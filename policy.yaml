@@ -18,6 +18,6 @@ findings:
   CURRENCY:          {severity: reject, disposition: return_to_vendor}
   PRICE_VARIANCE:    {severity: warn}
   DATE_ODDITY:       {severity: warn}
-  NEW_VENDOR:        {severity: info}
+  NEW_VENDOR:        {severity: warn}
   OCR_CORRECTED:     {severity: info}
   NEAR_THRESHOLD:    {severity: info}
