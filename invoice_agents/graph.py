@@ -26,7 +26,6 @@ from invoice_agents.schema import (
     Payment,
     Resolution,
     RiskMemo,
-    Severity,
 )
 from invoice_agents.tools import ToolBox, content_hash, number_key, text_key
 
