@@ -1,4 +1,4 @@
-data/heldout/invoice_3011.eml  grok-4.7 · replay · run 20261125-041300-invoice_3011-b744
+data/heldout/invoice_3011.eml  grok-4.7 · replay · run 20261125-051629-invoice_3011-4c3d
   ✓ Intake      INV-3011 · Widgets Inc. · 2 lines · 3780.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   9 tool calls so far
@@ -14,6 +14,6 @@ data/heldout/invoice_3011.eml  grok-4.7 · replay · run 20261125-041300-invoice
 │ same line items and a $3,780.00 total. Paying it would settle the same invoice twice. Policy     │
 │ requires void for duplicates so the document cannot be resubmitted.                              │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 8 model calls (replay) · 9 tool calls · 20389 tokens · $0.0171 recorded · log 
-runs/20261125-041300-invoice_3011-b744/events.jsonl · 
-runs/20261125-041300-invoice_3011-b744/report.md
+63.0s · 8 model calls (replay) · 9 tool calls · 20389 tokens · $0.0171 recorded · log 
+runs/20261125-051629-invoice_3011-4c3d/events.jsonl · 
+runs/20261125-051629-invoice_3011-4c3d/report.md

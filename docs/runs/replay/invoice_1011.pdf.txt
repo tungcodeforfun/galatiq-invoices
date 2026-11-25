@@ -1,4 +1,4 @@
-data/invoices/invoice_1011.pdf  grok-4.7 · replay · run 20261125-041242-invoice_1011-81ef
+data/invoices/invoice_1011.pdf  grok-4.7 · replay · run 20261125-051609-invoice_1011-c5e0
   ✓ Intake      INV-1011 · Summit Manufacturing Co. · 2 lines · 3000.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   9 tool calls so far
@@ -11,6 +11,6 @@ Paid 3000.0 to Summit Manufacturing Co.
 │ Paid 3,000.00 to Summit Manufacturing Co.: Approve INV-1011 for $3,000. The known vendor's bill  │
 │ is internally consistent, has no findings, and the risk memo is low.                             │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.1s · 6 model calls (replay) · 9 tool calls · 15818 tokens · $0.0111 recorded · log 
-runs/20261125-041242-invoice_1011-81ef/events.jsonl · 
-runs/20261125-041242-invoice_1011-81ef/report.md
+33.0s · 6 model calls (replay) · 9 tool calls · 15818 tokens · $0.0111 recorded · log 
+runs/20261125-051609-invoice_1011-c5e0/events.jsonl · 
+runs/20261125-051609-invoice_1011-c5e0/report.md

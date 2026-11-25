@@ -1,4 +1,4 @@
-data/invoices/invoice_1007.csv  grok-4.7 · replay · run 20261125-041239-invoice_1007-e235
+data/invoices/invoice_1007.csv  grok-4.7 · replay · run 20261125-051606-invoice_1007-7a24
   ✓ Intake      INV-1007 · MegaWidgets Corp · 3 lines · 15525.0 
   ✓ Check       every value traces to the document
   ✓ Validator   12 tool calls so far
@@ -33,6 +33,6 @@ data/invoices/invoice_1007.csv  grok-4.7 · replay · run 20261125-041239-invoic
 │ Thank you,                                                                                       │
 │ Acme Corp Accounts Payable                                                                       │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 8 model calls (replay) · 12 tool calls · 22100 tokens · $0.0245 recorded · log 
-runs/20261125-041239-invoice_1007-e235/events.jsonl · 
-runs/20261125-041239-invoice_1007-e235/report.md
+101.6s · 8 model calls (replay) · 12 tool calls · 22100 tokens · $0.0245 recorded · log 
+runs/20261125-051606-invoice_1007-7a24/events.jsonl · 
+runs/20261125-051606-invoice_1007-7a24/report.md

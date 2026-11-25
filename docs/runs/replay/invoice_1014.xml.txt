@@ -1,4 +1,4 @@
-data/invoices/invoice_1014.xml  grok-4.7 · replay · run 20261125-041247-invoice_1014-e19e
+data/invoices/invoice_1014.xml  grok-4.7 · replay · run 20261125-051614-invoice_1014-9029
   ✓ Intake      INV-1014 · TechParts International · 2 lines · 4125.0 EUR
   ✓ Check       every value traces to the document
   ✓ Validator   9 tool calls so far
@@ -23,6 +23,6 @@ data/invoices/invoice_1014.xml  grok-4.7 · replay · run 20261125-041247-invoic
 │ 225.00 and WidgetB quantity 6 at unit price 475.00—with the subtotal, tax, and total restated in │
 │ USD. Thank you.                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 10 model calls (replay) · 11 tool calls · 26626 tokens · $0.0210 recorded · log 
-runs/20261125-041247-invoice_1014-e19e/events.jsonl · 
-runs/20261125-041247-invoice_1014-e19e/report.md
+70.4s · 10 model calls (replay) · 11 tool calls · 26626 tokens · $0.0210 recorded · log 
+runs/20261125-051614-invoice_1014-9029/events.jsonl · 
+runs/20261125-051614-invoice_1014-9029/report.md

@@ -1,4 +1,4 @@
-data/heldout/invoice_3008.txt  grok-4.7 · replay · run 20261125-041257-invoice_3008-6c91
+data/heldout/invoice_3008.txt  grok-4.7 · replay · run 20261125-051626-invoice_3008-8051
   ✓ Intake      INV-3008 · Atlas Industrial Supply · 2 lines · 3170.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   9 tool calls so far
@@ -28,6 +28,6 @@ data/heldout/invoice_3008.txt  grok-4.7 · replay · run 20261125-041257-invoice
 │                                                                                                  │
 │ Thank you.                                                                                       │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 8 model calls (replay) · 9 tool calls · 20569 tokens · $0.0176 recorded · log 
-runs/20261125-041257-invoice_3008-6c91/events.jsonl · 
-runs/20261125-041257-invoice_3008-6c91/report.md
+58.3s · 8 model calls (replay) · 9 tool calls · 20569 tokens · $0.0176 recorded · log 
+runs/20261125-051626-invoice_3008-8051/events.jsonl · 
+runs/20261125-051626-invoice_3008-8051/report.md

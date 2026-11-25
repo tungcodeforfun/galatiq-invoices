@@ -28,11 +28,11 @@ Add `--json` to print the outcome as JSON. Every run also writes `runs/<run_id>/
 
 ## Scorecard
 
-`python main.py eval`, replaying the committed recordings: **24/24 match the answer key** · 8 paid ($48,300) · 16 rejected ($210,610.80 USD stopped, each invoice number counted once) · 210 model calls (8.8 per invoice) · 290 tool calls (12.1) · $0.5390 Grok as recorded ($0.0225 per invoice). Per-file results with links to every live and replayed run: [`docs/DEMO.md`](docs/DEMO.md#run-logs).
+`python main.py eval`, replaying the committed recordings: **24/24 match the answer key** · 8 paid ($48,300) · 16 rejected ($210,610.80 USD stopped, each invoice number counted once) · 82.8 s per invoice · 210 model calls (8.8 per invoice) · 290 tool calls (12.1) · $0.5390 Grok ($0.0225 per invoice), model time and cost as recorded live. Per-file results with links to every live and replayed run: [`docs/DEMO.md`](docs/DEMO.md#run-logs).
 
 ### Held-out set
 
-`python main.py eval --set heldout`: **20/20 match the key** · 9 paid ($35,745) · 11 rejected ($26,470 USD stopped) · 165 model calls (8.2 per invoice) · 187 tool calls (9.3) · $0.3321 Grok as recorded ($0.0166 per invoice).
+`python main.py eval --set heldout`: **20/20 match the key** · 9 paid ($35,745) · 11 rejected ($26,470 USD stopped) · 52.7 s per invoice · 165 model calls (8.2 per invoice) · 187 tool calls (9.3) · $0.3321 Grok ($0.0166 per invoice), as recorded.
 
 I wrote the 20 files in `data/heldout/` and their key in `evals/heldout.yaml` after the system was built, and committed both before running anything on them; the key has not changed since, and no prompt changed after their first run. They come in every supported format plus a Markdown table and cover clean bills under and over $10K, item names written differently (`Widget-A`, `widget b`, `Gadget X (expedited)`), split lines that sum past stock, totals off in each direction, a euro invoice, a paid bill resent under a new number, a revision, a missing vendor, a negative quantity and three injection styles (notes, a line description, a fake system message). Item names that differ only in case, spacing, punctuation or a note in parentheses resolve; a real misspelling does not, by design (see Decisions). Per-file runs: [`docs/DEMO.md`](docs/DEMO.md#held-out-run-logs).
 

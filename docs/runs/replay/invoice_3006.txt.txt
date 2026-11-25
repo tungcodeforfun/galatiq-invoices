@@ -1,4 +1,4 @@
-data/heldout/invoice_3006.txt  grok-4.7 · replay · run 20261125-041256-invoice_3006-33f5
+data/heldout/invoice_3006.txt  grok-4.7 · replay · run 20261125-051625-invoice_3006-dc3b
   ✓ Intake      INV-3006 · MEGAWIDGETS CORP. · 3 lines · 3060.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   12 tool calls so far
@@ -11,6 +11,6 @@ Paid 3060.0 to MEGAWIDGETS CORP.
 │ Paid 3,060.00 to MEGAWIDGETS CORP.: Approve INV-3006 for $3,060. Known vendor, low-risk memo,    │
 │ and line items plus shipping match the stated total with no blocking findings.                   │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.1s · 7 model calls (replay) · 13 tool calls · 19510 tokens · $0.0150 recorded · log 
-runs/20261125-041256-invoice_3006-33f5/events.jsonl · 
-runs/20261125-041256-invoice_3006-33f5/report.md
+47.8s · 7 model calls (replay) · 13 tool calls · 19510 tokens · $0.0150 recorded · log 
+runs/20261125-051625-invoice_3006-dc3b/events.jsonl · 
+runs/20261125-051625-invoice_3006-dc3b/report.md

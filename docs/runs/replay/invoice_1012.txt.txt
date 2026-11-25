@@ -1,4 +1,4 @@
-data/invoices/invoice_1012.txt  grok-4.7 · replay · run 20261125-041244-invoice_1012-de74
+data/invoices/invoice_1012.txt  grok-4.7 · replay · run 20261125-051612-invoice_1012-704c
   ✓ Intake      INV 1012 · QuickShip Distributers · 3 lines · 9975.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   12 tool calls so far
@@ -19,6 +19,6 @@ data/invoices/invoice_1012.txt  grok-4.7 · replay · run 20261125-041244-invoic
 │ invoice date and a line amount) are informational only and do not create a new payable or offset │
 │ the duplicate. Disposition is void.                                                              │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 10 model calls (replay) · 15 tool calls · 27836 tokens · $0.0322 recorded · log 
-runs/20261125-041244-invoice_1012-de74/events.jsonl · 
-runs/20261125-041244-invoice_1012-de74/report.md
+129.2s · 10 model calls (replay) · 15 tool calls · 27836 tokens · $0.0322 recorded · log 
+runs/20261125-051612-invoice_1012-704c/events.jsonl · 
+runs/20261125-051612-invoice_1012-704c/report.md

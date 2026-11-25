@@ -1,4 +1,4 @@
-data/heldout/invoice_3009.csv  grok-4.7 · replay · run 20261125-041258-invoice_3009-3bf3
+data/heldout/invoice_3009.csv  grok-4.7 · replay · run 20261125-051627-invoice_3009-5c63
   ✓ Intake      INV-3009 · TechParts International · 1 lines · 2475.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   6 tool calls so far
@@ -22,6 +22,6 @@ data/heldout/invoice_3009.csv  grok-4.7 · replay · run 20261125-041258-invoice
 │ resubmit a corrected invoice whose total equals the line amounts plus any tax and shipping, with │
 │ each amount shown clearly.                                                                       │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 9 model calls (replay) · 7 tool calls · 22330 tokens · $0.0198 recorded · log 
-runs/20261125-041258-invoice_3009-3bf3/events.jsonl · 
-runs/20261125-041258-invoice_3009-3bf3/report.md
+77.7s · 9 model calls (replay) · 7 tool calls · 22330 tokens · $0.0198 recorded · log 
+runs/20261125-051627-invoice_3009-5c63/events.jsonl · 
+runs/20261125-051627-invoice_3009-5c63/report.md

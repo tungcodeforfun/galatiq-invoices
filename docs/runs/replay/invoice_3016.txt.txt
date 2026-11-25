@@ -1,4 +1,4 @@
-data/heldout/invoice_3016.txt  grok-4.7 · replay · run 20261125-041304-invoice_3016-0169
+data/heldout/invoice_3016.txt  grok-4.7 · replay · run 20261125-051633-invoice_3016-286f
   ✓ Intake      INV-3016 · Gadgets Co. · 1 lines · 1500.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   6 tool calls so far
@@ -17,6 +17,6 @@ data/heldout/invoice_3016.txt  grok-4.7 · replay · run 20261125-041304-invoice
 │ not be resubmitted. The same notes also press for immediate payment contrary to the stated Net   │
 │ 30 terms, which reinforces that this document must not come back.                                │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 9 model calls (replay) · 7 tool calls · 23176 tokens · $0.0184 recorded · log 
-runs/20261125-041304-invoice_3016-0169/events.jsonl · 
-runs/20261125-041304-invoice_3016-0169/report.md
+57.4s · 9 model calls (replay) · 7 tool calls · 23176 tokens · $0.0184 recorded · log 
+runs/20261125-051633-invoice_3016-286f/events.jsonl · 
+runs/20261125-051633-invoice_3016-286f/report.md

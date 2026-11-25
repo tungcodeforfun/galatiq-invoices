@@ -1,4 +1,4 @@
-data/heldout/invoice_3015.json  grok-4.7 · replay · run 20261125-041303-invoice_3015-8544
+data/heldout/invoice_3015.json  grok-4.7 · replay · run 20261125-051632-invoice_3015-6222
   ✓ Intake      INV-3015 · Widgets Inc. · 2 lines · 2000.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   9 tool calls so far
@@ -14,6 +14,6 @@ data/heldout/invoice_3015.json  grok-4.7 · replay · run 20261125-041303-invoic
 │ negative line quantity of -4.0 for WidgetA (amount -1000) mixed with a positive WidgetB line.    │
 │ That corrupt quantity cannot be paid and the invoice must not be resubmitted.                    │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 9 model calls (replay) · 10 tool calls · 23107 tokens · $0.0154 recorded · log 
-runs/20261125-041303-invoice_3015-8544/events.jsonl · 
-runs/20261125-041303-invoice_3015-8544/report.md
+45.2s · 9 model calls (replay) · 10 tool calls · 23107 tokens · $0.0154 recorded · log 
+runs/20261125-051632-invoice_3015-6222/events.jsonl · 
+runs/20261125-051632-invoice_3015-6222/report.md

@@ -1,4 +1,4 @@
-data/invoices/invoice_1001.txt  grok-4.7 · replay · run 20261125-041233-invoice_1001-e467
+data/invoices/invoice_1001.txt  grok-4.7 · replay · run 20261125-051600-invoice_1001-f6ab
   ✓ Intake      INV-1001 · Widgets Inc. · 2 lines · 5000.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   9 tool calls so far
@@ -11,6 +11,6 @@ Paid 5000.0 to Widgets Inc.
 │ Paid 5,000.00 to Widgets Inc.: Approve INV-1001 for $5,000. Vendor is on file, checks are clean, │
 │ risk is low, and the line items reconcile to the billed total.                                   │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.1s · 7 model calls (replay) · 10 tool calls · 18503 tokens · $0.0132 recorded · log 
-runs/20261125-041233-invoice_1001-e467/events.jsonl · 
-runs/20261125-041233-invoice_1001-e467/report.md
+53.6s · 7 model calls (replay) · 10 tool calls · 18503 tokens · $0.0132 recorded · log 
+runs/20261125-051600-invoice_1001-f6ab/events.jsonl · 
+runs/20261125-051600-invoice_1001-f6ab/report.md

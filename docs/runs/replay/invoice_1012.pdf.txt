@@ -1,4 +1,4 @@
-data/invoices/invoice_1012.pdf  grok-4.7 · replay · run 20261125-041244-invoice_1012-a64c
+data/invoices/invoice_1012.pdf  grok-4.7 · replay · run 20261125-051611-invoice_1012-8b7c
   ✓ Intake      INV 1012 · QuickShip Distributers · 3 lines · 9975.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   12 tool calls so far
@@ -17,6 +17,6 @@ Paid 9975.0 to QuickShip Distributers
 │ Math reconciles, OCR corrections are cosmetic, the vendor is on file, and the low-risk memo plus │
 │ info findings do not show a reason to withhold payment.                                          │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.1s · 9 model calls (replay) · 14 tool calls · 25435 tokens · $0.0294 recorded · log 
-runs/20261125-041244-invoice_1012-a64c/events.jsonl · 
-runs/20261125-041244-invoice_1012-a64c/report.md
+119.2s · 9 model calls (replay) · 14 tool calls · 25435 tokens · $0.0294 recorded · log 
+runs/20261125-051611-invoice_1012-8b7c/events.jsonl · 
+runs/20261125-051611-invoice_1012-8b7c/report.md

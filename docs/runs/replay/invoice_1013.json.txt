@@ -1,4 +1,4 @@
-data/invoices/invoice_1013.json  grok-4.7 · replay · run 20261125-041245-invoice_1013-8f3f
+data/invoices/invoice_1013.json  grok-4.7 · replay · run 20261125-051613-invoice_1013-296f
   ✓ Intake      INV-1013 · Atlas Industrial Supply · 8 lines · 22562.8 USD
   ✓ Check       every value traces to the document
   ✓ Validator   22 tool calls so far
@@ -37,6 +37,6 @@ data/invoices/invoice_1013.json  grok-4.7 · replay · run 20261125-041245-invoi
 │                                                                                                  │
 │ Thank you.                                                                                       │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 9 model calls (replay) · 23 tool calls · 28459 tokens · $0.0317 recorded · log 
-runs/20261125-041245-invoice_1013-8f3f/events.jsonl · 
-runs/20261125-041245-invoice_1013-8f3f/report.md
+107.8s · 9 model calls (replay) · 23 tool calls · 28459 tokens · $0.0317 recorded · log 
+runs/20261125-051613-invoice_1013-296f/events.jsonl · 
+runs/20261125-051613-invoice_1013-296f/report.md

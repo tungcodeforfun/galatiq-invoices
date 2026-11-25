@@ -1,5 +1,5 @@
 data/invoices/invoice_1004_revised.json  grok-4.7 · replay · run 
-20261125-041237-invoice_1004_revised-47fc
+20261125-051604-invoice_1004_revised-b8f8
   ✓ Intake      INV-1004 · Precision Parts Ltd. · 3 lines · 5940.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   12 tool calls so far
@@ -35,6 +35,6 @@ data/invoices/invoice_1004_revised.json  grok-4.7 · replay · run
 │ Thank you,                                                                                       │
 │ Acme Corp Accounts Payable                                                                       │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 9 model calls (replay) · 13 tool calls · 24495 tokens · $0.0219 recorded · log 
-runs/20261125-041237-invoice_1004_revised-47fc/events.jsonl · 
-runs/20261125-041237-invoice_1004_revised-47fc/report.md
+116.8s · 9 model calls (replay) · 13 tool calls · 24495 tokens · $0.0219 recorded · log 
+runs/20261125-051604-invoice_1004_revised-b8f8/events.jsonl · 
+runs/20261125-051604-invoice_1004_revised-b8f8/report.md

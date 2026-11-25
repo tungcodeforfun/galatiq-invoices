@@ -1,4 +1,4 @@
-data/invoices/invoice_1005.json  grok-4.7 · replay · run 20261125-041237-invoice_1005-a5e6
+data/invoices/invoice_1005.json  grok-4.7 · replay · run 20261125-051604-invoice_1005-2a43
   ✓ Intake      INV-1005 · Global Supply Chain Partners · 3 lines · 15225.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   12 tool calls so far
@@ -22,6 +22,6 @@ data/invoices/invoice_1005.json  grok-4.7 · replay · run 20261125-041237-invoi
 │ corrected invoice with an acceptable GadgetX quantity and with the line amount, subtotal, tax,   │
 │ and total recalculated to match. Thank you.                                                      │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.1s · 11 model calls (replay) · 13 tool calls · 29636 tokens · $0.0427 recorded · log 
-runs/20261125-041237-invoice_1005-a5e6/events.jsonl · 
-runs/20261125-041237-invoice_1005-a5e6/report.md
+202.5s · 11 model calls (replay) · 13 tool calls · 29636 tokens · $0.0427 recorded · log 
+runs/20261125-051604-invoice_1005-2a43/events.jsonl · 
+runs/20261125-051604-invoice_1005-2a43/report.md

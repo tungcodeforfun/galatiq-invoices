@@ -1,4 +1,4 @@
-data/invoices/invoice_1002.txt  grok-4.7 · replay · run 20261125-041234-invoice_1002-440c
+data/invoices/invoice_1002.txt  grok-4.7 · replay · run 20261125-051601-invoice_1002-8ae8
   ✓ Intake      1002 · Gadgets Co. · 1 lines · 15000.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   6 tool calls so far
@@ -24,6 +24,6 @@ data/invoices/invoice_1002.txt  grok-4.7 · replay · run 20261125-041234-invoic
 │ 2026-01-30, the same as the invoice date, which does not match Net 30 terms—please set a due     │
 │ date consistent with those terms. Thank you.                                                     │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 8 model calls (replay) · 6 tool calls · 20226 tokens · $0.0211 recorded · log 
-runs/20261125-041234-invoice_1002-440c/events.jsonl · 
-runs/20261125-041234-invoice_1002-440c/report.md
+78.5s · 8 model calls (replay) · 6 tool calls · 20226 tokens · $0.0211 recorded · log 
+runs/20261125-051601-invoice_1002-8ae8/events.jsonl · 
+runs/20261125-051601-invoice_1002-8ae8/report.md

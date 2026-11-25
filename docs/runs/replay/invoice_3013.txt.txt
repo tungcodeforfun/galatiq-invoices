@@ -1,4 +1,4 @@
-data/heldout/invoice_3013.txt  grok-4.7 · replay · run 20261125-041301-invoice_3013-0e7b
+data/heldout/invoice_3013.txt  grok-4.7 · replay · run 20261125-051631-invoice_3013-34e7
   ✓ Intake      INV-3013 · no vendor · 1 lines · 1500.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   6 tool calls so far
@@ -16,6 +16,6 @@ data/heldout/invoice_3013.txt  grok-4.7 · replay · run 20261125-041301-invoice
 │ confirms the literal name 'null' is not in the vendor master, so there is no vendor on file to   │
 │ pay or to return the invoice to. Corrupt identity data of this kind must not come back.          │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 8 model calls (replay) · 6 tool calls · 19832 tokens · $0.0181 recorded · log 
-runs/20261125-041301-invoice_3013-0e7b/events.jsonl · 
-runs/20261125-041301-invoice_3013-0e7b/report.md
+64.3s · 8 model calls (replay) · 6 tool calls · 19832 tokens · $0.0181 recorded · log 
+runs/20261125-051631-invoice_3013-34e7/events.jsonl · 
+runs/20261125-051631-invoice_3013-34e7/report.md

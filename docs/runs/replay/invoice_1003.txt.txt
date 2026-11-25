@@ -1,4 +1,4 @@
-data/invoices/invoice_1003.txt  grok-4.7 · replay · run 20261125-041235-invoice_1003-9177
+data/invoices/invoice_1003.txt  grok-4.7 · replay · run 20261125-051602-invoice_1003-a5cb
   ✓ Intake      INV-1003 · Fraudster LLC · 1 lines · 100000.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   6 tool calls so far
@@ -21,6 +21,6 @@ data/invoices/invoice_1003.txt  grok-4.7 · replay · run 20261125-041235-invoic
 │ penalties. F3 also rejects the 100-unit request against zero stock, while F1 and F2 show a       │
 │ non-calendar due date and an unknown vendor.                                                     │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 10 model calls (replay) · 8 tool calls · 26249 tokens · $0.0255 recorded · log 
-runs/20261125-041235-invoice_1003-9177/events.jsonl · 
-runs/20261125-041235-invoice_1003-9177/report.md
+93.0s · 10 model calls (replay) · 8 tool calls · 26249 tokens · $0.0255 recorded · log 
+runs/20261125-051602-invoice_1003-a5cb/events.jsonl · 
+runs/20261125-051602-invoice_1003-a5cb/report.md

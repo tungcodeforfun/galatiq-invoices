@@ -1,4 +1,4 @@
-data/heldout/invoice_3019.txt  grok-4.7 · replay · run 20261125-041306-invoice_3019-b051
+data/heldout/invoice_3019.txt  grok-4.7 · replay · run 20261125-051636-invoice_3019-4133
   ✓ Intake      INV-3019 · Consolidated Materials Group · 2 lines · 4320.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   9 tool calls so far
@@ -11,6 +11,6 @@ Paid 4320.0 to Consolidated Materials Group
 │ Paid 4,320.00 to Consolidated Materials Group: Approve INV-3019 for $4,320. No findings, low     │
 │ risk, and the bill checks out against catalog, stock, prices, and totals.                        │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.1s · 7 model calls (replay) · 10 tool calls · 18332 tokens · $0.0115 recorded · log 
-runs/20261125-041306-invoice_3019-b051/events.jsonl · 
-runs/20261125-041306-invoice_3019-b051/report.md
+29.1s · 7 model calls (replay) · 10 tool calls · 18332 tokens · $0.0115 recorded · log 
+runs/20261125-051636-invoice_3019-4133/events.jsonl · 
+runs/20261125-051636-invoice_3019-4133/report.md

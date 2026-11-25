@@ -1,4 +1,4 @@
-data/invoices/invoice_1008.txt  grok-4.7 · replay · run 20261125-041240-invoice_1008-babb
+data/invoices/invoice_1008.txt  grok-4.7 · replay · run 20261125-051607-invoice_1008-5cd4
   ✓ Intake      INV-1008 · NoProd Industries · 2 lines · 9900.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   5 tool calls so far
@@ -32,6 +32,6 @@ data/invoices/invoice_1008.txt  grok-4.7 · replay · run 20261125-041240-invoic
 │ Thank you,                                                                                       │
 │ Acme Corp Accounts Payable                                                                       │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 9 model calls (replay) · 7 tool calls · 23588 tokens · $0.0238 recorded · log 
-runs/20261125-041240-invoice_1008-babb/events.jsonl · 
-runs/20261125-041240-invoice_1008-babb/report.md
+80.7s · 9 model calls (replay) · 7 tool calls · 23588 tokens · $0.0238 recorded · log 
+runs/20261125-051607-invoice_1008-5cd4/events.jsonl · 
+runs/20261125-051607-invoice_1008-5cd4/report.md

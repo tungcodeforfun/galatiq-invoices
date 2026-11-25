@@ -1,4 +1,4 @@
-data/heldout/invoice_3017.csv  grok-4.7 · replay · run 20261125-041304-invoice_3017-081f
+data/heldout/invoice_3017.csv  grok-4.7 · replay · run 20261125-051634-invoice_3017-2568
   ✓ Intake      INV-3017 · Reliable Components Inc. · 2 lines · 2000.0 
   ✓ Check       every value traces to the document
   ✓ Validator   7 tool calls so far
@@ -18,6 +18,6 @@ data/heldout/invoice_3017.csv  grok-4.7 · replay · run 20261125-041304-invoice
 │ invoice content rather than an authorization. F2 also rejects that same line as an unknown       │
 │ catalog item covering $1,000 of the $2,000 total.                                                │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 10 model calls (replay) · 9 tool calls · 25859 tokens · $0.0236 recorded · log 
-runs/20261125-041304-invoice_3017-081f/events.jsonl · 
-runs/20261125-041304-invoice_3017-081f/report.md
+79.1s · 10 model calls (replay) · 9 tool calls · 25859 tokens · $0.0236 recorded · log 
+runs/20261125-051634-invoice_3017-2568/events.jsonl · 
+runs/20261125-051634-invoice_3017-2568/report.md

@@ -1,4 +1,4 @@
-data/heldout/invoice_3007.json  grok-4.7 · replay · run 20261125-041257-invoice_3007-b44c
+data/heldout/invoice_3007.json  grok-4.7 · replay · run 20261125-051626-invoice_3007-d152
   ✓ Intake      INV-3007 · Consolidated Materials Group · 2 lines · 5500.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   8 tool calls so far
@@ -24,6 +24,6 @@ data/heldout/invoice_3007.json  grok-4.7 · replay · run 20261125-041257-invoic
 │ accept, and with each line amount and the invoice total recalculated to match that quantity.     │
 │ Thank you.                                                                                       │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 9 model calls (replay) · 9 tool calls · 23163 tokens · $0.0190 recorded · log 
-runs/20261125-041257-invoice_3007-b44c/events.jsonl · 
-runs/20261125-041257-invoice_3007-b44c/report.md
+58.7s · 9 model calls (replay) · 9 tool calls · 23163 tokens · $0.0190 recorded · log 
+runs/20261125-051626-invoice_3007-d152/events.jsonl · 
+runs/20261125-051626-invoice_3007-d152/report.md

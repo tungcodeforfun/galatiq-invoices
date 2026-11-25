@@ -1,4 +1,4 @@
-data/invoices/invoice_1011.txt  grok-4.7 · replay · run 20261125-041243-invoice_1011-8e5d
+data/invoices/invoice_1011.txt  grok-4.7 · replay · run 20261125-051610-invoice_1011-e21f
   ✓ Intake      INV-1011 · Summit Manufacturing Co. · 2 lines · 3000.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   9 tool calls so far
@@ -14,6 +14,6 @@ data/invoices/invoice_1011.txt  grok-4.7 · replay · run 20261125-041243-invoic
 │ items, and total of INV-1011, which is already PAID. Policy requires void for a duplicate so the │
 │ invoice cannot be resubmitted or paid again.                                                     │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 9 model calls (replay) · 10 tool calls · 22401 tokens · $0.0144 recorded · log 
-runs/20261125-041243-invoice_1011-8e5d/events.jsonl · 
-runs/20261125-041243-invoice_1011-8e5d/report.md
+44.3s · 9 model calls (replay) · 10 tool calls · 22401 tokens · $0.0144 recorded · log 
+runs/20261125-051610-invoice_1011-e21f/events.jsonl · 
+runs/20261125-051610-invoice_1011-e21f/report.md

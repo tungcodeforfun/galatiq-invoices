@@ -1,4 +1,4 @@
-data/invoices/invoice_1015.csv  grok-4.7 · replay · run 20261125-041247-invoice_1015-282a
+data/invoices/invoice_1015.csv  grok-4.7 · replay · run 20261125-051615-invoice_1015-ab77
   ✓ Intake      INV-1015 · Reliable Components Inc. · 3 lines · 6500.0 
   ✓ Check       every value traces to the document
   ✓ Validator   12 tool calls so far
@@ -12,6 +12,6 @@ Paid 6500.0 to Reliable Components Inc.
 │ Inc. Math and dates are clean, the vendor is on file, and the low-risk memo gives no reason to   │
 │ hold payment.                                                                                    │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.1s · 8 model calls (replay) · 14 tool calls · 21355 tokens · $0.0154 recorded · log 
-runs/20261125-041247-invoice_1015-282a/events.jsonl · 
-runs/20261125-041247-invoice_1015-282a/report.md
+44.0s · 8 model calls (replay) · 14 tool calls · 21355 tokens · $0.0154 recorded · log 
+runs/20261125-051615-invoice_1015-ab77/events.jsonl · 
+runs/20261125-051615-invoice_1015-ab77/report.md

@@ -1,4 +1,4 @@
-data/invoices/invoice_1016.json  grok-4.7 · replay · run 20261125-041248-invoice_1016-ff61
+data/invoices/invoice_1016.json  grok-4.7 · replay · run 20261125-051616-invoice_1016-533a
   ✓ Intake      INV-1016 · Widgets Inc. · 3 lines · 3233.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   10 tool calls so far
@@ -22,6 +22,6 @@ data/invoices/invoice_1016.json  grok-4.7 · replay · run 20261125-041248-invoi
 │ you mean WidgetA or WidgetB? Please resubmit a corrected invoice that replaces WidgetC with the  │
 │ correct catalog item, with matching quantity, unit price, line amount, subtotal, tax, and total. │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 9 model calls (replay) · 11 tool calls · 23393 tokens · $0.0171 recorded · log 
-runs/20261125-041248-invoice_1016-ff61/events.jsonl · 
-runs/20261125-041248-invoice_1016-ff61/report.md
+44.3s · 9 model calls (replay) · 11 tool calls · 23393 tokens · $0.0171 recorded · log 
+runs/20261125-051616-invoice_1016-533a/events.jsonl · 
+runs/20261125-051616-invoice_1016-533a/report.md

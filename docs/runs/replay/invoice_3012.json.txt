@@ -1,4 +1,4 @@
-data/heldout/invoice_3012.json  grok-4.7 · replay · run 20261125-041301-invoice_3012-080f
+data/heldout/invoice_3012.json  grok-4.7 · replay · run 20261125-051630-invoice_3012-0f52
   ✓ Intake      INV-3002 · Gadgets Co. · 2 lines · 2795.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   9 tool calls so far
@@ -25,6 +25,6 @@ data/heldout/invoice_3012.json  grok-4.7 · replay · run 20261125-041301-invoic
 │ the $250.00 amount, so we can review that increment without reprocessing the $2,545.00 already   │
 │ paid.                                                                                            │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 9 model calls (replay) · 10 tool calls · 23416 tokens · $0.0199 recorded · log 
-runs/20261125-041301-invoice_3012-080f/events.jsonl · 
-runs/20261125-041301-invoice_3012-080f/report.md
+63.6s · 9 model calls (replay) · 10 tool calls · 23416 tokens · $0.0199 recorded · log 
+runs/20261125-051630-invoice_3012-0f52/events.jsonl · 
+runs/20261125-051630-invoice_3012-0f52/report.md

@@ -1,4 +1,4 @@
-data/invoices/invoice_1009.json  grok-4.7 · replay · run 20261125-041240-invoice_1009-163d
+data/invoices/invoice_1009.json  grok-4.7 · replay · run 20261125-051608-invoice_1009-b005
   ✓ Intake      INV-1009 · no vendor · 2 lines · -250.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   9 tool calls so far
@@ -17,6 +17,6 @@ data/invoices/invoice_1009.json  grok-4.7 · replay · run 20261125-041240-invoi
 │ back. F3 confirms it does not reconcile, with computed line amounts of -250.00 against a stated  │
 │ subtotal of 1,000.00. F2 (no due date) is a warning only and does not change the void.           │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 8 model calls (replay) · 9 tool calls · 21464 tokens · $0.0230 recorded · log 
-runs/20261125-041240-invoice_1009-163d/events.jsonl · 
-runs/20261125-041240-invoice_1009-163d/report.md
+87.1s · 8 model calls (replay) · 9 tool calls · 21464 tokens · $0.0230 recorded · log 
+runs/20261125-051608-invoice_1009-b005/events.jsonl · 
+runs/20261125-051608-invoice_1009-b005/report.md
