@@ -144,7 +144,7 @@ def agents_view(s: dict[str, Any]) -> None:
     calls = s.get("tool_calls") or []
     if calls:
         st.markdown("**Tool calls**")
-        st.dataframe(pd.DataFrame([call_in_words(c) for c in calls]), hide_index=True, width="stretch")
+        st.table(pd.DataFrame([call_in_words(c) for c in calls]), hide_index=True)
     if s.get("coverage_forced"):
         st.markdown("Coverage ran in code: " + ", ".join(s["coverage_forced"]))
     if s.get("risk"):
@@ -190,11 +190,14 @@ def detail(s: dict[str, Any]) -> None:
 
 
 def ledger_frame(store: Store) -> pd.DataFrame:
-    """The ledger as a table, newest first."""
+    """The ledger as a table, newest first; `key` names the invoice however often it came back."""
     rows = store.ledger()
-    return pd.DataFrame([{"File": r["source_file"], "Invoice": r["number"], "Vendor": r["vendor"],
-                          "Total": r["total"], "Currency": r["currency"] or "USD", "Outcome": r["status"],
-                          "Disposition": (r["disposition"] or "").replace("_", " "), "run_id": r["run_id"]}
+    return pd.DataFrame([{"Time": pd.Timestamp(r["processed_at"]), "File": r["source_file"], "Invoice": r["number"],
+                          "Vendor": r["vendor"], "Total": r["total"], "Currency": r["currency"] or "USD",
+                          "Outcome": r["status"], "Disposition": (r["disposition"] or "").replace("_", " "),
+                          "run_id": r["run_id"],
+                          "key": invoice_key(r["vendor"], r["number"]) if r["vendor"] or r["number"]
+                          else r["source_file"]}
                          for r in rows])
 
 
@@ -206,14 +209,13 @@ def decisions(store: Store) -> None:
         return
     paid = frame[frame.Outcome == "PAID"]
     rejected = frame[frame.Outcome == "REJECTED"]
-    usd = rejected[(rejected.Currency == "USD") & (rejected.Total > 0)]
-    once = usd[~pd.Series([invoice_key(v, n) for v, n in zip(usd.Vendor, usd.Invoice, strict=True)],
-                          index=usd.index, dtype=str).duplicated()]
+    usd = rejected[(rejected.Currency == "USD") & (rejected.Total > 0)].drop_duplicates("key")
     cols = st.columns(4)
     cols[0].metric("Processed", len(frame))
     cols[1].metric(f"Paid · {len(paid)}", f"${paid.Total.sum():,.0f}")
-    cols[2].metric(f"Rejected · {len(rejected)}", f"${once.Total.sum():,.0f}",
-                   help="USD stopped from going out, each invoice number counted once")
+    cols[2].metric(f"Rejected · {rejected.key.nunique()}", f"${usd.Total.sum():,.0f}",
+                   help="Each invoice number counted once, however often it came back; the amount is USD stopped "
+                        "from going out")
     cols[3].metric("Straight-through", f"{len(paid) / len(frame):.0%}")
     left, right = st.columns([1, 2])
     status = left.segmented_control("Outcome", ["PAID", "REJECTED", "PAYMENT_FAILED"], selection_mode="multi",
@@ -225,9 +227,11 @@ def decisions(store: Store) -> None:
         mask = view[["File", "Invoice", "Vendor"]].astype(str).apply(lambda c: c.str.contains(query, case=False))
         view = view[mask.any(axis=1)]
     st.caption("Select a row to see the full run.")
-    picked = st.dataframe(view.drop(columns="run_id"), hide_index=True, width="stretch",
+    picked = st.dataframe(view.drop(columns=["run_id", "key"]), hide_index=True, width="stretch",
                           on_select="rerun", selection_mode="single-row",
-                          column_config={"Total": st.column_config.NumberColumn(format="%.2f")})
+                          column_config={"Total": st.column_config.NumberColumn(format="%.2f"),
+                                         "Time": st.column_config.DatetimeColumn("Time (UTC)",
+                                                                                 format="MMM D, HH:mm:ss")})
     rows = picked.selection.rows
     if rows:
         state = load_state(RUNS_DIR / view.iloc[rows[0]].run_id)
