@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from conftest import make_invoice
 
+from invoice_agents.schema import LineItem
 from invoice_agents.tools import ToolBox, content_hash, number_key, resolve_item, text_key
 
 CATALOG = {"WidgetA": {}, "WidgetB": {}, "GadgetX": {}}
@@ -65,6 +66,18 @@ def test_total_off_by_fifty_is_flagged_with_the_difference(store, policy):
 def test_total_within_one_cent_passes(store, policy):
     box = ToolBox(make_invoice([("WidgetA", 3, 250)], total=750.01), store, policy)
     assert box.check_totals()["ok"]
+
+
+def test_a_line_amount_that_is_not_quantity_times_price_is_flagged(store, policy):
+    line = LineItem(description="WidgetA", quantity=4, unit_price=250, amount=1100, note=None)
+    box = ToolBox(make_invoice([], total=1100.0, line_items=[line]), store, policy)
+    assert box.check_totals()["problems"] == ["line 1: 4 x 250.00 = 1,000.00, invoice says 1,100.00"]
+    assert codes(box) == ["TOTAL_MISMATCH"]
+
+
+def test_a_subtotal_that_disagrees_with_the_lines_is_flagged_even_when_the_total_adds_up(store, policy):
+    box = ToolBox(make_invoice([("WidgetA", 2, 250)], subtotal=550.0, total=500.0), store, policy)
+    assert box.check_totals()["problems"] == ["lines add up to 500.00, subtotal says 550.00"]
 
 
 def test_price_variance_beyond_tolerance_warns(store, policy):

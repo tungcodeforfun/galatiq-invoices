@@ -8,12 +8,16 @@ import sys
 from pathlib import Path
 
 import pytest
+from conftest import ScriptedLLM
 
 from evals.scorecard import load_answer_key, score_all
 from invoice_agents.agents import payment
 from invoice_agents.db import Store
 from invoice_agents.graph import process
 from invoice_agents.nodes import Deps, State
+from invoice_agents.observability import RunLog
+from invoice_agents.policy import load_policy
+from invoice_agents.schema import Critique, Decision, Reason
 
 ROOT = Path(__file__).resolve().parent.parent
 SAMPLES = ROOT / "data" / "invoices"
@@ -115,4 +119,73 @@ def test_the_briefs_exact_cli_command(tmp_path):
     result = subprocess.run([sys.executable, "main.py", "--invoice_path=data/invoices/invoice_1001.txt"],
                             cwd=ROOT, env=env, capture_output=True, text=True, timeout=120)
     assert result.returncode == 0, result.stderr
-    assert "PAID" in result.stdout and "Degraded" not in result.stdout
+    assert "PAID" in result.stdout and "built-in rules" not in result.stdout
+
+
+def cli(*args: str, tmp_path: Path) -> str:
+    env = {k: v for k, v in os.environ.items() if k != "XAI_API_KEY"}
+    env.update(INVOICE_DB=str(tmp_path / "cli.db"), LLM_MODE="replay", COLUMNS="80")
+    result = subprocess.run([sys.executable, "main.py", *args], cwd=ROOT, env=env, capture_output=True, text=True,
+                            timeout=300)
+    assert result.returncode == 0, result.stdout + result.stderr
+    return result.stdout
+
+
+def test_batch_and_eval_tables_show_whole_file_labels_and_codes_at_80_columns(tmp_path):
+    for output in (cli("batch", "data/invoices", tmp_path=tmp_path), cli("eval", tmp_path=tmp_path)):
+        assert "1004_revised.json" in output and "REVISION_CONFLICT" in output
+
+
+def test_the_gate_stops_an_approval_past_a_rejecting_finding(tmp_path):
+    approve = Decision(action="approve", reasons=[Reason(text="Looks fine", finding_ids=[])], addressed_findings=[],
+                       summary="Pay it.")
+    llm = ScriptedLLM(tmp_path / "cassettes", {"approver": approve, "critic": Critique(verdict="accept",
+                                                                                         objections=[])})
+    path, db = SAMPLES / "invoice_1016.json", tmp_path / "t.db"
+    state = process(path, Deps(llm=llm, store=Store(db), policy=load_policy(), log=RunLog(path)))
+    assert state["drafts"][-1].action == "approve" and codes(state) == ["UNKNOWN_ITEM"]
+    assert not state["degraded"] or state["degraded"] == ["resolution"]
+    assert not state["gate"].approved
+    assert state["outcome"].status == "REJECTED" and Store(db).payments() == []
+
+
+STRUCTURED = {
+    "supplier_export.json": (
+        '{"invoiceNo": "PP-5512", "supplier": {"companyName": "Precision Parts Ltd.", "taxId": "36-1234567"},\n'
+        ' "issueDate": "2026-03-03", "dueDate": "2026-04-02", "currencyCode": "USD", "paymentTerms": "Net 30",\n'
+        ' "items": [{"product": "WidgetA", "qty": 2, "unitPrice": 250.0, "lineTotal": 500.0},\n'
+        '           {"product": "GadgetX", "qty": 1, "unitPrice": 750.0, "lineTotal": 750.0}],\n'
+        ' "amountDue": 1250.0}\n', 1250.0),
+    "erp_lines.csv": (
+        "Bill Number,Seller,Issued,Pay By,Product,Units,Rate,Extended\n"
+        "AT-3301,Atlas Industrial Supply,2026-03-05,2026-04-04,WidgetB,3,500.00,1500.00\n"
+        "AT-3301,Atlas Industrial Supply,2026-03-05,2026-04-04,WidgetA,2,250.00,500.00\n"
+        ",,,,,,Grand Total,2000.00\n", 2000.0),
+    "ubl_like.xml": (
+        "<Invoice><InvoiceID>RC-778</InvoiceID><Seller><Name>Reliable Components Inc.</Name></Seller>"
+        "<Buyer><Name>Acme Corp</Name></Buyer><IssueDate>2026-03-09</IssueDate><DueDate>2026-04-08</DueDate>"
+        "<Terms>Net 30</Terms><Lines><Line><Description>GadgetX</Description><Quantity>2</Quantity>"
+        "<UnitPrice>750.00</UnitPrice></Line></Lines><TotalDue>1500.00</TotalDue></Invoice>\n", 1500.0),
+}
+
+
+@pytest.mark.parametrize("name", list(STRUCTURED))
+def test_structured_files_never_recorded_are_read_and_paid_without_a_key(tmp_path, monkeypatch, name):
+    monkeypatch.setenv("LLM_MODE", "replay")
+    text, amount = STRUCTURED[name]
+    path = tmp_path / name
+    path.write_text(text)
+    state = run(path, tmp_path / "t.db")
+    assert "intake" in state["degraded"]
+    assert (state["outcome"].status, state["outcome"].amount) == ("PAID", amount)
+
+
+def test_a_layout_the_rules_cannot_read_is_held_for_manual_entry_without_a_vendor_email(tmp_path, monkeypatch):
+    monkeypatch.setenv("LLM_MODE", "replay")
+    path = tmp_path / "invoice.md"
+    path.write_text("# Invoice MD-42 from Acme Industrial Supplies\n\n| Item | Qty | Price |\n|---|---|---|\n"
+                    "| WidgetA | 3 | $250.00 |\n\n**Amount due:** $750.00\n")
+    state = run(path, tmp_path / "t.db")
+    assert (state["outcome"].status, state["outcome"].disposition) == ("REJECTED", "manual_entry")
+    assert codes(state) == ["NEEDS_MODEL"] and "XAI_API_KEY" in state["outcome"].summary
+    assert "resolution" not in state
