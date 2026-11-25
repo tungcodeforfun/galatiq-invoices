@@ -216,7 +216,7 @@ class ToolBox:
                 "problems": problems, "ok": not problems}
 
     def check_duplicate(self) -> dict[str, Any]:
-        """Exact or content duplicates void the invoice; a changed invoice under a decided number is a conflict."""
+        """Same content voids the invoice; a changed invoice under a decided number is a conflict. Oldest match wins."""
         inv = self.invoice
         nk, vk, ch = number_key(inv.invoice_number), text_key(inv.vendor), content_hash(inv, self.catalog)
         prior = [r for r in self.store.related_invoices(nk, vk, ch) if r["status"] in COUNTED_STATUSES]
@@ -233,7 +233,7 @@ class ToolBox:
             )
             return {"result": "duplicate", "of": first["number"], "prior_status": first["status"]}
         if same_number:
-            first = same_number[-1]
+            first = same_number[0]
             delta = round((inv.total or 0) - (first["total"] or 0), 2)
             self._add(
                 self.policy.finding(
