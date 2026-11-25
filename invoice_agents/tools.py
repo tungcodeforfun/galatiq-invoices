@@ -6,6 +6,7 @@ import hashlib
 import json
 import re
 from decimal import Decimal
+from difflib import SequenceMatcher
 from typing import Any
 
 from invoice_agents.db import Store
@@ -13,6 +14,7 @@ from invoice_agents.policy import Policy
 from invoice_agents.schema import Finding, Invoice
 
 COUNTED_STATUSES = ("PAID", "REJECTED")
+NEAR_MISS = 0.8
 
 
 def text_key(text: str | None) -> str:
@@ -46,6 +48,13 @@ def resolve_item(description: str, catalog: dict[str, Any]) -> tuple[str | None,
     return None, "none"
 
 
+def closest_items(description: str, catalog: dict[str, Any]) -> list[str]:
+    """Nearest catalog items to an unmatched name, all tied for nearest: a hint for people, never a match."""
+    scores = {item: SequenceMatcher(None, item_key(description), text_key(item)).ratio() for item in catalog}
+    best = max(scores.values(), default=0.0)
+    return [item for item, score in scores.items() if score == best >= NEAR_MISS]
+
+
 def content_hash(invoice: Invoice, catalog: dict[str, Any]) -> str:
     """Fingerprint of what is being billed (vendor, lines, total), ignoring the invoice number and layout."""
     lines = sorted(
@@ -58,7 +67,8 @@ def content_hash(invoice: Invoice, catalog: dict[str, Any]) -> str:
 
 TOOL_SPECS: dict[str, dict[str, Any]] = {
     "resolve_item": {
-        "description": "Match one invoice line to the inventory catalog. Returns the catalog item or no match.",
+        "description": "Match one invoice line to the inventory catalog. Returns the catalog item, or no match "
+        "with the nearest catalog items as suggestions for the vendor; a suggestion is never a match.",
         "parameters": {"line": {"type": "integer", "description": "Line number, starting at 1"}},
     },
     "check_stock": {
@@ -133,12 +143,11 @@ class ToolBox:
         description = self._line(line).description
         item, match = resolve_item(description, self.catalog)
         if item is None:
-            self._add(
-                self.policy.finding(
-                    "UNKNOWN_ITEM", f"'{description}' is not in the inventory catalog", "resolve_item",
-                    subject=description, line=line,
-                )
-            )
+            hint = closest_items(description, self.catalog)
+            ask = f"; did you mean {' or '.join(hint)}?" if hint else ""
+            self._add(self.policy.finding("UNKNOWN_ITEM", f"'{description}' is not in the inventory catalog{ask}",
+                                          "resolve_item", subject=description, line=line, suggestions=hint))
+            return {"line": line, "description": description, "item": None, "match": match, "suggestions": hint}
         return {"line": line, "description": description, "item": item, "match": match}
 
     def check_stock(self, item: str) -> dict[str, Any]:

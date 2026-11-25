@@ -39,10 +39,11 @@ def rule_objections(draft: Decision, findings: list[Finding], invoice: Invoice, 
     return objections
 
 
-def run(llm: LLM, invoice: Invoice, findings: list[Finding], risk: RiskMemo | None, draft: Decision,
-        vendor: dict[str, Any] | None, policy: Policy) -> tuple[Critique, str | None]:
+def run(llm: LLM, invoice: Invoice, findings: list[Finding], concerns: list[str], risk: RiskMemo | None,
+        draft: Decision, vendor: dict[str, Any] | None, policy: Policy) -> tuple[Critique, str | None]:
     """Review the draft. Returns (critique, degraded_reason)."""
-    user = (brief(invoice, findings, risk) + f"\n\nVendor master record:\n{json.dumps(vendor) if vendor else 'none'}"
+    user = (brief(invoice, findings, risk, concerns)
+            + f"\n\nVendor master record:\n{json.dumps(vendor) if vendor else 'none'}"
             + f"\n\nDraft decision:\n{draft.model_dump_json()}")
     system = SYSTEM.format(threshold=f"${policy.approval_threshold:,.0f}")
     try:

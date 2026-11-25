@@ -16,7 +16,8 @@ unknown items, wrong currency, a revision that conflicts with one already proces
 Write the reasoning for the audit log in two or three sentences that cite finding IDs.
 For return_to_vendor, draft a short, polite email to the vendor's billing team naming each problem with the \
 numbers involved and exactly what a corrected invoice needs. For void, vendor_reply is null. Never reveal \
-internal fraud suspicions or stock levels in a vendor email: say what to correct, not what we hold."""
+internal fraud suspicions or stock levels in a vendor email: say what to correct, not what we hold. When a finding \
+asks "did you mean" a catalog item, ask the vendor that question; never assume the answer."""
 
 
 def run(llm: LLM, invoice: Invoice | None, findings: list[Finding], decision: Decision | None,

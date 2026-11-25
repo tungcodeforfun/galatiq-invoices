@@ -197,8 +197,9 @@ def approver_node(state: State, config: RunnableConfig) -> State:
     previous = drafts[-1] if drafts else None
     critique = critiques[-1] if critiques else None
     box = _toolbox(state, deps)
-    decision, reason = approver.run(deps.llm, state["invoice"], state["findings"], state.get("risk"),  # type: ignore[arg-type]
-                                    box, deps.policy, previous, critique)
+    concerns = notes.concerns if (notes := state.get("validator_notes")) else []
+    decision, reason = approver.run(deps.llm, state["invoice"], state["findings"], concerns,  # type: ignore[arg-type]
+                                    state.get("risk"), box, deps.policy, previous, critique)
     deps.log.emit("stage", agent="approver", draft=len(drafts) + 1, decision=decision.model_dump(), degraded=reason)
     return {"drafts": drafts + [decision], "tool_calls": _logged_calls(state, box, deps),
             "degraded": _degraded(state, "approver", reason)}
@@ -217,8 +218,9 @@ def critic_node(state: State, config: RunnableConfig) -> State:
     """Critic: objections to the latest draft, with the vendor master record the VP could look up."""
     deps = _deps(config)
     records = [c["result"] for c in state.get("tool_calls", []) if c["tool"] == "get_vendor"]
-    critique, reason = critic.run(deps.llm, state["invoice"], state["findings"], state.get("risk"),  # type: ignore[arg-type]
-                                  state["drafts"][-1], records[-1] if records else None, deps.policy)
+    concerns = notes.concerns if (notes := state.get("validator_notes")) else []
+    critique, reason = critic.run(deps.llm, state["invoice"], state["findings"], concerns,  # type: ignore[arg-type]
+                                  state.get("risk"), state["drafts"][-1], records[-1] if records else None, deps.policy)
     deps.log.emit("stage", agent="critic", round=len(state.get("critiques", [])) + 1,
                   critique=critique.model_dump(), degraded=reason)
     return {"critiques": state.get("critiques", []) + [critique], "degraded": _degraded(state, "critic", reason)}
