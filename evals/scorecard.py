@@ -72,14 +72,15 @@ def run_scorecard(console: Console) -> int:
     with tempfile.TemporaryDirectory() as tmp, console.status("Running the answer key"):
         scores = score_all(Path(tmp) / "eval.db")
     table = Table(header_style="bold")
-    for col in ("File", "Expected", "Got", "Findings", "Result"):
+    for col in ("File", "Expected", "Got", "Required findings", "Result"):
         table.add_column(col)
     for s in scores:
         e = s.expected
         want = e["outcome"] + (f" · {e['disposition']}" if e.get("disposition") else "")
         got = s.outcome + (f" · {s.disposition}" if s.disposition else "") + (" (degraded)" if s.degraded else "")
-        codes = ", ".join(s.codes) + (f"  [red]missing {', '.join(s.missing)}[/]" if s.missing else "")
-        table.add_row(Path(s.file).name, want, got, codes, "[green]pass[/]" if s.passed else "[red]FAIL[/]")
+        required = ", ".join(c if c in s.codes else f"[red]{c} missing[/]" for c in e.get("findings", []))
+        table.add_row(Path(s.file).name, want.replace("_to_vendor", ""), got.replace("_to_vendor", ""), required,
+                      "[green]pass[/]" if s.passed else "[red]FAIL[/]")
     console.print(table)
     passed = sum(s.passed for s in scores)
     paid = [s for s in scores if s.outcome == "PAID"]
