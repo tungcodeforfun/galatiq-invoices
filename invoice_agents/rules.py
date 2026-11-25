@@ -124,8 +124,9 @@ def invoice_findings(invoice: Invoice, source: str, policy: Policy, read_by_rule
         found.append(policy.finding("DATA_INTEGRITY", "; ".join(problems), "rules", subject="integrity"))
     unread = _unread_values(invoice, read_by_rules)
     if unread:
-        found.append(policy.finding("UNREAD_VALUE", f"Could not read {', '.join(unread)} from the document. Enter "
-                                    "the invoice by hand.", "rules", subject="unread"))
+        listed = ", ".join(unread[:-1]) + " and " + unread[-1] if len(unread) > 1 else unread[0]
+        found.append(policy.finding("UNREAD_VALUE", f"Could not read {listed} from the document. Enter the invoice "
+                                    "by hand.", "rules", subject="unread"))
 
     currency = (invoice.currency or "USD").upper()
     if currency not in policy.currencies:
