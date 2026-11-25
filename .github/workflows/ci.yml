@@ -21,3 +21,5 @@ jobs:
         run: uv run pytest -q
       - name: Scorecard
         run: uv run python main.py eval
+      - name: Held-out scorecard
+        run: uv run python main.py eval --set heldout
