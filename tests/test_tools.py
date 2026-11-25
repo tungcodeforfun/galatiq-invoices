@@ -30,6 +30,16 @@ def test_unknown_item_is_a_finding(store, policy):
     assert codes(box) == ["UNKNOWN_ITEM"]
 
 
+def test_a_near_miss_names_every_tied_catalog_item_as_a_question_and_never_matches(store, policy):
+    box = ToolBox(make_invoice([("WidgetC", 2, 250), ("SuperGizmo", 1, 400)]), store, policy)
+    first, second = box.resolve_item(1), box.resolve_item(2)
+    assert (first["item"], first["suggestions"]) == (None, ["WidgetA", "WidgetB"])
+    assert second["suggestions"] == []
+    messages = [f.message for f in box.finding_list()]
+    assert messages[0].endswith("did you mean WidgetA or WidgetB?")
+    assert "did you mean" not in messages[1]
+
+
 def test_stock_is_summed_across_repeated_lines(store, policy):
     invoice = make_invoice([("WidgetA", 10, 250), ("WidgetB", 1, 500), ("WidgetA", 4, 240), ("WidgetA", 2, 250)])
     box = ToolBox(invoice, store, policy)
@@ -114,6 +124,14 @@ def test_changed_invoice_under_a_decided_number_is_a_revision_conflict(store, po
     box = ToolBox(revised, store, policy)
     assert box.check_duplicate() == {"result": "revision_conflict", "prior_total": 1890.0, "prior_status": "PAID",
                                      "delta": 4050.0}
+
+
+def test_a_revision_is_compared_with_the_oldest_invoice_under_its_number(store, policy):
+    record(store, make_invoice([("WidgetA", 3, 250)], number="INV-1004"))
+    record(store, make_invoice([("WidgetA", 4, 250)], number="INV-1004"), status="REJECTED")
+    box = ToolBox(make_invoice([("WidgetA", 5, 250)], number="INV-1004"), store, policy)
+    assert box.check_duplicate() == {"result": "revision_conflict", "prior_total": 750.0, "prior_status": "PAID",
+                                     "delta": 500.0}
 
 
 def test_failed_payment_does_not_count_as_a_prior_decision(store, policy):
