@@ -1,0 +1,12 @@
+MEGAWIDGETS CORP.
+Invoice No. INV-3006
+Invoice date: February 11, 2026
+Due: March 13, 2026
+Terms: Net 30
+
+  Widget-A               x5    $250.00 each    $1,250.00
+  widget b               x2    $500.00 each    $1,000.00
+  Gadget X (expedited)   x1    $750.00 each      $750.00
+
+Shipping: $60.00
+Total due: $3,060.00

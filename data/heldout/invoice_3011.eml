@@ -1,0 +1,24 @@
+From: billing@widgetsinc.example
+To: accounts@acmecorp.example
+Subject: Invoice INV-3011
+
+Hi Acme AP team,
+
+Please find our invoice below for this month's order.
+
+  Invoice: INV-3011
+  Vendor: Widgets Inc.
+  Date: 2026-02-18
+  Due: 2026-03-20
+  Terms: Net 30
+
+  - WidgetA     x8     $250.00 each
+  - WidgetB     x3     $500.00 each
+
+  Subtotal: $3,500.00
+  Tax: $280.00
+  Total: $3,780.00
+
+Best regards,
+Accounts Receivable
+Widgets Inc.

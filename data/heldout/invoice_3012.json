@@ -1,0 +1,29 @@
+{
+  "invoiceNumber": "INV-3002",
+  "revision": "Revision 2: corrected WidgetA quantity",
+  "supplier": {
+    "name": "Gadgets Co.",
+    "email": "billing@gadgetsco.example"
+  },
+  "issueDate": "2026-02-19",
+  "dueDate": "2026-03-21",
+  "terms": "Net 30",
+  "currency": "USD",
+  "items": [
+    {
+      "product": "GadgetX",
+      "qty": 2,
+      "price": 750.0,
+      "lineTotal": 1500.0
+    },
+    {
+      "product": "WidgetA",
+      "qty": 5,
+      "price": 250.0,
+      "lineTotal": 1250.0
+    }
+  ],
+  "subtotal": 2750.0,
+  "shipping": 45.0,
+  "total": 2795.0
+}

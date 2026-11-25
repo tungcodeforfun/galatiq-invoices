@@ -1,0 +1,22 @@
+order: Written after the system was built and never used to tune it. Files run in this order against an empty ledger.
+invoices:
+  data/heldout/invoice_3001.txt:  {outcome: PAID, amount: 3780.00}
+  data/heldout/invoice_3002.json: {outcome: PAID, amount: 2545.00}
+  data/heldout/invoice_3003.csv:  {outcome: PAID, amount: 3250.00}
+  data/heldout/invoice_3004.xml:  {outcome: PAID, amount: 1620.00}
+  data/heldout/invoice_3005.pdf:  {outcome: PAID, amount: 11340.00}
+  data/heldout/invoice_3006.txt:  {outcome: PAID, amount: 3060.00}
+  data/heldout/invoice_3007.json: {outcome: REJECTED, disposition: return_to_vendor, findings: [STOCK_EXCEEDED]}
+  data/heldout/invoice_3008.txt:  {outcome: REJECTED, disposition: return_to_vendor, findings: [TOTAL_MISMATCH]}
+  data/heldout/invoice_3009.csv:  {outcome: REJECTED, disposition: return_to_vendor, findings: [TOTAL_MISMATCH]}
+  data/heldout/invoice_3010.xml:  {outcome: REJECTED, disposition: return_to_vendor, findings: [CURRENCY]}
+  data/heldout/invoice_3011.eml:  {outcome: REJECTED, disposition: void, findings: [DUPLICATE]}
+  data/heldout/invoice_3012.json: {outcome: REJECTED, disposition: return_to_vendor, findings: [REVISION_CONFLICT]}
+  data/heldout/invoice_3013.txt:  {outcome: REJECTED, disposition: void, findings: [DATA_INTEGRITY]}
+  data/heldout/invoice_3014.md:   {outcome: PAID, amount: 2280.00}
+  data/heldout/invoice_3015.json: {outcome: REJECTED, disposition: void, findings: [DATA_INTEGRITY]}
+  data/heldout/invoice_3016.txt:  {outcome: REJECTED, disposition: void, findings: [FRAUD_SIGNALS]}
+  data/heldout/invoice_3017.csv:  {outcome: REJECTED, disposition: void, findings: [FRAUD_SIGNALS]}
+  data/heldout/invoice_3018.pdf:  {outcome: REJECTED, disposition: void, findings: [FRAUD_SIGNALS]}
+  data/heldout/invoice_3019.txt:  {outcome: PAID, amount: 4320.00}
+  data/heldout/invoice_3020.json: {outcome: PAID, amount: 3550.00}

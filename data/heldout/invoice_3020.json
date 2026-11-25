@@ -1,0 +1,18 @@
+{
+  "invoice_no": "INV-3020",
+  "seller": "Acme Industrial Supplies",
+  "invoice_date": "2026-03-03",
+  "due_date": "2026-04-02",
+  "payment_terms": "Net 30",
+  "currency": "USD",
+  "lines": [
+    {
+      "item": "WidgetB",
+      "qty": 7,
+      "unit_price": 500.0,
+      "amount": 3500.0
+    }
+  ],
+  "shipping": 50.0,
+  "total_amount": 3550.0
+}

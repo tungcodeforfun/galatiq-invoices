@@ -1,0 +1,14 @@
+Atlas Industrial Supply
+INVOICE
+
+Invoice #: INV-3008
+Date: 2026-02-13
+Due Date: 2026-03-15
+Terms: Net 30
+
+GadgetX      qty 3   @ $750.00   $2,250.00
+WidgetA      qty 2   @ $250.00     $500.00
+
+Subtotal:  $2,750.00
+Tax:         $220.00
+Total:     $3,170.00

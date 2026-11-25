@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice>
+  <InvoiceID>INV-3004</InvoiceID>
+  <IssueDate>2026-02-09</IssueDate>
+  <DueDate>2026-03-11</DueDate>
+  <PaymentTerms>Net 30</PaymentTerms>
+  <Currency>USD</Currency>
+  <Seller>
+    <Name>Reliable Components Inc.</Name>
+  </Seller>
+  <Lines>
+    <Line>
+      <Description>WidgetA</Description>
+      <Quantity>6</Quantity>
+      <UnitPrice>250.00</UnitPrice>
+      <Amount>1500.00</Amount>
+    </Line>
+  </Lines>
+  <Subtotal>1500.00</Subtotal>
+  <Tax>120.00</Tax>
+  <Total>1620.00</Total>
+</Invoice>

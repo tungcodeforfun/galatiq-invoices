@@ -1,0 +1,26 @@
+{
+  "invoice_number": "INV-3007",
+  "vendor": "Consolidated Materials Group",
+  "date": "2026-02-12",
+  "due_date": "2026-03-14",
+  "payment_terms": "Net 30",
+  "currency": "USD",
+  "line_items": [
+    {
+      "description": "WidgetB",
+      "quantity": 6,
+      "unit_price": 500.0,
+      "amount": 3000.0,
+      "note": "first delivery"
+    },
+    {
+      "description": "WidgetB",
+      "quantity": 5,
+      "unit_price": 500.0,
+      "amount": 2500.0,
+      "note": "second delivery"
+    }
+  ],
+  "subtotal": 5500.0,
+  "total": 5500.0
+}

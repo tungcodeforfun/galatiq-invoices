@@ -1,0 +1,13 @@
+Consolidated Materials Group
+Invoice Number: INV-3019
+Invoice Date: 2026-03-02
+Due Date: 2026-04-01
+Payment Terms: Net 30
+
+Description   Qty   Unit Price   Line Total
+GadgetX         4      $750.00    $3,000.00
+WidgetB         2      $500.00    $1,000.00
+
+Subtotal: $4,000.00
+Tax (8%): $320.00
+Total: $4,320.00

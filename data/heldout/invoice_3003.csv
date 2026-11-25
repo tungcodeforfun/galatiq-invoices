@@ -1,0 +1,6 @@
+Invoice Number,Vendor,Date,Due Date,Item,Qty,Unit Price,Line Total
+INV-3003,Precision Parts Ltd.,2026-02-06,2026-03-08,WidgetB,5,500.00,2500.00
+INV-3003,Precision Parts Ltd.,2026-02-06,2026-03-08,GadgetX,1,750.00,750.00
+,,,,,,Subtotal:,3250.00
+,,,,,,Tax (0%):,0.00
+,,,,,,Total:,3250.00

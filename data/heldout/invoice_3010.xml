@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice>
+  <InvoiceNumber>INV-3010</InvoiceNumber>
+  <Vendor>Global Supply Chain Partners</Vendor>
+  <InvoiceDate>2026-02-17</InvoiceDate>
+  <DueDate>2026-03-19</DueDate>
+  <PaymentTerms>Net 30</PaymentTerms>
+  <Currency>EUR</Currency>
+  <LineItems>
+    <Item>
+      <Name>WidgetB</Name>
+      <Qty>4</Qty>
+      <Price>500.00</Price>
+      <LineTotal>2000.00</LineTotal>
+    </Item>
+  </LineItems>
+  <Subtotal>2000.00</Subtotal>
+  <Total>2000.00</Total>
+</Invoice>
