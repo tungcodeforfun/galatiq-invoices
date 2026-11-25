@@ -18,7 +18,7 @@ from invoice_agents.schema import (
     Severity,
     Signal,
 )
-from invoice_agents.structured import read_structured, to_date, to_number
+from invoice_agents.structured import free_text, read_structured, to_date, to_number
 
 MONEY = r"\$?\s*(-?[\d,]+(?:\.\d+)?)"
 VALUE = r"[ \t]*[:=][ \t]*(\S.*?)[ \t]*$"
@@ -41,6 +41,16 @@ LINE = re.compile(
     r"\$?([\d,]+(?:\.\d+)?)(?:\s*ea(?:ch)?)?(?:\s+\$?([\d,]+\.\d{2}))?\s*$",
     re.IGNORECASE,
 )
+LAYOUT_WORDS = {"invoice", "items", "item", "line", "description", "desc", "product", "qty", "quantity", "units",
+                "unit", "price", "rate", "cost", "each", "amount", "total"}
+
+
+def _item(line: str) -> LineItem | None:
+    m = LINE.match(line)
+    if not m or re.match(r"\s*(sub)?total|tax|date|due", m.group(1), re.IGNORECASE):
+        return None
+    return LineItem(description=m.group(1).strip(), quantity=to_number(m.group(2)), unit_price=to_number(m.group(3)),
+                    amount=to_number(m.group(4)), note=None)
 
 
 def extract(source: str) -> Invoice | None:
@@ -53,12 +63,7 @@ def extract(source: str) -> Invoice | None:
     for name, pattern in FIELDS.items():
         match = re.search(pattern, text, re.IGNORECASE | re.MULTILINE)
         found[name] = match.group(1).strip() if match else None
-    items = []
-    for line in text.splitlines():
-        m = LINE.match(line)
-        if m and not re.match(r"\s*(sub)?total|tax|date|due", m.group(1), re.IGNORECASE):
-            items.append(LineItem(description=m.group(1).strip(), quantity=to_number(m.group(2)),
-                                  unit_price=to_number(m.group(3)), amount=to_number(m.group(4)), note=None))
+    items = [item for line in text.splitlines() if (item := _item(line))]
     total = to_number(found["total"])
     if not items or total is None:
         return None
@@ -70,6 +75,31 @@ def extract(source: str) -> Invoice | None:
         subtotal=to_number(found["subtotal"]), tax=to_number(found["tax"]), shipping=to_number(found["shipping"]),
         total=total, payment_terms=found["payment_terms"], notes=found["notes"], revision=None, corrections=[],
     )
+
+
+def _layout(line: str) -> bool:
+    """Blank, a rule of dashes, a heading such as INVOICE, or a row of column names."""
+    words = set(re.findall(r"[a-z]+", line.lower()))
+    return not re.search(r"[A-Za-z0-9]", line) or (not re.search(r"\d", line) and words <= LAYOUT_WORDS)
+
+
+def _read_line(line: str) -> bool:
+    """Layout, a line item, or one labelled field (not notes) that fills the whole line."""
+    if _layout(line) or _item(line):
+        return True
+    for name, pattern in FIELDS.items():
+        m = re.match(rf"\s*(?:{pattern})", line, re.IGNORECASE | re.MULTILINE)
+        if m and name != "notes" and not line[m.end():].strip():
+            return True
+    return False
+
+
+def unread_text(source: str) -> list[str]:
+    """Free text no rule reads: notes, prose fields of JSON, XML or CSV, and any other line of a text document."""
+    found = free_text(source)
+    if found is not None:
+        return found
+    return [line.strip() for line in ocr_digits(source).splitlines() if not _read_line(line)]
 
 
 SIGNAL_WORDS: list[tuple[Literal["payment_redirect", "pressure_language"], str]] = [

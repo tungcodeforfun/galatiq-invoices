@@ -39,6 +39,9 @@ LINE_NAMES = {
     "note": {"note", "notes", "comment", "remark"},
 }
 OTHER_PARTIES = {"buyer", "billto", "customer", "shipto", "client", "soldto", "to"}
+CONTACT_NAMES = {"address", "street", "city", "state", "zip", "zipcode", "postcode", "postalcode", "country", "email",
+                 "phone", "fax", "website", "taxid", "vatid", "vatnumber", "contact"}
+PROSE_NAMES = FIELD_NAMES["notes"] | LINE_NAMES["note"]
 
 
 def to_number(raw: Any) -> float | None:
@@ -193,3 +196,63 @@ def read_structured(source: str) -> Invoice | None:
         shipping=to_number(text.get("shipping")), total=total, payment_terms=text.get("payment_terms"),
         notes=text.get("notes"), revision=None, corrections=[],
     )
+
+
+def _prose(key: str, value: Any, in_line: bool, party: bool) -> bool:
+    """Notes are free text; so is any value of two or more words under a field the reader does not use."""
+    text = str(value).strip() if value is not None else ""
+    if not text or key in PROSE_NAMES:
+        return bool(text)
+    read = _field(FIELD_NAMES, key) or (in_line and _field(LINE_NAMES, key)) or (party and key in CONTACT_NAMES)
+    return not read and len(text.split()) > 1
+
+
+def _tree_text(node: Any, key: str = "", in_line: bool = False, party: bool = False) -> list[str]:
+    if isinstance(node, list):
+        return [t for child in node for t in _tree_text(child, key, in_line, party)]
+    if isinstance(node, dict):
+        line = _line(node) is not None
+        return [t for k, v in node.items() for t in _tree_text(
+            v, _key(k), line, party or _key(k) in OTHER_PARTIES or _field(FIELD_NAMES, _key(k)) == "vendor")]
+    return [str(node).strip()] if _prose(key, node, in_line, party) else []
+
+
+def _xml_text(source: str) -> list[str]:
+    """Text the tree drops: comments, processing instructions, text beside child elements, and prose attributes."""
+    root = ET.fromstring(source.strip(), ET.XMLParser(target=ET.TreeBuilder(insert_comments=True, insert_pis=True)))
+    found: list[str] = []
+    for element in root.iter():
+        own = (element.text or "").strip() if len(element) or not isinstance(element.tag, str) else ""
+        found += [t for t in (own, (element.tail or "").strip()) if t]
+        found += [v for v in element.attrib.values() if len(v.split()) > 1]
+    return found
+
+
+def _csv_text(source: str) -> list[str]:
+    """Rows other than line items that carry more than a label the reader uses and its one value."""
+    rows = [r for r in csv.reader(io.StringIO(source)) if any(c.strip() for c in r)]
+    header = rows[0] if len(rows[0]) > 2 else []
+    found = []
+    for row in rows[1:] if header else rows:
+        cells = [c.strip() for c in row if c.strip()]
+        label = _key(cells[0])
+        if (header and _line(dict(zip(header, row, strict=True)))) or label == "field":
+            continue
+        known = _field(FIELD_NAMES, label) or _field(LINE_NAMES, label)
+        if len(cells) > 2 or (label in PROSE_NAMES and len(cells) > 1) or (not known and len(cells[0].split()) > 1):
+            found.append(" ".join(cells))
+    return found
+
+
+def free_text(source: str) -> list[str] | None:
+    """Free text in a JSON, XML or CSV document that no rule reads; None if the document is none of them."""
+    tree = _parse(source)
+    if tree is None:
+        return None
+    found = _tree_text(tree)
+    text = source.strip()
+    if text.startswith("<"):
+        found += _xml_text(text)
+    elif not text.startswith(("{", "[")):
+        found += _csv_text(text)
+    return list(dict.fromkeys(found))
