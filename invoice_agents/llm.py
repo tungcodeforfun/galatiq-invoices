@@ -87,6 +87,12 @@ class LLM:
         self.model = MODEL
         self._client: Any = None
 
+    def missing_key(self) -> str | None:
+        """The one-line reason this client cannot run (live mode with no XAI_API_KEY), or None when it can."""
+        if self.mode == "live" and not os.environ.get("XAI_API_KEY"):
+            return "LLM_MODE=live needs XAI_API_KEY: set it, or unset LLM_MODE to replay the recordings."
+        return None
+
     @property
     def client(self) -> Any:
         """OpenAI SDK client pointed at xAI, created on first live call."""

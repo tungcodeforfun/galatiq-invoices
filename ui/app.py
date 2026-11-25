@@ -259,7 +259,10 @@ def inbox() -> None:
                 path.write_bytes(upload.getvalue())
     go = button.button("Process invoice", type="primary", disabled=path is None, width="stretch")
     if go and path:
-        st.session_state["last_run"] = process(path)
+        if problem := LLM().missing_key():
+            st.error(problem)
+        else:
+            st.session_state["last_run"] = process(path)
     run_id = st.session_state.get("last_run")
     state = load_state(RUNS_DIR / run_id) if run_id else None
     if state:

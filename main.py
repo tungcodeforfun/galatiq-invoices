@@ -5,7 +5,6 @@ from __future__ import annotations
 import argparse
 import contextlib
 import json
-import os
 import subprocess
 import sys
 from pathlib import Path
@@ -155,8 +154,8 @@ def main(argv: list[str] | None = None) -> int:
         Store(args.db).reset()
         console.print(f"Reset {args.db}: inventory reseeded, ledger and payments empty")
         return 0
-    if LLM().mode == "live" and not os.environ.get("XAI_API_KEY"):
-        print("LLM_MODE=live needs XAI_API_KEY: set it, or unset LLM_MODE to replay the recordings.", file=sys.stderr)
+    if problem := LLM().missing_key():
+        print(problem, file=sys.stderr)
         return 2
     if args.command == "eval":
         from evals.scorecard import run_scorecard
