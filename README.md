@@ -36,6 +36,8 @@ Add `--json` to print the outcome as JSON. Every run also writes `runs/<run_id>/
 
 I wrote the 20 files in `data/heldout/` and their key in `evals/heldout.yaml` after the system was built, and committed both before running anything on them; the key has not changed since, and no prompt changed after their first run. They come in every supported format plus a Markdown table and cover clean bills under and over $10K, item names written differently (`Widget-A`, `widget b`, `Gadget X (expedited)`), split lines that sum past stock, totals off in each direction, a euro invoice, a paid bill resent under a new number, a revision, a missing vendor, a negative quantity and three injection styles (notes, a line description, a fake system message). Item names that differ only in case, spacing, punctuation or a note in parentheses resolve; a real misspelling does not, by design (see Decisions). Per-file runs: [`docs/DEMO.md`](docs/DEMO.md#held-out-run-logs).
 
+It is an easy set: every vendor is in the vendor master, every price is the catalog price, and its injections use wording the keyword screen already knows. What 20/20 shows is that new files of familiar kinds go through, not that the system handles unfamiliar vendors or phrasing.
+
 ## How it maps to the brief
 
 | Criterion | What I built | Where to look |
