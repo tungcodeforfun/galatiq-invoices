@@ -41,10 +41,10 @@ LangGraph runs it: the wiring is in `invoice_agents/graph.py`, the nodes and rou
 | Intake | `agents/intake.py` | Any file to one `Invoice` (structured output). Missing stays null; misprints are corrected and logged with the text as written. | none |
 | Validator | `agents/validator.py` | Plans and runs the checks. | `resolve_item`, `check_stock`, `check_price`, `check_totals`, `check_duplicate`, `get_vendor` |
 | Risk analyst | `agents/risk.py` | Reads the original document for pressure, payment redirection, injected instructions, vendor changes. Every signal must quote the document verbatim; code drops any quote it can't find. | `get_vendor` |
-| VP approver | `agents/approver.py` | Approves or rejects with reasons that cite finding IDs. Over $10K it must address every finding and the risk memo. | `get_vendor` |
+| VP approver | `agents/approver.py` | Approves or rejects with reasons that cite finding IDs, reading the findings, the validator's notes and the risk memo. Over $10K it must address every finding and the risk memo. | `get_vendor` |
 | Critic | `agents/critic.py` | Attacks the draft: ignored findings, unsupported reasons, approvals looser than policy. Code adds the objections that are matters of rule. | none |
 | Payment | `agents/payment.py` | The only holder of `mock_payment`. Runs after the gate. Idempotency key, retries, ledger write. No model. | `mock_payment` |
-| Resolution | `agents/resolution.py` | For each rejection: audit reasoning, disposition, and a drafted email to the vendor when they can fix it. | none |
+| Resolution | `agents/resolution.py` | For each rejection: audit reasoning, disposition, and a drafted email to the vendor when they can fix it. A layout no model could read is held for manual entry with no email. | none |
 
 Code-only guards: the extraction check (`rules.extraction_errors`), the coverage check (`ToolBox.missing_checks`), the policy gate (`policy.gate`).
 
@@ -61,10 +61,11 @@ Code-only guards: the extraction check (`rules.extraction_errors`), the coverage
 | `DATA_INTEGRITY` | rules | missing vendor or number, quantity ≤ 0, total ≤ 0 | reject, void |
 | `DUPLICATE` | `check_duplicate` | same vendor, lines and total as an invoice already paid or rejected, under any number | reject, void |
 | `FRAUD_SIGNALS` | `check_stock`, rules, risk analyst | zero-stock item; instruction-like text aimed at the reviewer; a high-risk memo with a verified quote of pressure, redirection, injection or a vendor change | reject, void |
-| `UNREADABLE` | extraction check | values still don't trace after two retries | reject, return |
+| `NEEDS_MODEL` | intake fallback | no key, no recording, and a layout the rules can't read | reject, manual entry |
+| `UNREADABLE` | extraction check | values still don't trace after one retry | reject, return |
 | `REVISION_CONFLICT` | `check_duplicate` | same number and vendor as a decided invoice, different content; shows the delta | reject, return |
 | `STOCK_EXCEEDED` | `check_stock` | quantity summed across all lines for an item exceeds stock | reject, return |
-| `UNKNOWN_ITEM` | `resolve_item` | not in the catalog after normalizing spacing and dropping parenthetical notes; never fuzzy-matched | reject, return |
+| `UNKNOWN_ITEM` | `resolve_item` | not in the catalog after normalizing spacing and dropping parenthetical notes; never fuzzy-matched, but the nearest catalog items are named as a question for the vendor | reject, return |
 | `TOTAL_MISMATCH` | `check_totals` | a line, the subtotal, or lines + tax + shipping differ from what's stated by more than 1¢ | reject, return |
 | `CURRENCY` | rules | not USD | reject, return |
 | `PRICE_VARIANCE` | `check_price` | unit price more than 5% off the catalog price | warn |
@@ -98,7 +99,7 @@ Disposition is decided by policy whenever a finding decides it (`void` beats `re
 |---|---|---|
 | Live | `XAI_API_KEY` is set | Calls `grok-4.7` at `https://api.x.ai/v1` and saves each response under `evals/cassettes/<sha256>.json` |
 | Replay | no key | Looks up each request by the SHA-256 of (model, messages, tools, response format) and returns the recorded response. Tools still run for real |
-| Degraded | no key and no recording for a request | That agent falls back to rules (`fallback.py`) and the run is labeled degraded. The gate then pays only spotless invoices under the line |
+| Degraded | no key and no recording for a request | That agent falls back to rules (`fallback.py`, `structured.py`) and the run is labeled degraded. JSON, CSV and XML are read by field name and labelled text by pattern; any other layout is held for manual entry. The gate then pays only spotless invoices under the line |
 
 Recordings hold the request digest and the response body only: no headers, no credentials.
 

@@ -16,7 +16,7 @@ jobs:
       - name: Ruff
         run: uv run ruff check .
       - name: Mypy
-        run: uv run mypy invoice_agents main.py evals ui
+        run: uv run mypy invoice_agents main.py evals ui scripts
       - name: Pytest
         run: uv run pytest -q
       - name: Scorecard
