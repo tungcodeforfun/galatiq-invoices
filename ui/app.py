@@ -15,8 +15,8 @@ sys.path.insert(0, str(ROOT))
 from invoice_agents.db import DEFAULT_DB, Store
 from invoice_agents.graph import stream
 from invoice_agents.llm import LLM
-from invoice_agents.observability import RUNS_DIR, load_state
 from invoice_agents.nodes import Deps
+from invoice_agents.observability import RUNS_DIR, load_state
 from main import SUFFIXES, step_line
 
 STAGES = [("intake", "Intake"), ("validator", "Validator"), ("risk", "Risk"), ("approver", "VP"),
