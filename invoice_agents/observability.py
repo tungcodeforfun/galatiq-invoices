@@ -38,7 +38,7 @@ class RunLog:
             f.write(json.dumps(event, default=str) + "\n")
 
     def llm_call(self, agent: str, tier: str, key: str, latency_ms: int, usage: dict[str, Any]) -> None:
-        """Log one model call: which agent, live or replayed, tokens, latency and cost."""
+        """Log one model call: agent, live or replayed, tokens, latency, and cost as xAI billed it when recorded."""
         details = usage.get("completion_tokens_details") or {}
         self.emit(
             "llm_call",
@@ -49,18 +49,19 @@ class RunLog:
             prompt_tokens=usage.get("prompt_tokens"),
             completion_tokens=usage.get("completion_tokens"),
             reasoning_tokens=details.get("reasoning_tokens"),
-            cost_usd=(usage.get("cost_in_usd_ticks") or 0) / TICKS_PER_USD if tier == "live" else 0.0,
+            cost_usd=(usage.get("cost_in_usd_ticks") or 0) / TICKS_PER_USD,
         )
 
     def totals(self) -> dict[str, Any]:
-        """Model calls, tiers used, tokens and cost for this run."""
+        """Seconds, model calls, tool calls, tokens and Grok cost for this run; replayed cost is the recorded cost."""
         calls = [e for e in self.events if e["kind"] == "llm_call"]
         return {
+            "seconds": round((time.perf_counter() - self._started), 1),
             "llm_calls": len(calls),
+            "tool_calls": sum(e["kind"] == "tool_call" for e in self.events),
             "tiers": sorted({c["tier"] for c in calls}),
             "tokens": sum((c["prompt_tokens"] or 0) + (c["completion_tokens"] or 0) for c in calls),
             "cost_usd": round(sum(c["cost_usd"] for c in calls), 4),
-            "seconds": round((time.perf_counter() - self._started), 1),
         }
 
 

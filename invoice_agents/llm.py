@@ -97,18 +97,18 @@ class LLM:
             messages.append({"role": "assistant", "content": message.get("content") or "", "tool_calls": calls})
             for c in calls:
                 messages.append({"role": "tool", "tool_call_id": c["id"],
-                                 "content": json.dumps(self._run_tool(tools, c["function"]))})
+                                 "content": json.dumps(self._run_tool(agent, tools, c["function"]))})
         raise ModelUnavailable(f"no valid answer in {max_turns} turns")
 
     @staticmethod
-    def _run_tool(tools: Tools | None, function: dict[str, Any]) -> dict[str, Any]:
+    def _run_tool(agent: str, tools: Tools | None, function: dict[str, Any]) -> dict[str, Any]:
         if tools is None:
             return {"error": "no tools available"}
         try:
             args = json.loads(function.get("arguments") or "{}")
         except json.JSONDecodeError:
             return {"error": "arguments were not valid JSON"}
-        return tools.call(function["name"], args)
+        return tools.call(function["name"], args, by=agent)
 
     def _complete(self, agent: str, messages: list[dict[str, Any]], tools: list[dict[str, Any]],
                   response_format: dict[str, Any]) -> dict[str, Any]:

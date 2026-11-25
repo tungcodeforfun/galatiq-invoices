@@ -25,7 +25,7 @@ class Score:
     amount: float | None
     codes: list[str]
     total: float | None
-    seconds: float
+    usage: dict[str, Any]
     degraded: bool
 
     @property
@@ -62,32 +62,35 @@ def score_all(db: Path) -> list[Score]:
         out, inv = state["outcome"], state.get("invoice")
         scores.append(Score(file=file, expected=expected, outcome=out.status, disposition=out.disposition,
                             amount=out.amount, codes=[f.code for f in state.get("findings", [])],
-                            total=inv.total if inv else None, seconds=deps.log.totals()["seconds"],
+                            total=inv.total if inv else None, usage=deps.log.totals(),
                             degraded=bool(state.get("degraded"))))
     return scores
 
 
 def run_scorecard(console: Console) -> int:
     """Print the scorecard; exit code 1 if any invoice misses its expectation."""
+    from main import cost_label, usage_summary
+
     with tempfile.TemporaryDirectory() as tmp, console.status("Running the answer key"):
         scores = score_all(Path(tmp) / "eval.db")
     table = Table(header_style="bold")
-    for col in ("File", "Expected", "Got", "Required findings", "Result"):
+    for col in ("File", "Expected", "Got", "Required findings", "Result", "Time", "Calls", "Cost"):
         table.add_column(col)
     for s in scores:
-        e = s.expected
+        e, u = s.expected, s.usage
         want = e["outcome"] + (f" · {e['disposition']}" if e.get("disposition") else "")
         got = s.outcome + (f" · {s.disposition}" if s.disposition else "") + (" (degraded)" if s.degraded else "")
         required = ", ".join(c if c in s.codes else f"[red]{c} missing[/]" for c in e.get("findings", []))
         table.add_row(Path(s.file).name, want.replace("_to_vendor", ""), got.replace("_to_vendor", ""), required,
-                      "[green]pass[/]" if s.passed else "[red]FAIL[/]")
+                      "[green]pass[/]" if s.passed else "[red]FAIL[/]", f"{u['seconds']}s",
+                      f"{u['llm_calls']}/{u['tool_calls']}", cost_label(u).replace(" recorded", ""))
     console.print(table)
     passed = sum(s.passed for s in scores)
     paid = [s for s in scores if s.outcome == "PAID"]
     stopped = sum(s.total or 0 for s in scores if s.outcome == "REJECTED" and (s.total or 0) > 0)
     console.print(
         f"[bold]{passed}/{len(scores)} match the answer key[/] · {len(paid)} paid "
-        f"({sum(s.amount or 0 for s in paid):,.2f}) · {len(scores) - len(paid)} rejected "
-        f"({stopped:,.2f} stopped) · {sum(s.seconds for s in scores) / len(scores):.1f}s per invoice"
+        f"({sum(s.amount or 0 for s in paid):,.2f}) · {len(scores) - len(paid)} rejected ({stopped:,.2f} stopped)"
     )
+    console.print("Calls = model calls / tool calls. " + usage_summary([s.usage for s in scores]))
     return 0 if passed == len(scores) else 1

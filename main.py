@@ -7,6 +7,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 from rich.console import Console
 from rich.panel import Panel
@@ -98,8 +99,26 @@ def show_result(s: State, deps: Deps, console: Console) -> None:
     if s.get("degraded"):
         console.print("[yellow]Degraded mode:[/] " + "; ".join(s["degraded"]))
     t = deps.log.totals()
-    console.print(f"[dim]{t['llm_calls']} model calls ({', '.join(t['tiers']) or 'none'}) · {t['tokens']} tokens · "
-                  f"${t['cost_usd']} · {t['seconds']}s · log {deps.log.dir}/events.jsonl · {deps.log.dir}/report.md[/]")
+    console.print(f"[dim]{t['seconds']}s · {t['llm_calls']} model calls ({', '.join(t['tiers']) or 'none'}) · "
+                  f"{t['tool_calls']} tool calls · {t['tokens']} tokens · {cost_label(t)} · "
+                  f"log {deps.log.dir}/events.jsonl · {deps.log.dir}/report.md[/]")
+
+
+def cost_label(t: dict[str, Any]) -> str:
+    """Grok cost for a run; replayed runs show what xAI billed when the responses were recorded."""
+    recorded = "replay" in t["tiers"] and "live" not in t["tiers"]
+    return f"${t['cost_usd']:.4f}" + (" recorded" if recorded else "")
+
+
+def usage_summary(totals: list[dict[str, Any]]) -> str:
+    """Totals and per-invoice averages of time, model calls, tool calls and Grok cost."""
+    n = max(len(totals), 1)
+    secs, cost = sum(t["seconds"] for t in totals), sum(t["cost_usd"] for t in totals)
+    llm, tools = sum(t["llm_calls"] for t in totals), sum(t["tool_calls"] for t in totals)
+    recorded = any(t["tiers"] for t in totals) and all("live" not in t["tiers"] for t in totals)
+    return (f"{secs:.1f}s ({secs / n:.1f}s per invoice) · {llm} model calls ({llm / n:.1f}) · "
+            f"{tools} tool calls ({tools / n:.1f}) · ${cost:.4f} Grok (${cost / n:.4f} per invoice"
+            + (", as recorded)" if recorded else ")"))
 
 
 def invoice_files(folder: Path) -> list[Path]:
@@ -110,20 +129,24 @@ def invoice_files(folder: Path) -> list[Path]:
 def run_batch(paths: list[Path], db: Path, console: Console) -> list[tuple[Path, State]]:
     """Process several invoices in order and print a summary table."""
     results = []
+    totals = []
     table = Table(header_style="bold")
-    for col in ("File", "Outcome", "Disposition", "Amount", "Findings"):
+    for col in ("File", "Outcome", "Disposition", "Amount", "Findings", "Time", "Calls", "Cost"):
         table.add_column(col)
     with console.status("") as status:
         for path in paths:
             status.update(f"Processing {path.name}")
-            state, _ = run_one(path, db, console, verbose=False)
-            out = state["outcome"]
+            state, deps = run_one(path, db, console, verbose=False)
+            out, t = state["outcome"], deps.log.totals()
             results.append((path, state))
+            totals.append(t)
             table.add_row(path.name, f"[{STYLE[out.status]}]{out.status}[/]", out.disposition or "",
-                          f"{out.amount:,.2f}" if out.amount else "", ", ".join(f.code for f in state["findings"]))
+                          f"{out.amount:,.2f}" if out.amount else "", ", ".join(f.code for f in state["findings"]),
+                          f"{t['seconds']}s", f"{t['llm_calls']}/{t['tool_calls']}", f"${t['cost_usd']:.4f}")
     console.print(table)
     paid = [s["outcome"].amount or 0 for _, s in results if s["outcome"].status == "PAID"]
     console.print(f"{len(paid)} of {len(results)} paid · {sum(paid):,.2f} paid")
+    console.print("Calls = model calls / tool calls. " + usage_summary(totals))
     return results
 
 
@@ -160,9 +183,9 @@ def main(argv: list[str] | None = None) -> int:
     path = Path(target)
     if not path.is_file():
         parser.error(f"no such file: {path}")
-    state, _ = run_one(path, args.db, console, verbose=not args.json)
+    state, deps = run_one(path, args.db, console, verbose=not args.json)
     if args.json:
-        print(json.dumps({"file": str(path), **state["outcome"].model_dump(),
+        print(json.dumps({"file": str(path), **state["outcome"].model_dump(), "usage": deps.log.totals(),
                           "findings": [f.model_dump(mode="json") for f in state["findings"]]}, indent=2))
     return 0
 
