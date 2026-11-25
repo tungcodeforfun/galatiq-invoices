@@ -44,7 +44,7 @@ LangGraph runs it: the wiring is in `invoice_agents/graph.py`, the nodes and rou
 | VP approver | `agents/approver.py` | Approves or rejects with reasons that cite finding IDs, reading the findings, the validator's notes and the risk memo. Over $10K it must address every finding and the risk memo. | `get_vendor` |
 | Critic | `agents/critic.py` | Attacks the draft: ignored findings, unsupported reasons, approvals looser than policy. Code adds the objections that are matters of rule. | none |
 | Payment | `agents/payment.py` | The only holder of `mock_payment`. Runs after the gate. Idempotency key, retries, ledger write. No model. | `mock_payment` |
-| Resolution | `agents/resolution.py` | For each rejection: audit reasoning, disposition, and a drafted email to the vendor when they can fix it. A layout no model could read is held for manual entry with no email. | none |
+| Resolution | `agents/resolution.py` | For each rejection: audit reasoning, disposition, and a drafted email to the vendor when they can fix it. An invoice held for manual entry gets no agent and no email. When policy overrides the agent's disposition, its reasoning is replaced with the rule that decided. | none |
 
 Code-only guards: the extraction check (`rules.extraction_errors`), the coverage check (`ToolBox.missing_checks`), the policy gate (`policy.gate`).
 
@@ -58,10 +58,11 @@ Code-only guards: the extraction check (`rules.extraction_errors`), the coverage
 
 | Code | Raised by | Trigger | Effect |
 |---|---|---|---|
-| `DATA_INTEGRITY` | rules | missing vendor or number, quantity ≤ 0, total ≤ 0 | reject, void |
+| `DATA_INTEGRITY` | rules | missing vendor or number (as read by a model), quantity ≤ 0, total ≤ 0 | reject, void |
 | `DUPLICATE` | `check_duplicate` | same vendor, lines and total as an invoice already paid or rejected, under any number | reject, void |
 | `FRAUD_SIGNALS` | `check_stock`, rules, risk analyst | zero-stock item; instruction-like text aimed at the reviewer; a high-risk memo with a verified quote of pressure, redirection, injection or a vendor change | reject, void |
-| `NEEDS_MODEL` | intake fallback | no key, no recording, and a layout the rules can't read | reject, manual entry |
+| `NEEDS_MODEL` | intake or risk fallback | no model answered, and either the rules can't read the layout or the document has text they don't read: notes, an email body, a letterhead, any line outside the invoice fields, a prose field in JSON, CSV or XML | reject, manual entry |
+| `UNREAD_VALUE` | rules | a quantity or total nobody could read as a number (written in words, say); when the rules read the file, a vendor or invoice number they couldn't find | reject, manual entry |
 | `UNREADABLE` | extraction check | values still don't trace after one retry | reject, return |
 | `REVISION_CONFLICT` | `check_duplicate` | same number and vendor as a decided invoice, different content; shows the delta | reject, return |
 | `STOCK_EXCEEDED` | `check_stock` | quantity summed across all lines for an item exceeds stock | reject, return |
@@ -87,21 +88,21 @@ Severities, dispositions, tolerances and the $10K line live in `policy.yaml`.
 - anything over the approval line went through the critic, and the critic's last word was not an open objection,
 - in degraded mode, the invoice has no warnings and is under the line.
 
-Disposition is decided by policy whenever a finding decides it (`void` beats `return_to_vendor`); the resolution agent only chooses when no finding does.
+Disposition is decided by policy whenever a finding decides it (`void`, then `manual_entry`, then `return_to_vendor`); the resolution agent only chooses when no finding does.
 
 ## Payment
 
-`agents/payment.py` builds an idempotency key from vendor, invoice number and content. Before each call it writes a `pending` row; after, `success` or `failed`. A key that already succeeded is never paid again. A decline is retried, up to three attempts, then `PAYMENT_FAILED`; running the invoice again retries under the same key. A call that raises (a timeout, a dropped connection) may still have moved money, so it is not retried: the row stays `pending` and the key is blocked until someone reconciles with the bank.
+`agents/payment.py` builds an idempotency key from vendor, invoice number and content. Before each call it writes a `pending` row; after, `success` or `failed`. A key that already succeeded is never paid again: that run is voided and writes no second PAID row. A decline is retried, up to three attempts, then `PAYMENT_FAILED`; running the invoice again retries under the same key. A call that raises (a timeout, a dropped connection) may still have moved money, so it is not retried: the row stays `pending` and the key is blocked until someone reconciles with the bank.
 
 ## Run tiers
 
 | Tier | When | What happens |
 |---|---|---|
 | Live | `XAI_API_KEY` is set | Calls `grok-4.7` at `https://api.x.ai/v1` and saves each response under `evals/cassettes/<sha256>.json` |
-| Replay | no key | Looks up each request by the SHA-256 of (model, messages, tools, response format) and returns the recorded response. Tools still run for real |
-| Degraded | no key and no recording for a request | That agent falls back to rules (`fallback.py`, `structured.py`) and the run is labeled degraded. JSON, CSV and XML are read by field name and labelled text by pattern; any other layout is held for manual entry. The gate then pays only spotless invoices under the line |
+| Replay | no key | Looks up each request by the SHA-256 of (model, messages, tools, response format) and returns the recorded response, with the cost and seconds the call took live. Tools still run for real |
+| Degraded | no key and no recording for a request | That agent falls back to rules (`fallback.py`, `structured.py`) and the run is labeled degraded. JSON, CSV and XML are read by field name (a CSV with no total row is totalled from its lines) and labelled text by pattern; any other layout is held for manual entry. If the risk analyst fell back, any text the rules don't read holds the invoice for manual entry too. The gate then pays only spotless invoices under the line |
 
-Recordings hold the request digest and the response body only: no headers, no credentials.
+Recordings hold the request digest, the response body and how long the call took: no headers, no credentials. The 449 committed recordings predate the time field; their live times, taken from the recording runs' logs, are in `evals/recorded_latency.json`.
 
 ## Data
 

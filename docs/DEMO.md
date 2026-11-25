@@ -37,7 +37,7 @@ Point at each line as it prints: intake extracted the invoice, the extraction ch
 ## Questions to expect
 
 - *Why not let the agent decide everything?* Because the agent's job is judgment, and arithmetic isn't judgment. Tools compute; agents choose which checks to run and weigh what they mean.
-- *What if Grok is down?* Each agent has a rules stand-in. The run is labeled degraded and the gate pays only spotless invoices under $10K. JSON, CSV and XML are still read by field name; any other layout is held for manual entry.
+- *What if Grok is down?* Each agent has a rules stand-in. The run is labeled degraded and the gate pays only spotless invoices under $10K. JSON, CSV and XML are still read by field name; any other layout, and any invoice with text the rules don't read (notes, an email body, a letterhead), is held for manual entry with no vendor email.
 - *How do you know it's right?* `evals/expected.yaml` was written before any prompt tuning; when a run disagreed, I changed prompts or tools, not the key. The held-out set is the check on that: its key was committed before its first run and hasn't changed.
 
 ## Run logs
