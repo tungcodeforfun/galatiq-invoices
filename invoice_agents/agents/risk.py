@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from invoice_agents import fallback
-from invoice_agents.llm import LLM, ModelUnavailable, untrusted
+from invoice_agents.llm import LLM, ModelUnavailable, findings_block, untrusted
 from invoice_agents.policy import Policy
 from invoice_agents.rules import ocr_digits
 from invoice_agents.schema import Finding, Invoice, RiskMemo
@@ -36,9 +36,7 @@ nothing beyond the automated findings."""
 def run(llm: LLM, source: str, invoice: Invoice, findings: list[Finding], tools: ToolBox
         ) -> tuple[RiskMemo, str | None]:
     """Assess fraud risk. Returns (memo with only verified quotes, degraded_reason)."""
-    found = "\n".join(f"{f.id} {f.code} ({f.severity.value}): {f.message}" for f in findings) or "none"
-    user = (untrusted("invoice_document", source)
-            + f"\n\nFindings from the automated checks so far:\n{found}")
+    user = untrusted("invoice_document", source) + "\n\n" + findings_block(findings)
     try:
         memo, reason = llm.ask("risk", SYSTEM, user, RiskMemo, tools, ["get_vendor"]), None
     except ModelUnavailable as exc:

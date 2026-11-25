@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from invoice_agents import fallback
-from invoice_agents.llm import LLM, ModelUnavailable, untrusted
+from invoice_agents.llm import LLM, ModelUnavailable, findings_block, untrusted
 from invoice_agents.policy import Policy, required_disposition
 from invoice_agents.schema import Decision, Finding, Invoice, Resolution
 
@@ -24,9 +24,9 @@ def run(llm: LLM, invoice: Invoice | None, findings: list[Finding], decision: De
         ) -> tuple[Resolution, str | None]:
     """Close out a rejection. Policy overrides the agent's disposition when a finding decides it."""
     forced = required_disposition(findings, policy)
-    found = "\n".join(f"{f.id} {f.code} ({f.severity.value}): {f.message}" for f in findings) or "none"
     user = (untrusted("extracted_invoice", invoice.model_dump_json() if invoice else "unreadable document")
-            + f"\n\nFindings:\n{found}\n\nVP decision:\n{decision.model_dump_json() if decision else 'none'}")
+            + "\n\n" + findings_block(findings)
+            + f"\n\nVP decision:\n{decision.model_dump_json() if decision else 'none'}")
     note = f"Policy requires the disposition {forced} for these findings." if forced else ""
     try:
         resolution, reason = llm.ask("resolution", SYSTEM.format(forced=note), user, Resolution), None

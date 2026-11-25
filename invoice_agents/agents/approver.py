@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from invoice_agents import fallback
-from invoice_agents.llm import LLM, ModelUnavailable, untrusted
+from invoice_agents.llm import LLM, ModelUnavailable, findings_block, untrusted
 from invoice_agents.policy import Policy
 from invoice_agents.schema import Critique, Decision, Finding, Invoice, RiskMemo
 from invoice_agents.tools import ToolBox
@@ -28,10 +28,9 @@ Be brief and concrete: a finance manager reads your summary."""
 
 def brief(invoice: Invoice, findings: list[Finding], risk: RiskMemo | None) -> str:
     """The case file every reviewer sees: invoice, findings and risk memo."""
-    found = "\n".join(f"{f.id} {f.code} ({f.severity.value}): {f.message}" for f in findings) or "none"
     memo = risk.model_dump_json() if risk else "not available"
-    return (untrusted("extracted_invoice", invoice.model_dump_json())
-            + f"\n\nFindings:\n{found}\n\nRisk memo:\n{memo}")
+    return (untrusted("extracted_invoice", invoice.model_dump_json()) + "\n\n" + findings_block(findings)
+            + f"\n\nRisk memo (its quotes come from the invoice):\n{memo}")
 
 
 def run(llm: LLM, invoice: Invoice, findings: list[Finding], risk: RiskMemo | None, tools: ToolBox,
