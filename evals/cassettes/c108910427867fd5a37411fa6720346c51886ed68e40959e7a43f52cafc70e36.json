@@ -1,0 +1,51 @@
+{
+ "request_sha256": "c108910427867fd5a37411fa6720346c51886ed68e40959e7a43f52cafc70e36",
+ "response": {
+  "id": "a0b2320f-1107-9143-ac64-2bbf9d1af7e0",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"The invoice has no fraud or manipulation signals beyond the automated findings. Missing vendor identity is already flagged separately and is not itself a vendor-change or payment-redirect cue.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I am acting as a fraud analyst to review the invoice.\n\nThe invoice shows a missing vendor name and a null vendor entry. I will not raise a signal that merely restates these findings.\n\nThe phrase \"Remit payment per the terms above\" is ordinary invoice wording. It does not indicate a payment redirect or new bank details."
+    }
+   }
+  ],
+  "created": 1795578579,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 48,
+   "prompt_tokens": 2110,
+   "total_tokens": 2549,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 391,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2110
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 17428400
+  }
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "request_sha256": "ec43ca07c15615586ea459b7658d74ba9f74d424129df837a1c4a8f51c1942f2",
+ "response": {
+  "id": "821565da-0888-965a-99d7-ffe7c6a11fc3",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"verdict\":\"accept\",\"objections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I am reviewing the VP's draft payment decision to identify errors.\n\nThe draft decision is being checked against the findings and rules. F1 is a date oddity warning because the due date equals the invoice date. F2 is a reject-severity stock finding. The low risk memo does not override the stock block.\n\nThe draft's rejection is valid because F2 is a reject-severity finding. It also properly addresses both findings.\n\nThe line math is correct. The draft decision is sound and requires no objections."
+    }
+   }
+  ],
+  "created": 1795577404,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 11,
+   "prompt_tokens": 2272,
+   "total_tokens": 3254,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 971,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2272
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 29607200
+  }
+ }
+}

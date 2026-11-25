@@ -1,8 +1,8 @@
 # invoice_1002.txt: REJECTED (return_to_vendor)
 
-Invoice 1002 is returned under F2 because it bills 20 units of GadgetX, a quantity over what we can accept (5 in stock), so it must not be paid as submitted. F1 is also cited: the due date equals the invoice date (2026-01-30) and does not match the stated Net 30 terms, and that date should be corrected on resubmission. There is no duplicate, corrupt data, or fraud signal that would require voiding.
+Invoice 1002 is returned under F2 because the requested quantity of 20 GadgetX units exceeds the quantity we can accept (5 in stock), which blocks payment. F1 is a warning only: the due date 2026-01-30 is not after the invoice date 2026-01-30 despite Net 30 terms, and it does not change the disposition. The vendor can correct the quantity and due date and resubmit, so this is not a void.
 
-Run `20261125-013615-invoice_1002-9045` · seconds 74.6 · llm_calls 8 · tool_calls 6 · tiers ['live'] · tokens 20014 · cost_usd 0.0197
+Run `20261125-032913-invoice_1002-d430` · seconds 78.5 · llm_calls 8 · tool_calls 6 · tiers ['live'] · tokens 20226 · cost_usd 0.0211
 
 ## Extracted invoice
 
@@ -49,18 +49,17 @@ Run `20261125-013615-invoice_1002-9045` · seconds 74.6 · llm_calls 8 · tool_c
 ```json
 {
   "checks_run": [
-    "resolve_item(1)",
-    "check_stock(GadgetX)",
-    "check_price(1)",
+    "resolve_item(line=1)",
     "check_totals",
     "check_duplicate",
-    "get_vendor(Gadgets Co.)"
+    "get_vendor(Gadgets Co.)",
+    "check_stock(GadgetX)",
+    "check_price(line=1)"
   ],
   "concerns": [
-    "Payment terms are Net 30, but due date equals invoice date (2026-01-30), so the written due date is not Net 30.",
-    "Line amount, subtotal, tax, and shipping are blank; only the total is stated. Recomputed total matches, but tax and shipping are not visible on the document."
+    "Payment terms say Net 30, but the due date is the same day as the invoice date (2026-01-30). Line amount, subtotal, tax, and shipping were blank; stated total still matched quantity times unit price."
   ],
-  "summary": "Checked invoice 1002 from Gadgets Co. (one GadgetX line). Catalog match and unit price are exact, totals recompute to the stated 15000, vendor is known, and this is not a duplicate. Stock check failed: 20 requested versus 5 on hand."
+  "summary": "One line matched GadgetX at the catalog price, totals reconciled, and the invoice is not a duplicate of a known vendor. Stock is short of the ordered quantity (20 requested, 5 on hand), and the due date conflicts with Net 30 terms."
 }
 ```
 
@@ -70,7 +69,7 @@ Run `20261125-013615-invoice_1002-9045` · seconds 74.6 · llm_calls 8 · tool_c
 {
   "level": "low",
   "signals": [],
-  "summary": "No fraud or manipulation signals appear on the invoice beyond the automated date and stock findings. Payment terms are ordinary Net 30 wording with no redirect, pressure, vendor-identity conflict, or instruction to the reviewer."
+  "summary": "No deception signals beyond the automated date and stock findings. Ordinary Net 30 terms and a misspelled header do not indicate intent to manipulate payment."
 }
 ```
 
@@ -81,19 +80,19 @@ Run `20261125-013615-invoice_1002-9045` · seconds 74.6 · llm_calls 8 · tool_c
   "action": "reject",
   "reasons": [
     {
-      "text": "F2 is a reject-severity stock finding: the invoice bills 20 units of GadgetX while only 5 are in stock, so the payment gate blocks this invoice and it must not be paid.",
+      "text": "Stock check F2 is a reject-severity finding: the invoice requests 20 units of GadgetX but only 5 are in stock, so payment is blocked regardless of other factors.",
       "finding_ids": [
         "F2"
       ]
     },
     {
-      "text": "F1 is a warning only: the due date equals the invoice date (2026-01-30) and does not match the written Net 30 terms. It does not by itself decide payment, but it adds inconsistency on a $15,000 invoice and is noted alongside the blocking stock finding.",
+      "text": "Invoice is $15,000, above the $10,000 scrutiny threshold. Due date equals the invoice date (2026-01-30) despite Net 30 terms (F1, warn). That date mismatch is a warning only and would not by itself block payment, but it does not offset the stock reject.",
       "finding_ids": [
         "F1"
       ]
     },
     {
-      "text": "The risk memo is low, with no fraud, redirect, pressure, or vendor-identity signals. A low memo does not outweigh or clear a reject-severity finding; F2 still blocks payment.",
+      "text": "Risk memo is low with no deception signals. A low memo does not override a reject-severity stock finding. Line math is consistent (20 × $750 = $15,000) but that does not cure the stock shortfall.",
       "finding_ids": [
         "F2"
       ]
@@ -103,7 +102,7 @@ Run `20261125-013615-invoice_1002-9045` · seconds 74.6 · llm_calls 8 · tool_c
     "F1",
     "F2"
   ],
-  "summary": "Reject invoice 1002 from Gadgets Co. for $15,000. Automated check F2 (stock exceeded: 20 GadgetX billed, 5 in stock) is a reject-severity finding and blocks payment; the same-day due date (F1) and low risk memo do not change that."
+  "summary": "Reject. GadgetX quantity exceeds stock (F2, reject severity), so the payment gate blocks this $15,000 invoice. The same-day due date (F1) is only a warning, and the low risk memo does not change the stock block."
 }
 ```
 
@@ -123,8 +122,7 @@ Run `20261125-013615-invoice_1002-9045` · seconds 74.6 · llm_calls 8 · tool_c
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -133,7 +131,7 @@ Run `20261125-013615-invoice_1002-9045` · seconds 74.6 · llm_calls 8 · tool_c
 ```json
 {
   "disposition": "return_to_vendor",
-  "reasoning": "Invoice 1002 is returned under F2 because it bills 20 units of GadgetX, a quantity over what we can accept (5 in stock), so it must not be paid as submitted. F1 is also cited: the due date equals the invoice date (2026-01-30) and does not match the stated Net 30 terms, and that date should be corrected on resubmission. There is no duplicate, corrupt data, or fraud signal that would require voiding.",
-  "vendor_reply": "Dear Gadgets Co. billing team, we are returning invoice 1002 (dated 2026-01-30, total $15,000.00) for correction and cannot process it as submitted. The GadgetX line bills a quantity of 20 at $750.00, which is more than we can accept; please resubmit a corrected invoice with a reduced quantity and a matching line amount and total. The due date is written as 2026-01-30, the same day as the invoice date, which does not match the stated Net 30 terms; please set the due date to 30 days after the invoice date. Thank you."
+  "reasoning": "Invoice 1002 is returned under F2 because the requested quantity of 20 GadgetX units exceeds the quantity we can accept (5 in stock), which blocks payment. F1 is a warning only: the due date 2026-01-30 is not after the invoice date 2026-01-30 despite Net 30 terms, and it does not change the disposition. The vendor can correct the quantity and due date and resubmit, so this is not a void.",
+  "vendor_reply": "Hello Gadgets Co. billing team, we cannot process invoice 1002 as submitted. The quantity of 20 for GadgetX (unit price $750, invoice total $15,000) is more than we can accept; please resubmit a corrected invoice with a reduced quantity and a recalculated total. The due date is also 2026-01-30, the same as the invoice date, which does not match Net 30 terms—please set a due date consistent with those terms. Thank you."
 }
 ```

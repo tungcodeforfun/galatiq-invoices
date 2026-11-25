@@ -1,0 +1,100 @@
+{
+ "request_sha256": "8970eefd23012bf9064ab8ebdbfeb8feddeb6a74a339236427a7b07d293f582d",
+ "response": {
+  "id": "7013b8a6-b96f-910a-b349-6e43794481a0",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-1045e66e-64c7-4ad7-9053-e70b584b238d-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-1045e66e-64c7-4ad7-9053-e70b584b238d-1",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-1045e66e-64c7-4ad7-9053-e70b584b238d-2",
+       "function": {
+        "arguments": "{\"line\":3}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-1045e66e-64c7-4ad7-9053-e70b584b238d-3",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-1045e66e-64c7-4ad7-9053-e70b584b238d-4",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-1045e66e-64c7-4ad7-9053-e70b584b238d-5",
+       "function": {
+        "arguments": "{\"name\":\"Precision Parts Ltd.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will validate the invoice using the available tools.\n\nI will call resolve_item for all three lines first. Then I will run check_stock and check_price for each matched catalog item. Finally I will verify totals, duplicates, and vendor details."
+    }
+   }
+  ],
+  "created": 1795577585,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 56,
+   "prompt_tokens": 2353,
+   "total_tokens": 2630,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 221,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2353
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15776000
+  }
+ }
+}

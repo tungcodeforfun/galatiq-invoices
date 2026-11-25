@@ -1,0 +1,51 @@
+{
+ "request_sha256": "b649b668cea60b729ca88931fe48ca4686ab04f23e8003423c7f4fbcabd4a068",
+ "response": {
+  "id": "36cd5f86-e2d6-4533-abb7-ffcc3246a7f0",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"INV-3001\",\"vendor\":\"Widgets Inc.\",\"invoice_date\":\"2026-02-03\",\"due_date\":\"2026-03-05\",\"due_date_as_written\":\"2026-03-05\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":8,\"unit_price\":250,\"amount\":2000,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":3,\"unit_price\":500,\"amount\":1500,\"note\":null}],\"subtotal\":3500,\"tax\":280,\"shipping\":null,\"total\":3780,\"payment_terms\":\"Net 30\",\"notes\":\"Thank you for your business.\",\"revision\":null,\"corrections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract the invoice data into a structured JSON format.\n\nI parsed the invoice fields. The vendor is Widgets Inc. Invoice INV-3001 is dated 2026-02-03 with a due date of 2026-03-05. It contains two line items: WidgetA (8 units at $250) and WidgetB (3 units at $500). Subtotal is $3,500. Tax is $280. Total is $3,780. No shipping or corrections are present.\n\nThe due date text will be stored in due_date_as_written even though it is a valid calendar date. The special rule only applies to non-calendar dates.\n\nThe invoice date is also a valid calendar date, so it will be stored as \"2026-02-03\". All monetary values will be formatted as plain numbers without currency symbols or thousands separators."
+    }
+   }
+  ],
+  "created": 1795577890,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 166,
+   "prompt_tokens": 2875,
+   "total_tokens": 3851,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 810,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2875
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 33585200
+  }
+ }
+}

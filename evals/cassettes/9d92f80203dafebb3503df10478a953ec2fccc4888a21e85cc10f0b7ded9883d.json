@@ -1,0 +1,51 @@
+{
+ "request_sha256": "9d92f80203dafebb3503df10478a953ec2fccc4888a21e85cc10f0b7ded9883d",
+ "response": {
+  "id": "48d7abd8-1367-9994-8ee1-b74e12b4d653",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"No deception signals beyond the automated checks. The formerly name matches a known vendor alias, and the notes and Net 30 terms are ordinary invoice wording.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor is known. \"FastShip Ltd.\" is an alias in the vendor master.\n\nNo vendor change is flagged. The \"formerly\" name is already explained by the vendor master alias. No payment redirects, pressure language, or instruction injection were found. Notes and terms are ordinary."
+    }
+   }
+  ],
+  "created": 1795579454,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_c60958d81f66f847",
+  "usage": {
+   "completion_tokens": 44,
+   "prompt_tokens": 2511,
+   "total_tokens": 2815,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 260,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2304,
+    "image_tokens": 0,
+    "text_tokens": 2511
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 11526000
+  }
+ }
+}

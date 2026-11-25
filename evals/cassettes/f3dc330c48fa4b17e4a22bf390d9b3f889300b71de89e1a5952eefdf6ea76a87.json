@@ -1,0 +1,51 @@
+{
+ "request_sha256": "f3dc330c48fa4b17e4a22bf390d9b3f889300b71de89e1a5952eefdf6ea76a87",
+ "response": {
+  "id": "be146661-3eb4-9f38-9380-9d83af3821e3",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"return_to_vendor\",\"reasoning\":\"Finding F1 rejects INV-1005 because the GadgetX line requests 8 units, which exceeds the 5 units in stock. Quantities over what we can accept are returned so the vendor can correct and resubmit. No duplicate, corrupt data, or fraud finding supports a void.\",\"vendor_reply\":\"Hello Global Supply Chain Partners billing team, we cannot accept invoice INV-1005 as submitted. The GadgetX line shows a quantity of 8, which is more than we can accept. Please resubmit a corrected invoice with an acceptable GadgetX quantity and with the line amount, subtotal, tax, and total recalculated to match. Thank you.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will close out the rejected invoice.\n\nF1 is a stock-exceeded finding. The policy requires return_to_vendor for quantities over what we can accept. The invoice should be returned to the vendor.\n\nThe vendor email will ask for a corrected quantity without revealing stock levels. The audit log reasoning will cite the finding IDs.\n\nThe draft email cites GadgetX quantity 8 as the problem. It asks for a corrected invoice with updated line amounts, subtotal, tax, and total.\n\nThe vendor email will omit the medium risk memo and White House address. The audit log reasoning cites finding F1 and states that no duplicate, corrupt data, or fraud finding requires a void."
+    }
+   }
+  ],
+  "created": 1795577866,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 154,
+   "prompt_tokens": 2197,
+   "total_tokens": 3354,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1003,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2197
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 32667200
+  }
+ }
+}

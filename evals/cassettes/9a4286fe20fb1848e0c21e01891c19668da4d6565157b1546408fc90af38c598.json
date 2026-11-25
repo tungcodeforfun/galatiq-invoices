@@ -1,0 +1,51 @@
+{
+ "request_sha256": "9a4286fe20fb1848e0c21e01891c19668da4d6565157b1546408fc90af38c598",
+ "response": {
+  "id": "3f069591-787b-444d-a2bb-8ebab09e139c",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"verdict\":\"accept\",\"objections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Reviewing the VP's draft payment decision for errors against the provided criteria.\n\nThe invoice lines plus shipping total $2,575, but the invoice total is $2,475. The risk memo is low-level with no signals. The vendor is known on master. The draft decision rejects based on F1.\n\nThe draft correctly relies on a reject-severity finding. The total mismatch is accurately described.\n\nThe draft correctly treats the null tax as zero. It accurately characterizes the $100 shortfall as an unclassified error, consistent with the validator notes.\n\nThe draft is sound. The verdict should be accept with no objections."
+    }
+   }
+  ],
+  "created": 1795578368,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 11,
+   "prompt_tokens": 2162,
+   "total_tokens": 3412,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1239,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2162
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 34326400
+  }
+ }
+}

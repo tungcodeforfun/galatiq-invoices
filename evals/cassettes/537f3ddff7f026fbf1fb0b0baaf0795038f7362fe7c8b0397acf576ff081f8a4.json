@@ -1,0 +1,51 @@
+{
+ "request_sha256": "537f3ddff7f026fbf1fb0b0baaf0795038f7362fe7c8b0397acf576ff081f8a4",
+ "response": {
+  "id": "30a0864e-ccf5-9bdd-a574-acd606b8a425",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"F1 is a reject-severity fraud finding: this invoice is paired with an unsolicited instruction to remit to a new First Coastal Bank account (routing 021000089, account 4481 2290 7731) from a sender the vendor master does not recognize. The payment gate blocks payment, and the high-risk memo independently requires rejection.\",\"finding_ids\":[\"F1\"]}],\"addressed_findings\":[\"F1\"],\"summary\":\"Reject INV-2003 ($3,500, Precision Parts Ltd.). A reject-severity fraud finding and a high-risk payment-redirect memo block payment; do not update bank details or pay until the change is confirmed out of band with the vendor on file.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I need to determine whether to pay this vendor invoice."
+    }
+   }
+  ],
+  "created": 1795579716,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 163,
+   "prompt_tokens": 2483,
+   "total_tokens": 2833,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 187,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1792,
+    "image_tokens": 0,
+    "text_tokens": 2483
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14885200
+  }
+ }
+}

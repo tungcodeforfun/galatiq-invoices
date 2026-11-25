@@ -1,25 +1,25 @@
 {
  "request_sha256": "b2ce884e797021852eb0b5025dffbfbd829f77b1151d46af94db5dec41e2a04b",
  "response": {
-  "id": "30a609e1-68d0-9c83-a507-01903c87c3df",
+  "id": "2f93028b-5b79-4584-94e3-34f01377e404",
   "choices": [
    {
     "finish_reason": "stop",
     "index": 0,
     "logprobs": null,
     "message": {
-     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"No fraud or manipulation signals appear on the invoice beyond the automated date and stock findings. Payment terms are ordinary Net 30 wording with no redirect, pressure, vendor-identity conflict, or instruction to the reviewer.\"}",
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"No deception signals beyond the automated date and stock findings. Ordinary Net 30 terms and a misspelled header do not indicate intent to manipulate payment.\"}",
      "refusal": null,
      "role": "assistant",
      "annotations": null,
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I am reviewing the invoice for signs of fraud or manipulation.\n\nThe invoice appears ordinary. The automated findings already cover the date and stock issues, so no additional signals are needed."
+     "reasoning_content": "I am analyzing the invoice for fraud signals.\n\nThe automated findings are already covered. I will look for pressure language, payment redirects, instruction injection, vendor changes, and unusual terms."
     }
    }
   ],
-  "created": 1795570604,
+  "created": 1795577392,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -27,13 +27,13 @@
   "service_tier": "default",
   "system_fingerprint": "fp_b507827d1c19f448",
   "usage": {
-   "completion_tokens": 56,
+   "completion_tokens": 44,
    "prompt_tokens": 2136,
-   "total_tokens": 2533,
+   "total_tokens": 2461,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 341,
+    "reasoning_tokens": 281,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 2136
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 16748400
+   "cost_in_usd_ticks": 15279600
   }
  }
 }

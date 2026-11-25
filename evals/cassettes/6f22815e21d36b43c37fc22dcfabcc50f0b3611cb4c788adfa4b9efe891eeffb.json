@@ -1,0 +1,68 @@
+{
+ "request_sha256": "6f22815e21d36b43c37fc22dcfabcc50f0b3611cb4c788adfa4b9efe891eeffb",
+ "response": {
+  "id": "32774eeb-6e1b-9720-a38b-7663c2649423",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-89bfb84b-4c42-40f0-a6d5-dd10d792a097-5",
+       "function": {
+        "arguments": "{\"item\":\"WidgetB\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-89bfb84b-4c42-40f0-a6d5-dd10d792a097-6",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "Line 1 did not match any catalog item.\n\nLine 2 matched WidgetB exactly. Only WidgetB requires stock and price checks."
+    }
+   }
+  ],
+  "created": 1795578782,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 22,
+   "prompt_tokens": 2750,
+   "total_tokens": 2951,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 179,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2750
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 16925200
+  }
+ }
+}

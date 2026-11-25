@@ -1,7 +1,7 @@
 {
  "request_sha256": "1adb7ae6dc483789e0c349d5d5ccd6b406baed08b962de840b5a01112dcf952e",
  "response": {
-  "id": "a358bfbf-01ee-41d8-9d22-607d4ec94305",
+  "id": "535ebff1-8b47-9d20-8e3a-f07fc12128f8",
   "choices": [
    {
     "finish_reason": "stop",
@@ -15,11 +15,11 @@
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I will extract the invoice data into the requested JSON schema.\n\nI need to decide whether to set due_date_as_written to null or preserve the exact text \"2026-02-20\". The schema says to use null if the date is not a calendar date, but the value appears to be a standard calendar date.\n\nValid calendar dates should populate both due_date and due_date_as_written. The null rule applies only to non-calendar date text.\n\nLine item amounts should be null since the document omits them. Notes are absent too. The subtotal is 5000.00.\n\nI will preserve the exact numeric values from the document, including decimals. The tax amount is 0.00, so tax should be 0 rather than null. Shipping, notes, revision, and corrections are absent and will be set to null."
+     "reasoning_content": "Extracting invoice data from the document and formatting it as JSON matching the schema.\n\nThe due date is a calendar date, so it will be stored as YYYY-MM-DD with no separate written text.\n\nThe due date text will be included in due_date_as_written.\n\nLine items lack amounts and notes. Tax is zero. Shipping, free-text notes, revision, and corrections are absent."
     }
    }
   ],
-  "created": 1795572228,
+  "created": 1795579323,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -29,11 +29,11 @@
   "usage": {
    "completion_tokens": 158,
    "prompt_tokens": 2934,
-   "total_tokens": 4140,
+   "total_tokens": 3843,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 1048,
+    "reasoning_tokens": 751,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 2934
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 38678400
+   "cost_in_usd_ticks": 32619600
   }
  }
 }

@@ -1,0 +1,19 @@
+data/heldout/invoice_3011.eml  grok-4.7 · cached · run 20261125-034712-invoice_3011-8fa4
+  ✓ Intake      INV-3011 · Widgets Inc. · 2 lines · 3780.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   9 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: reject
+  ✓ Critic      accept
+  ✓ Gate        blocked: approver rejected
+  ✓ Resolution  void
+ ID  Code       Severity  Finding                                         
+ F1  DUPLICATE  reject    Same vendor, lines and total as INV-3001 (PAID) 
+╭─ REJECTED · void ────────────────────────────────────────────────────────────────────────────────╮
+│ INV-3011 is voided under F1 because it matches already-paid INV-3001 for Widgets Inc., with the  │
+│ same line items and a $3,780.00 total. Paying it would settle the same invoice twice. Policy     │
+│ requires void for duplicates so the document cannot be resubmitted.                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+63.0s · 8 model calls (live) · 9 tool calls · 20389 tokens · $0.0171 · log 
+runs/20261125-034712-invoice_3011-8fa4/events.jsonl · 
+runs/20261125-034712-invoice_3011-8fa4/report.md

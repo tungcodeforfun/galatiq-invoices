@@ -1,0 +1,51 @@
+{
+ "request_sha256": "ed5f0ab98008f805063bfe44665adb2dc27ee33612b53e4cd93c37214d7425d1",
+ "response": {
+  "id": "b3a951dc-0f82-9cc6-ac85-ab22535d9abb",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"approve\",\"reasons\":[{\"text\":\"Vendor QuickShip Distributers is on file since 2021-07-01 with alias FastShip Ltd.; the payee name matches the known entity. No earlier invoices exist to compare, but nothing on the document conflicts with the master record.\",\"finding_ids\":[]},{\"text\":\"F1 is informational only: total is $9,975, under the $10,000 extra-scrutiny line. Line math holds (3,000 + 3,500 + 3,000 = 9,500 subtotal; tax 475; total 9,975). Being just under the threshold is not, by itself, a defect.\",\"finding_ids\":[\"F1\"]},{\"text\":\"F2 records ordinary OCR letter-O/zero fixes on the date (26-Jan-2026) and Widget B amount ($3,500.00). Normalized values are consistent with the rest of the invoice; no residual misread.\",\"finding_ids\":[\"F2\"]},{\"text\":\"Risk memo is low with no deception signals. Notes cite PO-20260115 and ordinary Net 30 / dock delivery wording; the PO was not verified here, but the document does not show a contradiction that would justify rejection.\",\"finding_ids\":[]}],\"addressed_findings\":[\"F1\",\"F2\"],\"summary\":\"Approve INV 1012 for $9,975 to QuickShip Distributers. Math is sound, OCR fixes are clean, the vendor is on file, and the low-risk memo plus the near-threshold info flag do not show a payment problem.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I am evaluating the invoice for approval. The vendor alias matches the master record, and automated checks show no deception signals.\n\nThe invoice total of $9,975 sits just below the $10,000 approval threshold. OCR corrections normalized correctly. I will look up the vendor via the get_vendor tool.\n\nNo findings block payment. The vendor has no earlier invoices in the system."
+    }
+   }
+  ],
+  "created": 1795579458,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 345,
+   "prompt_tokens": 2465,
+   "total_tokens": 3258,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 448,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1792,
+    "image_tokens": 0,
+    "text_tokens": 2465
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 23800000
+  }
+ }
+}

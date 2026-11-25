@@ -1,0 +1,51 @@
+{
+ "request_sha256": "33027b5c6f47473adb6cd8eb64d6f0213c2b0475656877b157179d894966390c",
+ "response": {
+  "id": "cb06b877-f141-9fa5-b3d0-2765ec0ca6f8",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"Vendor TechParts International is on the master with no aliases or prior invoices, and the document has no pressure language, payment redirect, instruction injection, or conflicting vendor identity. Nothing beyond the automated total mismatch warrants holding payment.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor is known. The automated check already flagged the total mismatch.\n\nNo additional signals are warranted. The invoice contains no pressure language, payment redirects, instruction injection, or vendor identity conflicts."
+    }
+   }
+  ],
+  "created": 1795578344,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 58,
+   "prompt_tokens": 2243,
+   "total_tokens": 2540,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 239,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2048,
+    "image_tokens": 0,
+    "text_tokens": 2243
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 10866400
+  }
+ }
+}

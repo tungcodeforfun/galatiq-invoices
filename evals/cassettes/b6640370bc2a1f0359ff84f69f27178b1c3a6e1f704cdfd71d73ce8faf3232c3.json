@@ -1,7 +1,7 @@
 {
  "request_sha256": "b6640370bc2a1f0359ff84f69f27178b1c3a6e1f704cdfd71d73ce8faf3232c3",
  "response": {
-  "id": "2bf6119b-b376-9313-b5bd-6e90b116e75c",
+  "id": "380ac99b-2504-9e47-ac40-636b92fa3cea",
   "choices": [
    {
     "finish_reason": "tool_calls",
@@ -16,7 +16,7 @@
      "function_call": null,
      "tool_calls": [
       {
-       "id": "call-bd213de3-4fcf-4ddc-b710-2ffbd75c0958-0",
+       "id": "call-7996eb35-1448-42c5-8820-67673453c563-0",
        "function": {
         "arguments": "{\"name\":\"Precision Parts Ltd.\"}",
         "name": "get_vendor"
@@ -24,11 +24,11 @@
        "type": "function"
       }
      ],
-     "reasoning_content": "I am analyzing the invoice for fraud signals.\n\nThe revision conflict is already flagged by automated checks. I will not raise a redundant signal. I am now examining the invoice for other fraud indicators."
+     "reasoning_content": "Analyzing the invoice for fraud signals."
     }
    }
   ],
-  "created": 1795570821,
+  "created": 1795577612,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -38,11 +38,11 @@
   "usage": {
    "completion_tokens": 14,
    "prompt_tokens": 2295,
-   "total_tokens": 2568,
+   "total_tokens": 2478,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 259,
+    "reasoning_tokens": 169,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -54,7 +54,7 @@
     "text_tokens": 2295
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 15300000
+   "cost_in_usd_ticks": 13464000
   }
  }
 }

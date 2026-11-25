@@ -1,8 +1,8 @@
 # invoice_1016.json: REJECTED (return_to_vendor)
 
-Invoice INV-1016 is rejected under finding F1 because line item WidgetC is an unknown item not in the inventory catalog. Unknown items can be corrected and resubmitted, so policy requires return_to_vendor rather than void. A corrected invoice must omit or replace WidgetC and recalculate the related amounts.
+INV-1016 is rejected under F1 because line item WidgetC is not in the inventory catalog. Unknown items can be corrected and resubmitted, so policy requires return_to_vendor rather than void. The vendor must identify the intended catalog item and resubmit a corrected invoice before payment can proceed.
 
-Run `20261125-015856-invoice_1016-aecc` · seconds 60.5 · llm_calls 9 · tool_calls 11 · tiers ['live'] · tokens 23172 · cost_usd 0.0183
+Run `20261125-035710-invoice_1016-b3bc` · seconds 44.3 · llm_calls 9 · tool_calls 11 · tiers ['live'] · tokens 23393 · cost_usd 0.0171
 
 ## Extracted invoice
 
@@ -32,7 +32,7 @@ Run `20261125-015856-invoice_1016-aecc` · seconds 60.5 · llm_calls 9 · tool_c
 
 | id | code | severity | message | source |
 |---|---|---|---|---|
-| F1 | UNKNOWN_ITEM | reject | 'WidgetC' is not in the inventory catalog | resolve_item |
+| F1 | UNKNOWN_ITEM | reject | 'WidgetC' is not in the inventory catalog; did you mean WidgetA or WidgetB? | resolve_item |
 
 ## Tool calls
 
@@ -40,7 +40,7 @@ Run `20261125-015856-invoice_1016-aecc` · seconds 60.5 · llm_calls 9 · tool_c
 |---|---|---|---|
 | validator | resolve_item | {"line": 1} | {"line": 1, "description": "WidgetA", "item": "WidgetA", "match": "exact"} |
 | validator | resolve_item | {"line": 2} | {"line": 2, "description": "WidgetB", "item": "WidgetB", "match": "exact"} |
-| validator | resolve_item | {"line": 3} | {"line": 3, "description": "WidgetC", "item": null, "match": "none"} |
+| validator | resolve_item | {"line": 3} | {"line": 3, "description": "WidgetC", "item": null, "match": "none", "suggestions": ["WidgetA", "WidgetB"]} |
 | validator | check_totals | {} | {"lines_sum": 3050.0, "expected_total": 3233.0, "stated_total": 3233.0, "problems": [], "ok": true} |
 | validator | check_duplicate | {} | {"result": "no_match"} |
 | validator | get_vendor | {"name": "Widgets Inc."} | {"known": true, "name": "Widgets Inc.", "aliases": [], "first_seen": "2023-03-01", "earlier_invoices": [{"number": "INV-1001", "total": 5000.0, "status": "PAID" |
@@ -55,22 +55,21 @@ Run `20261125-015856-invoice_1016-aecc` · seconds 60.5 · llm_calls 9 · tool_c
 ```json
 {
   "checks_run": [
-    "resolve_item(line=1)",
-    "resolve_item(line=2)",
-    "resolve_item(line=3)",
-    "check_totals()",
-    "check_duplicate()",
-    "get_vendor(Widgets Inc.)",
+    "resolve_item(1)",
+    "resolve_item(2)",
+    "resolve_item(3)",
     "check_stock(WidgetA)",
     "check_stock(WidgetB)",
-    "check_price(line=1)",
-    "check_price(line=2)"
+    "check_price(1)",
+    "check_price(2)",
+    "check_totals",
+    "check_duplicate",
+    "get_vendor(Widgets Inc.)"
   ],
   "concerns": [
-    "Line 3 WidgetC did not match the catalog, so price and stock were not checked for that line (stated amount 1050.00 is unvalidated against a catalog price).",
-    "Payment terms are Net 30 but the due date is 2026-02-27, one calendar month after the invoice date 2026-01-27 (31 days), not 30 days."
+    "Line 3 (WidgetC) did not match any catalog item, so price and stock were not checked for it. Suggestions WidgetA and WidgetB are not matches."
   ],
-  "summary": "Checked all three lines, stock and price for the two catalog matches (WidgetA, WidgetB), totals, duplicates, and vendor Widgets Inc. Totals, stock, prices, and duplicate lookup were clean; WidgetC is not in the catalog."
+  "summary": "Lines 1–2 match WidgetA and WidgetB at catalog price with sufficient stock; totals, vendor, and duplicate checks are clean. WidgetC is not in the catalog."
 }
 ```
 
@@ -80,7 +79,7 @@ Run `20261125-015856-invoice_1016-aecc` · seconds 60.5 · llm_calls 9 · tool_c
 {
   "level": "low",
   "signals": [],
-  "summary": "Known vendor Widgets Inc. with ordinary Net 30 terms and no pressure, payment-redirect, identity conflict, or reviewer instructions on the document. Nothing beyond the automated unknown-item finding warrants holding payment."
+  "summary": "Widgets Inc. is a known vendor with a prior paid invoice, and this document shows ordinary Net 30 terms with no pressure, payment-redirect, reviewer instruction, or conflicting identity. Nothing here beyond the automated unknown-item finding suggests deception."
 }
 ```
 
@@ -91,7 +90,7 @@ Run `20261125-015856-invoice_1016-aecc` · seconds 60.5 · llm_calls 9 · tool_c
   "action": "reject",
   "reasons": [
     {
-      "text": "F1 is a reject-severity finding: WidgetC is not in the inventory catalog, so the payment gate blocks this invoice regardless of other factors.",
+      "text": "F1 is a reject-severity unknown-item finding: WidgetC is not in the inventory catalog, and the suggested names WidgetA and WidgetB are not matches. Price and stock were never checked for that line ($1,050). A reject finding blocks payment regardless of other factors.",
       "finding_ids": [
         "F1"
       ]
@@ -100,7 +99,7 @@ Run `20261125-015856-invoice_1016-aecc` · seconds 60.5 · llm_calls 9 · tool_c
   "addressed_findings": [
     "F1"
   ],
-  "summary": "Reject INV-1016. Automated check F1 (reject) flags WidgetC as not in the inventory catalog, which blocks payment. The low-risk memo and known vendor do not override a reject finding."
+  "summary": "Reject INV-1016 from Widgets Inc. for $3,233. Automated check F1 (severity reject) flags WidgetC as not in the catalog, so the payment gate blocks this invoice."
 }
 ```
 
@@ -120,8 +119,7 @@ Run `20261125-015856-invoice_1016-aecc` · seconds 60.5 · llm_calls 9 · tool_c
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -130,7 +128,7 @@ Run `20261125-015856-invoice_1016-aecc` · seconds 60.5 · llm_calls 9 · tool_c
 ```json
 {
   "disposition": "return_to_vendor",
-  "reasoning": "Invoice INV-1016 is rejected under finding F1 because line item WidgetC is an unknown item not in the inventory catalog. Unknown items can be corrected and resubmitted, so policy requires return_to_vendor rather than void. A corrected invoice must omit or replace WidgetC and recalculate the related amounts.",
-  "vendor_reply": "Hello Widgets Inc. billing team,\n\nWe cannot process invoice INV-1016 as submitted. Line item WidgetC (quantity 3 at $350.00, amount $1,050.00) is not a recognized catalog item. Please resubmit a corrected invoice that removes WidgetC or replaces it with a valid item, and that recalculates the subtotal (currently $3,050.00), tax (currently $183.00), and total (currently $3,233.00) accordingly.\n\nThank you."
+  "reasoning": "INV-1016 is rejected under F1 because line item WidgetC is not in the inventory catalog. Unknown items can be corrected and resubmitted, so policy requires return_to_vendor rather than void. The vendor must identify the intended catalog item and resubmit a corrected invoice before payment can proceed.",
+  "vendor_reply": "Hello Widgets Inc. billing team, we cannot process invoice INV-1016 ($3,233.00) as submitted. Line item WidgetC (quantity 3, unit price $350.00, amount $1,050.00) is not in our catalog. Did you mean WidgetA or WidgetB? Please resubmit a corrected invoice that replaces WidgetC with the correct catalog item, with matching quantity, unit price, line amount, subtotal, tax, and total."
 }
 ```

@@ -1,25 +1,25 @@
 {
  "request_sha256": "77ade5c3830777299faf3229411a9eab0dedb2c73423867322f8b498dfb06497",
  "response": {
-  "id": "2414b5d0-bdb2-4b5f-93c7-06823d18aad5",
+  "id": "6bbf94c1-96e1-91f8-b0de-5f33bb2d7a3c",
   "choices": [
    {
     "finish_reason": "stop",
     "index": 0,
     "logprobs": null,
     "message": {
-     "content": "{\"invoice_number\":\"INV-2003\",\"vendor\":\"Precision Parts Ltd.\",\"invoice_date\":\"2026-02-04\",\"due_date\":\"2026-03-06\",\"due_date_as_written\":\"2026-03-06\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetB\",\"quantity\":4,\"unit_price\":500,\"amount\":null,\"note\":null},{\"description\":\"GadgetX\",\"quantity\":2,\"unit_price\":750,\"amount\":null,\"note\":null}],\"subtotal\":null,\"tax\":null,\"shipping\":null,\"total\":3500,\"payment_terms\":null,\"notes\":\"Please note our bank details have changed. Kindly remit payment for the invoice below to our new account:\\n\\n  Bank: First Coastal Bank\\n  Routing: 021000089\\n  Account: 4481 2290 7731\\n\\nPlease confirm once your records are updated.\",\"revision\":null,\"corrections\":[]}",
+     "content": "{\"invoice_number\":\"INV-2003\",\"vendor\":\"Precision Parts Ltd.\",\"invoice_date\":\"2026-02-04\",\"due_date\":\"2026-03-06\",\"due_date_as_written\":\"2026-03-06\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetB\",\"quantity\":4,\"unit_price\":500,\"amount\":null,\"note\":null},{\"description\":\"GadgetX\",\"quantity\":2,\"unit_price\":750,\"amount\":null,\"note\":null}],\"subtotal\":null,\"tax\":null,\"shipping\":null,\"total\":3500,\"payment_terms\":null,\"notes\":\"Hello Accounts Payable,\\n\\nPlease note our bank details have changed. Kindly remit payment for the\\ninvoice below to our new account:\\n\\n  Bank: First Coastal Bank\\n  Routing: 021000089\\n  Account: 4481 2290 7731\\n\\nPlease confirm once your records are updated.\\n\\nBilling Team\\nPrecision Parts Ltd.\",\"revision\":null,\"corrections\":[]}",
      "refusal": null,
      "role": "assistant",
      "annotations": null,
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I will extract the invoice data from the document and return it as JSON matching the schema.\n\nThe invoice details are INV-2003 from Precision Parts Ltd. dated 2026-02-04 with a due date of 2026-03-06. The line items are four WidgetBs at $500 each and two GadgetXs at $750 each, totaling $3,500. Notes will include the remittance instructions and confirmation request.\n\nThe due_date_as_written field will be set to \"2026-03-06\" since the date is explicitly written in the document.\n\nThe line items will each have null for amount, since the document only shows unit prices and not line totals. The first item is WidgetB with quantity 4 at $500.00 each. The second is GadgetX with quantity 2 at $750.00 each.\n\nSubtotal, tax, shipping, payment terms, revision, and corrections will all be null. The notes field will contain the full remittance instructions and confirmation request verbatim.\n\nThe description field will contain only the item text exactly as written, such as \"WidgetB\" and \"GadgetX\", omitting quantities and prices. Numeric values will be plain numbers without currency symbols or trailing zeros."
+     "reasoning_content": "I will extract structured data from the invoice document.\n\nI am parsing the invoice fields against the extraction rules. I will use null for missing values and preserve exact text from the document.\n\nThe invoice number is INV-2003. The vendor is Precision Parts Ltd. The invoice date is 2026-02-04 and the due date is 2026-03-06.\n\nThe due date text is \"2026-03-06\". The currency is USD. The line items are WidgetB x4 at $500.00 each and GadgetX x2 at $750.00 each.\n\nThe description field should contain only the item name. Quantity is 4 and unit price is 500.00. The line total is absent, so amount is null.\n\nSubtotal, tax, shipping, and payment terms are null. The total is 3500.00. Notes contains the full free-text message verbatim.\n\nThe bank details are remittance instructions and belong in notes. No corrections or revisions are needed."
     }
    }
   ],
-  "created": 1795572148,
+  "created": 1795579242,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -27,13 +27,13 @@
   "service_tier": "default",
   "system_fingerprint": "fp_bc4243bed6",
   "usage": {
-   "completion_tokens": 221,
+   "completion_tokens": 241,
    "prompt_tokens": 2925,
-   "total_tokens": 4481,
+   "total_tokens": 5801,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 1335,
+    "reasoning_tokens": 2635,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 2925
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 37923600
+   "cost_in_usd_ticks": 64851600
   }
  }
 }

@@ -1,0 +1,51 @@
+{
+ "request_sha256": "ec42befb5631bf8562031f257188b1940b2930fb40de2b821b70ad68ff72ea35",
+ "response": {
+  "id": "3fa7ae71-2721-467e-8c5f-764f641357dc",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"resolve_item(2)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_price(1)\",\"check_price(2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Widgets Inc.)\"],\"concerns\":[\"INV-3011 matches already-paid INV-3001 (same vendor and total of 3780.00). Do not pay again; treat as a resubmission of a settled invoice.\"],\"summary\":\"Both lines matched the catalog (WidgetA, WidgetB); stock and unit prices were within tolerance and stated totals reconciled. The invoice is a duplicate of paid INV-3001 for known vendor Widgets Inc.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks have completed. I will report the findings in JSON schema format.\n\nThe invoice is a duplicate of paid INV-3001. Shipping is null but totals are correct. Tax is 8%.\n\nThe due date of March 20, 2026 is consistent with the Net 30 payment terms. The null line amounts were recomputed and reconciled correctly.\n\nThe duplicate invoice carries a double-payment risk. The tool flagged it as a paid duplicate, but the approver should still verify that paying this invoice again would not duplicate payment for INV-3001."
+    }
+   }
+  ],
+  "created": 1795578456,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 157,
+   "prompt_tokens": 2997,
+   "total_tokens": 3796,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 642,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 2997
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 22970400
+  }
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "request_sha256": "9ef88ce529131cf89689350aa84c217739b53318d809942e3a148eda474a1f53",
+ "response": {
+  "id": "a897d5c3-ea1d-462c-bc21-6406acec339d",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(line 1)\",\"resolve_item(line 2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Widgets Inc.)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_price(line 1)\",\"check_price(line 2)\"],\"concerns\":[\"Vendor master shows Widgets Inc. as known since 2023-03-01 but lists no earlier invoices.\"],\"summary\":\"INV-3001 from Widgets Inc. was checked against the catalog, stock, prices, totals, the processed-invoice ledger, and the vendor master. Every tool result was clean: both lines matched exactly, quantities are in stock, prices match catalog, totals reconcile, and the invoice is not a duplicate.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks passed. I will report the findings in JSON schema format.\n\nThe invoice checks out. Items, prices, and totals all match. No duplicates or stock issues were found. The vendor is known but has no earlier invoices."
+    }
+   }
+  ],
+  "created": 1795577904,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 168,
+   "prompt_tokens": 2990,
+   "total_tokens": 3408,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 250,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 2990
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15150400
+  }
+ }
+}

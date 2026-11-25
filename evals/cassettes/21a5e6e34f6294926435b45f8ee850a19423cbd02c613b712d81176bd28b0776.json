@@ -1,0 +1,51 @@
+{
+ "request_sha256": "21a5e6e34f6294926435b45f8ee850a19423cbd02c613b712d81176bd28b0776",
+ "response": {
+  "id": "d32dad10-98d7-9353-a398-fcea67be6a4c",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"high\",\"signals\":[{\"kind\":\"payment_redirect\",\"quote\":\"Please note our bank details have changed. Kindly remit payment for the invoice below to our new account:\",\"why\":\"The document asks AP to send this payment to a newly stated bank account, which is a classic payment-diversion request.\"},{\"kind\":\"payment_redirect\",\"quote\":\"Bank: First Coastal Bank\\n  Routing: 021000089\\n  Account: 4481 2290 7731\",\"why\":\"Specific new routing and account numbers are given as the remit destination and are not explained by the vendor master.\"},{\"kind\":\"vendor_change\",\"quote\":\"From: billing@precision-parts-payments.com\",\"why\":\"The sender address does not match Precision Parts Ltd., and the vendor master lists no alias that would explain that identity.\"}],\"summary\":\"Do not pay. This known vendor's invoice is paired with a request to use new bank details and arrives from a sender domain the vendor master does not recognize.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will analyze the invoice for fraud signals.\n\nThe invoice shows a new bank account for remittance. The vendor is Precision Parts Ltd. The total is $3,500.\n\nThe vendor is known and has no aliases. The email domain differs from the vendor name, which suggests a payment redirect signal. No pressure language was found.\n\nThe email address billing@precision-parts-payments.com may indicate a separate remit-to party. The instruction \"Please confirm once your records are updated\" is too mild to qualify as pressure language.\n\nThe greeting \"Hello Accounts Payable\" is normal and does not indicate instruction injection. The sender email domain differs from the vendor name, which may signal a vendor change.\n\nThe conflicting sender identity confirms a vendor change signal. Payment redirect is the primary fraud signal and indicates classic business email compromise. The level is high, so payment should be withheld."
+    }
+   }
+  ],
+  "created": 1795579287,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 221,
+   "prompt_tokens": 2303,
+   "total_tokens": 3701,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1177,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2303
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 38304400
+  }
+ }
+}

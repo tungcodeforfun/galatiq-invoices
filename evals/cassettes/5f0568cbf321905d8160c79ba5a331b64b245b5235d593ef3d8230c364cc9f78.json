@@ -1,0 +1,51 @@
+{
+ "request_sha256": "5f0568cbf321905d8160c79ba5a331b64b245b5235d593ef3d8230c364cc9f78",
+ "response": {
+  "id": "7561aa47-1986-91cd-aa57-9faa4644fa84",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(line=1)\",\"resolve_item(line=2)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_price(line=1)\",\"check_price(line=2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Summit Manufacturing Co.)\"],\"concerns\":[\"Subtotal, tax, and shipping are blank; the stated total equals the sum of the two line amounts only, which check_totals accepted.\",\"Vendor is known (first seen 2023-04-22) but the ledger lists no earlier invoices.\"],\"summary\":\"INV-1011 from Summit Manufacturing Co. was checked against the catalog, stock, prices, totals, the processed-invoice ledger, and the vendor master. Both lines matched WidgetA and WidgetB exactly; stock, prices, totals, and duplicate checks all came back clean.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks passed. I will report the findings in JSON schema format.\n\nItems matched exactly. Stock and prices align with the catalog. Totals are correct despite null subtotal, tax, and shipping fields. No duplicates or aliases were found. The vendor is known and has no earlier invoices.\n\nThe vendor is known since 2023-04-22 but has no earlier invoices in the ledger. This is a mild observation for the approver. Null payment terms, notes, and revision are not concerns.\n\nThe blank tax, shipping, and subtotal fields are worth noting as observations the tools did not flag. The total equals the line sum only."
+    }
+   }
+  ],
+  "created": 1795578396,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 193,
+   "prompt_tokens": 2946,
+   "total_tokens": 3733,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 594,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2946
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 30212400
+  }
+ }
+}

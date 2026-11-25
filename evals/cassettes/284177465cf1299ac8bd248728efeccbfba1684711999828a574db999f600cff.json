@@ -1,0 +1,51 @@
+{
+ "request_sha256": "284177465cf1299ac8bd248728efeccbfba1684711999828a574db999f600cff",
+ "response": {
+  "id": "ad3d0b62-f9b6-4bb2-9e13-4d3b6723b474",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"return_to_vendor\",\"reasoning\":\"F1 is a reject-severity stock finding: WidgetB is billed for 11 units across two lines (6 and 5) against 10 on hand, so the quantity is over what we can accept and payment is blocked. Policy requires return_to_vendor for quantities over what we can accept, and the invoice is not a duplicate, corrupt, or fraudulent document that must be voided. The vendor can correct the quantity and resubmit.\",\"vendor_reply\":\"Hello Consolidated Materials Group billing team, Invoice INV-3007 cannot be processed as submitted. WidgetB appears on two lines for quantities of 6 and 5 (11 units total at $500 each; line amounts $3,000.00 and $2,500.00; invoice total $5,500.00), which is more than the quantity we can accept. Please resubmit a corrected invoice with a reduced WidgetB quantity we can accept, and with each line amount and the invoice total recalculated to match that quantity. Thank you.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The user wants to close out a rejected invoice.\n\nF1 is a reject-severity stock finding. The policy requires disposition return_to_vendor for quantities over what we can accept. The vendor must fix the excess and resubmit.\n\nThe vendor email must not reveal internal stock levels. It should only list the specific corrections needed. The WidgetB quantity of 11 exceeds the accepted amount.\n\nThe corrected invoice must reduce WidgetB to a quantity we can accept. The exact numbers are 6 and 5 units at $500 each, totaling $5,500.\n\nThe vendor email must not specify a maximum quantity. Telling them to reduce WidgetB to 10 would reveal internal stock levels.\n\nThe vendor email should ask for a corrected invoice with a reduced WidgetB quantity and matching line amounts. The audit log may cite stock levels since it is internal."
+    }
+   }
+  ],
+  "created": 1795578238,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 224,
+   "prompt_tokens": 2043,
+   "total_tokens": 3157,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 890,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2043
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 30742800
+  }
+ }
+}

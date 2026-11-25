@@ -1,26 +1,27 @@
-data/invoices/invoice_1005.json  grok-4.7 · replay · run 20261125-020647-invoice_1005-1635
+data/invoices/invoice_1005.json  grok-4.7 · replay · run 20261125-041237-invoice_1005-a5e6
   ✓ Intake      INV-1005 · Global Supply Chain Partners · 3 lines · 15225.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   12 tool calls so far
   ✓ Risk        medium · 1 signal(s)
   ✓ VP          draft 1: reject
+  ✓ Critic      revise · 1 objection(s)
+  ✓ VP          draft 2: reject
   ✓ Critic      accept
   ✓ Gate        blocked: approver rejected
   ✓ Resolution  return_to_vendor
  ID  Code            Severity  Finding                                           
  F1  STOCK_EXCEEDED  reject    GadgetX: 8 requested across 1 line(s), 5 in stock 
 ╭─ REJECTED · return_to_vendor ────────────────────────────────────────────────────────────────────╮
-│ Finding F1 rejects INV-1005 because GadgetX is billed for 8 units against 5 in stock, a quantity │
-│ over what we can accept. Policy requires return_to_vendor for F1 so the vendor can correct that  │
-│ quantity and resubmit. The invoice is not voided: F1 is correctable, and there is no duplicate,  │
-│ corrupt-data, or fraud finding.                                                                  │
+│ Finding F1 rejects INV-1005 because the GadgetX line requests 8 units, which exceeds the 5 units │
+│ in stock. Quantities over what we can accept are returned so the vendor can correct and          │
+│ resubmit. No duplicate, corrupt data, or fraud finding supports a void.                          │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
 ╭─ Draft reply to vendor ──────────────────────────────────────────────────────────────────────────╮
-│ Hello Global Supply Chain Partners billing team, we cannot process invoice INV-1005 as           │
-│ submitted. GadgetX is billed for a quantity of 8, which is more than we can accept. Please       │
-│ resubmit a corrected invoice with a lower GadgetX quantity and with the line amount, subtotal,   │
-│ tax, and total recalculated to match. Thank you.                                                 │
+│ Hello Global Supply Chain Partners billing team, we cannot accept invoice INV-1005 as submitted. │
+│ The GadgetX line shows a quantity of 8, which is more than we can accept. Please resubmit a      │
+│ corrected invoice with an acceptable GadgetX quantity and with the line amount, subtotal, tax,   │
+│ and total recalculated to match. Thank you.                                                      │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 10 model calls (replay) · 14 tool calls · 26365 tokens · $0.0276 recorded · log 
-runs/20261125-020647-invoice_1005-1635/events.jsonl · 
-runs/20261125-020647-invoice_1005-1635/report.md
+0.1s · 11 model calls (replay) · 13 tool calls · 29636 tokens · $0.0427 recorded · log 
+runs/20261125-041237-invoice_1005-a5e6/events.jsonl · 
+runs/20261125-041237-invoice_1005-a5e6/report.md

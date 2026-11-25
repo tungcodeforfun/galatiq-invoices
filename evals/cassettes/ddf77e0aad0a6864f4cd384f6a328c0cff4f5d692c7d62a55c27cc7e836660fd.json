@@ -1,0 +1,84 @@
+{
+ "request_sha256": "ddf77e0aad0a6864f4cd384f6a328c0cff4f5d692c7d62a55c27cc7e836660fd",
+ "response": {
+  "id": "e4e5d8c7-c21e-4f56-a8d2-264585b05d74",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-31906e04-25c1-4b56-9668-4f05eb577afe-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-31906e04-25c1-4b56-9668-4f05eb577afe-1",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-31906e04-25c1-4b56-9668-4f05eb577afe-2",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-31906e04-25c1-4b56-9668-4f05eb577afe-3",
+       "function": {
+        "arguments": "{\"name\":\"null\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "Validating the provided invoice.\n\nThe vendor field is null. I will still call get_vendor with the vendor name as written. I am starting parallel tool calls for resolve_item, check_totals, check_duplicate, and get_vendor."
+    }
+   }
+  ],
+  "created": 1795578565,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 33,
+   "prompt_tokens": 2273,
+   "total_tokens": 2577,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 271,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2048,
+    "image_tokens": 0,
+    "text_tokens": 2273
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 11213200
+  }
+ }
+}

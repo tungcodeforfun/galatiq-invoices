@@ -1,25 +1,25 @@
 {
  "request_sha256": "5ce5c3d3ed37221397ba2a23450c6694564dc2da2fac332ccb64a0d15995c361",
  "response": {
-  "id": "8f5191f7-8336-473c-8adf-624cec7a0e99",
+  "id": "ee2ea0a5-7122-980a-bb7c-14eb4e77d72e",
   "choices": [
    {
     "finish_reason": "stop",
     "index": 0,
     "logprobs": null,
     "message": {
-     "content": "{\"invoice_number\":\"INV-1008\",\"vendor\":\"NoProd Industries\",\"invoice_date\":\"2026-01-10\",\"due_date\":\"2026-01-20\",\"due_date_as_written\":\"2026-01-20\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"SuperGizmo\",\"quantity\":12,\"unit_price\":400,\"amount\":null,\"note\":null},{\"description\":\"MegaSprocket\",\"quantity\":6,\"unit_price\":850,\"amount\":null,\"note\":null}],\"subtotal\":null,\"tax\":null,\"shipping\":null,\"total\":9900,\"payment_terms\":null,\"notes\":\"Hi,\\n\\nPlease find the invoice details below:\\n\\nPlease process at your earliest convenience.\\n\\nBest regards,\\nAccounts Receivable\\nNoProd Industries\",\"revision\":null,\"corrections\":[]}",
+     "content": "{\"invoice_number\":\"INV-1008\",\"vendor\":\"NoProd Industries\",\"invoice_date\":\"2026-01-10\",\"due_date\":\"2026-01-20\",\"due_date_as_written\":\"2026-01-20\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"SuperGizmo\",\"quantity\":12,\"unit_price\":400,\"amount\":null,\"note\":null},{\"description\":\"MegaSprocket\",\"quantity\":6,\"unit_price\":850,\"amount\":null,\"note\":null}],\"subtotal\":null,\"tax\":null,\"shipping\":null,\"total\":9900,\"payment_terms\":null,\"notes\":\"Subject: Invoice Attached - Please Process\\n\\nHi,\\n\\nPlease find the invoice details below:\\n\\nPlease process at your earliest convenience.\\n\\nBest regards,\\nAccounts Receivable\\nNoProd Industries\",\"revision\":null,\"corrections\":[]}",
      "refusal": null,
      "role": "assistant",
      "annotations": null,
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I will extract the invoice data from the document and return it as JSON matching the schema.\n\nI extracted the vendor, invoice number, dates, items, and total. I also noted the free-text greeting and processing request for the notes field.\n\nI will use the exact item descriptions from the document. The amount field is null because the line shows only unit price and quantity, not a line total.\n\nThe currency is USD. Payment terms, shipping, tax, and subtotal are null. The total is 9900.00. I am deciding whether to populate due_date_as_written with the exact due date text.\n\nI will include the exact due date text in due_date_as_written. The invoice date is 2026-01-10. The vendor is NoProd Industries, not Acme. Notes will contain all free-text messages verbatim."
+     "reasoning_content": "Extracting invoice data from the document and formatting it as JSON.\n\nIdentified the vendor, invoice number, dates, line items, and total from the document. Will format the JSON using only the exact text provided.\n\nLine amounts, subtotal, tax, and shipping are null because the document only shows quantities and unit prices.\n\nPayment terms are null because the document does not state them. The notes field will contain every free-text message verbatim, including the greeting and the request to process the invoice.\n\nThe notes field will contain the full email text including the subject line, greeting, and signature. Revision is null and corrections are none."
     }
    }
   ],
-  "created": 1795571091,
+  "created": 1795578143,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -27,13 +27,13 @@
   "service_tier": "default",
   "system_fingerprint": "fp_bc4243bed6",
   "usage": {
-   "completion_tokens": 194,
+   "completion_tokens": 206,
    "prompt_tokens": 2885,
-   "total_tokens": 4050,
+   "total_tokens": 4452,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 971,
+    "reasoning_tokens": 1361,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 2885
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 37508800
+   "cost_in_usd_ticks": 45709600
   }
  }
 }

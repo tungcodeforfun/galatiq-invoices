@@ -1,0 +1,51 @@
+{
+ "request_sha256": "bef3b74aaf2d591d833f278dd84f5077cd62dc7c194af6b31a9c5c36dcdeb115",
+ "response": {
+  "id": "062fb326-9cce-9612-9b51-e9a713f4d8fc",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"resolve_item(2)\",\"resolve_item(3)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_stock(GadgetX)\",\"check_price(1)\",\"check_price(2)\",\"check_price(3)\",\"check_totals\",\"check_duplicate\",\"get_vendor(QuickShip Distributers)\"],\"concerns\":[\"Vendor is known since 2021-07-01 but the vendor lookup returned no earlier invoices, so there is no payment history to compare.\",\"Vendor master lists an alias, FastShip Ltd.; confirm the payee matches the entity on the invoice if remittance details differ.\",\"Invoice notes cite PO-20260115; no tool verified that purchase order.\"],\"summary\":\"All three lines matched catalog items (WidgetA, WidgetB, GadgetX). Stock, unit prices, totals, and duplicate checks were clean; the vendor name as written is on the master.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks passed. I will report the findings and any tool-suggested issues.\n\nAll line items, stock, and prices match. Totals are correct. No duplicates were found.\n\nThe vendor name \"QuickShip Distributers\" uses \"Distributers\" rather than \"Distributors,\" though this spelling is intentional and recorded in the master file. The vendor also has an alias, \"FastShip Ltd.\"\n\nThe vendor has been in the master since 2021-07-01, yet no prior invoices appear in the ledger. This gap is unusual and may warrant a flag.\n\nShipping is null rather than zero, though totals still reconcile correctly.\n\nThe invoice number contains a space: \"INV 1012\". The due date matches its written form.\n\nThe invoice references purchase order PO-20260115, which no tool verified."
+    }
+   }
+  ],
+  "created": 1795578505,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 215,
+   "prompt_tokens": 3168,
+   "total_tokens": 4209,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 826,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 3168
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 29070000
+  }
+ }
+}

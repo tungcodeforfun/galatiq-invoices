@@ -1,0 +1,60 @@
+{
+ "request_sha256": "319f3513f8eb3bea2e60a05e967934455a701d7510a40e2fa08fc5829e5b4d4e",
+ "response": {
+  "id": "aa85e673-162b-9d9a-a466-b1f1402d8338",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-1862a725-1905-4a02-8fe1-91f936e8894d-0",
+       "function": {
+        "arguments": "{\"name\":\"Acme Industrial Supplies\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "The user wants to know whether to pay a vendor invoice.\n\nI will check the vendor record. The invoice totals reconcile despite blank subtotal and tax fields. The vendor has no earlier ledger history."
+    }
+   }
+  ],
+  "created": 1795578963,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 14,
+   "prompt_tokens": 2224,
+   "total_tokens": 2584,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 346,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1792,
+    "image_tokens": 0,
+    "text_tokens": 2224
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 13328000
+  }
+ }
+}

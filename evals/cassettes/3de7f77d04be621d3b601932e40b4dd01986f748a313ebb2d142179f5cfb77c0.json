@@ -1,0 +1,92 @@
+{
+ "request_sha256": "3de7f77d04be621d3b601932e40b4dd01986f748a313ebb2d142179f5cfb77c0",
+ "response": {
+  "id": "d2f1b98c-e387-48e7-8be1-fba99b2ed297",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-0887f505-f5df-4a52-895c-f326e6ee8057-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-0887f505-f5df-4a52-895c-f326e6ee8057-1",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-0887f505-f5df-4a52-895c-f326e6ee8057-2",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-0887f505-f5df-4a52-895c-f326e6ee8057-3",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-0887f505-f5df-4a52-895c-f326e6ee8057-4",
+       "function": {
+        "arguments": "{\"name\":\"Widgets Inc.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "Validating the invoice using the available tools.\n\nPlanning parallel tool calls for the invoice validation. resolve_item will run on both lines simultaneously. check_totals, check_duplicate, and get_vendor can execute together since they do not depend on item resolution results."
+    }
+   }
+  ],
+  "created": 1795577312,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 45,
+   "prompt_tokens": 2304,
+   "total_tokens": 2561,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 212,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2304
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15034800
+  }
+ }
+}

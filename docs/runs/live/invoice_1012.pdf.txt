@@ -1,4 +1,4 @@
-data/invoices/invoice_1012.pdf  grok-4.7 · live · run 20261125-015011-invoice_1012-7203
+data/invoices/invoice_1012.pdf  grok-4.7 · cached · run 20261125-034742-invoice_1012-b907
   ✓ Intake      INV 1012 · QuickShip Distributers · 3 lines · 9975.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   12 tool calls so far
@@ -13,10 +13,10 @@ Paid 9975.0 to QuickShip Distributers
  F2  OCR_CORRECTED   info      invoice_date: '26-Jan-2O26' read as '2026-01-26';                    
                                line_items[1].amount: '$3,500.O0' read as '3500.00'                  
 ╭─ PAID ───────────────────────────────────────────────────────────────────────────────────────────╮
-│ Paid 9,975.00 to QuickShip Distributers: Approve INV 1012 for $9,975. Vendor is on file, amounts │
-│ tie out, risk is low, and the two info findings (near-threshold total and OCR letter-O fixes) do │
-│ not make the invoice unsound.                                                                    │
+│ Paid 9,975.00 to QuickShip Distributers: Approve INV 1012 for $9,975 to QuickShip Distributers.  │
+│ Math reconciles, OCR corrections are cosmetic, the vendor is on file, and the low-risk memo plus │
+│ info findings do not show a reason to withhold payment.                                          │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-85.1s · 9 model calls (live) · 14 tool calls · 24635 tokens · $0.0221 · log 
-runs/20261125-015011-invoice_1012-7203/events.jsonl · 
-runs/20261125-015011-invoice_1012-7203/report.md
+119.2s · 9 model calls (live) · 14 tool calls · 25435 tokens · $0.0294 · log 
+runs/20261125-034742-invoice_1012-b907/events.jsonl · 
+runs/20261125-034742-invoice_1012-b907/report.md

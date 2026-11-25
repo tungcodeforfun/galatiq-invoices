@@ -1,0 +1,51 @@
+{
+ "request_sha256": "1d5c50c918e2a4abe01f3f85fe29ee8527b40475a9d1c5d9bf060ae698e884ed",
+ "response": {
+  "id": "ecff913d-e52e-97e2-a0b6-c606c65dbd4f",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(line 1)\",\"resolve_item(line 2)\",\"check_stock(WidgetB)\",\"check_stock(GadgetX)\",\"check_price(line 1)\",\"check_price(line 2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Precision Parts Ltd.)\"],\"concerns\":[\"Invoice notes ask AP to update bank details and remit to a new First Coastal Bank account. Vendor master lookup does not confirm banking data, and the vendor has no earlier invoices on file to compare against, so treat the change as unverified and confirm out of band before payment.\"],\"summary\":\"Both lines matched the catalog exactly; stock, prices, totals, and duplicate checks were clean, and Precision Parts Ltd. is a known vendor. The only issue for the approver is the unverified bank-account change in the notes.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks passed. I will report the findings in the JSON schema.\n\nThe invoice notes request a bank account change and include routing and account numbers. This creates a payment diversion risk that automated tools would not flag. I will flag this manually in the report.\n\nThe vendor has been known since January 2024, yet no prior invoices appear in the ledger. This absence of historical transaction data is a mild concern.\n\nThe null tax and shipping fields are not a concern. The tools already verified that the line items sum to the stated total."
+    }
+   }
+  ],
+  "created": 1795579694,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 189,
+   "prompt_tokens": 3145,
+   "total_tokens": 3807,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 473,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2816,
+    "image_tokens": 0,
+    "text_tokens": 3145
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 20529200
+  }
+ }
+}

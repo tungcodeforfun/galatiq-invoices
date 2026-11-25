@@ -1,0 +1,100 @@
+{
+ "request_sha256": "153118948469be34d873b996159c0759b2a5301dd442fd11461a94e9dea7ac00",
+ "response": {
+  "id": "64a6835c-0ae6-4571-9182-4e720f3108cb",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[],\"concerns\":[],\"summary\":\"Running stock and price checks.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-cc6a2e35-b17c-478f-b170-e8e908a2924b-6",
+       "function": {
+        "arguments": "{\"item\":\"WidgetA\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-cc6a2e35-b17c-478f-b170-e8e908a2924b-7",
+       "function": {
+        "arguments": "{\"item\":\"WidgetB\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-cc6a2e35-b17c-478f-b170-e8e908a2924b-8",
+       "function": {
+        "arguments": "{\"item\":\"GadgetX\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-cc6a2e35-b17c-478f-b170-e8e908a2924b-9",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-cc6a2e35-b17c-478f-b170-e8e908a2924b-10",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-cc6a2e35-b17c-478f-b170-e8e908a2924b-11",
+       "function": {
+        "arguments": "{\"line\":3}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "All three items matched exactly."
+    }
+   }
+  ],
+  "created": 1795579596,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 87,
+   "prompt_tokens": 2799,
+   "total_tokens": 2923,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 37,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2048,
+    "image_tokens": 0,
+    "text_tokens": 2799
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 11118000
+  }
+ }
+}

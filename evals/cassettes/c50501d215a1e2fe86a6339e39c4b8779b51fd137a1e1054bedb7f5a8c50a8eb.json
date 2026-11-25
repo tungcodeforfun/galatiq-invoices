@@ -1,0 +1,51 @@
+{
+ "request_sha256": "c50501d215a1e2fe86a6339e39c4b8779b51fd137a1e1054bedb7f5a8c50a8eb",
+ "response": {
+  "id": "292c85e3-8415-4c55-828f-93dc7f872be8",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"No deception or manipulation language appears on the invoice beyond the automated data-integrity finding on the negative line quantity. Nothing here indicates pressure, payment redirection, vendor identity conflict, or instructions aimed at the approver.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I am analyzing the invoice as a fraud analyst.\n\nThe invoice shows a negative quantity of -4 on WidgetA. This triggers the DATA_INTEGRITY finding. I will format my response as JSON.\n\nI will not restate the automated finding as a fraud signal. The invoice contains no pressure language, payment redirects, instruction injection, or vendor changes. I am considering whether to look up the vendor."
+    }
+   }
+  ],
+  "created": 1795578680,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 56,
+   "prompt_tokens": 2208,
+   "total_tokens": 2590,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 326,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1920,
+    "image_tokens": 0,
+    "text_tokens": 2208
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 13015200
+  }
+ }
+}

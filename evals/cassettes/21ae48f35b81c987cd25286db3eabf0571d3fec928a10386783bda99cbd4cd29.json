@@ -1,0 +1,51 @@
+{
+ "request_sha256": "21ae48f35b81c987cd25286db3eabf0571d3fec928a10386783bda99cbd4cd29",
+ "response": {
+  "id": "75a2671a-ca2e-909f-bb53-d20cebc055dd",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"F3 is a reject finding: FakeItem requests 100 units against 0 in stock, so the payment gate blocks this invoice.\",\"finding_ids\":[\"F3\"]},{\"text\":\"F4 is a reject finding: FakeItem is a catalog item we hold none of and never price, so the $100,000 line cannot be validated.\",\"finding_ids\":[\"F4\"]},{\"text\":\"High-risk memo must be rejected. F5 and the memo cite penalty threats, Immediate terms, and a preferred wire; do not pay until the vendor and payment instructions are independently verified.\",\"finding_ids\":[\"F5\"]},{\"text\":\"F2 warns Fraudster LLC is not in the vendor master. Lookup confirms it is unknown with no earlier invoices, so there is no on-file vendor whose checks pass.\",\"finding_ids\":[\"F2\"]},{\"text\":\"F1 warns the due date is written as 'yesterday' rather than a calendar date, which matches the rushed Immediate terms and is not a sound basis for a $100,000 payment.\",\"finding_ids\":[\"F1\"]}],\"addressed_findings\":[\"F1\",\"F2\",\"F3\",\"F4\",\"F5\"],\"summary\":\"Reject INV-1003 for $100,000 from Fraudster LLC. Reject-severity stock and fraud findings plus a high-risk memo block payment; the vendor is not on file.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The user wants to know whether to pay this vendor invoice.\n\nI am reviewing the payment policy. A \"reject\" finding blocks payment automatically. Warnings and info findings do not block payment on their own. I must weigh them carefully. Invoices over $10,000 require extra scrutiny.\n\nTwo warnings stand out: the due date \"yesterday\" is not a calendar date, and \"Fraudster LLC\" is missing from the vendor master. A medium risk memo does not automatically block payment if the vendor checks all pass; I will weigh it against the evidence. I must cite finding IDs in every reason and list every finding considered.\n\nThree additional findings are severe. The invoice requests 100 units of a catalog item the company holds none of and never prices. The risk analyst rated the memo as high. Because the invoice total is $100,000, it falls under extra scrutiny. Reject-severity findings and the high-risk memo together require rejecting this invoice."
+    }
+   }
+  ],
+  "created": 1795577991,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_c60958d81f66f847",
+  "usage": {
+   "completion_tokens": 309,
+   "prompt_tokens": 2577,
+   "total_tokens": 3905,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1019,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2577
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 38739600
+  }
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "request_sha256": "caf097729c25f9260a5308b5974c92d262cf045e8c2838374bded4bf62131aef",
+ "response": {
+  "id": "636ee48c-f6c4-42be-9239-b01f25c463b5",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-6529be31-3972-4655-9636-2702fa86b2c5-0",
+       "function": {
+        "arguments": "{\"name\":\"Widgets Inc.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I am acting as VP of Finance to decide whether to pay this invoice.\n\nThe invoice totals $3,780 with no findings. The risk memo rates this as low risk because Widgets Inc. is a known vendor and the terms are ordinary Net 30. I am now reviewing the payment policy."
+    }
+   }
+  ],
+  "created": 1795577915,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 13,
+   "prompt_tokens": 2232,
+   "total_tokens": 2527,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 282,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2232
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15320400
+  }
+ }
+}

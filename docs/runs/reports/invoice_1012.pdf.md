@@ -1,8 +1,8 @@
 # invoice_1012.pdf: PAID
 
-Paid 9,975.00 to QuickShip Distributers: Approve INV 1012 for $9,975. Vendor is on file, amounts tie out, risk is low, and the two info findings (near-threshold total and OCR letter-O fixes) do not make the invoice unsound.
+Paid 9,975.00 to QuickShip Distributers: Approve INV 1012 for $9,975 to QuickShip Distributers. Math reconciles, OCR corrections are cosmetic, the vendor is on file, and the low-risk memo plus info findings do not show a reason to withhold payment.
 
-Run `20261125-015011-invoice_1012-7203` · seconds 85.1 · llm_calls 9 · tool_calls 14 · tiers ['live'] · tokens 24635 · cost_usd 0.0221
+Run `20261125-034742-invoice_1012-b907` · seconds 119.2 · llm_calls 9 · tool_calls 14 · tiers ['live'] · tokens 25435 · cost_usd 0.0294
 
 ## Extracted invoice
 
@@ -59,25 +59,25 @@ Run `20261125-015011-invoice_1012-7203` · seconds 85.1 · llm_calls 9 · tool_c
 ```json
 {
   "checks_run": [
-    "resolve_item(line 1)",
-    "resolve_item(line 2)",
-    "resolve_item(line 3)",
+    "resolve_item(1)",
+    "resolve_item(2)",
+    "resolve_item(3)",
     "check_stock(WidgetA)",
     "check_stock(WidgetB)",
     "check_stock(GadgetX)",
-    "check_price(line 1)",
-    "check_price(line 2)",
-    "check_price(line 3)",
+    "check_price(1)",
+    "check_price(2)",
+    "check_price(3)",
     "check_totals",
     "check_duplicate",
     "get_vendor(QuickShip Distributers)"
   ],
   "concerns": [
-    "Vendor is on the master (alias FastShip Ltd., first seen 2021-07-01) but has no earlier invoices in the ledger.",
-    "Stock checks passed, but remaining on-hand after this invoice would be thin: WidgetA 3, WidgetB 3, GadgetX 1.",
-    "Shipping is null rather than an explicit amount; totals still reconciled with tax of 475."
+    "Vendor is known since 2021-07-01 but the vendor lookup returned no earlier invoices, so there is no payment history to compare.",
+    "Vendor master lists an alias, FastShip Ltd.; confirm the payee matches the entity on the invoice if remittance details differ.",
+    "Invoice notes cite PO-20260115; no tool verified that purchase order."
   ],
-  "summary": "All three lines matched the catalog (WidgetA, WidgetB, GadgetX). Prices, summed quantities vs stock, totals, and duplicate lookup were clean; vendor name as written is a known master record with no prior invoices on file."
+  "summary": "All three lines matched catalog items (WidgetA, WidgetB, GadgetX). Stock, unit prices, totals, and duplicate checks were clean; the vendor name as written is on the master."
 }
 ```
 
@@ -87,7 +87,7 @@ Run `20261125-015011-invoice_1012-7203` · seconds 85.1 · llm_calls 9 · tool_c
 {
   "level": "low",
   "signals": [],
-  "summary": "The formerly name matches an alias already on the vendor master, so it is not an unexplained vendor change. Nothing else on the invoice shows pressure, a payment redirect, injected instructions, or unusual terms beyond the automated findings."
+  "summary": "The “formerly FastShip Ltd.” line matches an alias already on the vendor master, so it is not an unexplained identity change. Nothing else on the invoice indicates pressure, payment redirection, instruction injection, or deceptive terms beyond the automated findings."
 }
 ```
 
@@ -98,18 +98,21 @@ Run `20261125-015011-invoice_1012-7203` · seconds 85.1 · llm_calls 9 · tool_c
   "action": "approve",
   "reasons": [
     {
-      "text": "Vendor QuickShip Distributers is on file (known since 2021-07-01). Line items sum to the $9,500 subtotal, tax is 5% ($475), and the $9,975 total is consistent. The low-risk memo reports no payment redirect, pressure, or unexplained vendor change.",
-      "finding_ids": []
-    },
-    {
-      "text": "F1 notes the total sits just under the $10,000 line. The invoice is still under that threshold, so the extra-scrutiny rule does not apply, and the near-threshold position alone is not a reason to withhold payment.",
+      "text": "Total is $9,975, under the $10,000 line, so the over-threshold scrutiny rule does not apply. Widget A $3,000 + Widget B $3,500 + Gadget X $3,000 = $9,500 subtotal, and 5% tax ($475) ties to $9,975. The near-threshold flag is informational only; the lines are ordinary round pricing, not a document defect.",
       "finding_ids": [
         "F1"
       ]
     },
     {
-      "text": "F2 records OCR letter-O fixes on the date and one line amount. Both normalize to values that match the rest of the invoice (26-Jan-2026 and $3,500), so the corrections do not undermine the amount.",
+      "text": "OCR fixes are O-for-0 on the invoice date (26-Jan-2026) and the Widget B amount ($3,500.00). Normalized figures match the line math and Net 30 due date (25-Feb-2026). No residual amount or date error.",
       "finding_ids": [
+        "F2"
+      ]
+    },
+    {
+      "text": "Risk memo is low, not high, so it does not require rejection. Payee QuickShip Distributers matches the vendor master (on file since 2021-07-01; alias FastShip Ltd.). No remittance change, payment redirection, or other problem appears on the invoice. Lack of prior invoices and an unverified PO reference are gaps that cannot be checked here and do not outweigh a known vendor whose checks pass.",
+      "finding_ids": [
+        "F1",
         "F2"
       ]
     }
@@ -118,7 +121,7 @@ Run `20261125-015011-invoice_1012-7203` · seconds 85.1 · llm_calls 9 · tool_c
     "F1",
     "F2"
   ],
-  "summary": "Approve INV 1012 for $9,975. Vendor is on file, amounts tie out, risk is low, and the two info findings (near-threshold total and OCR letter-O fixes) do not make the invoice unsound."
+  "summary": "Approve INV 1012 for $9,975 to QuickShip Distributers. Math reconciles, OCR corrections are cosmetic, the vendor is on file, and the low-risk memo plus info findings do not show a reason to withhold payment."
 }
 ```
 
@@ -136,8 +139,7 @@ Run `20261125-015011-invoice_1012-7203` · seconds 85.1 · llm_calls 9 · tool_c
 ```json
 {
   "approved": true,
-  "blocked_by": [],
-  "overridden": false
+  "blocked_by": []
 }
 ```
 

@@ -1,0 +1,100 @@
+{
+ "request_sha256": "76b87932c10d2496b84cf40bd59b36694cc6fed5a8f0eb60bc2feecd0df5c85b",
+ "response": {
+  "id": "affa5613-26fe-4b55-9db8-3665fd4478d4",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-9e9ec89c-7745-4eff-ab98-53a63998c3c9-6",
+       "function": {
+        "arguments": "{\"item\":\"WidgetA\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-9e9ec89c-7745-4eff-ab98-53a63998c3c9-7",
+       "function": {
+        "arguments": "{\"item\":\"WidgetB\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-9e9ec89c-7745-4eff-ab98-53a63998c3c9-8",
+       "function": {
+        "arguments": "{\"item\":\"GadgetX\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-9e9ec89c-7745-4eff-ab98-53a63998c3c9-9",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-9e9ec89c-7745-4eff-ab98-53a63998c3c9-10",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-9e9ec89c-7745-4eff-ab98-53a63998c3c9-11",
+       "function": {
+        "arguments": "{\"line\":3}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "Line 1 is Widget A. The match was normalized."
+    }
+   }
+  ],
+  "created": 1795578650,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 65,
+   "prompt_tokens": 2831,
+   "total_tokens": 2953,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 57,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2831
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15864400
+  }
+ }
+}

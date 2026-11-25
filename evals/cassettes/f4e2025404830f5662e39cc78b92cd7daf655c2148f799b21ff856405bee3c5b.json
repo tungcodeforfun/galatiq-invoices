@@ -1,0 +1,51 @@
+{
+ "request_sha256": "f4e2025404830f5662e39cc78b92cd7daf655c2148f799b21ff856405bee3c5b",
+ "response": {
+  "id": "cb0ae4e0-8bfe-9fe2-a430-e733f1ca59c1",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"approve\",\"reasons\":[{\"text\":\"Vendor Reliable Components Inc. is on file (known since 2022-03-27). Line items 10\u00d7250, 5\u00d7500, and 2\u00d7750 sum to the $6,500 subtotal and total with tax 0; dates are ordinary (invoice 2026-01-29, due 2026-02-28). Amount is under $10,000.\",\"finding_ids\":[]},{\"text\":\"Risk memo is low with no deception, payment-redirect, or identity signals. Blank currency, payment terms, and null shipping are not validated by the checks and are not enough, on the document itself, to withhold a first ledgered invoice from a long-known vendor.\",\"finding_ids\":[]}],\"addressed_findings\":[],\"summary\":\"Approve INV-1015 for $6,500 to Reliable Components Inc. Math and dates are clean, the vendor is on file, and the low-risk memo gives no reason to hold payment.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor has been tracked since March 27, 2022. No earlier invoices or aliases were found.\n\nThe invoice totals $6,500 and line items are accurate. Dates are reasonable. No findings were detected. The low-risk memo supports approval. Null currency and shipping fields cannot be validated here, but policy treats uncheckable doubts as insufficient to reject.\n\nNo findings were cited. The approval reasons will cover the vendor on file, accurate math, low risk, and the amount under threshold."
+    }
+   }
+  ],
+  "created": 1795579022,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 220,
+   "prompt_tokens": 2609,
+   "total_tokens": 3173,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 344,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2304,
+    "image_tokens": 0,
+    "text_tokens": 2609
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 17496400
+  }
+ }
+}

@@ -1,8 +1,8 @@
 # invoice_1005.json: REJECTED (return_to_vendor)
 
-Finding F1 rejects INV-1005 because GadgetX is billed for 8 units against 5 in stock, a quantity over what we can accept. Policy requires return_to_vendor for F1 so the vendor can correct that quantity and resubmit. The invoice is not voided: F1 is correctable, and there is no duplicate, corrupt-data, or fraud finding.
+Finding F1 rejects INV-1005 because the GadgetX line requests 8 units, which exceeds the 5 units in stock. Quantities over what we can accept are returned so the vendor can correct and resubmit. No duplicate, corrupt data, or fraud finding supports a void.
 
-Run `20261125-014054-invoice_1005-ef25` · seconds 108.6 · llm_calls 10 · tool_calls 14 · tiers ['live'] · tokens 26365 · cost_usd 0.0276
+Run `20261125-033438-invoice_1005-c31f` · seconds 202.6 · llm_calls 11 · tool_calls 13 · tiers ['live'] · tokens 29636 · cost_usd 0.0427
 
 ## Extracted invoice
 
@@ -51,33 +51,30 @@ Run `20261125-014054-invoice_1005-ef25` · seconds 108.6 · llm_calls 10 · tool
 | validator | check_price | {"line": 2} | {"line": 2, "item": "GadgetX", "invoiced": 750.0, "catalog": 750.0, "variance_pct": 0.0, "within_tolerance": true} |
 | validator | check_price | {"line": 3} | {"line": 3, "item": "WidgetB", "invoiced": 500.0, "catalog": 500.0, "variance_pct": 0.0, "within_tolerance": true} |
 | risk | get_vendor | {"name": "Global Supply Chain Partners"} | {"known": true, "name": "Global Supply Chain Partners", "aliases": [], "first_seen": "2024-02-19", "earlier_invoices": []} |
-| approver | get_vendor | {"name": "Global Supply Chain Partners"} | {"known": true, "name": "Global Supply Chain Partners", "aliases": [], "first_seen": "2024-02-19", "earlier_invoices": []} |
 
 ## Validator notes
 
 ```json
 {
   "checks_run": [
-    "resolve_item(line 1)",
-    "resolve_item(line 2)",
-    "resolve_item(line 3)",
+    "resolve_item(line=1)",
+    "resolve_item(line=2)",
+    "resolve_item(line=3)",
     "check_stock(WidgetA)",
     "check_stock(GadgetX)",
     "check_stock(WidgetB)",
-    "check_price(line 1)",
-    "check_price(line 2)",
-    "check_price(line 3)",
+    "check_price(line=1)",
+    "check_price(line=2)",
+    "check_price(line=3)",
     "check_totals",
     "check_duplicate",
     "get_vendor(Global Supply Chain Partners)"
   ],
   "concerns": [
-    "GadgetX is short: invoice asks for 8 and stock is 5; the stock check already marks this not ok.",
-    "WidgetB uses the full on-hand quantity (10 of 10), so the line is within stock but leaves no buffer.",
-    "Line amounts and shipping are blank on the extract; totals still reconciled (lines 14500, tax 725, stated total 15225).",
-    "Vendor is known (first seen 2024-02-19) but has no earlier invoices and no aliases."
+    "Line amounts and shipping are blank on the invoice. check_totals still reconciled the stated total, which is consistent with shipping treated as zero; confirm shipping was intentionally omitted rather than omitted in extraction.",
+    "Vendor master lists Global Supply Chain Partners as known since 2024-02-19 with no aliases and no earlier invoices on this ledger, so there is no prior payment history here to compare."
   ],
-  "summary": "All three lines matched the catalog exactly, prices were within tolerance, totals matched, and the invoice is not a duplicate. The only tool failure is GadgetX stock: 8 requested against 5 on hand."
+  "summary": "INV-1005 from Global Supply Chain Partners was checked on all three lines (WidgetA, GadgetX, WidgetB), stock, prices, totals, duplicates, and the vendor master. Prices, totals, and duplicate lookup were clean and the vendor is known; check_stock flagged GadgetX (8 requested, 5 on hand)."
 }
 ```
 
@@ -90,10 +87,10 @@ Run `20261125-014054-invoice_1005-ef25` · seconds 108.6 · llm_calls 10 · tool
     {
       "kind": "other",
       "quote": "1600 Pennsylvania Ave, Washington, DC 20500",
-      "why": "A commercial supplier listing the White House as its address is inconsistent with a real business location and may indicate a fabricated identity."
+      "why": "A commercial supplier listing the White House as its address is inconsistent with a legitimate business remit-to and suggests the document may be fabricated."
     }
   ],
-  "summary": "The vendor is known in the master since 2024, with no payment-redirect, pressure, or instruction text. The street address is the White House, which the VP should weigh before paying."
+  "summary": "The vendor name is on the master, but the invoice address is the White House, which does not fit a real supplier and is not explained by aliases or prior invoices. No payment redirect, pressure language, or instruction to the approver appears; weigh the address before paying."
 }
 ```
 
@@ -104,13 +101,60 @@ Run `20261125-014054-invoice_1005-ef25` · seconds 108.6 · llm_calls 10 · tool
   "action": "reject",
   "reasons": [
     {
-      "text": "F1 is a reject-severity stock check: GadgetX is billed for 8 units but only 5 are in stock. That finding blocks payment regardless of other factors.",
+      "text": "F1 is a reject-severity stock check: GadgetX quantity 8 exceeds the 5 units in stock. The payment gate blocks this invoice, so it cannot be paid.",
       "finding_ids": [
         "F1"
       ]
     },
     {
-      "text": "Invoice total is $15,225, so the medium risk memo is weighed explicitly. The memo flags a White House street address as inconsistent with a commercial supplier. The vendor is on file since 2024-02-19 with no aliases, no earlier invoices, and no payment-redirect or pressure language. A medium memo alone would not outweigh a vendor whose checks all pass, but they do not: F1 already requires rejection, and the address inconsistency adds identity risk rather than clearing the stock failure.",
+      "text": "Amount is $15,225, over the $10,000 scrutiny threshold. Line math reconciles (14×250 + 8×750 + 10×500 = 14,500 subtotal; tax 725; total 15,225) with blank shipping treated as zero, but that does not clear F1.",
+      "finding_ids": [
+        "F1"
+      ]
+    },
+    {
+      "text": "Medium risk memo: remit-to is 1600 Pennsylvania Ave, Washington, DC 20500 (the White House), which is not a plausible commercial supplier address. Vendor is on file since 2024-02-19 with no aliases and no prior invoices, so the address is unexplained. The memo alone would not outweigh clean checks, but checks did not pass, and the address on the document is an independent reason not to pay.",
+      "finding_ids": []
+    }
+  ],
+  "addressed_findings": [
+    "F1"
+  ],
+  "summary": "Reject INV-1005 for $15,225. F1 blocks payment because GadgetX quantity exceeds stock, and the White House remit-to in the medium risk memo is not a credible supplier address."
+}
+```
+
+## Critique 1
+
+```json
+{
+  "verdict": "revise",
+  "objections": [
+    "The claim that the medium risk memo's White House remit-to \"is an independent reason not to pay\" is not supported. Memo level is medium, not high, and a medium memo alone is not grounds to refuse a vendor on file (Global Supply Chain Partners, known since 2024-02-19). Rejection is supported only by F1."
+  ]
+}
+```
+
+## VP draft 2
+
+```json
+{
+  "action": "reject",
+  "reasons": [
+    {
+      "text": "F1 is a reject-severity stock check: GadgetX quantity 8 exceeds the 5 units in stock. The payment gate blocks this invoice, so it cannot be paid.",
+      "finding_ids": [
+        "F1"
+      ]
+    },
+    {
+      "text": "Amount is $15,225, over the $10,000 scrutiny threshold. Line math reconciles (14×250 + 8×750 + 10×500 = 14,500 subtotal; tax 725; total 15,225) with blank shipping treated as zero. That does not clear F1.",
+      "finding_ids": [
+        "F1"
+      ]
+    },
+    {
+      "text": "Medium risk memo (White House remit-to, 1600 Pennsylvania Ave) is noted and weighed. It is not high, and it is not an independent ground to refuse Global Supply Chain Partners, on file since 2024-02-19 with no aliases. Rejection rests only on F1.",
       "finding_ids": [
         "F1"
       ]
@@ -119,11 +163,11 @@ Run `20261125-014054-invoice_1005-ef25` · seconds 108.6 · llm_calls 10 · tool
   "addressed_findings": [
     "F1"
   ],
-  "summary": "Reject INV-1005 ($15,225). GadgetX quantity exceeds stock (F1, reject severity), so the payment gate blocks this invoice. The medium White House-address memo is noted and does not change that result."
+  "summary": "Reject INV-1005 for $15,225 solely because F1 blocks payment: GadgetX quantity exceeds stock. The medium risk memo is noted and does not add a separate refusal ground."
 }
 ```
 
-## Critique 1
+## Critique 2
 
 ```json
 {
@@ -139,8 +183,7 @@ Run `20261125-014054-invoice_1005-ef25` · seconds 108.6 · llm_calls 10 · tool
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -149,7 +192,7 @@ Run `20261125-014054-invoice_1005-ef25` · seconds 108.6 · llm_calls 10 · tool
 ```json
 {
   "disposition": "return_to_vendor",
-  "reasoning": "Finding F1 rejects INV-1005 because GadgetX is billed for 8 units against 5 in stock, a quantity over what we can accept. Policy requires return_to_vendor for F1 so the vendor can correct that quantity and resubmit. The invoice is not voided: F1 is correctable, and there is no duplicate, corrupt-data, or fraud finding.",
-  "vendor_reply": "Hello Global Supply Chain Partners billing team, we cannot process invoice INV-1005 as submitted. GadgetX is billed for a quantity of 8, which is more than we can accept. Please resubmit a corrected invoice with a lower GadgetX quantity and with the line amount, subtotal, tax, and total recalculated to match. Thank you."
+  "reasoning": "Finding F1 rejects INV-1005 because the GadgetX line requests 8 units, which exceeds the 5 units in stock. Quantities over what we can accept are returned so the vendor can correct and resubmit. No duplicate, corrupt data, or fraud finding supports a void.",
+  "vendor_reply": "Hello Global Supply Chain Partners billing team, we cannot accept invoice INV-1005 as submitted. The GadgetX line shows a quantity of 8, which is more than we can accept. Please resubmit a corrected invoice with an acceptable GadgetX quantity and with the line amount, subtotal, tax, and total recalculated to match. Thank you."
 }
 ```

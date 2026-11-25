@@ -1,25 +1,25 @@
 {
  "request_sha256": "5ad89705474a7bd3dcae6a62a81c1cda7ab22b40b42f6fef021a439643e5ff26",
  "response": {
-  "id": "872c4693-6b0b-9058-9a03-9617049e32ec",
+  "id": "ad9775d5-5004-4d1b-a86a-6f146a19702a",
   "choices": [
    {
     "finish_reason": "stop",
     "index": 0,
     "logprobs": null,
     "message": {
-     "content": "{\"invoice_number\":\"INV-1007\",\"vendor\":\"MegaWidgets Corp\",\"invoice_date\":\"2026-01-28\",\"due_date\":\"2026-02-28\",\"due_date_as_written\":\"02/28/2026\",\"currency\":null,\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":20,\"unit_price\":250.00,\"amount\":5000.00,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":15,\"unit_price\":500.00,\"amount\":7500.00,\"note\":null},{\"description\":\"GadgetX\",\"quantity\":3,\"unit_price\":750.00,\"amount\":2250.00,\"note\":null}],\"subtotal\":14750.00,\"tax\":885.00,\"shipping\":null,\"total\":15525.00,\"payment_terms\":null,\"notes\":null,\"revision\":null,\"corrections\":[]}",
+     "content": "{\"invoice_number\":\"INV-1007\",\"vendor\":\"MegaWidgets Corp\",\"invoice_date\":\"2026-01-28\",\"due_date\":\"2026-02-28\",\"due_date_as_written\":\"02/28/2026\",\"currency\":null,\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":20,\"unit_price\":250,\"amount\":5000,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":15,\"unit_price\":500,\"amount\":7500,\"note\":null},{\"description\":\"GadgetX\",\"quantity\":3,\"unit_price\":750,\"amount\":2250,\"note\":null}],\"subtotal\":14750,\"tax\":885,\"shipping\":null,\"total\":15525,\"payment_terms\":null,\"notes\":null,\"revision\":null,\"corrections\":[]}",
      "refusal": null,
      "role": "assistant",
      "annotations": null,
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I will extract the invoice data from the CSV into the specified JSON schema.\n\nThe CSV contains three line items and summary totals. I will extract only the exact values provided and leave any missing fields as null.\n\nI will convert dates to YYYY-MM-DD format. Non-calendar due dates become null with the original text in due_date_as_written. Numbers are plain values without currency symbols or separators. I will add corrections only for misprints, not for reformatting. Each line item maps to one document line in order.\n\nNo currency symbol appears, so currency is null. The due date is a calendar date, so due_date_as_written will not be populated.\n\nThe schema description requires due_date_as_written to contain the exact text when a due date is present. The original \"02/28/2026\" will be preserved there, while the parsed date becomes 2026-02-28.\n\nThe three line items are WidgetA (20 \u00d7 250.00), WidgetB (15 \u00d7 500.00), and GadgetX (3 \u00d7 750.00). Subtotal is 14750.00, tax is 885.00, and total is 15525.00. Notes will be null because the tax label is a field label, not free text."
+     "reasoning_content": "I will extract structured data from the invoice document.\n\nI will parse the CSV and output JSON. I will not compute or infer values. Missing fields will be null.\n\nNumbers will be plain values without currency symbols or separators. Dates will be formatted as YYYY-MM-DD. Invalid due dates become null and their original text goes into due_date_as_written. Misprints will be corrected to the intended value with a note. Each line item maps to one document line in order. Currency uses an ISO code when stated; otherwise null. Vendor is the party billing Acme, not Acme itself. Notes hold every free-text message verbatim.\n\nI am extracting the invoice number, vendor, and dates. I am weighing whether due_date_as_written should capture the original text or remain null for a valid calendar date.\n\nThe due date is a valid calendar date. It will be reformatted to YYYY-MM-DD in the due_date field. The original text goes into due_date_as_written only when the date is not a calendar date.\n\nThe due date text is present. I will include it in due_date_as_written.\n\nCurrency is null. Three line items are extracted in document order: WidgetA, WidgetB, and GadgetX. Subtotal, tax, and total lines are not line items.\n\nSubtotal is 14750.00. Tax is 885.00. Shipping, payment terms, notes, revision, and corrections are null. The 6% is a label, not a separate field."
     }
    }
   ],
-  "created": 1795571013,
+  "created": 1795578041,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -27,13 +27,13 @@
   "service_tier": "default",
   "system_fingerprint": "fp_b507827d1c19f448",
   "usage": {
-   "completion_tokens": 201,
+   "completion_tokens": 183,
    "prompt_tokens": 2908,
-   "total_tokens": 4238,
+   "total_tokens": 5204,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 1129,
+    "reasoning_tokens": 2113,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 2908
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 41031200
+   "cost_in_usd_ticks": 60737600
   }
  }
 }

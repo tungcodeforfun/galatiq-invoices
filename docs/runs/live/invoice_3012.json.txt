@@ -1,0 +1,30 @@
+data/heldout/invoice_3012.json  grok-4.7 · cached · run 20261125-034816-invoice_3012-3757
+  ✓ Intake      INV-3002 · Gadgets Co. · 2 lines · 2795.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   9 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: reject
+  ✓ Critic      accept
+  ✓ Gate        blocked: approver rejected
+  ✓ Resolution  return_to_vendor
+ ID  Code               Severity  Finding                                                           
+ F1  REVISION_CONFLICT  reject    INV-3002 was already PAID at 2,545.00; this version totals        
+                                  2,795.00 (+250.00)                                                
+╭─ REJECTED · return_to_vendor ────────────────────────────────────────────────────────────────────╮
+│ Finding F1 is a revision conflict: INV-3002 was already paid at $2,545.00, and this Revision 2   │
+│ totals $2,795.00 (+$250.00). A revision that conflicts with an invoice already processed cannot  │
+│ be paid again as a full invoice. The vendor can correct the document and resubmit so it does not │
+│ rebill the amount already paid.                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Draft reply to vendor ──────────────────────────────────────────────────────────────────────────╮
+│ Hello Gadgets Co. billing team, we cannot process INV-3002 Revision 2 as submitted. INV-3002 was │
+│ already paid at $2,545.00, and this revision totals $2,795.00, which is $250.00 higher. Please   │
+│ do not resubmit this invoice number as a replacement of the paid invoice. If the WidgetA         │
+│ quantity change is valid, send a separate supplemental invoice or debit memo for only the unpaid │
+│ $250.00 difference, showing the prior and revised WidgetA quantity, the $250.00 unit price, and  │
+│ the $250.00 amount, so we can review that increment without reprocessing the $2,545.00 already   │
+│ paid.                                                                                            │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+63.7s · 9 model calls (live) · 10 tool calls · 23416 tokens · $0.0199 · log 
+runs/20261125-034816-invoice_3012-3757/events.jsonl · 
+runs/20261125-034816-invoice_3012-3757/report.md

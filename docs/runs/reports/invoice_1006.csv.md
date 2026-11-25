@@ -1,8 +1,8 @@
 # invoice_1006.csv: PAID
 
-Paid 2,750.00 to Acme Industrial Supplies: Approve INV-1006 for $2,750. Known vendor, totals tie out, no findings, and a low-risk memo.
+Paid 2,750.00 to Acme Industrial Supplies: Approve INV-1006 for $2,750. Acme Industrial Supplies is a known vendor, the total matches the line math, and the low-risk memo has no blocking findings.
 
-Run `20261125-014243-invoice_1006-cb2b` · seconds 48.0 · llm_calls 8 · tool_calls 11 · tiers ['live'] · tokens 20415 · cost_usd 0.0151
+Run `20261125-033801-invoice_1006-d0fc` · seconds 60.9 · llm_calls 8 · tool_calls 11 · tiers ['live'] · tokens 20996 · cost_usd 0.017
 
 ## Extracted invoice
 
@@ -54,15 +54,15 @@ Run `20261125-014243-invoice_1006-cb2b` · seconds 48.0 · llm_calls 8 · tool_c
     "check_stock(WidgetB)",
     "check_price(1)",
     "check_price(2)",
-    "check_totals",
-    "check_duplicate",
+    "check_totals()",
+    "check_duplicate()",
     "get_vendor(Acme Industrial Supplies)"
   ],
   "concerns": [
-    "Vendor is known (first seen 2022-11-30) but the vendor lookup returned no earlier invoices.",
-    "Invoice currency, shipping, and both line amounts are null; totals still reconciled, so those blanks were not flagged."
+    "Vendor is known (first seen 2022-11-30) but the ledger lists no earlier invoices.",
+    "Currency, shipping, and both line amounts are null on the extraction; totals still matched the stated 2750 with no tool problem."
   ],
-  "summary": "Both lines matched the catalog exactly; stock, prices, totals, and duplicate checks all came back clean for Acme Industrial Supplies INV-1006. Nothing in the tool results failed, but the vendor has no prior invoices on file and several amount fields were blank."
+  "summary": "Checked both lines against the catalog, stock, and price, plus totals, duplicates, and the vendor master. No tool flagged a mismatch, stock issue, price variance, total error, or duplicate."
 }
 ```
 
@@ -72,7 +72,7 @@ Run `20261125-014243-invoice_1006-cb2b` · seconds 48.0 · llm_calls 8 · tool_c
 {
   "level": "low",
   "signals": [],
-  "summary": "The invoice is a routine billing from known vendor Acme Industrial Supplies with standard Net 15 terms and no language suggesting pressure, payment redirection, identity change, or reviewer manipulation. Nothing in the document itself warrants holding payment beyond the automated checks."
+  "summary": "Acme Industrial Supplies is a known vendor and the invoice shows ordinary Net 15 terms with no payment-redirect, identity conflict, or reviewer instructions. Nothing in the document suggests deception beyond the automated checks."
 }
 ```
 
@@ -83,12 +83,16 @@ Run `20261125-014243-invoice_1006-cb2b` · seconds 48.0 · llm_calls 8 · tool_c
   "action": "approve",
   "reasons": [
     {
-      "text": "Vendor Acme Industrial Supplies is on file (first seen 2022-11-30). Line math checks: 5×250 + 3×500 = 2,750, matching subtotal and total. Amount is under $10,000, automated checks returned no findings, and the risk memo is low with no pressure, redirection, or identity-change signals.",
+      "text": "Vendor Acme Industrial Supplies is on file (first seen 2022-11-30). There are no findings, and the risk memo is low: ordinary Net 15 terms, no payment redirect, identity conflict, or reviewer instructions.",
+      "finding_ids": []
+    },
+    {
+      "text": "Amount is $2,750, under the $10,000 extra-scrutiny threshold. Line math reconciles (5 x 250 = 1,250; 3 x 500 = 1,500; tax 0; total 2,750). Null extracted currency, shipping, and line amounts do not contradict the stated total.",
       "finding_ids": []
     }
   ],
   "addressed_findings": [],
-  "summary": "Approve INV-1006 for $2,750. Known vendor, totals tie out, no findings, and a low-risk memo."
+  "summary": "Approve INV-1006 for $2,750. Acme Industrial Supplies is a known vendor, the total matches the line math, and the low-risk memo has no blocking findings."
 }
 ```
 
@@ -97,8 +101,7 @@ Run `20261125-014243-invoice_1006-cb2b` · seconds 48.0 · llm_calls 8 · tool_c
 ```json
 {
   "approved": true,
-  "blocked_by": [],
-  "overridden": false
+  "blocked_by": []
 }
 ```
 

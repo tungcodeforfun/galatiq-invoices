@@ -1,7 +1,7 @@
 {
  "request_sha256": "58f2ec610536f499d49174be34d15d81f45e67329bac4dd9068aaa0e751d8adf",
  "response": {
-  "id": "a6badeb8-e172-483a-8987-fb6f32304946",
+  "id": "bbdde436-7c8b-48db-9f2e-761bbbe679c3",
   "choices": [
    {
     "finish_reason": "stop",
@@ -15,11 +15,11 @@
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I will extract the invoice data from the document and format it as JSON.\n\nI parsed the invoice fields. The due date is a calendar date, so it belongs in `due_date` and `due_date_as_written` should be null.\n\nThe due date text \"2026-01-30\" belongs in `due_date_as_written`. The currency is USD.\n\nThe line item description is \"GadgetX\". The line total is null because the invoice omits it. Subtotal, tax, and shipping are also null. The total amount is 15000.00.\n\nPayment terms are \"Net 30\". Notes and revision are null. Corrections is an empty array."
+     "reasoning_content": "I will extract the invoice data from the document into a JSON schema.\n\nI parsed the invoice fields. I will extract only exact document facts. Missing values become null. Numbers are plain numbers without currency symbols or separators. Dates are YYYY-MM-DD. A non-calendar due date becomes null with its original text preserved.\n\nI will record corrections for misprints by quoting the exact original text. Each line item appears once in document order. Currency is an ISO code or null. Vendor is the billing party. Notes contain every free-text message verbatim.\n\nThe invoice date and due date are both \"2026-01-30\". Because the due date is a valid calendar date, it does not need to be stored in due_date_as_written.\n\nThe due date text is \"2026-01-30\", so it belongs in due_date_as_written. Currency is USD. The line item is GadgetX, quantity 20, unit price 750. The amount field is null because the document omits a line total.\n\nThe \"Amt\" line is the total amount due, not a line item. Subtotal, tax, shipping, and notes are absent from the document.\n\nThe total amount is 15000.00. The document explicitly states \"Amt: $15,000.00\" as the amount due.\n\nPayment terms are \"Net 30\". Notes is null because the document contains no free-text messages. The revision field is also null. The misspelled \"INVOCE\" header is not a correction.\n\nThe total amount is 15000. The unit price is 750."
     }
    }
   ],
-  "created": 1795570576,
+  "created": 1795577354,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -29,11 +29,11 @@
   "usage": {
    "completion_tokens": 133,
    "prompt_tokens": 2820,
-   "total_tokens": 3950,
+   "total_tokens": 5002,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 997,
+    "reasoning_tokens": 2049,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 2820
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 36352800
+   "cost_in_usd_ticks": 57813600
   }
  }
 }

@@ -1,0 +1,51 @@
+{
+ "request_sha256": "f913700b7558e6003cd9182d6eabdb0e4b82a3c7994a1ebc8b819ceb4382b495",
+ "response": {
+  "id": "45dc3081-b21e-42e5-b4f8-f3e3275fc558",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"void\",\"reasoning\":\"F1 is a reject-severity duplicate: this INV-1001 matches a prior Widgets Inc. invoice with the same lines and $5,000 total that is already marked PAID. Policy requires void for duplicates so the invoice cannot be resubmitted or paid again.\",\"vendor_reply\":null}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The user wants to close out a rejected invoice.\n\nThe duplicate finding requires a void disposition. No vendor reply is needed."
+    }
+   }
+  ],
+  "created": 1795579936,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 71,
+   "prompt_tokens": 2024,
+   "total_tokens": 2302,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 207,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2024
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 13559200
+  }
+ }
+}

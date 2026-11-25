@@ -1,0 +1,60 @@
+{
+ "request_sha256": "d44166a8f845b26928a18911bb111b042f35bb82a8495e56245865ad32e4ce33",
+ "response": {
+  "id": "4c8adb0e-69a7-9803-8e55-f9751c28b60c",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-621f5eb7-fa32-4dde-ad07-7c02912e74b6-0",
+       "function": {
+        "arguments": "{\"name\":\"FastShip Ltd.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "The user wants to know whether to pay invoice INV-3014 from FastShip Ltd."
+    }
+   }
+  ],
+  "created": 1795578656,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 14,
+   "prompt_tokens": 2269,
+   "total_tokens": 2477,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 194,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2269
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 13797200
+  }
+ }
+}

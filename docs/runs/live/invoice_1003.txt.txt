@@ -1,28 +1,26 @@
-data/invoices/invoice_1003.txt  grok-4.7 · live · run 20261125-013731-invoice_1003-e8f7
+data/invoices/invoice_1003.txt  grok-4.7 · cached · run 20261125-033033-invoice_1003-132d
   ✓ Intake      INV-1003 · Fraudster LLC · 1 lines · 100000.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   6 tool calls so far
-  ✓ Risk        high · 3 signal(s)
+  ✓ Risk        high · 2 signal(s)
   ✓ VP          draft 1: reject
   ✓ Critic      accept
   ✓ Gate        blocked: approver rejected
   ✓ Resolution  void
- ID  Code            Severity  Finding                                                              
- F1  DATE_ODDITY     warn      Due date 'yesterday' is not a calendar date                          
- F2  NEW_VENDOR      warn      'Fraudster LLC' is not in the vendor master                          
- F3  STOCK_EXCEEDED  reject    FakeItem: 100 requested across 1 line(s), 0 in stock                 
- F4  FRAUD_SIGNALS   reject    FakeItem is a catalog item we hold none of and never price           
- F5  FRAUD_SIGNALS   reject    Risk analyst: The invoice demands immediate payment under penalty    
-                               threat and prefers a wire, which is classic payment-fraud pressure   
-                               rather than a routine bill. Do not pay until the request is          
-                               independently verified outside this document.                        
+ ID  Code            Severity  Finding                                                    
+ F1  DATE_ODDITY     warn      Due date 'yesterday' is not a calendar date                
+ F2  NEW_VENDOR      warn      'Fraudster LLC' is not in the vendor master                
+ F3  STOCK_EXCEEDED  reject    FakeItem: 100 requested across 1 line(s), 0 in stock       
+ F4  FRAUD_SIGNALS   reject    FakeItem is a catalog item we hold none of and never price 
+ F5  FRAUD_SIGNALS   reject    Risk analyst: Keyword screen found 2 signal(s).            
 ╭─ REJECTED · void ────────────────────────────────────────────────────────────────────────────────╮
-│ INV-1003 is voided and must not be resubmitted. Findings F4 and F5 are fraud signals: FakeItem   │
-│ is a catalog item we hold none of and never price, and the memo uses urgency, a penalty threat,  │
-│ and a wire preference as payment-fraud pressure. F1, F2, and F3 further show this is not a       │
-│ payable bill (due date 'yesterday', unknown vendor Fraudster LLC, and quantity 100 against 0 in  │
-│ stock).                                                                                          │
+│ INV-1003 is voided and must not be resubmitted. F4 and F5 are fraud signals: FakeItem is a       │
+│ catalog item we hold none of and never price, and the keyword screen matched payment-redirect    │
+│ and pressure language on the urgent wire demand. F3 (100 units requested with none on hand), F2  │
+│ (Fraudster LLC not in the vendor master), and F1 (due date written as 'yesterday') reinforce     │
+│ that this $100,000 invoice is not a legitimate payable.                                          │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-88.7s · 10 model calls (live) · 8 tool calls · 25546 tokens · $0.0237 · log 
-runs/20261125-013731-invoice_1003-e8f7/events.jsonl · 
-runs/20261125-013731-invoice_1003-e8f7/report.md
+Grok did not answer for Risk, so built-in rules handled those steps. The run log has the error.
+65.5s · 7 model calls (live) · 6 tool calls · 18571 tokens · $0.0158 · log 
+runs/20261125-033033-invoice_1003-132d/events.jsonl · 
+runs/20261125-033033-invoice_1003-132d/report.md

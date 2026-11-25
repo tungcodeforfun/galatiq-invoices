@@ -1,0 +1,51 @@
+{
+ "request_sha256": "81aef27d4710807918adb14d498d9cbd852c9eb93f4b5b6a4a02fc008959194f",
+ "response": {
+  "id": "1b8541cf-4226-4fac-b885-36d2cd92953d",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(line 1)\",\"resolve_item(line 2)\",\"resolve_item(line 3)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_stock(GadgetX)\",\"check_price(line 1)\",\"check_price(line 2)\",\"check_price(line 3)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Summit Manufacturing Co.)\"],\"concerns\":[\"Stock checks passed, but remaining stock is thin: WidgetB leaves 1 of 10 and GadgetX leaves 1 of 5 after this invoice.\",\"Vendor is known since 2023-04-22, yet earlier_invoices is empty, so there is no prior invoice history to compare against.\"],\"summary\":\"INV-3005 from Summit Manufacturing Co. was checked on all three lines (WidgetA, WidgetB, GadgetX): exact catalog matches, prices at catalog, stock sufficient, totals consistent, and no duplicate. No tool flagged a problem; only tight remaining stock and a lack of prior invoices stand out for the approver.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks passed. I will report the findings and any tool results that require manual review.\n\nStock levels are tight but sufficient. WidgetA has 12 of 15 units, WidgetB has 9 of 10, and GadgetX has 4 of 5. Prices match the catalog exactly. Totals check out with no duplicates. The vendor is known since April 2023, though earlier invoices are not listed.\n\nThe empty earlier invoices list may indicate the ledger only tracks recent transactions. WidgetB and GadgetX will each have just one unit remaining after this order. The 30-day interval between invoice and due dates matches the Net 30 payment terms."
+    }
+   }
+  ],
+  "created": 1795578094,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 243,
+   "prompt_tokens": 3187,
+   "total_tokens": 3938,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 508,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 3187
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 23283200
+  }
+ }
+}

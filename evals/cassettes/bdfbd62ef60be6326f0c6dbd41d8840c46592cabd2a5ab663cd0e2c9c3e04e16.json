@@ -1,0 +1,51 @@
+{
+ "request_sha256": "bdfbd62ef60be6326f0c6dbd41d8840c46592cabd2a5ab663cd0e2c9c3e04e16",
+ "response": {
+  "id": "2937e038-0202-9909-a689-e8589b38a814",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"Invoice INV-3002 from Gadgets Co. is a routine Net 30 bill with no pressure language, payment redirection, conflicting vendor identity, or text aimed at the reviewer. Nothing here suggests deception beyond the automated checks, which found no issues.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor is known. First seen on 2023-06-12. No aliases or earlier invoices found."
+    }
+   }
+  ],
+  "created": 1795577959,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 63,
+   "prompt_tokens": 2631,
+   "total_tokens": 2877,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 183,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2631
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 17034000
+  }
+ }
+}

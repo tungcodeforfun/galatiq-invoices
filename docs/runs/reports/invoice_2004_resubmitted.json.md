@@ -1,8 +1,8 @@
 # invoice_2004_resubmitted.json: REJECTED (void)
 
-INV-1101 is rejected under finding F1 as a duplicate of INV-1001, which is already PAID, with the same vendor, line items, and $5,000 total. Policy requires void for duplicates so the invoice cannot be resubmitted. The payment gate blocks this invoice regardless of other factors.
+Finding F1 flags INV-1101 as a reject-severity duplicate of paid invoice INV-1001: same vendor, lines, and $5,000 total. Policy requires void for duplicates, so this invoice must not be paid or resubmitted. The payment gate blocks it regardless of other factors.
 
-Run `20261125-020347-invoice_2004_resubmitted-dcc3` · seconds 54.4 · llm_calls 9 · tool_calls 10 · tiers ['live'] · tokens 22768 · cost_usd 0.0178
+Run `20261125-040203-invoice_2004_resubmitted-7eed` · seconds 50.6 · llm_calls 8 · tool_calls 9 · tiers ['live'] · tokens 20575 · cost_usd 0.0176
 
 ## Extracted invoice
 
@@ -46,7 +46,6 @@ Run `20261125-020347-invoice_2004_resubmitted-dcc3` · seconds 54.4 · llm_calls
 | validator | check_stock | {"item": "WidgetB"} | {"item": "WidgetB", "lines": [2], "requested": 5.0, "in_stock": 10, "ok": true} |
 | validator | check_price | {"line": 1} | {"line": 1, "item": "WidgetA", "invoiced": 250.0, "catalog": 250.0, "variance_pct": 0.0, "within_tolerance": true} |
 | validator | check_price | {"line": 2} | {"line": 2, "item": "WidgetB", "invoiced": 500.0, "catalog": 500.0, "variance_pct": 0.0, "within_tolerance": true} |
-| approver | get_vendor | {"name": "Widgets Inc."} | {"known": true, "name": "Widgets Inc.", "aliases": [], "first_seen": "2023-03-01", "earlier_invoices": [{"number": "INV-1001", "total": 5000.0, "status": "PAID" |
 
 ## Validator notes
 
@@ -64,10 +63,10 @@ Run `20261125-020347-invoice_2004_resubmitted-dcc3` · seconds 54.4 · llm_calls
     "get_vendor(Widgets Inc.)"
   ],
   "concerns": [
-    "Line amounts and shipping are blank on the extracted invoice; totals still matched after recomputation, so those blanks were not recorded as mismatches.",
-    "Vendor history lists INV-1016 as rejected and returned to vendor. That history was not tied to these lines by any check."
+    "Line amounts and shipping are blank on the invoice; recomputed totals still match, but the source document is incomplete.",
+    "Vendor history shows INV-1016 was rejected and returned; unrelated to this match but worth knowing if the vendor disputes this hold."
   ],
-  "summary": "Both lines matched WidgetA and WidgetB; stock and unit prices were within catalog limits, and stated totals reconciled. check_duplicate reports this as a duplicate of already-paid INV-1001."
+  "summary": "Both lines match catalog items WidgetA and WidgetB at catalog price, stock is sufficient, and stated totals reconcile. check_duplicate flags this as a duplicate of INV-1001, which vendor history shows is already PAID for the same $5000 total, so it should not be paid again."
 }
 ```
 
@@ -77,7 +76,7 @@ Run `20261125-020347-invoice_2004_resubmitted-dcc3` · seconds 54.4 · llm_calls
 {
   "level": "low",
   "signals": [],
-  "summary": "The invoice itself shows ordinary terms and no payment-redirect, pressure, vendor-identity conflict, or instruction aimed at the reviewer. The duplicate finding is already covered by automated checks and is not restated here."
+  "summary": "The invoice text has ordinary Net 15 terms and no pressure language, payment redirect, instruction injection, or conflicting vendor identity. Nothing beyond the automated duplicate finding warrants a separate fraud signal."
 }
 ```
 
@@ -88,7 +87,7 @@ Run `20261125-020347-invoice_2004_resubmitted-dcc3` · seconds 54.4 · llm_calls
   "action": "reject",
   "reasons": [
     {
-      "text": "F1 is a reject-severity duplicate: same vendor, line items, and $5,000 total as INV-1001, which is already PAID. The payment gate blocks this invoice regardless of any other factor.",
+      "text": "F1 is a reject-severity duplicate: same vendor, lines, and $5,000 total as INV-1001, which is already paid. The payment gate blocks this regardless of other factors.",
       "finding_ids": [
         "F1"
       ]
@@ -97,7 +96,7 @@ Run `20261125-020347-invoice_2004_resubmitted-dcc3` · seconds 54.4 · llm_calls
   "addressed_findings": [
     "F1"
   ],
-  "summary": "Reject INV-1101. It duplicates paid invoice INV-1001 (same vendor, lines, and $5,000 total), and that reject-severity finding blocks payment. Vendor is on file; the low risk memo does not change the duplicate block."
+  "summary": "Reject INV-1101. It duplicates paid invoice INV-1001 (same vendor, lines, and total), and a reject-severity duplicate must not be paid."
 }
 ```
 
@@ -117,8 +116,7 @@ Run `20261125-020347-invoice_2004_resubmitted-dcc3` · seconds 54.4 · llm_calls
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -127,7 +125,7 @@ Run `20261125-020347-invoice_2004_resubmitted-dcc3` · seconds 54.4 · llm_calls
 ```json
 {
   "disposition": "void",
-  "reasoning": "INV-1101 is rejected under finding F1 as a duplicate of INV-1001, which is already PAID, with the same vendor, line items, and $5,000 total. Policy requires void for duplicates so the invoice cannot be resubmitted. The payment gate blocks this invoice regardless of other factors.",
+  "reasoning": "Finding F1 flags INV-1101 as a reject-severity duplicate of paid invoice INV-1001: same vendor, lines, and $5,000 total. Policy requires void for duplicates, so this invoice must not be paid or resubmitted. The payment gate blocks it regardless of other factors.",
   "vendor_reply": null
 }
 ```

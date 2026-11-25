@@ -1,0 +1,92 @@
+{
+ "request_sha256": "6c8cc5556f867d6e7cc906e3ba2d44a0718c1f4a7f36d0c86b8860aa1ca18df1",
+ "response": {
+  "id": "08b0fb28-d066-4c94-9fe1-5f5065791b7f",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-0c476b16-965c-4c60-aa85-b21213ee4e55-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-0c476b16-965c-4c60-aa85-b21213ee4e55-1",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-0c476b16-965c-4c60-aa85-b21213ee4e55-2",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-0c476b16-965c-4c60-aa85-b21213ee4e55-3",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-0c476b16-965c-4c60-aa85-b21213ee4e55-4",
+       "function": {
+        "arguments": "{\"name\":\"TechParts International\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will validate the invoice using the available tools.\n\nI'll run resolve_item on both lines first. Then I'll check totals, duplicates, and vendor details in parallel. Stock and price checks will follow once the catalog items are known."
+    }
+   }
+  ],
+  "created": 1795578922,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 45,
+   "prompt_tokens": 2304,
+   "total_tokens": 2556,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 207,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2048,
+    "image_tokens": 0,
+    "text_tokens": 2304
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 10363200
+  }
+ }
+}

@@ -1,7 +1,7 @@
 {
  "request_sha256": "0c81e43e1c03afce729bb4c365436eaf441ccc2af73fde5c8625709697cf5bdf",
  "response": {
-  "id": "be940160-2f91-42e4-b932-b027feef9263",
+  "id": "06c90cfb-6215-9f3f-b1c0-735343612075",
   "choices": [
    {
     "finish_reason": "tool_calls",
@@ -16,7 +16,7 @@
      "function_call": null,
      "tool_calls": [
       {
-       "id": "call-2c63c032-fef6-4ba3-a38c-34b1b2e09066-0",
+       "id": "call-045af8a6-d1d3-4382-a34c-c294225e1aa0-0",
        "function": {
         "arguments": "{\"name\":\"Acme Industrial Supplies\"}",
         "name": "get_vendor"
@@ -24,11 +24,11 @@
        "type": "function"
       }
      ],
-     "reasoning_content": "I am analyzing the invoice for fraud signals.\n\nThe automated checks found no issues. I am now looking for pressure language and payment redirect signals."
+     "reasoning_content": "I am reviewing the invoice as a fraud analyst."
     }
    }
   ],
-  "created": 1795570996,
+  "created": 1795577918,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -38,11 +38,11 @@
   "usage": {
    "completion_tokens": 14,
    "prompt_tokens": 2108,
-   "total_tokens": 2356,
+   "total_tokens": 2331,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 234,
+    "reasoning_tokens": 209,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -54,7 +54,7 @@
     "text_tokens": 2108
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 13518400
+   "cost_in_usd_ticks": 13008400
   }
  }
 }

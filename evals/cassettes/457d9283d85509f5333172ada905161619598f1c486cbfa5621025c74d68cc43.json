@@ -1,0 +1,60 @@
+{
+ "request_sha256": "457d9283d85509f5333172ada905161619598f1c486cbfa5621025c74d68cc43",
+ "response": {
+  "id": "f95bc1ad-91db-9bef-a6e2-44a9255e3efd",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-2d090927-9adc-44d8-9d3c-1bf7c1a0f921-0",
+       "function": {
+        "arguments": "{\"name\":\"Reliable Components Inc.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "Reviewing the invoice details and risk memo to determine whether to approve payment.\n\nThe invoice totals $1,620.00 and checks out. The vendor has been on the master since 2022-03-27 with no earlier invoices. The risk memo is low risk. No issues warrant holding payment."
+    }
+   }
+  ],
+  "created": 1795578069,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 14,
+   "prompt_tokens": 2211,
+   "total_tokens": 2489,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 264,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1792,
+    "image_tokens": 0,
+    "text_tokens": 2211
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 11566800
+  }
+ }
+}

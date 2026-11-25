@@ -1,0 +1,68 @@
+{
+ "request_sha256": "90e42e9608c60f1737eb781730076588f4954deef6767711adf15456efdaf458",
+ "response": {
+  "id": "184e22fa-1a03-9f1c-94db-4bca5465fc9c",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-d5cf617b-7ad7-46f1-abd4-9b921fcc788b-4",
+       "function": {
+        "arguments": "{\"item\":\"WidgetA\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-d5cf617b-7ad7-46f1-abd4-9b921fcc788b-5",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will validate the provided invoice."
+    }
+   }
+  ],
+  "created": 1795578052,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 22,
+   "prompt_tokens": 2441,
+   "total_tokens": 2586,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 123,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2441
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 8459200
+  }
+ }
+}

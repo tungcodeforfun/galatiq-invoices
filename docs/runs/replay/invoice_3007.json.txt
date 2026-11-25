@@ -1,0 +1,29 @@
+data/heldout/invoice_3007.json  grok-4.7 · replay · run 20261125-041257-invoice_3007-b44c
+  ✓ Intake      INV-3007 · Consolidated Materials Group · 2 lines · 5500.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   8 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: reject
+  ✓ Critic      accept
+  ✓ Gate        blocked: approver rejected
+  ✓ Resolution  return_to_vendor
+ ID  Code            Severity  Finding                                             
+ F1  STOCK_EXCEEDED  reject    WidgetB: 11 requested across 2 line(s), 10 in stock 
+╭─ REJECTED · return_to_vendor ────────────────────────────────────────────────────────────────────╮
+│ F1 is a reject-severity stock finding: WidgetB is billed for 11 units across two lines (6 and 5) │
+│ against 10 on hand, so the quantity is over what we can accept and payment is blocked. Policy    │
+│ requires return_to_vendor for quantities over what we can accept, and the invoice is not a       │
+│ duplicate, corrupt, or fraudulent document that must be voided. The vendor can correct the       │
+│ quantity and resubmit.                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Draft reply to vendor ──────────────────────────────────────────────────────────────────────────╮
+│ Hello Consolidated Materials Group billing team, Invoice INV-3007 cannot be processed as         │
+│ submitted. WidgetB appears on two lines for quantities of 6 and 5 (11 units total at $500 each;  │
+│ line amounts $3,000.00 and $2,500.00; invoice total $5,500.00), which is more than the quantity  │
+│ we can accept. Please resubmit a corrected invoice with a reduced WidgetB quantity we can        │
+│ accept, and with each line amount and the invoice total recalculated to match that quantity.     │
+│ Thank you.                                                                                       │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+0.0s · 9 model calls (replay) · 9 tool calls · 23163 tokens · $0.0190 recorded · log 
+runs/20261125-041257-invoice_3007-b44c/events.jsonl · 
+runs/20261125-041257-invoice_3007-b44c/report.md

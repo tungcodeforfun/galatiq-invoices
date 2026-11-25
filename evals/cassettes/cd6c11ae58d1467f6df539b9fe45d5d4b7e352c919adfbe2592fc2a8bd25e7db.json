@@ -1,0 +1,51 @@
+{
+ "request_sha256": "cd6c11ae58d1467f6df539b9fe45d5d4b7e352c919adfbe2592fc2a8bd25e7db",
+ "response": {
+  "id": "74e6624d-0494-94ad-9d93-ff68ac399889",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"approve\",\"reasons\":[{\"text\":\"Widgets Inc. has been on file since 2023-03-01 with no alias issues. Automated checks returned no findings, and the low-risk memo cites no pressure, redirection, or identity conflict.\",\"finding_ids\":[]},{\"text\":\"Line math holds: 10 x $250 plus 5 x $500 equals the $5,000 subtotal and total, tax $0, Net 15, under the $10,000 extra-scrutiny threshold.\",\"finding_ids\":[]},{\"text\":\"Vendor history shows the same INV-1001 at $5,000 as PAYMENT_FAILED with no disposition, and the duplicate check returned no_match. That is an unpaid resubmission, not a second payment of a settled bill, so it does not justify withholding payment.\",\"finding_ids\":[]}],\"addressed_findings\":[],\"summary\":\"Approve INV-1001 for $5,000 to Widgets Inc. No findings, vendor is on file, risk is low, and the prior same-number invoice failed payment and was never disposed, so this is still owed.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Vendor information is already available."
+    }
+   }
+  ],
+  "created": 1795579866,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 244,
+   "prompt_tokens": 3969,
+   "total_tokens": 4338,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 125,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 3969
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 20808000
+  }
+ }
+}

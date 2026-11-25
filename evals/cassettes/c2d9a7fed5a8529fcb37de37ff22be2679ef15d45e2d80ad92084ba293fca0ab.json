@@ -1,7 +1,7 @@
 {
  "request_sha256": "c2d9a7fed5a8529fcb37de37ff22be2679ef15d45e2d80ad92084ba293fca0ab",
  "response": {
-  "id": "de3d4da4-9a52-9762-acd5-c635f2dbae13",
+  "id": "138cda4a-84d6-4d28-b62e-c1fe5a6ae99e",
   "choices": [
    {
     "finish_reason": "tool_calls",
@@ -16,7 +16,7 @@
      "function_call": null,
      "tool_calls": [
       {
-       "id": "call-525df417-6106-4751-a9c4-700a9ae471e3-0",
+       "id": "call-a6412f26-5036-447b-b0da-4df1d10ac560-0",
        "function": {
         "arguments": "{\"name\":\"Fraudster LLC\"}",
         "name": "get_vendor"
@@ -24,11 +24,11 @@
        "type": "function"
       }
      ],
-     "reasoning_content": "I am analyzing the invoice for fraud signals.\n\nI am checking for manual fraud signals beyond the automated findings. I will flag pressure language and payment redirects.\n\nThe invoice contains two fraud signals. \"URGENT - Pay immediately to avoid penalties!!!\" is pressure language. \"Wire transfer preferred.\" is a payment redirect."
+     "reasoning_content": "I am analyzing the invoice for fraud signals.\n\nThe invoice shows a due date of \"yesterday,\" an unknown vendor, and a fake item with zero stock. The automated checks already cover stock levels, pricing, totals, dates, and vendor validation.\n\nI am checking for manual fraud signals beyond the automated checks. I will look for pressure language, payment redirects, instruction injection, vendor changes, and unusual terms. Every signal must be quoted exactly as it appears in the document."
     }
    }
   ],
-  "created": 1795570672,
+  "created": 1795577970,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -38,23 +38,23 @@
   "usage": {
    "completion_tokens": 13,
    "prompt_tokens": 2180,
-   "total_tokens": 2563,
+   "total_tokens": 2606,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 370,
+    "reasoning_tokens": 413,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
    "prompt_tokens_details": {
     "audio_tokens": 0,
     "cache_write_tokens": null,
-    "cached_tokens": 1920,
+    "cached_tokens": 0,
     "image_tokens": 0,
     "text_tokens": 2180
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 12845200
+   "cost_in_usd_ticks": 23514400
   }
  }
 }

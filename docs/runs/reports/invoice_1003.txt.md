@@ -1,8 +1,8 @@
 # invoice_1003.txt: REJECTED (void)
 
-INV-1003 is voided and must not be resubmitted. Findings F4 and F5 are fraud signals: FakeItem is a catalog item we hold none of and never price, and the memo uses urgency, a penalty threat, and a wire preference as payment-fraud pressure. F1, F2, and F3 further show this is not a payable bill (due date 'yesterday', unknown vendor Fraudster LLC, and quantity 100 against 0 in stock).
+INV-1003 is voided and must not be resubmitted. F4 and F5 are fraud signals: FakeItem is a catalog item we never price, and the invoice demands immediate wire payment under threat of penalties. F3 also rejects the 100-unit request against zero stock, while F1 and F2 show a non-calendar due date and an unknown vendor.
 
-Run `20261125-013731-invoice_1003-e8f7` · seconds 88.7 · llm_calls 10 · tool_calls 8 · tiers ['live'] · tokens 25546 · cost_usd 0.0237
+Run `20261125-033929-invoice_1003-d78e` · seconds 67.3 · llm_calls 10 · tool_calls 8 · tiers ['live', 'replay'] · tokens 26249 · cost_usd 0.0255
 
 ## Extracted invoice
 
@@ -34,7 +34,7 @@ Run `20261125-013731-invoice_1003-e8f7` · seconds 88.7 · llm_calls 10 · tool_
 | F2 | NEW_VENDOR | warn | 'Fraudster LLC' is not in the vendor master | get_vendor |
 | F3 | STOCK_EXCEEDED | reject | FakeItem: 100 requested across 1 line(s), 0 in stock | check_stock |
 | F4 | FRAUD_SIGNALS | reject | FakeItem is a catalog item we hold none of and never price | check_stock |
-| F5 | FRAUD_SIGNALS | reject | Risk analyst: The invoice demands immediate payment under penalty threat and prefers a wire, which is classic payment-fraud pressure rather than a routine bill. Do not pay until the request is independently verified outside this document. | risk |
+| F5 | FRAUD_SIGNALS | reject | Risk analyst: The invoice presses for immediate payment under threat of penalties and asks for a wire transfer. Do not pay until the vendor and payment instructions are independently verified. | risk |
 
 ## Tool calls
 
@@ -54,20 +54,20 @@ Run `20261125-013731-invoice_1003-e8f7` · seconds 88.7 · llm_calls 10 · tool_
 ```json
 {
   "checks_run": [
-    "resolve_item(1)",
+    "resolve_item(line=1)",
+    "check_totals()",
+    "check_duplicate()",
+    "get_vendor(Fraudster LLC)",
     "check_stock(FakeItem)",
-    "check_price(1)",
-    "check_totals",
-    "check_duplicate",
-    "get_vendor(Fraudster LLC)"
+    "check_price(line=1)"
   ],
   "concerns": [
-    "Vendor 'Fraudster LLC' is not in the vendor master and has no earlier invoices.",
-    "Due date is written as 'yesterday' rather than a calendar date, with payment terms 'Immediate'.",
-    "Notes pressure an urgent wire transfer to avoid penalties.",
-    "Line 1 matched catalog item FakeItem, but stock is 0 against a requested quantity of 100, and unit price could not be checked because there is no catalog price."
+    "Vendor \"Fraudster LLC\" is not in the vendor master and has no earlier invoices.",
+    "Line 1 matched catalog item FakeItem exactly, but check_price could not compare a unit price because there is no catalog price (or no unit price).",
+    "Stock check shows 100 requested and 0 on hand; that shortage is already in the tool result.",
+    "Due date is null while due_date_as_written is \"yesterday\"; payment terms are Immediate and notes demand an urgent wire. Line amount, tax, and shipping were null; totals still reconciled to the stated 100000.00."
   ],
-  "summary": "Resolved the single line to FakeItem, checked stock and price, recomputed totals, searched the ledger, and looked up the vendor. Totals match and there is no duplicate, but stock fails, price could not be verified, and the unknown vendor plus urgent wire language should be reviewed before payment."
+  "summary": "Resolved line 1 to FakeItem, checked stock and price, and ran totals, duplicate, and vendor lookup. Totals match and this invoice is not a ledger duplicate, but the vendor is unknown, price could not be verified, and quantity exceeds stock."
 }
 ```
 
@@ -80,20 +80,20 @@ Run `20261125-013731-invoice_1003-e8f7` · seconds 88.7 · llm_calls 10 · tool_
     {
       "kind": "pressure_language",
       "quote": "URGENT - Pay immediately to avoid penalties!!!",
-      "why": "Urgency plus a penalty threat is meant to push approval before normal review."
+      "why": "Threat of penalties and a demand to pay immediately are classic pressure tactics meant to rush approval before the payment can be verified."
+    },
+    {
+      "kind": "pressure_language",
+      "quote": "Payment Terms: Immediate",
+      "why": "Immediate terms reinforce the urgency and leave no normal payment window for verification."
     },
     {
       "kind": "payment_redirect",
       "quote": "Wire transfer preferred.",
-      "why": "A wire preference on the invoice itself is a common way to divert payment off the usual method."
-    },
-    {
-      "kind": "unusual_terms",
-      "quote": "Payment Terms: Immediate",
-      "why": "Immediate terms, paired with the urgency note, demand payment outside ordinary terms."
+      "why": "A wire-transfer preference on an invoice is a common way to divert funds and should be confirmed out of band before any payment."
     }
   ],
-  "summary": "The invoice demands immediate payment under penalty threat and prefers a wire, which is classic payment-fraud pressure rather than a routine bill. Do not pay until the request is independently verified outside this document."
+  "summary": "The invoice presses for immediate payment under threat of penalties and asks for a wire transfer. Do not pay until the vendor and payment instructions are independently verified."
 }
 ```
 
@@ -104,31 +104,31 @@ Run `20261125-013731-invoice_1003-e8f7` · seconds 88.7 · llm_calls 10 · tool_
   "action": "reject",
   "reasons": [
     {
-      "text": "High-risk memo: urgency, penalty threat, and wire preference are payment-fraud pressure, not a routine bill. Do not pay until independently verified outside this document.",
-      "finding_ids": [
-        "F5"
-      ]
-    },
-    {
-      "text": "F3 blocks payment: FakeItem quantity 100 with 0 in stock.",
+      "text": "F3 is a reject finding: FakeItem requests 100 units against 0 in stock, so the payment gate blocks this invoice.",
       "finding_ids": [
         "F3"
       ]
     },
     {
-      "text": "F4 blocks payment: FakeItem is a catalog item we hold none of and never price.",
+      "text": "F4 is a reject finding: FakeItem is a catalog item we hold none of and never price, so the $100,000 line cannot be validated.",
       "finding_ids": [
         "F4"
       ]
     },
     {
-      "text": "Vendor Fraudster LLC is not in the vendor master and has no prior invoices (F2).",
+      "text": "High-risk memo must be rejected. F5 and the memo cite penalty threats, Immediate terms, and a preferred wire; do not pay until the vendor and payment instructions are independently verified.",
+      "finding_ids": [
+        "F5"
+      ]
+    },
+    {
+      "text": "F2 warns Fraudster LLC is not in the vendor master. Lookup confirms it is unknown with no earlier invoices, so there is no on-file vendor whose checks pass.",
       "finding_ids": [
         "F2"
       ]
     },
     {
-      "text": "Due date 'yesterday' is not a calendar date (F1). Combined with Immediate terms and a $100,000 total, the document is not a payable bill.",
+      "text": "F1 warns the due date is written as 'yesterday' rather than a calendar date, which matches the rushed Immediate terms and is not a sound basis for a $100,000 payment.",
       "finding_ids": [
         "F1"
       ]
@@ -141,7 +141,7 @@ Run `20261125-013731-invoice_1003-e8f7` · seconds 88.7 · llm_calls 10 · tool_
     "F4",
     "F5"
   ],
-  "summary": "Reject INV-1003 ($100,000) from unknown vendor Fraudster LLC. Reject-severity stock and fraud findings plus a high-risk memo block payment."
+  "summary": "Reject INV-1003 for $100,000 from Fraudster LLC. Reject-severity stock and fraud findings plus a high-risk memo block payment; the vendor is not on file."
 }
 ```
 
@@ -161,8 +161,7 @@ Run `20261125-013731-invoice_1003-e8f7` · seconds 88.7 · llm_calls 10 · tool_
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -171,7 +170,7 @@ Run `20261125-013731-invoice_1003-e8f7` · seconds 88.7 · llm_calls 10 · tool_
 ```json
 {
   "disposition": "void",
-  "reasoning": "INV-1003 is voided and must not be resubmitted. Findings F4 and F5 are fraud signals: FakeItem is a catalog item we hold none of and never price, and the memo uses urgency, a penalty threat, and a wire preference as payment-fraud pressure. F1, F2, and F3 further show this is not a payable bill (due date 'yesterday', unknown vendor Fraudster LLC, and quantity 100 against 0 in stock).",
+  "reasoning": "INV-1003 is voided and must not be resubmitted. F4 and F5 are fraud signals: FakeItem is a catalog item we never price, and the invoice demands immediate wire payment under threat of penalties. F3 also rejects the 100-unit request against zero stock, while F1 and F2 show a non-calendar due date and an unknown vendor.",
   "vendor_reply": null
 }
 ```

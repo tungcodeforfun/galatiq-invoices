@@ -1,0 +1,92 @@
+{
+ "request_sha256": "76bcd1ad277300628888ca5eded68efc67c92ffefccbd132bfbf3a05d7c609dc",
+ "response": {
+  "id": "d61d7973-59f3-9571-9513-38f0f4a36f9c",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"summary\":\"Starting required invoice checks against catalog, ledger, and vendor master.\",\"checks_run\":[],\"concerns\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-4a7fe3c3-b221-40eb-88e6-b282c1599fc9-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-4a7fe3c3-b221-40eb-88e6-b282c1599fc9-1",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-4a7fe3c3-b221-40eb-88e6-b282c1599fc9-2",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-4a7fe3c3-b221-40eb-88e6-b282c1599fc9-3",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-4a7fe3c3-b221-40eb-88e6-b282c1599fc9-4",
+       "function": {
+        "arguments": "{\"name\":\"Widgets Inc.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will validate the invoice using the available tools.\n\nI will resolve each line item first. Then I will check stock and price for matched catalog items. Finally I will verify totals, duplicates, and vendor details."
+    }
+   }
+  ],
+  "created": 1795579331,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 73,
+   "prompt_tokens": 2304,
+   "total_tokens": 2578,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 201,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2304
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15381600
+  }
+ }
+}

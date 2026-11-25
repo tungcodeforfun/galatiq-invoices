@@ -1,7 +1,7 @@
 {
  "request_sha256": "d0739181bed116540a9806a723fe434642e1a329b738d48e6ff619327aa78924",
  "response": {
-  "id": "9d32eaba-b90c-474f-b72d-804ed68348d3",
+  "id": "27fea0c8-5401-47f6-9cdc-f7e3ab23d35c",
   "choices": [
    {
     "finish_reason": "stop",
@@ -15,11 +15,11 @@
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "Extracting invoice data from the document and formatting it as JSON.\n\nThe document contains no missing values, so null is not needed. The due date is a valid calendar date, so it will be formatted as YYYY-MM-DD.\n\nThe due date text is present in the document. It will be included in due_date_as_written.\n\nVendor is Widgets Inc. Invoice date is 2026-01-27. Currency is USD. Tax amount is 183.00. Line items are WidgetA, WidgetB, and WidgetC.\n\nShipping, notes, and revision are absent. The total is 3233. Payment terms are Net 30. No corrections were found.\n\nTax rate is omitted because it is not in the schema. The vendor address will not be placed in notes, as that field is reserved for free-text messages."
+     "reasoning_content": "I will extract the invoice data from the document and return it as JSON matching the schema.\n\nI am extracting the invoice number, vendor, dates, and line items. The due date is a calendar date, so it will be stored as both the parsed date and the exact text.\n\nThe currency is USD. The subtotal is 3050.00 and the tax amount is 183.00. Shipping, notes, revision, and corrections are null. No reformatting corrections are needed."
     }
    }
   ],
-  "created": 1795571937,
+  "created": 1795579030,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -29,23 +29,23 @@
   "usage": {
    "completion_tokens": 186,
    "prompt_tokens": 2997,
-   "total_tokens": 4591,
+   "total_tokens": 3792,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 1408,
+    "reasoning_tokens": 609,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
    "prompt_tokens_details": {
     "audio_tokens": 0,
     "cache_write_tokens": null,
-    "cached_tokens": 2688,
+    "cached_tokens": 1152,
     "image_tokens": 0,
     "text_tokens": 2997
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 39188400
+   "cost_in_usd_ticks": 30722400
   }
  }
 }

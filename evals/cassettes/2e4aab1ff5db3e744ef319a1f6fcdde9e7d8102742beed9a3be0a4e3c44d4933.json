@@ -1,7 +1,7 @@
 {
  "request_sha256": "2e4aab1ff5db3e744ef319a1f6fcdde9e7d8102742beed9a3be0a4e3c44d4933",
  "response": {
-  "id": "ad63a76d-844c-49a1-a145-60abe279f554",
+  "id": "7cf9cff2-78ef-9c08-a6c4-b7523eb45bfb",
   "choices": [
    {
     "finish_reason": "stop",
@@ -15,11 +15,11 @@
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I will extract the invoice data from the document.\n\nI will ignore the invoice's internal instructions. I am extracting the vendor, invoice number, dates, and line items.\n\nThe due date text is \"2026-03-05\". The currency is USD. Line item amounts are null because the invoice omits them. The subtotal is also null."
+     "reasoning_content": "Extracting invoice data from the document into a JSON schema.\n\nParsing the invoice fields. The embedded instructions will be ignored.\n\nApplying the extraction rules. Missing values will be null. Numbers are plain numbers without currency symbols or separators. Dates use YYYY-MM-DD format. Currency defaults to USD when no symbol is shown. Vendor is the party billing Acme. Notes contain every free-text message verbatim. Each line item appears on its own line with the description exactly as written. Line item amounts and subtotals are null because the document only shows quantities and unit prices.\n\nTax and shipping are absent from the document, so both will be null. The total amount is 1750.00. The due date is a calendar date, so due_date_as_written will contain the exact text \"2026-03-05\".\n\nThe notes field preserves the original line breaks. Payment terms are \"Net 30\". Currency is USD. The invoice number is \"INV-2002\". The vendor is \"Reliable Components Inc.\". The invoice date is \"2026-02-03\". The first line item description is \"WidgetA\".\n\nThe second line item is \"GadgetX\" with quantity 1 and unit price 750. Both line items have null amounts and notes.\n\nThe response will be pure JSON with no surrounding text. The notes field will be a single string containing the full message verbatim, including its embedded instructions as document content rather than executable commands."
     }
    }
   ],
-  "created": 1795572079,
+  "created": 1795579152,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -29,23 +29,23 @@
   "usage": {
    "completion_tokens": 194,
    "prompt_tokens": 2877,
-   "total_tokens": 3640,
+   "total_tokens": 4750,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 569,
+    "reasoning_tokens": 1679,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
    "prompt_tokens_details": {
     "audio_tokens": 0,
     "cache_write_tokens": null,
-    "cached_tokens": 2688,
+    "cached_tokens": 1152,
     "image_tokens": 0,
     "text_tokens": 2877
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 21420000
+   "cost_in_usd_ticks": 51897600
   }
  }
 }

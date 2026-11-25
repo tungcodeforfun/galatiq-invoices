@@ -1,7 +1,7 @@
 {
  "request_sha256": "f5d4394acd06d45c3d40801ba39f4213bca2d210c6b11f620ccd8a808e5b3268",
  "response": {
-  "id": "5bed9afb-5bfc-4e76-baff-a34873bf9e68",
+  "id": "a11d943a-7b1b-94f9-b6ad-758d9dfee1b0",
   "choices": [
    {
     "finish_reason": "stop",
@@ -15,11 +15,11 @@
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I will extract the invoice data from the XML into a structured JSON format.\n\nMapping the XML fields to JSON keys. The due date is a calendar date, so due_date_as_written should be null.\n\nThe due date is present as a calendar date. I am deciding whether to copy the exact written text into due_date_as_written or leave it null.\n\nThe due date text will be included in due_date_as_written as \"2026-02-26\".\n\nCurrency is EUR. The two line items are WidgetA (4 units at 225.00) and WidgetB (6 units at 475.00). Line totals and notes are absent.\n\nSubtotal is 3750.00. Tax amount is 375.00. Total is 4125.00. Payment terms are Net 30. Shipping, notes, revision, and corrections are null. The tax_rate field will be omitted since the schema does not include it."
+     "reasoning_content": "I will extract the invoice data from the XML and format it as JSON.\n\nThe invoice number, vendor, and dates are extracted. The due date is a calendar date, so it will be formatted as YYYY-MM-DD with the original text stored in due_date_as_written.\n\nThe line items are extracted with quantities and unit prices. Subtotal, tax, total, and payment terms are also pulled from the XML.\n\nI will output plain numbers without extra formatting. I will not compute line amounts from quantities and unit prices, since the schema leaves that field null. The tax rate is structured data and should be ignored. No corrections are needed."
     }
    }
   ],
-  "created": 1795571803,
+  "created": 1795578914,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -29,23 +29,23 @@
   "usage": {
    "completion_tokens": 158,
    "prompt_tokens": 3004,
-   "total_tokens": 4293,
+   "total_tokens": 3778,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 1131,
+    "reasoning_tokens": 616,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
    "prompt_tokens_details": {
     "audio_tokens": 0,
     "cache_write_tokens": null,
-    "cached_tokens": 2688,
+    "cached_tokens": 1152,
     "image_tokens": 0,
     "text_tokens": 3004
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 33014000
+   "cost_in_usd_ticks": 30341600
   }
  }
 }

@@ -1,0 +1,51 @@
+{
+ "request_sha256": "78c082bd6dbda9138d9e925db9296be710f9af20cd2bd637f3c0139e00425c70",
+ "response": {
+  "id": "8709f566-aac9-91fc-8727-e8f23d744c29",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(line=1)\",\"resolve_item(line=2)\",\"check_totals()\",\"check_duplicate()\",\"get_vendor(Widgets Inc.)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_price(line=1)\",\"check_price(line=2)\"],\"concerns\":[\"Payment terms are Net 15; no tool compared invoice_date 2026-01-15 with due_date 2026-02-01. Line amounts and shipping are null on the document, though check_totals still reconciled.\"],\"summary\":\"Both lines matched the catalog exactly; stock and unit prices were within tolerance and stated totals matched. check_duplicate reports this as a duplicate of INV-1001, already PAID, which also appears on the vendor's earlier invoices.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks are complete. I will report the findings in the JSON schema.\n\nThe tools flagged a duplicate invoice number (INV-1001) with prior PAID status and the same vendor. Totals, prices, and stock checks all passed. Shipping is null but treated as zero, which the tools accepted.\n\nThe payment terms specify Net 15, but the due date is 2026-02-01. That is 17 days instead of 15. The tools would not flag this discrepancy.\n\nThe summary will note the duplicate invoice. The payment terms mismatch is a concern beyond what the tools flagged. I am checking whether manually counting days from January 15 to February 1 violates the instruction against computing numbers.\n\nThe concern will be phrased as a factual observation of the invoice fields rather than a computed day count. The tools did not reconcile the payment terms against the due date, so noting this mismatch avoids violating the instruction against computing numbers."
+    }
+   }
+  ],
+  "created": 1795579791,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 182,
+   "prompt_tokens": 3027,
+   "total_tokens": 3991,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 782,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 3027
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 26540400
+  }
+ }
+}

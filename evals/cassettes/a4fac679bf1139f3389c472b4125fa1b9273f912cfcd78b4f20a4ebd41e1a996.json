@@ -1,0 +1,51 @@
+{
+ "request_sha256": "a4fac679bf1139f3389c472b4125fa1b9273f912cfcd78b4f20a4ebd41e1a996",
+ "response": {
+  "id": "7b8311fb-c904-4986-9119-d6727c32a51a",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"return_to_vendor\",\"reasoning\":\"INV-3008 is rejected under F1 because the stated total does not match the document math. Line amounts 2,250.00 and 500.00 plus tax 220.00 equal 2,970.00, while the invoice total is 3,170.00 (200.00 higher) and shipping is null. A total mismatch is correctable by the vendor, so policy requires return_to_vendor rather than void.\",\"vendor_reply\":\"Hello Atlas Industrial Supply billing team,\\n\\nWe cannot process invoice INV-3008 (dated 2026-02-13) because the total does not match the other amounts on the invoice. Line items are 2,250.00 and 500.00 (subtotal 2,750.00) and tax is 220.00, which sum to 2,970.00, but the invoice total is 3,170.00 \u2014 200.00 higher. Shipping is not shown.\\n\\nPlease resubmit a corrected invoice in which the total equals the line amounts plus tax plus any shipping, with those figures shown clearly.\\n\\nThank you.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Closing out the rejected invoice.\n\nThe policy requires a return_to_vendor disposition for total mismatches. The invoice will be returned to the vendor.\n\nDrafting the return-to-vendor email for Atlas Industrial Supply INV-3008. The total is $200.00 above the line items plus tax. The corrected invoice must match the line items and tax exactly."
+    }
+   }
+  ],
+  "created": 1795578302,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 253,
+   "prompt_tokens": 2052,
+   "total_tokens": 2815,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 510,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2052
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 23643600
+  }
+ }
+}

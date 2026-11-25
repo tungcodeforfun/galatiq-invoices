@@ -1,0 +1,51 @@
+{
+ "request_sha256": "753064a03bb77c4c875401b6868bace5f5dce2b5a250566ae6f2636164c949d5",
+ "response": {
+  "id": "90d023a1-0b05-4c0b-af34-9ad61dd539da",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(line 1)\",\"resolve_item(line 2)\",\"resolve_item(line 3)\",\"resolve_item(line 4)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Consolidated Materials Group)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_stock(GadgetX)\",\"check_price(line 1)\",\"check_price(line 2)\",\"check_price(line 3)\",\"check_price(line 4)\"],\"concerns\":[\"Line 4 matched WidgetA only after normalizing \\\"WidgetA (rush order)\\\"; the 20% unit-price overage is labeled as a rush order, which the price check does not evaluate as authorized or not.\",\"Vendor is on the master (first seen 2023-09-14) but the lookup returned no earlier invoices.\"],\"summary\":\"All four lines resolved to catalog items (line 4 via normalization), stock covers the summed quantities, totals match, and the invoice is not a duplicate. The only tool problem is line 4's WidgetA unit price of 300 versus the catalog 250 (20%, outside tolerance).\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks have completed. I will now report the findings in the JSON schema.\n\nThe WidgetA rush order line shows a 20% price variance. Totals, vendor, and stock checks all pass. No additional concerns beyond the tool flags.\n\nThe vendor has no earlier invoices despite being known since September 2023. Payment terms are consistent with the due date.\n\nThe WidgetA rush order premium may be a contractual surcharge rather than a pricing error. The approver should confirm whether rush premiums are authorized."
+    }
+   }
+  ],
+  "created": 1795578325,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 259,
+   "prompt_tokens": 3373,
+   "total_tokens": 4259,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 627,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2816,
+    "image_tokens": 0,
+    "text_tokens": 3373
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 26649200
+  }
+ }
+}

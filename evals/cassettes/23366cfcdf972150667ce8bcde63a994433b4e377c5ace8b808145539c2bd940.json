@@ -1,0 +1,51 @@
+{
+ "request_sha256": "23366cfcdf972150667ce8bcde63a994433b4e377c5ace8b808145539c2bd940",
+ "response": {
+  "id": "49770acf-98a1-4369-b898-eeac97848765",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"INV-3011\",\"vendor\":\"Widgets Inc.\",\"invoice_date\":\"2026-02-18\",\"due_date\":\"2026-03-20\",\"due_date_as_written\":\"2026-03-20\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":8,\"unit_price\":250,\"amount\":null,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":3,\"unit_price\":500,\"amount\":null,\"note\":null}],\"subtotal\":3500,\"tax\":280,\"shipping\":null,\"total\":3780,\"payment_terms\":\"Net 30\",\"notes\":\"Hi Acme AP team,\\n\\nPlease find our invoice below for this month's order.\\n\\nBest regards,\\nAccounts Receivable\\nWidgets Inc.\",\"revision\":null,\"corrections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract the invoice data and return it as JSON matching the schema.\n\nThe invoice contains two line items: WidgetA x8 at $250.00 each and WidgetB x3 at $500.00 each. Subtotal is $3,500.00, tax is $280.00, and total is $3,780.00. The notes field will capture the email body verbatim.\n\nThe subject line is metadata and excluded. The description field should capture the exact item text from each line.\n\nThe description field will contain only the item name, such as \"WidgetA\" and \"WidgetB\". Quantity and unit price are extracted from each line. Amount is null because no explicit line total appears on the document. Shipping is also null. The due date is 2026-03-20.\n\nThe due date is a calendar date, so both due_date and due_date_as_written will be \"2026-03-20\". Payment terms are \"Net 30\". Vendor is Widgets Inc. Invoice number is INV-3011. Currency is USD. Revision and corrections are null."
+    }
+   }
+  ],
+  "created": 1795578432,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 193,
+   "prompt_tokens": 2902,
+   "total_tokens": 4766,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1671,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 2902
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 44050400
+  }
+ }
+}

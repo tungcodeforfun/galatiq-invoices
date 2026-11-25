@@ -1,8 +1,8 @@
 # invoice_1009.json: REJECTED (void)
 
-INV-1009 is voided because F1 is a data-integrity reject: the vendor name is missing, line 1 quantity is -5.0, and the total is -250.0, so there is no valid payee or payable. F3 is also a reject: the lines compute to -250.00 while the subtotal is stated as 1,000.00 and the amounts do not reconcile. F2 only warns that no due date is present and does not change the required void.
+INV-1009 is voided under the data-integrity rule in F1: the vendor name is missing, line 1 quantity is -5.0, and the stated total is -250.0, so the document is corrupt and must not come back. F3 confirms it does not reconcile, with computed line amounts of -250.00 against a stated subtotal of 1,000.00. F2 (no due date) is a warning only and does not change the void.
 
-Run `20261125-014614-invoice_1009-0aa4` · seconds 101.1 · llm_calls 8 · tool_calls 9 · tiers ['live'] · tokens 21120 · cost_usd 0.026
+Run `20261125-034344-invoice_1009-1880` · seconds 87.1 · llm_calls 8 · tool_calls 9 · tiers ['live'] · tokens 21464 · cost_usd 0.023
 
 ## Extracted invoice
 
@@ -54,22 +54,21 @@ Run `20261125-014614-invoice_1009-0aa4` · seconds 101.1 · llm_calls 8 · tool_
 ```json
 {
   "checks_run": [
-    "resolve_item(line 1)",
-    "resolve_item(line 2)",
+    "resolve_item(1)",
+    "resolve_item(2)",
     "check_stock(WidgetA)",
     "check_stock(WidgetB)",
-    "check_price(line 1)",
-    "check_price(line 2)",
-    "check_totals",
-    "check_duplicate",
+    "check_price(1)",
+    "check_price(2)",
+    "check_totals()",
+    "check_duplicate()",
     "get_vendor(\"\")"
   ],
   "concerns": [
-    "Line 1 quantity is negative (−5 WidgetA). check_stock returned ok only because −5 is below on-hand stock, so the sign itself was not treated as a problem. A negative quantity on a payable invoice may be a return, a credit, or an extraction error.",
-    "Stated total is negative (−250) and matches the recomputed line sum, so this may be a credit rather than an amount to pay. check_totals only flagged that the stated subtotal (1,000) does not match that line sum.",
-    "No vendor name is on the invoice, so there is no payee to match even though prices matched the catalog and no duplicate was found. Due date, payment terms, shipping, and line amounts are also blank."
+    "Line 1 quantity is negative (−5 WidgetA). check_stock returned ok because −5 does not exceed the 15 on hand, so a credit-style or erroneous quantity was not flagged.",
+    "The stated total is negative while the stated subtotal is positive, and line amounts, shipping, due date, and payment terms are all blank. Together with no vendor, this reads like an incomplete credit rather than a normal payable."
   ],
-  "summary": "Both lines matched the catalog (WidgetA, WidgetB); unit prices match and stock checks passed, including a negative WidgetA quantity that was not flagged. Totals do not: lines and the stated total are −250 while the subtotal says 1,000, the vendor field is empty, and the invoice is not a known duplicate."
+  "summary": "Both lines matched the catalog exactly; unit prices are in tolerance and there is no ledger duplicate. Totals failed because the lines sum to −250.00 while the subtotal says 1,000.00, and the invoice names no vendor."
 }
 ```
 
@@ -79,7 +78,7 @@ Run `20261125-014614-invoice_1009-0aa4` · seconds 101.1 · llm_calls 8 · tool_
 {
   "level": "low",
   "signals": [],
-  "summary": "The invoice has no pressure language, payment-redirect instructions, reviewer-directed text, or conflicting vendor identity beyond the missing name already flagged. Nothing in the document itself adds a fraud signal past the automated data-integrity and total findings."
+  "summary": "Nothing in the document shows pressure, payment redirection, instruction injection, or a conflicting vendor identity. The missing vendor, negative quantity, and total mismatch are already covered by the automated checks and are not separate fraud signals."
 }
 ```
 
@@ -90,19 +89,19 @@ Run `20261125-014614-invoice_1009-0aa4` · seconds 101.1 · llm_calls 8 · tool_
   "action": "reject",
   "reasons": [
     {
-      "text": "F1 is a reject finding: vendor name is missing, WidgetA quantity is -5, and the invoice total is -250. There is no payee and this is not a valid payable.",
+      "text": "Vendor name is missing, line 1 quantity is −5 WidgetA, and the stated total is −250.00, so this is not a valid payable.",
       "finding_ids": [
         "F1"
       ]
     },
     {
-      "text": "F3 is a reject finding: lines compute to -250.00 (-5 × 250 + 2 × 500) but the subtotal is stated as 1,000.00, so the amount does not reconcile and cannot be paid.",
+      "text": "Computed line amounts are −250.00 (−5 × 250 + 2 × 500) while the stated subtotal is 1,000.00, so the invoice does not reconcile.",
       "finding_ids": [
         "F3"
       ]
     },
     {
-      "text": "F2 warns there is no due date. That alone would not block payment, but it does not cure the reject findings. The risk memo is low and adds no offsetting comfort.",
+      "text": "No due date is a warning only and would not block a sound invoice; it only confirms the document is incomplete.",
       "finding_ids": [
         "F2"
       ]
@@ -113,7 +112,7 @@ Run `20261125-014614-invoice_1009-0aa4` · seconds 101.1 · llm_calls 8 · tool_
     "F2",
     "F3"
   ],
-  "summary": "Reject INV-1009. Missing vendor, a negative quantity and total, and a subtotal that does not match the lines are hard stops; the missing due date and low risk memo do not make it payable."
+  "summary": "Reject INV-1009. Reject-severity data-integrity and total-mismatch findings block payment: no vendor, a negative quantity and total, and a subtotal that does not match the lines. The low-risk memo adds no separate fraud signal and does not override those blocks."
 }
 ```
 
@@ -133,8 +132,7 @@ Run `20261125-014614-invoice_1009-0aa4` · seconds 101.1 · llm_calls 8 · tool_
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -143,7 +141,7 @@ Run `20261125-014614-invoice_1009-0aa4` · seconds 101.1 · llm_calls 8 · tool_
 ```json
 {
   "disposition": "void",
-  "reasoning": "INV-1009 is voided because F1 is a data-integrity reject: the vendor name is missing, line 1 quantity is -5.0, and the total is -250.0, so there is no valid payee or payable. F3 is also a reject: the lines compute to -250.00 while the subtotal is stated as 1,000.00 and the amounts do not reconcile. F2 only warns that no due date is present and does not change the required void.",
+  "reasoning": "INV-1009 is voided under the data-integrity rule in F1: the vendor name is missing, line 1 quantity is -5.0, and the stated total is -250.0, so the document is corrupt and must not come back. F3 confirms it does not reconcile, with computed line amounts of -250.00 against a stated subtotal of 1,000.00. F2 (no due date) is a warning only and does not change the void.",
   "vendor_reply": null
 }
 ```

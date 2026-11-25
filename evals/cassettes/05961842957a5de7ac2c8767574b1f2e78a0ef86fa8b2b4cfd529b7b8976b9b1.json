@@ -1,0 +1,84 @@
+{
+ "request_sha256": "05961842957a5de7ac2c8767574b1f2e78a0ef86fa8b2b4cfd529b7b8976b9b1",
+ "response": {
+  "id": "f401aa99-90d0-979d-bab6-b43576351a8e",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-915202b3-cac4-42ed-99a7-278dbb20b3a3-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-915202b3-cac4-42ed-99a7-278dbb20b3a3-1",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-915202b3-cac4-42ed-99a7-278dbb20b3a3-2",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-915202b3-cac4-42ed-99a7-278dbb20b3a3-3",
+       "function": {
+        "arguments": "{\"name\":\"Global Supply Chain Partners\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will validate the provided invoice.\n\nI will resolve the item first. Then I will check stock, price, totals, duplicates, and vendor in parallel."
+    }
+   }
+  ],
+  "created": 1795578400,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 36,
+   "prompt_tokens": 2272,
+   "total_tokens": 2490,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 182,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2272
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14021600
+  }
+ }
+}

@@ -1,8 +1,8 @@
 # invoice_1014.xml: REJECTED (return_to_vendor)
 
-INV-1014 is rejected under F1 because it is billed in EUR while Acme pays only in USD, so the payment gate blocks it. F2 is a warning only: WidgetA is priced at 225.00 versus catalog 250.00 (-10%), which does not itself block payment and does not override the currency reject. Wrong currency can be corrected and resubmitted, so the disposition is return_to_vendor.
+INV-1014 is rejected under F1 because it is denominated in EUR (subtotal 3750.00, tax 375.00, total 4125.00) and we pay only in USD. F2 is a warning only: WidgetA is 225.00 versus catalog 250.00, a favorable variance that does not clear the currency block. The vendor can reissue the invoice in USD, so the disposition is return_to_vendor.
 
-Run `20261125-015643-invoice_1014-68de` · seconds 83.0 · llm_calls 9 · tool_calls 10 · tiers ['live'] · tokens 23236 · cost_usd 0.02
+Run `20261125-035514-invoice_1014-ff9e` · seconds 70.4 · llm_calls 10 · tool_calls 11 · tiers ['live'] · tokens 26626 · cost_usd 0.021
 
 ## Extracted invoice
 
@@ -48,6 +48,7 @@ Run `20261125-015643-invoice_1014-68de` · seconds 83.0 · llm_calls 9 · tool_c
 | validator | check_price | {"line": 1} | {"line": 1, "item": "WidgetA", "invoiced": 225.0, "catalog": 250.0, "variance_pct": -10.0, "within_tolerance": false} |
 | validator | check_price | {"line": 2} | {"line": 2, "item": "WidgetB", "invoiced": 475.0, "catalog": 500.0, "variance_pct": -5.0, "within_tolerance": true} |
 | risk | get_vendor | {"name": "TechParts International"} | {"known": true, "name": "TechParts International", "aliases": [], "first_seen": "2025-01-15", "earlier_invoices": []} |
+| approver | get_vendor | {"name": "TechParts International"} | {"known": true, "name": "TechParts International", "aliases": [], "first_seen": "2025-01-15", "earlier_invoices": []} |
 
 ## Validator notes
 
@@ -65,10 +66,11 @@ Run `20261125-015643-invoice_1014-68de` · seconds 83.0 · llm_calls 9 · tool_c
     "get_vendor(TechParts International)"
   ],
   "concerns": [
-    "Both matched lines are priced below catalog, not only the out-of-tolerance WidgetA line: WidgetB is 5% under catalog but still within tolerance, so a discount may apply to the whole invoice.",
-    "Vendor is on the master (first seen 2025-01-15) but has no earlier invoices in the ledger, so there is no prior billing history to compare despite more than a year on file."
+    "Line 2 is also priced under catalog (475 vs 500, −5%) even though that variance is inside tolerance, so both lines are discounted rather than only the out-of-tolerance WidgetA line.",
+    "Vendor is on the master (first seen 2025-01-15) but has no earlier invoices in the ledger.",
+    "Line amounts were blank on the invoice; the totals check still reconciled subtotal, tax, and total with shipping omitted."
   ],
-  "summary": "Resolved both lines to WidgetA and WidgetB, checked stock and price on each, and ran totals, duplicate, and vendor lookup. Totals match, stock is sufficient, and this is not a duplicate; the price check flags WidgetA at 225 vs catalog 250 (outside tolerance), while WidgetB is under catalog but within tolerance."
+  "summary": "Both lines matched the catalog exactly; stock, totals, and duplicate checks were clean, and TechParts International is a known vendor. The only tool exception is WidgetA on line 1, invoiced at 225 versus catalog 250 (−10%), outside tolerance."
 }
 ```
 
@@ -78,7 +80,7 @@ Run `20261125-015643-invoice_1014-68de` · seconds 83.0 · llm_calls 9 · tool_c
 {
   "level": "low",
   "signals": [],
-  "summary": "The invoice is a standard Net 30 bill from known vendor TechParts International, with no pressure language, bank-detail changes, remit-to mismatch, or instructions aimed at a reviewer. Nothing in the document itself suggests deception beyond the automated currency and price findings."
+  "summary": "The invoice shows ordinary Net 30 terms and a known vendor with no conflicting identity, remit-to change, urgency, or reviewer instructions. Nothing beyond the automated currency and price findings suggests deception or manipulation."
 }
 ```
 
@@ -89,13 +91,13 @@ Run `20261125-015643-invoice_1014-68de` · seconds 83.0 · llm_calls 9 · tool_c
   "action": "reject",
   "reasons": [
     {
-      "text": "F1 is a reject-severity currency mismatch: the invoice is billed in EUR and we only pay in USD, so the payment gate blocks it.",
+      "text": "F1 is a reject finding: the invoice is denominated in EUR and we pay only in USD, so the payment gate blocks it.",
       "finding_ids": [
         "F1"
       ]
     },
     {
-      "text": "F2 is only a warning: WidgetA is 10% under catalog (225.00 vs 250.00), which does not by itself block payment, but it does not override the currency reject.",
+      "text": "F2 is a warning only: WidgetA is 10% under catalog (225 vs 250) and WidgetB is also slightly under catalog inside tolerance. The discount does not cure the currency block.",
       "finding_ids": [
         "F2"
       ]
@@ -105,7 +107,7 @@ Run `20261125-015643-invoice_1014-68de` · seconds 83.0 · llm_calls 9 · tool_c
     "F1",
     "F2"
   ],
-  "summary": "Reject INV-1014 from TechParts International. The EUR currency finding is a hard block, and the modest under-catalog price variance does not change that."
+  "summary": "Reject INV-1014. Currency is EUR against a USD payment policy (F1, reject severity). The below-catalog pricing (F2) is favorable and does not change the block. Vendor is on file with a low risk memo; amount is under $10,000."
 }
 ```
 
@@ -125,8 +127,7 @@ Run `20261125-015643-invoice_1014-68de` · seconds 83.0 · llm_calls 9 · tool_c
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -135,7 +136,7 @@ Run `20261125-015643-invoice_1014-68de` · seconds 83.0 · llm_calls 9 · tool_c
 ```json
 {
   "disposition": "return_to_vendor",
-  "reasoning": "INV-1014 is rejected under F1 because it is billed in EUR while Acme pays only in USD, so the payment gate blocks it. F2 is a warning only: WidgetA is priced at 225.00 versus catalog 250.00 (-10%), which does not itself block payment and does not override the currency reject. Wrong currency can be corrected and resubmitted, so the disposition is return_to_vendor.",
-  "vendor_reply": "Hello TechParts International billing team, we cannot process invoice INV-1014 (dated 2026-01-26) because it is issued in EUR. Please resubmit a corrected invoice in USD, with all line amounts, the subtotal of 3750.00, tax of 375.00, and total of 4125.00 restated in USD. On that resubmission, please also confirm line 1 WidgetA (quantity 4 at a unit price of 225.00) and line 2 WidgetB (quantity 6 at a unit price of 475.00). Thank you."
+  "reasoning": "INV-1014 is rejected under F1 because it is denominated in EUR (subtotal 3750.00, tax 375.00, total 4125.00) and we pay only in USD. F2 is a warning only: WidgetA is 225.00 versus catalog 250.00, a favorable variance that does not clear the currency block. The vendor can reissue the invoice in USD, so the disposition is return_to_vendor.",
+  "vendor_reply": "Hello TechParts International billing team, we cannot process invoice INV-1014 because it is issued in EUR (subtotal 3750.00, tax 375.00, total 4125.00) and we pay invoices in USD only. Please resubmit a corrected invoice in USD for the same lines—WidgetA quantity 4 at unit price 225.00 and WidgetB quantity 6 at unit price 475.00—with the subtotal, tax, and total restated in USD. Thank you."
 }
 ```

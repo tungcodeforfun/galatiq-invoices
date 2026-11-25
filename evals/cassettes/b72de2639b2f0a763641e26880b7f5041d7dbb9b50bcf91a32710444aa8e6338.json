@@ -1,0 +1,51 @@
+{
+ "request_sha256": "b72de2639b2f0a763641e26880b7f5041d7dbb9b50bcf91a32710444aa8e6338",
+ "response": {
+  "id": "3673955a-19db-4510-adda-2349e4ec975b",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"return_to_vendor\",\"reasoning\":\"Invoice 1002 is returned under F2 because the requested quantity of 20 GadgetX units exceeds the quantity we can accept (5 in stock), which blocks payment. F1 is a warning only: the due date 2026-01-30 is not after the invoice date 2026-01-30 despite Net 30 terms, and it does not change the disposition. The vendor can correct the quantity and due date and resubmit, so this is not a void.\",\"vendor_reply\":\"Hello Gadgets Co. billing team, we cannot process invoice 1002 as submitted. The quantity of 20 for GadgetX (unit price $750, invoice total $15,000) is more than we can accept; please resubmit a corrected invoice with a reduced quantity and a recalculated total. The due date is also 2026-01-30, the same as the invoice date, which does not match Net 30 terms\u2014please set a due date consistent with those terms. Thank you.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The user wants to close out a rejected invoice.\n\nThe disposition should be return_to_vendor. F2 is a stock shortfall, which falls under quantities over what we can accept. Void is reserved for fraud or duplicate data.\n\nThe audit log should cite the finding IDs in two or three sentences. The vendor email must be brief and polite. It should state the exact quantities that need correction without revealing internal stock levels or fraud suspicions.\n\nF1 is a date oddity. The vendor email must name each problem with its numbers. The corrected invoice needs the due date changed from January 30 to Net 30.\n\nThe vendor email cannot specify a replacement quantity because the exact stock level is internal. It should only state that 20 GadgetX exceeds our accepted limit and request a corrected invoice with an acceptable quantity.\n\nThe vendor email should ask them to confirm a lower quantity rather than stating the exact stock level. The due date must be changed from January 30 to Net 30 terms. There is uncertainty about whether F1 belongs in the vendor email since it is only a warning, not the reject reason.\n\nThe vendor email should include both findings, since each is a problem on the document. The audit reasoning may cite stock levels because it is internal; the vendor email must not reveal them. The disposition is return_to_vendor.\n\nThe audit reasoning now explicitly cites the stock level for internal use. The vendor email draft opens with a polite rejection of invoice 1002."
+    }
+   }
+  ],
+  "created": 1795577414,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 225,
+   "prompt_tokens": 2167,
+   "total_tokens": 3570,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1178,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2167
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 37481600
+  }
+ }
+}

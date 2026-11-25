@@ -1,0 +1,60 @@
+{
+ "request_sha256": "7666912eced193e3a234341bfb4c0f50e1c03a6170c4d1463eeef848efb9b866",
+ "response": {
+  "id": "9999e262-8a5b-4c67-b33d-600d88a4b5eb",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-a30ee63c-7f0a-4868-9b3b-f7106ee4d6f4-0",
+       "function": {
+        "arguments": "{\"name\":\"Summit Manufacturing Co.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I am acting as VP of Finance to decide whether to pay this vendor invoice.\n\nThe invoice totals $12,000 with Net 30 terms. The risk memo is low-level and the vendor is known. A validator note flags that INV-1011 appears twice in the vendor history: once paid and once rejected or void."
+    }
+   }
+  ],
+  "created": 1795579103,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 14,
+   "prompt_tokens": 2281,
+   "total_tokens": 2650,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 355,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2281
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 17163200
+  }
+ }
+}

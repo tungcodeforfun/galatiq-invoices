@@ -1,0 +1,16 @@
+data/heldout/invoice_3004.xml  grok-4.7 · cached · run 20261125-034041-invoice_3004-7c08
+  ✓ Intake      INV-3004 · Reliable Components Inc. · 1 lines · 1620.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   6 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: approve
+  ✓ Gate        pass
+Paid 1620.0 to Reliable Components Inc.
+  ✓ Payment     success · 1,620.00 · attempt 1
+╭─ PAID ───────────────────────────────────────────────────────────────────────────────────────────╮
+│ Paid 1,620.00 to Reliable Components Inc.: Approve INV-3004 for $1,620. Vendor is on file, the   │
+│ bill is arithmetically clean, and the low-risk memo shows nothing that should hold payment.      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+40.5s · 7 model calls (live) · 7 tool calls · 18139 tokens · $0.0126 · log 
+runs/20261125-034041-invoice_3004-7c08/events.jsonl · 
+runs/20261125-034041-invoice_3004-7c08/report.md

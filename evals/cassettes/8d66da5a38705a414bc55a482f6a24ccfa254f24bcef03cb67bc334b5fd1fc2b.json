@@ -1,0 +1,51 @@
+{
+ "request_sha256": "8d66da5a38705a414bc55a482f6a24ccfa254f24bcef03cb67bc334b5fd1fc2b",
+ "response": {
+  "id": "059bfbe4-8e1c-9ea9-ad90-4642d84a4a11",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"void\",\"reasoning\":\"INV-3015 is voided under the data-integrity rejection policy because finding F1 reports a negative line quantity of -4.0 for WidgetA (amount -1000) mixed with a positive WidgetB line. That corrupt quantity cannot be paid and the invoice must not be resubmitted.\",\"vendor_reply\":null}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I need to close out the rejected invoice.\n\nThe policy requires a void disposition for this finding. The negative line quantity is a data-integrity issue that blocks payment.\n\nThe disposition is void. Vendor reply is null. The audit log will cite the finding IDs."
+    }
+   }
+  ],
+  "created": 1795578702,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 77,
+   "prompt_tokens": 2027,
+   "total_tokens": 2558,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 454,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2027
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 18740800
+  }
+ }
+}

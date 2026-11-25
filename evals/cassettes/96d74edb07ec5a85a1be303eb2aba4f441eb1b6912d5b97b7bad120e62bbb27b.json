@@ -1,0 +1,51 @@
+{
+ "request_sha256": "96d74edb07ec5a85a1be303eb2aba4f441eb1b6912d5b97b7bad120e62bbb27b",
+ "response": {
+  "id": "36bf5312-58e9-942c-9448-b6f3f38072f5",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(line 1)\",\"resolve_item(line 2)\",\"check_stock(WidgetA)\",\"check_stock(GadgetX)\",\"check_price(line 1)\",\"check_price(line 2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(FastShip Ltd.)\"],\"concerns\":[\"Vendor on the invoice is an alias: master name is QuickShip Distributers, not FastShip Ltd.\",\"Vendor has been on file since 2021-07-01 but the master lists no earlier invoices.\"],\"summary\":\"Both lines matched the catalog exactly; stock, prices, totals, and duplicate checks were clean. The only notes are the vendor alias versus the master name and the lack of prior invoices.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks passed. I will report the findings and any tool results that require manual review.\n\nThe vendor is known via alias. The invoice lists \"FastShip Ltd.\" while the canonical name is \"QuickShip Distributers\" with a misspelled \"Distributers\". Tools did not flag this as an unknown vendor.\n\nThe vendor has no earlier invoices in the ledger despite being on file since 2021. Tax is null and shipping is 30. Totals are correct. The due date is 30 days."
+    }
+   }
+  ],
+  "created": 1795578644,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 167,
+   "prompt_tokens": 2990,
+   "total_tokens": 3576,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 419,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 2990
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 18577600
+  }
+ }
+}

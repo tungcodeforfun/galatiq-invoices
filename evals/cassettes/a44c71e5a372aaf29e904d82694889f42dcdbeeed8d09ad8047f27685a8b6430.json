@@ -1,25 +1,25 @@
 {
  "request_sha256": "a44c71e5a372aaf29e904d82694889f42dcdbeeed8d09ad8047f27685a8b6430",
  "response": {
-  "id": "f5a8d77e-378c-913d-b3cf-9b9a1b0dc28e",
+  "id": "a1f50bdf-4f84-913f-bc70-72d3f90f2a0f",
   "choices": [
    {
     "finish_reason": "stop",
     "index": 0,
     "logprobs": null,
     "message": {
-     "content": "{\"invoice_number\":\"INV-1006\",\"vendor\":\"Acme Industrial Supplies\",\"invoice_date\":\"2026-01-25\",\"due_date\":\"2026-02-10\",\"due_date_as_written\":\"2026-02-10\",\"currency\":null,\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":5,\"unit_price\":250,\"amount\":null,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":3,\"unit_price\":500,\"amount\":null,\"note\":null}],\"subtotal\":2750,\"tax\":0,\"shipping\":null,\"total\":2750,\"payment_terms\":\"Net 15\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
+     "content": "{\"invoice_number\":\"INV-1006\",\"vendor\":\"Acme Industrial Supplies\",\"invoice_date\":\"2026-01-25\",\"due_date\":\"2026-02-10\",\"due_date_as_written\":\"2026-02-10\",\"currency\":null,\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":5,\"unit_price\":250.00,\"amount\":null,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":3,\"unit_price\":500.00,\"amount\":null,\"note\":null}],\"subtotal\":2750.00,\"tax\":0.00,\"shipping\":null,\"total\":2750.00,\"payment_terms\":\"Net 15\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
      "refusal": null,
      "role": "assistant",
      "annotations": null,
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "Extracting invoice data from the document and formatting it as JSON.\n\nThe vendor is \"Acme Industrial Supplies\". Line items will be listed in document order.\n\nLine items are WidgetA and WidgetB with quantities 5 and 3, unit prices 250.00 and 500.00, and amounts null. Subtotal is 2750.00, tax is 0.00, total is 2750.00, and payment terms are Net 15. Notes, shipping, revision, and corrections are all null.\n\nThe due date text is \"2026-02-10\", so due_date_as_written will be that exact string.\n\nThe invoice date is 2026-01-25. Currency is null."
+     "reasoning_content": "I will extract the invoice data and format it as JSON.\n\nThe vendor is \"Acme Industrial Supplies\". I will extract only the fields present in the document and leave any missing values as null.\n\nThe vendor is \"Acme Industrial Supplies\", not \"Acme Corp\". Currency is null. The invoice date is 2026-01-25.\n\nThe due date is 2026-02-10. I am deciding whether to place that exact text in the required due_date_as_written field.\n\nThe exact due date text \"2026-02-10\" will be placed in the required due_date_as_written field.\n\nThe document uses field-value pairs rather than traditional invoice lines. Each item has no line total shown, so the amount is null. The subtotal is 2750.00 and the tax is 0.00. Shipping is absent and will be null.\n\nThe total is 2750.00 and the payment terms are Net 15. Notes, revision, and corrections are absent and will be null. I am deciding whether to preserve decimal points in numeric fields.\n\nI will use plain integer values for all numeric fields. The vendor is \"Acme Industrial Supplies\"."
     }
    }
   ],
-  "created": 1795570964,
+  "created": 1795577881,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -27,13 +27,13 @@
   "service_tier": "default",
   "system_fingerprint": "fp_b507827d1c19f448",
   "usage": {
-   "completion_tokens": 158,
+   "completion_tokens": 168,
    "prompt_tokens": 2851,
-   "total_tokens": 3995,
+   "total_tokens": 4406,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 986,
+    "reasoning_tokens": 1387,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 2851
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 36849200
+   "cost_in_usd_ticks": 45233600
   }
  }
 }

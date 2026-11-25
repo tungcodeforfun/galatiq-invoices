@@ -1,0 +1,60 @@
+{
+ "request_sha256": "a244831ddadedf19f3071a17af2b0c1e2bc5b660cf8f0fc7008d9d11af29e3e0",
+ "response": {
+  "id": "f4228095-b162-9397-82b5-d1c0a634d55b",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-239cf74e-1cff-4e7a-b7b6-92c2d1305106-0",
+       "function": {
+        "arguments": "{\"name\":\"QuickShip Distributers\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "The user wants me to decide whether to pay this vendor invoice.\n\nThe invoice must be rejected. A duplicate finding (F3) carries severity \"reject\" and blocks payment regardless of other findings."
+    }
+   }
+  ],
+  "created": 1795578679,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 15,
+   "prompt_tokens": 2528,
+   "total_tokens": 2843,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 300,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2528
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 17741200
+  }
+ }
+}

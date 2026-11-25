@@ -1,0 +1,16 @@
+data/heldout/invoice_3020.json  grok-4.7 · cached · run 20261125-035526-invoice_3020-ea99
+  ✓ Intake      INV-3020 · Acme Industrial Supplies · 1 lines · 3550.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   6 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: approve
+  ✓ Gate        pass
+Paid 3550.0 to Acme Industrial Supplies
+  ✓ Payment     success · 3,550.00 · attempt 1
+╭─ PAID ───────────────────────────────────────────────────────────────────────────────────────────╮
+│ Paid 3,550.00 to Acme Industrial Supplies: Approve INV-3020 for $3,550. Known vendor,            │
+│ reconciling total, no findings, and a low-risk memo.                                             │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+48.9s · 8 model calls (live) · 8 tool calls · 20429 tokens · $0.0141 · log 
+runs/20261125-035526-invoice_3020-ea99/events.jsonl · 
+runs/20261125-035526-invoice_3020-ea99/report.md

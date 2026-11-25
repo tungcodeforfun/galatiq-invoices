@@ -1,0 +1,51 @@
+{
+ "request_sha256": "2b6a5c993d4f7f90bd5883e2ef5fa797f289f4ced1aba8b504f8b834434d3a48",
+ "response": {
+  "id": "48ee2d65-6c1e-9484-a00e-8bfb8ec53a11",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"approve\",\"reasons\":[{\"text\":\"Vendor Precision Parts Ltd. is on file (first seen 2024-01-08) with no conflicting aliases or identity issues. No automated findings were raised.\",\"finding_ids\":[]},{\"text\":\"Stated subtotal $1,750 matches 3 x $250 plus 2 x $500, and total $1,890 equals subtotal plus $140 tax. Null line amounts and shipping were not mismatches. Amount is under $10,000.\",\"finding_ids\":[]},{\"text\":\"Risk memo is low: ordinary Net 30 terms, known vendor, no payment redirection, urgency, or reviewer instructions. Absence of prior invoices is noted and does not outweigh the clean checks.\",\"finding_ids\":[]}],\"addressed_findings\":[],\"summary\":\"Approve INV-1004 for $1,890 to Precision Parts Ltd. Totals reconcile, the vendor is on file, there are no findings, and the risk memo is low.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The user wants to know whether to pay a vendor invoice.\n\nThe invoice totals reconcile correctly. The vendor is known but has no prior invoices.\n\nNo issues block payment. The invoice is under the $10,000 threshold and the risk level is low. I will approve it."
+    }
+   }
+  ],
+  "created": 1795577550,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 214,
+   "prompt_tokens": 2317,
+   "total_tokens": 2997,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 466,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2317
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 18530000
+  }
+ }
+}

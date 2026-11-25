@@ -1,0 +1,51 @@
+{
+ "request_sha256": "0e3bf1110f23f3ba8d5a4373ef9f91f5cbf7f4a4a6b939600f2642e42efff7c8",
+ "response": {
+  "id": "fc7523e6-4eed-9e30-bb72-14799f31862a",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"return_to_vendor\",\"reasoning\":\"INV-1004 R1 from Precision Parts Ltd. is rejected under finding F1: the invoice was already paid at $1,890.00, and this revision totals $5,940.00 (+$4,050.00), which conflicts with a version already processed. The note cites extra items under a PO amendment, but no PO or amendment id is on the document, so the increase cannot be verified or netted against the amount already paid. It is returned so the vendor can resubmit a corrected billing document that does not conflict with the paid invoice.\",\"vendor_reply\":\"Hello Precision Parts Ltd. billing team,\\n\\nWe cannot process revised invoice INV-1004 R1 (dated 2026-01-22, total $5,940.00). INV-1004 was already paid at $1,890.00, so this revision conflicts with the invoice already processed. The note refers to additional items under a PO amendment, but no purchase order or amendment number is shown.\\n\\nPlease do not resubmit this revision of INV-1004. If further charges are due, send a new invoice (not a revision of the paid invoice) for only the incremental amount, with the PO number and amendment ID, each line item, quantity, unit price, and a total that does not include the $1,890.00 already paid.\\n\\nThank you,\\nAcme Corp Accounts Payable\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Closing out the rejected invoice.\n\nThe policy classifies this as a revision conflict with an already processed invoice. The correct disposition is return_to_vendor.\n\nDrafting the audit log reasoning and a vendor email to request corrections. The email will cite the exact finding IDs and required changes without revealing internal fraud suspicions.\n\nThe vendor note cites a PO amendment but provides no ID. The corrected invoice must either exclude the already-paid amount or issue a new invoice for only the additional items with a valid amendment reference.\n\nThe invoice math checks out. The vendor email draft cites the exact conflict: INV-1004 was already paid at $1,890.00, and this revision totals $5,940.00.\n\nThe audit log reasoning can cite the payment gate block and unverifiable delta. The vendor email will stay strictly factual."
+    }
+   }
+  ],
+  "created": 1795577648,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_c60958d81f66f847",
+  "usage": {
+   "completion_tokens": 310,
+   "prompt_tokens": 2128,
+   "total_tokens": 3564,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1126,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2128
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 37889600
+  }
+ }
+}

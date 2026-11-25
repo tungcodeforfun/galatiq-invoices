@@ -1,7 +1,7 @@
 {
  "request_sha256": "98ac4f0b4ff8af98af8fcd1df52cb9a95962bfe1e0f5dd558c2c28fa9a67b820",
  "response": {
-  "id": "7e51530e-3055-9da0-8a7d-37b59fe5cdc4",
+  "id": "86086f86-12d1-9456-8b7a-7ab4b01d89f5",
   "choices": [
    {
     "finish_reason": "tool_calls",
@@ -16,7 +16,7 @@
      "function_call": null,
      "tool_calls": [
       {
-       "id": "call-1b376fe4-c258-4e3c-85c3-a5ced9ae5c75-0",
+       "id": "call-50ba1097-0a2e-4270-b3dd-ca46637e8492-0",
        "function": {
         "arguments": "{\"name\":\"QuickShip Distributers\"}",
         "name": "get_vendor"
@@ -24,11 +24,11 @@
        "type": "function"
       }
      ],
-     "reasoning_content": "I am analyzing the invoice for fraud signals.\n\nNo fraud signals were found. The invoice contains no pressure language, payment redirects, or instruction injection."
+     "reasoning_content": "I am analyzing the invoice for signs of fraud or manipulation.\n\nThe invoice shows a vendor name change from FastShip Ltd. to QuickShip Distributers. The date field contains an OCR error with an \"O\" instead of \"0\". The recipient address has a typo: \"Accounts Payble\". I will look up the vendor details next."
     }
    }
   ],
-  "created": 1795571462,
+  "created": 1795578519,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -38,23 +38,23 @@
   "usage": {
    "completion_tokens": 15,
    "prompt_tokens": 2270,
-   "total_tokens": 2648,
+   "total_tokens": 2619,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 363,
+    "reasoning_tokens": 334,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
    "prompt_tokens_details": {
     "audio_tokens": 0,
     "cache_write_tokens": null,
-    "cached_tokens": 1152,
+    "cached_tokens": 1920,
     "image_tokens": 0,
     "text_tokens": 2270
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 17272000
+   "cost_in_usd_ticks": 12763600
   }
  }
 }

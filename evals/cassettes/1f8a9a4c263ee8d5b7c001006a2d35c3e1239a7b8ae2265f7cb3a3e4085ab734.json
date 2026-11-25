@@ -1,0 +1,51 @@
+{
+ "request_sha256": "1f8a9a4c263ee8d5b7c001006a2d35c3e1239a7b8ae2265f7cb3a3e4085ab734",
+ "response": {
+  "id": "ac7df164-b775-44c2-bade-b344748b87ee",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"resolve_item(2)\",\"check_stock(WidgetB)\",\"check_stock(GadgetX)\",\"check_price(1)\",\"check_price(2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Precision Parts Ltd.)\"],\"concerns\":[\"Currency is missing on the invoice, so the amount is not labeled even though the arithmetic checks out.\",\"Vendor has been on the master since 2024-01-08 but the ledger lists no earlier invoices.\"],\"summary\":\"INV-3003 from Precision Parts Ltd. was checked against the catalog, stock, prices, totals, duplicate ledger, and vendor master. Both lines matched exactly, quantities are in stock, prices and totals agree, and no duplicate was found.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks passed. I will report the verification results and any tool findings.\n\nThe vendor has no earlier invoices despite being known since 2024-01-08. Currency, shipping, and payment terms are null."
+    }
+   }
+  ],
+  "created": 1795578012,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 170,
+   "prompt_tokens": 2968,
+   "total_tokens": 3487,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 349,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 2968
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 17061200
+  }
+ }
+}

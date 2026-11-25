@@ -1,0 +1,51 @@
+{
+ "request_sha256": "9a4f206a68a510108baf21f3df1d56f2a9418c1c8729cb0cf61ca1da4342b1f2",
+ "response": {
+  "id": "9151a4bf-7de0-4602-b51d-bc7f84f60376",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"F1 is a reject-severity total mismatch: line items sum to $21,040.00 plus tax $1,472.80 equals $22,512.80, but the invoice total is $22,562.80. Shipping is blank, so the $50 gap is not an itemized charge even if line 6's Expedited note might explain it. The gate blocks payment.\",\"finding_ids\":[\"F1\"]},{\"text\":\"F2, F3, and F4 are reject-severity stock exceptions. WidgetA is billed for 22 units against 15 in stock, WidgetB for 18 against 10, and GadgetX for 9 against 5. Replacement and sample notes were not treated as exceptions, so the quantities cannot be paid as billed.\",\"finding_ids\":[\"F2\",\"F3\",\"F4\"]},{\"text\":\"Risk memo is low: no deception, pressure, or reviewer-redirect signals, and ordinary Net 60 terms. Vendor Atlas Industrial Supply has been on file since 2024-08-09 with no earlier invoices. A low memo does not clear reject findings on a $22,562.80 invoice.\",\"finding_ids\":[\"F1\",\"F2\",\"F3\",\"F4\"]}],\"addressed_findings\":[\"F1\",\"F2\",\"F3\",\"F4\"],\"summary\":\"Reject INV-1013. The stated total is $50 above lines plus tax, and every SKU is billed above stock; those reject findings block payment despite a low risk memo and a known vendor.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor has been on file since August 2024 with no earlier invoices in the ledger.\n\nThe invoice totals $19,790. Findings F1 through F4 are reject-severity and require rejection. The response must cite each finding ID in its reasons and address all four findings. A brief summary for the finance manager is also needed.\n\nThe $50 tax discrepancy confirms finding F1. Stock levels for WidgetA, WidgetB, and GadgetX are all below the ledger quantities. The low risk memo does not override these reject findings. The payment gate blocks approval.\n\nSTOCK_EXCEEDED is also reject-severity. Stock levels for WidgetA, WidgetB, and GadgetX all exceed ledger quantities. This blocks payment even if the $50 tax gap is explained as shipping. The schema requires finding IDs in every reason. A reason about the low risk memo may not cite any findings."
+    }
+   }
+  ],
+  "created": 1795578756,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 340,
+   "prompt_tokens": 3319,
+   "total_tokens": 4463,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 804,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2560,
+    "image_tokens": 0,
+    "text_tokens": 3319
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 32850800
+  }
+ }
+}

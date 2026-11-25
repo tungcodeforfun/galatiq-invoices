@@ -1,0 +1,108 @@
+{
+ "request_sha256": "39c74871616be1ab843927c0d41e6b4e005657ccf99c7d73cf86eb5881b590b6",
+ "response": {
+  "id": "056c2e88-8945-49f3-91c8-4354a261d148",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-58744427-cdb7-46fe-b382-6f6e594ff096-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-58744427-cdb7-46fe-b382-6f6e594ff096-1",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-58744427-cdb7-46fe-b382-6f6e594ff096-2",
+       "function": {
+        "arguments": "{\"line\":3}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-58744427-cdb7-46fe-b382-6f6e594ff096-3",
+       "function": {
+        "arguments": "{\"line\":4}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-58744427-cdb7-46fe-b382-6f6e594ff096-4",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-58744427-cdb7-46fe-b382-6f6e594ff096-5",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-58744427-cdb7-46fe-b382-6f6e594ff096-6",
+       "function": {
+        "arguments": "{\"name\":\"Consolidated Materials Group\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will validate the invoice using the available tools."
+    }
+   }
+  ],
+  "created": 1795578321,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 66,
+   "prompt_tokens": 2404,
+   "total_tokens": 2637,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 167,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2404
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15225200
+  }
+ }
+}

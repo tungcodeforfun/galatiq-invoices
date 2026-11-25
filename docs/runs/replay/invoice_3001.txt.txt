@@ -1,0 +1,16 @@
+data/heldout/invoice_3001.txt  grok-4.7 · replay · run 20261125-041252-invoice_3001-2845
+  ✓ Intake      INV-3001 · Widgets Inc. · 2 lines · 3780.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   9 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: approve
+  ✓ Gate        pass
+Paid 3780.0 to Widgets Inc.
+  ✓ Payment     success · 3,780.00 · attempt 1
+╭─ PAID ───────────────────────────────────────────────────────────────────────────────────────────╮
+│ Paid 3,780.00 to Widgets Inc.: Approve INV-3001 for $3,780 to Widgets Inc. The vendor is on      │
+│ file, the amount and terms check out, and there are no findings or elevated risk signals.        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+0.1s · 8 model calls (replay) · 11 tool calls · 20745 tokens · $0.0134 recorded · log 
+runs/20261125-041252-invoice_3001-2845/events.jsonl · 
+runs/20261125-041252-invoice_3001-2845/report.md

@@ -1,0 +1,99 @@
+{
+ "request_sha256": "df70a2f0a18dc56c396756c9b63ba8b5ecc1a6f005f58585de5576f4c3f69ab4",
+ "response": {
+  "id": "af21fdfb-78a9-9c73-aed1-623778dc6088",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"summary\":\"Catalog matches found; running stock and price checks.\",\"checks_run\":[],\"concerns\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-4db3dda2-d866-4e97-a88c-7c7f1776b2e8-6",
+       "function": {
+        "arguments": "{\"item\":\"WidgetA\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-4db3dda2-d866-4e97-a88c-7c7f1776b2e8-7",
+       "function": {
+        "arguments": "{\"item\":\"WidgetB\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-4db3dda2-d866-4e97-a88c-7c7f1776b2e8-8",
+       "function": {
+        "arguments": "{\"item\":\"GadgetX\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-4db3dda2-d866-4e97-a88c-7c7f1776b2e8-9",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-4db3dda2-d866-4e97-a88c-7c7f1776b2e8-10",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-4db3dda2-d866-4e97-a88c-7c7f1776b2e8-11",
+       "function": {
+        "arguments": "{\"line\":3}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ]
+    }
+   }
+  ],
+  "created": 1795578072,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 90,
+   "prompt_tokens": 2814,
+   "total_tokens": 2927,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 23,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2814
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15565200
+  }
+ }
+}

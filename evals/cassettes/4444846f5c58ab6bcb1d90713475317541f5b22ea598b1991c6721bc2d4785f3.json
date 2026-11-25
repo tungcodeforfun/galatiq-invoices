@@ -1,0 +1,51 @@
+{
+ "request_sha256": "4444846f5c58ab6bcb1d90713475317541f5b22ea598b1991c6721bc2d4785f3",
+ "response": {
+  "id": "74b8a26e-949f-99dc-a40e-17ecc825e821",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"void\",\"reasoning\":\"INV-1003 is voided and must not be resubmitted. F4 and F5 are fraud signals: FakeItem is a catalog item we hold none of and never price, and the keyword screen matched payment-redirect and pressure language on the urgent wire demand. F3 (100 units requested with none on hand), F2 (Fraudster LLC not in the vendor master), and F1 (due date written as 'yesterday') reinforce that this $100,000 invoice is not a legitimate payable.\",\"vendor_reply\":null}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Closing out the rejected invoice.\n\nThe invoice should be voided. Findings F4 and F5 indicate fraud signals, which require a void disposition.\n\nVendor reply is null. The audit log will cite finding IDs F3, F4, and F5."
+    }
+   }
+  ],
+  "created": 1795577493,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 119,
+   "prompt_tokens": 2289,
+   "total_tokens": 2734,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 326,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2289
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 18768000
+  }
+ }
+}

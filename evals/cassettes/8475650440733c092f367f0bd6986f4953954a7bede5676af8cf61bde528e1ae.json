@@ -1,7 +1,7 @@
 {
  "request_sha256": "8475650440733c092f367f0bd6986f4953954a7bede5676af8cf61bde528e1ae",
  "response": {
-  "id": "cf9fd450-1a93-9c6a-acc1-38bf718f88ab",
+  "id": "5dccda90-c1ab-4f3e-a1b8-0f9aa6c1f0f5",
   "choices": [
    {
     "finish_reason": "tool_calls",
@@ -16,7 +16,7 @@
      "function_call": null,
      "tool_calls": [
       {
-       "id": "call-45c103d7-071b-48c5-9a37-1204f9de78a3-0",
+       "id": "call-6e98b9ad-7918-4a7f-8341-2f9400ff117d-0",
        "function": {
         "arguments": "{\"name\":\"TechParts International\"}",
         "name": "get_vendor"
@@ -24,11 +24,11 @@
        "type": "function"
       }
      ],
-     "reasoning_content": "I am reviewing the invoice for signs of deception."
+     "reasoning_content": "I am analyzing the invoice for signs of fraud or manipulation.\n\nThe invoice totals are mathematically correct. The automated checks flag two issues: the EUR currency conflicts with USD payment terms, and WidgetA is priced 10% below catalog cost."
     }
    }
   ],
-  "created": 1795571843,
+  "created": 1795578940,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -38,23 +38,23 @@
   "usage": {
    "completion_tokens": 13,
    "prompt_tokens": 2305,
-   "total_tokens": 2373,
+   "total_tokens": 2606,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 55,
+    "reasoning_tokens": 288,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
    "prompt_tokens_details": {
     "audio_tokens": 0,
     "cache_write_tokens": null,
-    "cached_tokens": 1920,
+    "cached_tokens": 1152,
     "image_tokens": 0,
     "text_tokens": 2305
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 7269200
+   "cost_in_usd_ticks": 15939200
   }
  }
 }

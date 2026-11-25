@@ -1,25 +1,25 @@
 {
  "request_sha256": "2727fcf88afcadef9d283d8652c721267cd7901ee055cfc73d1e3459eaaf8f15",
  "response": {
-  "id": "3f086d55-2f50-9169-a625-56f9c929493a",
+  "id": "22098f18-1f8a-41d5-924d-6b12ff980e85",
   "choices": [
    {
     "finish_reason": "stop",
     "index": 0,
     "logprobs": null,
     "message": {
-     "content": "{\"invoice_number\":\"INV-1013\",\"vendor\":\"Atlas Industrial Supply\",\"invoice_date\":\"2026-01-24\",\"due_date\":\"2026-03-24\",\"due_date_as_written\":\"2026-03-24\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":15,\"unit_price\":250.00,\"amount\":3750.00,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":10,\"unit_price\":500.00,\"amount\":5000.00,\"note\":null},{\"description\":\"GadgetX\",\"quantity\":5,\"unit_price\":750.00,\"amount\":3750.00,\"note\":null},{\"description\":\"WidgetA\",\"quantity\":5,\"unit_price\":240.00,\"amount\":1200.00,\"note\":\"Volume discount\"},{\"description\":\"WidgetB\",\"quantity\":8,\"unit_price\":480.00,\"amount\":3840.00,\"note\":\"Volume discount\"},{\"description\":\"GadgetX\",\"quantity\":3,\"unit_price\":750.00,\"amount\":2250.00,\"note\":\"Expedited\"},{\"description\":\"WidgetA\",\"quantity\":2,\"unit_price\":250.00,\"amount\":500.00,\"note\":\"Replacement\"},{\"description\":\"GadgetX\",\"quantity\":1,\"unit_price\":750.00,\"amount\":750.00,\"note\":\"Sample\"}],\"subtotal\":21040.00,\"tax\":1472.80,\"shipping\":null,\"total\":22562.80,\"payment_terms\":\"Net 60\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
+     "content": "{\"invoice_number\":\"INV-1013\",\"vendor\":\"Atlas Industrial Supply\",\"invoice_date\":\"2026-01-24\",\"due_date\":\"2026-03-24\",\"due_date_as_written\":null,\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":15,\"unit_price\":250,\"amount\":3750,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":10,\"unit_price\":500,\"amount\":5000,\"note\":null},{\"description\":\"GadgetX\",\"quantity\":5,\"unit_price\":750,\"amount\":3750,\"note\":null},{\"description\":\"WidgetA\",\"quantity\":5,\"unit_price\":240,\"amount\":1200,\"note\":\"Volume discount\"},{\"description\":\"WidgetB\",\"quantity\":8,\"unit_price\":480,\"amount\":3840,\"note\":\"Volume discount\"},{\"description\":\"GadgetX\",\"quantity\":3,\"unit_price\":750,\"amount\":2250,\"note\":\"Expedited\"},{\"description\":\"WidgetA\",\"quantity\":2,\"unit_price\":250,\"amount\":500,\"note\":\"Replacement\"},{\"description\":\"GadgetX\",\"quantity\":1,\"unit_price\":750,\"amount\":750,\"note\":\"Sample\"}],\"subtotal\":21040,\"tax\":1472.8,\"shipping\":null,\"total\":22562.8,\"payment_terms\":\"Net 60\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
      "refusal": null,
      "role": "assistant",
      "annotations": null,
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "Extracting invoice data from the document and formatting it as JSON.\n\nMapping the invoice number, vendor, and dates. The due date text will be stored exactly as written.\n\nCurrency is USD. Line items are being parsed with exact descriptions and amounts.\n\nAll line items are now parsed with exact descriptions, quantities, and notes. The subtotal is 21040.00. Tax amount is 1472.80. Total is 22562.80. Payment terms are Net 60. Shipping, notes, revision, and corrections are null."
+     "reasoning_content": "Extracting invoice data from the document and formatting it as JSON.\n\nMapping the invoice fields from the JSON. No shipping, notes, or revision data are present. The due date is a calendar date, so due_date_as_written will be null.\n\nConfirmed the vendor name is Atlas Industrial Supply. The line items are being parsed with exact descriptions and amounts."
     }
    }
   ],
-  "created": 1795571612,
+  "created": 1795578710,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -27,13 +27,13 @@
   "service_tier": "default",
   "system_fingerprint": "fp_b507827d1c19f448",
   "usage": {
-   "completion_tokens": 365,
+   "completion_tokens": 325,
    "prompt_tokens": 3205,
-   "total_tokens": 4421,
+   "total_tokens": 4551,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 851,
+    "reasoning_tokens": 1021,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 3205
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 40725200
+   "cost_in_usd_ticks": 43377200
   }
  }
 }

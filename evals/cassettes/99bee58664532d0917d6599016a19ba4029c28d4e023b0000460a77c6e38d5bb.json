@@ -1,0 +1,51 @@
+{
+ "request_sha256": "99bee58664532d0917d6599016a19ba4029c28d4e023b0000460a77c6e38d5bb",
+ "response": {
+  "id": "66c27b47-7f28-419b-84c7-adb5e93d96d1",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"F1 is a reject-severity stock finding: WidgetB quantity across both lines is 11 against 10 on hand. Combined stock was already checked once, so the invoice is one unit over available stock and the payment gate blocks it.\",\"finding_ids\":[\"F1\"]}],\"addressed_findings\":[\"F1\"],\"summary\":\"Reject INV-3007. WidgetB is billed for 11 units and only 10 are in stock (F1, reject severity), so payment is blocked. The low risk memo and matching $5,500 total do not override that finding.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I am acting as VP of Finance to decide whether to pay this invoice.\n\nThe invoice shows a reject-level stock exceeded finding. Eleven WidgetB units were requested against ten on hand. Payment is blocked by policy."
+    }
+   }
+  ],
+  "created": 1795578227,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 135,
+   "prompt_tokens": 2312,
+   "total_tokens": 2759,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 312,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1792,
+    "image_tokens": 0,
+    "text_tokens": 2312
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15701200
+  }
+ }
+}

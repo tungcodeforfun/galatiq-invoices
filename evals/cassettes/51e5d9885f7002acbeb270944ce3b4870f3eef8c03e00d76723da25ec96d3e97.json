@@ -1,0 +1,51 @@
+{
+ "request_sha256": "51e5d9885f7002acbeb270944ce3b4870f3eef8c03e00d76723da25ec96d3e97",
+ "response": {
+  "id": "90b17866-ac2c-43be-9d32-8c32dd2f35b8",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"verdict\":\"accept\",\"objections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will review the VP's draft payment decision and object only to concrete problems based on specific criteria.\n\nF1 is a reject-severity currency mismatch. F2 is a warning-only price variance. The risk memo is low. I am checking whether the draft ignores or misreads any finding, or approves despite a reject-severity finding.\n\nThe draft's rejection is valid because F1 is reject-severity. I am now checking whether the $10,000 threshold applies, since the invoice total is 4125 EUR.\n\nThe 4125 EUR total converts to roughly 4500 USD, so the $10,000 threshold does not apply. The draft correctly rejects based on F1. I am now checking whether the draft misreads any finding.\n\nThe draft accurately references validator notes for WidgetB's price variance. All findings are properly addressed. The rejection is valid.\n\nThe draft is sound. No concrete objections are warranted."
+    }
+   }
+  ],
+  "created": 1795578958,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 11,
+   "prompt_tokens": 2258,
+   "total_tokens": 3472,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1203,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1536,
+    "image_tokens": 0,
+    "text_tokens": 2258
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 32286400
+  }
+ }
+}

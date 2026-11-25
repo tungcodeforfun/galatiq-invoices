@@ -1,0 +1,51 @@
+{
+ "request_sha256": "d2fd58a8fe24d2a3460457ca4371d572fed42fd032bed1895645c9f04f1f731e",
+ "response": {
+  "id": "3e489e68-1a65-4ff4-b2db-632fbdc357f1",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"INV-3015\",\"vendor\":\"Widgets Inc.\",\"invoice_date\":\"2026-02-24\",\"due_date\":\"2026-03-26\",\"due_date_as_written\":\"2026-03-26\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":-4,\"unit_price\":250.0,\"amount\":-1000.0,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":6,\"unit_price\":500.0,\"amount\":3000.0,\"note\":null}],\"subtotal\":2000.0,\"tax\":null,\"shipping\":null,\"total\":2000.0,\"payment_terms\":\"Net 30\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract the invoice data from the document and return it as JSON matching the schema.\n\nThe vendor is Widgets Inc. The invoice date is 2026-02-24. The due date is 2026-03-26. I am deciding whether to include the original text in due_date_as_written.\n\nI will include the original due date text in due_date_as_written. No corrections are needed since the date is already in YYYY-MM-DD format."
+    }
+   }
+  ],
+  "created": 1795578663,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 174,
+   "prompt_tokens": 2934,
+   "total_tokens": 3816,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 708,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 2934
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 24235200
+  }
+ }
+}

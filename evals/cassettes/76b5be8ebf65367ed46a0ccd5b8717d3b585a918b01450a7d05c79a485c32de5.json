@@ -1,0 +1,51 @@
+{
+ "request_sha256": "76b5be8ebf65367ed46a0ccd5b8717d3b585a918b01450a7d05c79a485c32de5",
+ "response": {
+  "id": "dd5f8b68-e582-491a-9c54-fe1eb6ce542c",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"return_to_vendor\",\"reasoning\":\"INV-3010 is rejected under F1 because the invoice is denominated in EUR while Acme pays only in USD. A wrong currency is a correctable defect, so the vendor may fix and resubmit rather than having the invoice voided. The payment gate blocks the 2,000 EUR total until a USD invoice is received.\",\"vendor_reply\":\"Hello Global Supply Chain Partners billing team,\\n\\nWe cannot process invoice INV-3010 (dated 2026-02-17, total 2,000.00 EUR, one line: WidgetB, quantity 4 at 500.00) because it is issued in EUR and we pay only in USD. Please resubmit a corrected invoice in USD that shows the line amounts, subtotal, and total in USD and confirms the quantities and unit prices you intend to bill.\\n\\nThank you.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Closing out the rejected invoice.\n\nWrong currency is explicitly listed under return_to_vendor. The policy requires disposition return_to_vendor for this finding."
+    }
+   }
+  ],
+  "created": 1795578426,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 195,
+   "prompt_tokens": 2035,
+   "total_tokens": 2509,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 279,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2035
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 17632400
+  }
+ }
+}

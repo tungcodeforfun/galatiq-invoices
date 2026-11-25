@@ -1,8 +1,8 @@
 # invoice_1004.json: PAID
 
-Paid 1,890.00 to Precision Parts Ltd.: Approve INV-1004 for $1,890. Known vendor, low-risk memo, totals reconcile, and automated checks found nothing to block payment.
+Paid 1,890.00 to Precision Parts Ltd.: Approve INV-1004 for $1,890 to Precision Parts Ltd. Totals reconcile, the vendor is on file, there are no findings, and the risk memo is low.
 
-Run `20261125-013900-invoice_1004-1b08` · seconds 53.4 · llm_calls 8 · tool_calls 11 · tiers ['live'] · tokens 20944 · cost_usd 0.0159
+Run `20261125-033139-invoice_1004-3a92` · seconds 60.3 · llm_calls 8 · tool_calls 11 · tiers ['live'] · tokens 20884 · cost_usd 0.0163
 
 ## Extracted invoice
 
@@ -48,20 +48,21 @@ Run `20261125-013900-invoice_1004-1b08` · seconds 53.4 · llm_calls 8 · tool_c
 ```json
 {
   "checks_run": [
-    "resolve_item(1)",
-    "resolve_item(2)",
-    "check_stock(WidgetA)",
-    "check_stock(WidgetB)",
-    "check_price(1)",
-    "check_price(2)",
+    "resolve_item(line 1)",
+    "resolve_item(line 2)",
     "check_totals",
     "check_duplicate",
-    "get_vendor(Precision Parts Ltd.)"
+    "get_vendor(Precision Parts Ltd.)",
+    "check_stock(WidgetA)",
+    "check_stock(WidgetB)",
+    "check_price(line 1)",
+    "check_price(line 2)"
   ],
   "concerns": [
-    "Vendor master shows Precision Parts Ltd. as known since 2024-01-08, but earlier_invoices is empty, so this looks like the first ledgered invoice from a long-known vendor."
+    "Vendor is known (first seen 2024-01-08) but get_vendor returned no earlier invoices, so there is no prior payment history to compare.",
+    "Line amounts and shipping were null on the extract; check_totals still matched the stated subtotal and total, so those blanks were not treated as a mismatch."
   ],
-  "summary": "Both lines matched the catalog exactly; stock, prices, totals, and duplicate checks all came back clean, and the vendor is on the master. Nothing in the tool results was flagged as a problem."
+  "summary": "INV-1004 from Precision Parts Ltd. was checked against the catalog, stock, prices, totals, duplicate ledger, and vendor master. Both lines matched WidgetA and WidgetB exactly, prices and stock were within limits, totals matched, and no duplicate was found."
 }
 ```
 
@@ -71,7 +72,7 @@ Run `20261125-013900-invoice_1004-1b08` · seconds 53.4 · llm_calls 8 · tool_c
 {
   "level": "low",
   "signals": [],
-  "summary": "Precision Parts Ltd. is a known vendor first seen in 2024, and this invoice contains only ordinary commercial wording. Nothing in the document suggests pressure, a payment redirect, injected instructions, or a conflicting vendor identity."
+  "summary": "The invoice uses ordinary Net 30 terms and a known vendor name with no conflicting identity, payment redirection, urgency, or reviewer instructions. Nothing in the document indicates deception beyond the automated checks."
 }
 ```
 
@@ -82,12 +83,20 @@ Run `20261125-013900-invoice_1004-1b08` · seconds 53.4 · llm_calls 8 · tool_c
   "action": "approve",
   "reasons": [
     {
-      "text": "Vendor Precision Parts Ltd. is on file (first seen 2024-01-08) and the risk memo is low with no signals. Line math checks: 3×250 + 2×500 = 1,750 subtotal, plus tax 140 = 1,890 total; Net 30 due date matches the invoice date. Amount is under $10,000 and no findings were raised.",
+      "text": "Vendor Precision Parts Ltd. is on file (first seen 2024-01-08) with no conflicting aliases or identity issues. No automated findings were raised.",
+      "finding_ids": []
+    },
+    {
+      "text": "Stated subtotal $1,750 matches 3 x $250 plus 2 x $500, and total $1,890 equals subtotal plus $140 tax. Null line amounts and shipping were not mismatches. Amount is under $10,000.",
+      "finding_ids": []
+    },
+    {
+      "text": "Risk memo is low: ordinary Net 30 terms, known vendor, no payment redirection, urgency, or reviewer instructions. Absence of prior invoices is noted and does not outweigh the clean checks.",
       "finding_ids": []
     }
   ],
   "addressed_findings": [],
-  "summary": "Approve INV-1004 for $1,890. Known vendor, low-risk memo, totals reconcile, and automated checks found nothing to block payment."
+  "summary": "Approve INV-1004 for $1,890 to Precision Parts Ltd. Totals reconcile, the vendor is on file, there are no findings, and the risk memo is low."
 }
 ```
 
@@ -96,8 +105,7 @@ Run `20261125-013900-invoice_1004-1b08` · seconds 53.4 · llm_calls 8 · tool_c
 ```json
 {
   "approved": true,
-  "blocked_by": [],
-  "overridden": false
+  "blocked_by": []
 }
 ```
 

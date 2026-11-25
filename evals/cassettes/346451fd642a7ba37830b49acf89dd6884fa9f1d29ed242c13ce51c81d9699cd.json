@@ -1,7 +1,7 @@
 {
  "request_sha256": "346451fd642a7ba37830b49acf89dd6884fa9f1d29ed242c13ce51c81d9699cd",
  "response": {
-  "id": "b9a37470-d3ec-40fe-88da-436d5985e621",
+  "id": "be1f7cb7-9b10-90a9-ba6d-9a48ed1954d8",
   "choices": [
    {
     "finish_reason": "tool_calls",
@@ -16,7 +16,7 @@
      "function_call": null,
      "tool_calls": [
       {
-       "id": "call-8eaa6bd2-36df-4d6b-b76b-21f2230392df-0",
+       "id": "call-594aa45c-79e8-4f19-aafd-f81412c5d23a-0",
        "function": {
         "arguments": "{\"name\":\"Atlas Industrial Supply\"}",
         "name": "get_vendor"
@@ -24,11 +24,11 @@
        "type": "function"
       }
      ],
-     "reasoning_content": "I am analyzing the invoice for fraud signals."
+     "reasoning_content": "I am analyzing the invoice for fraud signals.\n\nI will check for pressure language, payment redirects, instruction injection, vendor changes, and unusual terms. I must not repeat the automated findings. Every signal must be quoted exactly."
     }
    }
   ],
-  "created": 1795571745,
+  "created": 1795578861,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -38,11 +38,11 @@
   "usage": {
    "completion_tokens": 13,
    "prompt_tokens": 2352,
-   "total_tokens": 2537,
+   "total_tokens": 2712,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 172,
+    "reasoning_tokens": 347,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -54,7 +54,7 @@
     "text_tokens": 2352
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 13892400
+   "cost_in_usd_ticks": 17462400
   }
  }
 }

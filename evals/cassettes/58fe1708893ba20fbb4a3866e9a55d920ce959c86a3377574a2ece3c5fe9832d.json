@@ -1,0 +1,51 @@
+{
+ "request_sha256": "58fe1708893ba20fbb4a3866e9a55d920ce959c86a3377574a2ece3c5fe9832d",
+ "response": {
+  "id": "647c3fb8-9771-45d8-af30-8b0ca4b03ed2",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"approve\",\"reasons\":[{\"text\":\"No automated findings. Vendor Acme Industrial Supplies is on file since 2022-11-30; line math holds (7 x $500 = $3,500 plus $50 shipping = $3,550) even with subtotal and tax blank. Amount is under $10,000 and the risk memo is low, with ordinary Net 30 terms and no payment-redirection or identity conflict.\",\"finding_ids\":[]}],\"addressed_findings\":[],\"summary\":\"Approve INV-3020 for $3,550. Known vendor, reconciling total, no findings, and a low-risk memo.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor has no aliases and no earlier invoices in the ledger.\n\nNo findings were raised. The invoice totals reconcile correctly. The vendor is on file and checks pass. No reject-severity issues exist.\n\nThe low risk memo does not override the vendor on file. The invoice is sound and should be approved. The addressed_findings array should be empty.\n\nThe schema allows empty finding_ids arrays. The blank subtotal and tax are validator notes, not findings, so they do not need to be cited in any reason."
+    }
+   }
+  ],
+  "created": 1795578967,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 142,
+   "prompt_tokens": 2631,
+   "total_tokens": 3249,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 476,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2631
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 19400400
+  }
+ }
+}

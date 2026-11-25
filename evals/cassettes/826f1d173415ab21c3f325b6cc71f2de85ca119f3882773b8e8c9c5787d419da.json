@@ -1,0 +1,60 @@
+{
+ "request_sha256": "826f1d173415ab21c3f325b6cc71f2de85ca119f3882773b8e8c9c5787d419da",
+ "response": {
+  "id": "6cd31b16-7cec-9482-949e-0b3061b21c62",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-b464588e-35cb-4bcc-b742-d475943c26ee-0",
+       "function": {
+        "arguments": "{\"name\":\"Widgets Inc.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I am evaluating the invoice for approval or rejection.\n\nThe invoice shows blank line item amounts and no shipping charge. The validator flagged these gaps.\n\nThe recomputed total matches the stated amount, so the missing shipping charge may be omitted rather than zero. The vendor ledger shows no earlier invoices, but this gap was not flagged. The risk memo is low severity with no signals. No findings require rejection."
+    }
+   }
+  ],
+  "created": 1795579769,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 13,
+   "prompt_tokens": 2265,
+   "total_tokens": 2728,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 450,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2265
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 18972000
+  }
+ }
+}

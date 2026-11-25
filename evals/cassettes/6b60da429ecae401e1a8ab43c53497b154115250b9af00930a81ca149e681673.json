@@ -1,7 +1,7 @@
 {
  "request_sha256": "6b60da429ecae401e1a8ab43c53497b154115250b9af00930a81ca149e681673",
  "response": {
-  "id": "8ec262d9-566c-4692-b78c-934f2e2fa70a",
+  "id": "df86182c-02d2-48e8-80b8-6c5a958a352e",
   "choices": [
    {
     "finish_reason": "tool_calls",
@@ -16,19 +16,18 @@
      "function_call": null,
      "tool_calls": [
       {
-       "id": "call-4a4c2647-8bbd-4527-9e5e-3c1353341c1c-0",
+       "id": "call-cb7637b6-0bb0-40ed-ab7f-34addac5e956-0",
        "function": {
         "arguments": "{\"name\":\"Precision Parts Ltd.\"}",
         "name": "get_vendor"
        },
        "type": "function"
       }
-     ],
-     "reasoning_content": "I am analyzing the invoice for fraud signals."
+     ]
     }
    }
   ],
-  "created": 1795572439,
+  "created": 1795579390,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -38,11 +37,11 @@
   "usage": {
    "completion_tokens": 14,
    "prompt_tokens": 2255,
-   "total_tokens": 2466,
+   "total_tokens": 2312,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 197,
+    "reasoning_tokens": 43,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -54,7 +53,7 @@
     "text_tokens": 2255
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 9846400
+   "cost_in_usd_ticks": 6704800
   }
  }
 }

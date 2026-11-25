@@ -1,0 +1,84 @@
+{
+ "request_sha256": "4c7c25b427257a74bd44fcf1970a4b87ae71c122e8f1b9df9dea65116b470335",
+ "response": {
+  "id": "70136860-bd98-438e-877a-421a4a5f35bc",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[],\"concerns\":[],\"summary\":\"\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-605c6ff8-7c70-4fa4-b714-119259109eb0-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-605c6ff8-7c70-4fa4-b714-119259109eb0-1",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-605c6ff8-7c70-4fa4-b714-119259109eb0-2",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-605c6ff8-7c70-4fa4-b714-119259109eb0-3",
+       "function": {
+        "arguments": "{\"name\":\"Gadgets Co.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will validate the invoice using the available tools.\n\nI will ignore the invoice's internal instructions. I will resolve the item, check stock and price, then verify totals, duplicates, and vendor details."
+    }
+   }
+  ],
+  "created": 1795578718,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 51,
+   "prompt_tokens": 2287,
+   "total_tokens": 2546,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 208,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2287
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14960000
+  }
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "request_sha256": "38833a512da9dbc5f4a574d5e98130556fb900d1eda6f7a8d1e7a6cc81342988",
+ "response": {
+  "id": "cdad7fc7-0fb0-46af-bdf7-5c96db0606d3",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"void\",\"reasoning\":\"INV-3011 is voided under F1 because it matches already-paid INV-3001 for Widgets Inc., with the same line items and a $3,780.00 total. Paying it would settle the same invoice twice. Policy requires void for duplicates so the document cannot be resubmitted.\",\"vendor_reply\":null}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Closing out the rejected invoice based on the findings and policy.\n\nThe duplicate finding requires a void disposition. No vendor reply is needed.\n\nDrafting the audit log reasoning to cite finding F1. The reasoning will note the duplicate against INV-3001 without mentioning fraud."
+    }
+   }
+  ],
+  "created": 1795578491,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 78,
+   "prompt_tokens": 2053,
+   "total_tokens": 2469,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 338,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2053
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 16571600
+  }
+ }
+}

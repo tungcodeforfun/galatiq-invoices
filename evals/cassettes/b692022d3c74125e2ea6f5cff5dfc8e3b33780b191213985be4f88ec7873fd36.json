@@ -1,0 +1,92 @@
+{
+ "request_sha256": "b692022d3c74125e2ea6f5cff5dfc8e3b33780b191213985be4f88ec7873fd36",
+ "response": {
+  "id": "ee3158d3-2e84-475e-b85a-22a3dead876a",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-82951305-8ea4-4221-ae54-f2a6eee83aa7-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-82951305-8ea4-4221-ae54-f2a6eee83aa7-1",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-82951305-8ea4-4221-ae54-f2a6eee83aa7-2",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-82951305-8ea4-4221-ae54-f2a6eee83aa7-3",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-82951305-8ea4-4221-ae54-f2a6eee83aa7-4",
+       "function": {
+        "arguments": "{\"name\":\"Summit Manufacturing Co.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will validate the invoice using the available tools.\n\nI will run resolve_item on both lines in parallel. Then I will check stock, price, totals, duplicates, and vendor details."
+    }
+   }
+  ],
+  "created": 1795578422,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 46,
+   "prompt_tokens": 2311,
+   "total_tokens": 2549,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 192,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2311
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14694800
+  }
+ }
+}

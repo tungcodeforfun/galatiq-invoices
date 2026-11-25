@@ -1,0 +1,51 @@
+{
+ "request_sha256": "dae9210f41d9c972c6d70968743bd87b385ebba12bc0f325c9b6d07bf68fba43",
+ "response": {
+  "id": "1f02da7a-130a-91bd-b6a2-96665b6dad9b",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"Invoice INV-3014 from FastShip Ltd. is a routine Net 30 bill with no pressure language, payment-redirect, injected instructions, or unexplained vendor conflict. FastShip Ltd. is a known alias of QuickShip Distributers, so nothing here goes beyond the automated checks.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will analyze the invoice for fraud signals."
+    }
+   }
+  ],
+  "created": 1795578653,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 72,
+   "prompt_tokens": 2212,
+   "total_tokens": 2447,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 163,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2048,
+    "image_tokens": 0,
+    "text_tokens": 2212
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 9390800
+  }
+ }
+}

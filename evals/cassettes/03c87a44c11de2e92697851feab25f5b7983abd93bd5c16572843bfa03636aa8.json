@@ -1,0 +1,51 @@
+{
+ "request_sha256": "03c87a44c11de2e92697851feab25f5b7983abd93bd5c16572843bfa03636aa8",
+ "response": {
+  "id": "b4e71af3-109d-4630-9111-0e6a6f021e9a",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"F1 is a reject-severity duplicate: same vendor, lines, and $5,000 total as INV-1001, which is already paid. The payment gate blocks this regardless of other factors.\",\"finding_ids\":[\"F1\"]}],\"addressed_findings\":[\"F1\"],\"summary\":\"Reject INV-1101. It duplicates paid invoice INV-1001 (same vendor, lines, and total), and a reject-severity duplicate must not be paid.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I need to decide whether to pay this vendor invoice.\n\nThe invoice is a duplicate of INV-1001, which was already paid. The policy requires rejecting any invoice with a \"reject\" severity finding. This invoice must not be paid."
+    }
+   }
+  ],
+  "created": 1795579353,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_c60958d81f66f847",
+  "usage": {
+   "completion_tokens": 112,
+   "prompt_tokens": 2262,
+   "total_tokens": 2694,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 320,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2262
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 18319200
+  }
+ }
+}

@@ -1,7 +1,7 @@
 {
  "request_sha256": "98dc0eb0dbfbde64b21b084ee1b54a8849db21f9c89c20eab819fd2a9c2a64bf",
  "response": {
-  "id": "0649e40a-a0eb-49a2-a66c-84412a6cb539",
+  "id": "50fc37c0-1594-97f8-a42a-55ed6b70d838",
   "choices": [
    {
     "finish_reason": "tool_calls",
@@ -16,7 +16,7 @@
      "function_call": null,
      "tool_calls": [
       {
-       "id": "call-537943be-1eaf-43b8-839d-28518d818d20-0",
+       "id": "call-1d5da3ad-9899-41bf-a43f-d1a5acca674e-0",
        "function": {
         "arguments": "{\"name\":\"Widgets Inc.\"}",
         "name": "get_vendor"
@@ -24,11 +24,11 @@
        "type": "function"
       }
      ],
-     "reasoning_content": "I am analyzing the invoice for fraud signals.\n\nThe invoice is a duplicate of paid INV-1001. I am checking for manipulation beyond the automated findings.\n\nNo fraud signals were found. The invoice contains no pressure language, payment redirects, instruction injection, vendor changes, or unusual terms."
+     "reasoning_content": "I am acting as a fraud analyst to examine the invoice for signs of deception.\n\nThe invoice is a duplicate of a paid INV-1001. No pressure language or deception signals were found.\n\nNo payment redirects, instruction injection, or vendor changes were found. The payment terms are ordinary."
     }
    }
   ],
-  "created": 1795572859,
+  "created": 1795579803,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -38,11 +38,11 @@
   "usage": {
    "completion_tokens": 13,
    "prompt_tokens": 2135,
-   "total_tokens": 2552,
+   "total_tokens": 2595,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 404,
+    "reasoning_tokens": 447,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -54,7 +54,7 @@
     "text_tokens": 2135
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 13232800
+   "cost_in_usd_ticks": 14110000
   }
  }
 }

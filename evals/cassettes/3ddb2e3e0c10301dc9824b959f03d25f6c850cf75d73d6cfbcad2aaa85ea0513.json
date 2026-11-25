@@ -1,0 +1,51 @@
+{
+ "request_sha256": "3ddb2e3e0c10301dc9824b959f03d25f6c850cf75d73d6cfbcad2aaa85ea0513",
+ "response": {
+  "id": "fd2639a5-df2b-4082-93a6-3baa3f978282",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"The invoice is ordinary Net 30 wording from a known vendor, with no pressure language, payment redirect, instruction injection, or conflicting vendor identity. Nothing here goes beyond the automated duplicate finding, which the VP already sees separately.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor is known with no aliases and first appeared in 2023."
+    }
+   }
+  ],
+  "created": 1795578438,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 59,
+   "prompt_tokens": 2415,
+   "total_tokens": 2618,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 144,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2048,
+    "image_tokens": 0,
+    "text_tokens": 2415
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 10118400
+  }
+ }
+}

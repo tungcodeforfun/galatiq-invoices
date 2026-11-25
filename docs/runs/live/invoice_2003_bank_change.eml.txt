@@ -1,23 +1,24 @@
-data/invoices_extra/invoice_2003_bank_change.eml  grok-4.7 · live · run 
-20261125-020228-invoice_2003_bank_change-cdfb
+data/invoices_extra/invoice_2003_bank_change.eml  grok-4.7 · cached · run 
+20261125-040041-invoice_2003_bank_change-1e52
   ✓ Intake      INV-2003 · Precision Parts Ltd. · 2 lines · 3500.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   9 tool calls so far
-  ✓ Risk        high · 2 signal(s)
+  ✓ Risk        high · 3 signal(s)
   ✓ VP          draft 1: reject
   ✓ Critic      accept
   ✓ Gate        blocked: approver rejected
   ✓ Resolution  void
  ID  Code           Severity  Finding                                                               
- F1  FRAUD_SIGNALS  reject    Risk analyst: Do not pay. A non-matching sender is redirecting        
-                              INV-2003 to a new bank account that the vendor master does not        
-                              explain.                                                              
+ F1  FRAUD_SIGNALS  reject    Risk analyst: Do not pay. This known vendor's invoice is paired with  
+                              a request to use new bank details and arrives from a sender domain    
+                              the vendor master does not recognize.                                 
 ╭─ REJECTED · void ────────────────────────────────────────────────────────────────────────────────╮
-│ INV-2003 is voided under F1, a reject-severity fraud finding: a non-matching sender redirected   │
-│ payment to a bank account that the vendor master does not explain. Policy requires void for      │
-│ fraud signals so this invoice must not be resubmitted or paid. The payment gate and the          │
-│ high-risk memo independently require rejection.                                                  │
+│ INV-2003 is voided under F1, a reject-severity fraud finding: the invoice asks AP to remit to    │
+│ new First Coastal Bank details (routing 021000089, account 4481 2290 7731) and arrived from a    │
+│ sender domain not on the vendor master. Policy requires void for fraud signals, so this invoice  │
+│ must not be paid or resubmitted. Bank details must not be updated from this document; payment    │
+│ remains blocked.                                                                                 │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-79.1s · 9 model calls (live) · 10 tool calls · 23476 tokens · $0.0192 · log 
-runs/20261125-020228-invoice_2003_bank_change-cdfb/events.jsonl · 
-runs/20261125-020228-invoice_2003_bank_change-cdfb/report.md
+80.8s · 9 model calls (live) · 10 tool calls · 24446 tokens · $0.0230 · log 
+runs/20261125-040041-invoice_2003_bank_change-1e52/events.jsonl · 
+runs/20261125-040041-invoice_2003_bank_change-1e52/report.md

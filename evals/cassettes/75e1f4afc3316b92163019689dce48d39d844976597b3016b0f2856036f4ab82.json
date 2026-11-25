@@ -1,0 +1,51 @@
+{
+ "request_sha256": "75e1f4afc3316b92163019689dce48d39d844976597b3016b0f2856036f4ab82",
+ "response": {
+  "id": "869bbab8-ffbc-9ded-bca9-4a8c0344467d",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"void\",\"reasoning\":\"INV-3013 is voided because F1 is a reject-severity data-integrity failure: the vendor name is missing, so there is no payable party, remit-to, or alias and payment cannot be released. F2 confirms the literal name 'null' is not in the vendor master, so there is no vendor on file to pay or to return the invoice to. Corrupt identity data of this kind must not come back.\",\"vendor_reply\":null}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Closing out the rejected invoice based on the findings and VP decision.\n\nThe findings require a void disposition. The missing vendor name and null master entry indicate unfixable data issues.\n\nReconsidering the void disposition. A missing vendor name is a data integrity issue, but the null vendor field means no one to contact for resubmission.\n\nThe missing vendor name is not explicitly listed in either disposition category. \"Corrupt data\" likely covers this critical identity gap. The policy text appears to require void for these findings.\n\nThe disposition is void. The audit log will cite findings F1 and F2. vendor_reply is null."
+    }
+   }
+  ],
+  "created": 1795578611,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 104,
+   "prompt_tokens": 2040,
+   "total_tokens": 3199,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1055,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2040
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 31640400
+  }
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "request_sha256": "aefa2c0f1de45d13405e8f5634c26eccd6d13bbc25e64d5b1dac372aecc1954a",
+ "response": {
+  "id": "c8565f0e-ae24-481e-a3e8-355cd61b9bd6",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"check_stock(WidgetB)\",\"check_price(1)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Acme Industrial Supplies)\"],\"concerns\":[\"Subtotal and tax are blank on the invoice. Totals still reconcile if tax is treated as absent (3500 + 50 shipping = 3550), but the missing fields were not flagged.\",\"Vendor is known since 2022-11-30 yet has no earlier invoices in the ledger.\"],\"summary\":\"One line, WidgetB, matched the catalog exactly; stock (7 of 10) and unit price ($500) are within limits, totals match, and this is not a duplicate. Nothing in the tool results blocks payment beyond the blank subtotal/tax and the vendor's empty invoice history.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks have been completed. The report will be formatted in JSON schema.\n\nTools flagged no issues. Totals are correct and null subtotal or tax fields were handled properly. The focus is now on identifying gaps an approver might miss.\n\nThe missing subtotal and tax fields are the main gap. The invoice totals correctly sum to 3550, but the absence of those line items could indicate an incomplete record. Stock levels and dates are acceptable.\n\nThe vendor has no earlier invoices despite being known since November 2022. This is unusual but not flagged by the tools.\n\nNo concerns will be added. The vendor's empty invoice history is unusual but not flagged by the tools, and the quantity used is acceptable. The null subtotal and tax are already visible on the invoice."
+    }
+   }
+  ],
+  "created": 1795578946,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 177,
+   "prompt_tokens": 2893,
+   "total_tokens": 3843,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 773,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2893
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 27954800
+  }
+ }
+}

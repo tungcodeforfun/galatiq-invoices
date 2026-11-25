@@ -1,0 +1,51 @@
+{
+ "request_sha256": "6be4c38fdb6b34880e72ffe5c22cab6cf46f96f69e8282a9f985455122a6a51a",
+ "response": {
+  "id": "e74cd868-9fbb-4fc3-9ac1-ff73ffd6fa93",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"void\",\"reasoning\":\"F1 flags this invoice as a reject-severity duplicate: same vendor, lines, and total as INV-1001, which is already paid. A second payment of the same bill is blocked, and duplicates must not be resubmitted. Disposition is void under policy for F1.\",\"vendor_reply\":null}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The rejected invoice should be closed out.\n\nThe disposition should be void per policy. The vendor reply will be null."
+    }
+   }
+  ],
+  "created": 1795579835,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 74,
+   "prompt_tokens": 2007,
+   "total_tokens": 2254,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 173,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1280,
+    "image_tokens": 0,
+    "text_tokens": 2007
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 12158400
+  }
+ }
+}

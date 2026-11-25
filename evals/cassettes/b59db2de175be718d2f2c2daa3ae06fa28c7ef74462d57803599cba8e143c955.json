@@ -1,0 +1,51 @@
+{
+ "request_sha256": "b59db2de175be718d2f2c2daa3ae06fa28c7ef74462d57803599cba8e143c955",
+ "response": {
+  "id": "e2978bda-ea7c-48bc-b00a-a409a23760f0",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"resolve_item(2)\",\"resolve_item(3)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_stock(GadgetX)\",\"check_price(1)\",\"check_price(2)\",\"check_price(3)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Precision Parts Ltd.)\"],\"concerns\":[\"INV-1004 R1 is a revision of an invoice already PAID at 1890.00 (delta 4050.00). The note claims extra items under a PO amendment, but no PO or amendment id is on the document and the tools do not show the paid invoice's lines, so the additional-items claim cannot be verified. Do not pay the full 5940.00 without confirming the amendment and netting the amount already paid.\",\"Line amounts and shipping are blank. Totals still reconcile if shipping is treated as zero (5500.00 + 440.00 = 5940.00).\",\"GadgetX requested quantity equals stock on hand (5 of 5); stock check passed, but this line would clear the shelf.\"],\"summary\":\"All three lines matched the catalog exactly, prices are at catalog, stock covers the quantities, and stated totals reconcile. The material issue is a revision conflict: the same invoice number was already paid at 1890.00, and this R1 total is 5940.00.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will report the invoice data in JSON schema format.\n\nTools flagged a revision conflict: prior invoice INV-1004 was paid at 1890, while this revision totals 5940. The notes indicate additional items were added per PO amendment. Shipping is null, but check_totals confirmed the total matches the expected amount.\n\nLine amounts are null, but check_totals recomputed them to 5500 and confirmed the subtotal. GadgetX stock of 5 matches the requested quantity exactly, so there is no overstock. The due date aligns with due_date_as_written. The invoice cites a PO amendment, yet no purchase order data is available.\n\nThe approver should not treat this as a routine revision. The prior invoice was already paid, so the additional items may require a credit against that prior amount. No purchase order data is available to verify the amendment.\n\nThe invoice omits any purchase order number or amendment reference. Paying the full 5940 would double-pay the original 1890; the approver should pay only the 4050 delta."
+    }
+   }
+  ],
+  "created": 1795577590,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 313,
+   "prompt_tokens": 3259,
+   "total_tokens": 4580,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1008,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2816,
+    "image_tokens": 0,
+    "text_tokens": 3259
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 34748000
+  }
+ }
+}

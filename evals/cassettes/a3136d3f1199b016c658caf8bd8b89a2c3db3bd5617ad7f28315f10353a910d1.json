@@ -1,0 +1,84 @@
+{
+ "request_sha256": "a3136d3f1199b016c658caf8bd8b89a2c3db3bd5617ad7f28315f10353a910d1",
+ "response": {
+  "id": "2ee86eec-8619-4550-84f8-5f343e011249",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-eaf0a31a-440e-4009-b94b-8a1aee056747-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-eaf0a31a-440e-4009-b94b-8a1aee056747-1",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-eaf0a31a-440e-4009-b94b-8a1aee056747-2",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-eaf0a31a-440e-4009-b94b-8a1aee056747-3",
+       "function": {
+        "arguments": "{\"name\":\"Acme Industrial Supplies\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will validate the invoice using the available tools.\n\nI will run resolve_item first to identify catalog matches. Then I will call check_stock, check_price, check_totals, check_duplicate, and get_vendor together in one turn."
+    }
+   }
+  ],
+  "created": 1795578939,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 36,
+   "prompt_tokens": 2271,
+   "total_tokens": 2524,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 217,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2271
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14728800
+  }
+ }
+}

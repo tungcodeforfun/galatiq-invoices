@@ -1,0 +1,51 @@
+{
+ "request_sha256": "1a77b75f6f7206af5c219d42b85c334efca1863ad13fe9ae32104ef2aa61e3d1",
+ "response": {
+  "id": "3abdc154-61a4-981d-b961-df921caab300",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"void\",\"reasoning\":\"INV-1003 is voided and must not be resubmitted. F4 and F5 are fraud signals: FakeItem is a catalog item we never price, and the invoice demands immediate wire payment under threat of penalties. F3 also rejects the 100-unit request against zero stock, while F1 and F2 show a non-calendar due date and an unknown vendor.\",\"vendor_reply\":null}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Closing out the rejected invoice.\n\nThe invoice should be voided. Fraud signals and duplicate findings require this disposition.\n\nThe vendor reply will be null. The audit log will cite the fraud findings.\n\nThe audit log cites findings F1, F2, F3, F4, and F5. The invoice lists a fake catalog item, demands immediate wire payment under threat of penalties, requests 100 units against zero stock, shows an invalid due date, and names an unknown vendor."
+    }
+   }
+  ],
+  "created": 1795578030,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 94,
+   "prompt_tokens": 2279,
+   "total_tokens": 2842,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 469,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2279
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 21107200
+  }
+ }
+}

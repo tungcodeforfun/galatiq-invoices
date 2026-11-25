@@ -1,4 +1,4 @@
-data/invoices/invoice_1009.json  grok-4.7 · replay · run 20261125-020650-invoice_1009-ff03
+data/invoices/invoice_1009.json  grok-4.7 · replay · run 20261125-041240-invoice_1009-163d
   ✓ Intake      INV-1009 · no vendor · 2 lines · -250.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   9 tool calls so far
@@ -12,11 +12,11 @@ data/invoices/invoice_1009.json  grok-4.7 · replay · run 20261125-020650-invoi
  F2  DATE_ODDITY     warn      No due date                                                      
  F3  TOTAL_MISMATCH  reject    lines add up to -250.00, subtotal says 1,000.00                  
 ╭─ REJECTED · void ────────────────────────────────────────────────────────────────────────────────╮
-│ INV-1009 is voided because F1 is a data-integrity reject: the vendor name is missing, line 1     │
-│ quantity is -5.0, and the total is -250.0, so there is no valid payee or payable. F3 is also a   │
-│ reject: the lines compute to -250.00 while the subtotal is stated as 1,000.00 and the amounts do │
-│ not reconcile. F2 only warns that no due date is present and does not change the required void.  │
+│ INV-1009 is voided under the data-integrity rule in F1: the vendor name is missing, line 1       │
+│ quantity is -5.0, and the stated total is -250.0, so the document is corrupt and must not come   │
+│ back. F3 confirms it does not reconcile, with computed line amounts of -250.00 against a stated  │
+│ subtotal of 1,000.00. F2 (no due date) is a warning only and does not change the void.           │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 8 model calls (replay) · 9 tool calls · 21120 tokens · $0.0260 recorded · log 
-runs/20261125-020650-invoice_1009-ff03/events.jsonl · 
-runs/20261125-020650-invoice_1009-ff03/report.md
+0.0s · 8 model calls (replay) · 9 tool calls · 21464 tokens · $0.0230 recorded · log 
+runs/20261125-041240-invoice_1009-163d/events.jsonl · 
+runs/20261125-041240-invoice_1009-163d/report.md

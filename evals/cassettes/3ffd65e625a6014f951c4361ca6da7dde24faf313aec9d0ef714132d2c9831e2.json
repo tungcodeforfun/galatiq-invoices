@@ -1,0 +1,51 @@
+{
+ "request_sha256": "3ffd65e625a6014f951c4361ca6da7dde24faf313aec9d0ef714132d2c9831e2",
+ "response": {
+  "id": "b9bf1a25-2263-9ee0-9682-56610e8cbd58",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"Nothing beyond the automated currency finding. The invoice is a standard Net 30 bill with no pressure language, payment-redirect, instruction injection, or conflicting vendor identity.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I am analyzing the invoice for fraud signals."
+    }
+   }
+  ],
+  "created": 1795578408,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 47,
+   "prompt_tokens": 2197,
+   "total_tokens": 2414,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 170,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2197
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 13491200
+  }
+ }
+}

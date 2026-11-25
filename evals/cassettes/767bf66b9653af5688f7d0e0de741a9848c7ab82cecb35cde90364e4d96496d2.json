@@ -1,0 +1,51 @@
+{
+ "request_sha256": "767bf66b9653af5688f7d0e0de741a9848c7ab82cecb35cde90364e4d96496d2",
+ "response": {
+  "id": "3993b03a-59cb-9936-8b98-bffab01736ab",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"verdict\":\"accept\",\"objections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I need to review the VP's draft payment decision and identify what is wrong with it.\n\nThe draft decision rejects the invoice because F1 shows WidgetB is one unit over stock. I am checking whether this finding is ignored or misread.\n\nThe draft correctly identifies and addresses the reject-severity finding. The rejection is supported by the document.\n\nThe invoice total is $5,500, so the $10,000 threshold does not apply. The draft decision should be accepted with no objections."
+    }
+   }
+  ],
+  "created": 1795578232,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 11,
+   "prompt_tokens": 2193,
+   "total_tokens": 2752,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 548,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2193
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 20440800
+  }
+ }
+}

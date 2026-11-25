@@ -1,8 +1,8 @@
 # invoice_1011.txt: REJECTED (void)
 
-F1 is a reject-severity duplicate: this invoice matches the vendor, lines, and total of INV-1011, which is already paid. A duplicate must not be paid again and must not be returned for resubmission. Disposition is void under policy for F1.
+INV-1011 from Summit Manufacturing Co. is rejected under F1 because it matches the vendor, line items, and total of INV-1011, which is already PAID. Policy requires void for a duplicate so the invoice cannot be resubmitted or paid again.
 
-Run `20261125-014926-invoice_1011-e106` · seconds 44.4 · llm_calls 8 · tool_calls 9 · tiers ['live'] · tokens 20057 · cost_usd 0.0145
+Run `20261125-034657-invoice_1011-4d9d` · seconds 44.3 · llm_calls 9 · tool_calls 10 · tiers ['live'] · tokens 22401 · cost_usd 0.0144
 
 ## Extracted invoice
 
@@ -46,26 +46,25 @@ Run `20261125-014926-invoice_1011-e106` · seconds 44.4 · llm_calls 8 · tool_c
 | validator | check_stock | {"item": "WidgetB"} | {"item": "WidgetB", "lines": [2], "requested": 3.0, "in_stock": 10, "ok": true} |
 | validator | check_price | {"line": 1} | {"line": 1, "item": "WidgetA", "invoiced": 250.0, "catalog": 250.0, "variance_pct": 0.0, "within_tolerance": true} |
 | validator | check_price | {"line": 2} | {"line": 2, "item": "WidgetB", "invoiced": 500.0, "catalog": 500.0, "variance_pct": 0.0, "within_tolerance": true} |
+| risk | get_vendor | {"name": "Summit Manufacturing Co."} | {"known": true, "name": "Summit Manufacturing Co.", "aliases": [], "first_seen": "2023-04-22", "earlier_invoices": [{"number": "INV-1011", "total": 3000.0, "sta |
 
 ## Validator notes
 
 ```json
 {
   "checks_run": [
-    "resolve_item(1)",
-    "resolve_item(2)",
+    "resolve_item(line 1)",
+    "resolve_item(line 2)",
     "check_totals",
     "check_duplicate",
     "get_vendor(Summit Manufacturing Co.)",
     "check_stock(WidgetA)",
     "check_stock(WidgetB)",
-    "check_price(1)",
-    "check_price(2)"
+    "check_price(line 1)",
+    "check_price(line 2)"
   ],
-  "concerns": [
-    "INV-1011 is already on the ledger as PAID for this vendor at the same $3000 total, so paying it again would be a double payment even though lines, prices, stock, and totals otherwise match."
-  ],
-  "summary": "Both lines matched the catalog exactly, prices and stock were within limits, and stated totals reconciled. The invoice is a duplicate of INV-1011, which is already PAID."
+  "concerns": [],
+  "summary": "Both lines matched the catalog exactly (WidgetA, WidgetB); stock, unit prices, and totals all checked out. check_duplicate and the vendor master both show INV-1011 already processed and PAID, so this looks like a resubmission of a paid invoice."
 }
 ```
 
@@ -75,7 +74,7 @@ Run `20261125-014926-invoice_1011-e106` · seconds 44.4 · llm_calls 8 · tool_c
 {
   "level": "low",
   "signals": [],
-  "summary": "The invoice is ordinary Net 30 wording with no pressure language, payment redirect, instruction injection, or conflicting vendor identity. Nothing here goes beyond the automated duplicate finding, which is already presented separately."
+  "summary": "The invoice is ordinary Net 30 wording from a known vendor, with no pressure language, payment redirect, instruction injection, or conflicting vendor identity. Nothing here goes beyond the automated duplicate finding, which the VP already sees separately."
 }
 ```
 
@@ -86,7 +85,7 @@ Run `20261125-014926-invoice_1011-e106` · seconds 44.4 · llm_calls 8 · tool_c
   "action": "reject",
   "reasons": [
     {
-      "text": "F1 is a reject-severity duplicate: this invoice matches vendor, lines, and total of INV-1011, which is already paid. The payment gate blocks it, so it must not be paid again.",
+      "text": "F1 is a reject-severity duplicate: same vendor, lines, and total as INV-1011, which is already PAID. The payment gate blocks this invoice regardless of any other weighing.",
       "finding_ids": [
         "F1"
       ]
@@ -95,7 +94,7 @@ Run `20261125-014926-invoice_1011-e106` · seconds 44.4 · llm_calls 8 · tool_c
   "addressed_findings": [
     "F1"
   ],
-  "summary": "Reject INV-1011 from Summit Manufacturing Co. for $3,000. It is a duplicate of an already-paid invoice (F1), and a reject finding blocks payment."
+  "summary": "Reject INV-1011 from Summit Manufacturing Co. for $3,000. It is a duplicate of an invoice already paid (F1), so it must not be paid again."
 }
 ```
 
@@ -115,8 +114,7 @@ Run `20261125-014926-invoice_1011-e106` · seconds 44.4 · llm_calls 8 · tool_c
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -125,7 +123,7 @@ Run `20261125-014926-invoice_1011-e106` · seconds 44.4 · llm_calls 8 · tool_c
 ```json
 {
   "disposition": "void",
-  "reasoning": "F1 is a reject-severity duplicate: this invoice matches the vendor, lines, and total of INV-1011, which is already paid. A duplicate must not be paid again and must not be returned for resubmission. Disposition is void under policy for F1.",
+  "reasoning": "INV-1011 from Summit Manufacturing Co. is rejected under F1 because it matches the vendor, line items, and total of INV-1011, which is already PAID. Policy requires void for a duplicate so the invoice cannot be resubmitted or paid again.",
   "vendor_reply": null
 }
 ```

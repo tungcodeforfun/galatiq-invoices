@@ -1,0 +1,51 @@
+{
+ "request_sha256": "bea697540a0bae480c07dc20ea46bf6f377188502db81a37e1282aa609086f00",
+ "response": {
+  "id": "e6cb2291-4bc6-91cc-9b75-2c32c4c107bb",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"resolve_item(2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Gadgets Co.)\",\"check_stock(GadgetX)\",\"check_stock(WidgetA)\",\"check_price(1)\",\"check_price(2)\"],\"concerns\":[],\"summary\":\"Checked INV-3002 from Gadgets Co. against the catalog, stock, prices, totals, duplicate ledger, and vendor master. All tool checks passed with no exceptions.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks passed. I will report the findings in the JSON schema.\n\nThe invoice is clean. Both items match the catalog. Stock and prices are correct. Totals are accurate. The Net 30 due date is exact. No concerns to report."
+    }
+   }
+  ],
+  "created": 1795577949,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 111,
+   "prompt_tokens": 2969,
+   "total_tokens": 3376,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 296,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2969
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 22616800
+  }
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "request_sha256": "683984a111658b944cf9b5f99fb3ffdcf0796c95569d3b63b6a5893052ad006a",
+ "response": {
+  "id": "02e8d141-91e9-9fc6-a20a-49548dd824ec",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"void\",\"reasoning\":\"INV-2003 is voided under F1, a reject-severity fraud finding: the invoice asks AP to remit to new First Coastal Bank details (routing 021000089, account 4481 2290 7731) and arrived from a sender domain not on the vendor master. Policy requires void for fraud signals, so this invoice must not be paid or resubmitted. Bank details must not be updated from this document; payment remains blocked.\",\"vendor_reply\":null}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Closing out the rejected invoice.\n\nThe invoice is void. The fraud finding requires a void disposition.\n\nThe invoice pairs new bank details with an unrecognized sender domain. This confirms the fraud finding. The vendor reply will be null. The audit log reasoning will cite the finding IDs."
+    }
+   }
+  ],
+  "created": 1795579316,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 109,
+   "prompt_tokens": 2184,
+   "total_tokens": 2784,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 491,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2184
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 21216000
+  }
+ }
+}

@@ -1,25 +1,25 @@
 {
  "request_sha256": "8b2a5e7ff3911e6fc86b908e2540060974f5ac08402c12c4ed57b84b3b8ca332",
  "response": {
-  "id": "01a05bae-2f98-96d1-a4e1-4af868012dec",
+  "id": "c64bfc1e-f7b8-9f9a-9722-a1fce65a9671",
   "choices": [
    {
     "finish_reason": "stop",
     "index": 0,
     "logprobs": null,
     "message": {
-     "content": "{\"invoice_number\":\"INV-1011\",\"vendor\":\"Summit Manufacturing Co.\",\"invoice_date\":\"2026-01-20\",\"due_date\":\"2026-02-20\",\"due_date_as_written\":\"2026-02-20\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":6,\"unit_price\":250.00,\"amount\":1500.00,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":3,\"unit_price\":500.00,\"amount\":1500.00,\"note\":null}],\"subtotal\":null,\"tax\":null,\"shipping\":null,\"total\":3000.00,\"payment_terms\":null,\"notes\":null,\"revision\":null,\"corrections\":[]}",
+     "content": "{\"invoice_number\":\"INV-1011\",\"vendor\":\"Summit Manufacturing Co.\",\"invoice_date\":\"2026-01-20\",\"due_date\":\"2026-02-20\",\"due_date_as_written\":\"2026-02-20\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":6,\"unit_price\":250,\"amount\":1500,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":3,\"unit_price\":500,\"amount\":1500,\"note\":null}],\"subtotal\":null,\"tax\":null,\"shipping\":null,\"total\":3000,\"payment_terms\":null,\"notes\":null,\"revision\":null,\"corrections\":[]}",
      "refusal": null,
      "role": "assistant",
      "annotations": null,
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I will extract the invoice data into structured JSON.\n\nThe invoice contains two line items: WidgetA (6 units at $250.00) and WidgetB (3 units at $500.00). The total is $3,000.00. No subtotals, taxes, shipping, or payment terms are present.\n\nThe due date \"2026-02-20\" will be stored in both the parsed date field and the `due_date_as_written` field. Quantities are plain numbers without currency symbols or separators."
+     "reasoning_content": "I will extract the invoice data into a JSON schema.\n\nThe invoice contains two line items: WidgetA (6 units at $250.00) and WidgetB (3 units at $500.00). The total is $3,000.00. Subtotal, tax, shipping, payment terms, notes, and revision are not present in the document.\n\nThe due date is a calendar date, so it should be stored as the date field rather than in the written text field.\n\nThe written due date text is \"2026-02-20\"."
     }
    }
   ],
-  "created": 1795571337,
+  "created": 1795578384,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -27,13 +27,13 @@
   "service_tier": "default",
   "system_fingerprint": "fp_b507827d1c19f448",
   "usage": {
-   "completion_tokens": 167,
+   "completion_tokens": 157,
    "prompt_tokens": 2831,
-   "total_tokens": 3394,
+   "total_tokens": 3650,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 396,
+    "reasoning_tokens": 662,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 2831
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 24860800
+   "cost_in_usd_ticks": 30083200
   }
  }
 }

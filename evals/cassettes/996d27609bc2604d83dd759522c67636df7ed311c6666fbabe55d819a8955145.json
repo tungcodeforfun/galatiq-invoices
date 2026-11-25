@@ -1,0 +1,51 @@
+{
+ "request_sha256": "996d27609bc2604d83dd759522c67636df7ed311c6666fbabe55d819a8955145",
+ "response": {
+  "id": "65e8d2fa-8dff-4330-be06-dcba5bca255d",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"check_stock(WidgetA)\",\"check_price(1)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Reliable Components Inc.)\"],\"concerns\":[\"Vendor is on the master since 2022-03-27 but the ledger lists no earlier invoices, so this looks like the first processed bill for a long-known vendor.\"],\"summary\":\"INV-3004 from Reliable Components Inc. was checked against the catalog, stock, prices, totals, duplicate ledger, and vendor master. Line 1 matches WidgetA exactly; quantity 6 is within stock, unit price matches the catalog, totals agree, and no duplicate was found.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Preparing the final JSON report.\n\nAll checks passed. WidgetA is an exact match with sufficient stock and correct pricing. Totals reconcile. No duplicates or vendor aliases were found.\n\nThe vendor has no earlier invoices in the ledger despite being known since 2022. The 30-day payment terms match the invoice dates exactly."
+    }
+   }
+  ],
+  "created": 1795578054,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 149,
+   "prompt_tokens": 2895,
+   "total_tokens": 3851,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 807,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2895
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 33313200
+  }
+ }
+}

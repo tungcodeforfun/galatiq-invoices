@@ -1,7 +1,7 @@
 {
  "request_sha256": "3d5a71babfffa648157f5589848f0cfb1e1ec0df405d1f106ad55ec8849f4bf4",
  "response": {
-  "id": "85856cf5-e679-426a-b810-38cfe44aa90d",
+  "id": "f155caf6-66e3-98fb-ab1d-50da75ec8985",
   "choices": [
    {
     "finish_reason": "stop",
@@ -15,11 +15,11 @@
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I will extract the invoice data and return it as JSON matching the schema.\n\nExtracting the invoice number, vendor, dates, and line items. The due date is a calendar date, so due_date_as_written will be null.\n\nThe due date text will be included in due_date_as_written as \"2026-03-04\".\n\nCurrency is USD. The first line item is WidgetA, quantity 14, unit price $250.00, amount $3,500.00.\n\nWidgetB is quantity 10 at $500.00 per unit for $5,000.00 total. GadgetX is quantity 4 at $750.00 per unit for $3,000.00 total. Subtotal is $11,500.00. Shipping is $500.00. Total is $12,000.00. Payment terms are Net 30. Tax and notes are null. PO reference is ignored. Vendor is Summit Manufacturing Co."
+     "reasoning_content": "I will extract the invoice data into a structured JSON format.\n\nI parsed the invoice fields and line items. I noted the strict rules to avoid computation or inference.\n\nI noted the formatting rules: preserve negative signs, use YYYY-MM-DD dates, and map currency symbols to ISO codes. The vendor is Summit Manufacturing Co. I am deciding whether to place the PO Reference in notes or omit it, since the schema lacks a dedicated field for it.\n\nThe PO Reference will be omitted entirely. Notes, tax, revision, and corrections will all be null.\n\nThe due date is a valid calendar date, so it will be stored as YYYY-MM-DD. I am checking whether the original text must also be preserved in due_date_as_written.\n\nThe original due date text will be preserved in due_date_as_written. Both fields will be populated since the date is a valid calendar date."
     }
    }
   ],
-  "created": 1795571998,
+  "created": 1795579076,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -29,11 +29,11 @@
   "usage": {
    "completion_tokens": 188,
    "prompt_tokens": 2902,
-   "total_tokens": 4175,
+   "total_tokens": 3979,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 1085,
+    "reasoning_tokens": 889,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 2902
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 31994000
+   "cost_in_usd_ticks": 27995600
   }
  }
 }

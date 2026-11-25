@@ -1,8 +1,8 @@
 # invoice_1001.txt: PAID
 
-Paid 5,000.00 to Widgets Inc.: Approve INV-1001 for $5,000. Known vendor, totals reconcile, no findings, and the risk memo is low.
+Paid 5,000.00 to Widgets Inc.: Approve INV-1001 for $5,000. Vendor is on file, checks are clean, risk is low, and the line items reconcile to the billed total.
 
-Run `20261125-013531-invoice_1001-16e7` · seconds 43.4 · llm_calls 8 · tool_calls 11 · tiers ['live'] · tokens 20727 · cost_usd 0.014
+Run `20261125-032819-invoice_1001-84dc` · seconds 53.6 · llm_calls 7 · tool_calls 10 · tiers ['live'] · tokens 18503 · cost_usd 0.0132
 
 ## Extracted invoice
 
@@ -40,7 +40,6 @@ Run `20261125-013531-invoice_1001-16e7` · seconds 43.4 · llm_calls 8 · tool_c
 | validator | check_stock | {"item": "WidgetB"} | {"item": "WidgetB", "lines": [2], "requested": 5.0, "in_stock": 10, "ok": true} |
 | validator | check_price | {"line": 1} | {"line": 1, "item": "WidgetA", "invoiced": 250.0, "catalog": 250.0, "variance_pct": 0.0, "within_tolerance": true} |
 | validator | check_price | {"line": 2} | {"line": 2, "item": "WidgetB", "invoiced": 500.0, "catalog": 500.0, "variance_pct": 0.0, "within_tolerance": true} |
-| risk | get_vendor | {"name": "Widgets Inc."} | {"known": true, "name": "Widgets Inc.", "aliases": [], "first_seen": "2023-03-01", "earlier_invoices": []} |
 | approver | get_vendor | {"name": "Widgets Inc."} | {"known": true, "name": "Widgets Inc.", "aliases": [], "first_seen": "2023-03-01", "earlier_invoices": []} |
 
 ## Validator notes
@@ -48,22 +47,20 @@ Run `20261125-013531-invoice_1001-16e7` · seconds 43.4 · llm_calls 8 · tool_c
 ```json
 {
   "checks_run": [
-    "resolve_item(line=1)",
-    "resolve_item(line=2)",
+    "resolve_item(line 1)",
+    "resolve_item(line 2)",
     "check_totals",
     "check_duplicate",
     "get_vendor(Widgets Inc.)",
     "check_stock(WidgetA)",
     "check_stock(WidgetB)",
-    "check_price(line=1)",
-    "check_price(line=2)"
+    "check_price(line 1)",
+    "check_price(line 2)"
   ],
   "concerns": [
-    "Payment terms are Net 15 (invoice date 2026-01-15) but due_date is 2026-02-01; tools do not compare terms to the due date.",
-    "Vendor is known since 2023-03-01 but get_vendor returned no earlier invoices.",
-    "Line amounts and shipping are null on the invoice; check_totals recomputed from quantity and unit price and matched the stated subtotal and total, so blank amounts were not flagged."
+    "Vendor master lists Widgets Inc. as known since 2023-03-01, but earlier_invoices is empty, so there is no prior invoice history to compare."
   ],
-  "summary": "Both lines matched catalog items at catalog prices, stock covers the requested quantities, totals recompute to the stated 5000.00, the invoice is not a duplicate, and Widgets Inc. is a known vendor. No tool reported a problem; the terms-versus-due-date mismatch, empty invoice history, and null line/shipping amounts are the only points for the approver."
+  "summary": "Both lines matched WidgetA and WidgetB exactly; stock, unit prices, totals, and duplicate lookup were all clear, and the vendor is on the master."
 }
 ```
 
@@ -73,7 +70,7 @@ Run `20261125-013531-invoice_1001-16e7` · seconds 43.4 · llm_calls 8 · tool_c
 {
   "level": "low",
   "signals": [],
-  "summary": "Widgets Inc. is a known vendor and the invoice shows no pressure language, payment redirection, conflicting identity, or instructions aimed at the reviewer. Nothing here goes beyond the automated checks."
+  "summary": "The invoice is a routine Widgets Inc. bill for $5,000 with ordinary Net 15 terms and no language suggesting pressure, payment redirection, conflicting vendor identity, or instructions to the approver. Nothing here goes beyond the automated checks."
 }
 ```
 
@@ -84,12 +81,16 @@ Run `20261125-013531-invoice_1001-16e7` · seconds 43.4 · llm_calls 8 · tool_c
   "action": "approve",
   "reasons": [
     {
-      "text": "Widgets Inc. is on file (first seen 2023-03-01). Line math reconciles (10 x $250 + 5 x $500 = $5,000 subtotal and total), terms are Net 15, and the risk memo is low with no pressure, redirection, or identity conflict.",
+      "text": "Widgets Inc. is on the vendor master (known since 2023-03-01). No automated findings were raised, and the low-risk memo cites no pressure, payment redirection, or identity conflict.",
+      "finding_ids": []
+    },
+    {
+      "text": "Line math is consistent: 10 x $250 and 5 x $500 equal the $5,000 subtotal and total. Amount is under $10,000, terms are ordinary Net 15, and empty prior-invoice history is not a document defect.",
       "finding_ids": []
     }
   ],
   "addressed_findings": [],
-  "summary": "Approve INV-1001 for $5,000. Known vendor, totals reconcile, no findings, and the risk memo is low."
+  "summary": "Approve INV-1001 for $5,000. Vendor is on file, checks are clean, risk is low, and the line items reconcile to the billed total."
 }
 ```
 
@@ -98,8 +99,7 @@ Run `20261125-013531-invoice_1001-16e7` · seconds 43.4 · llm_calls 8 · tool_c
 ```json
 {
   "approved": true,
-  "blocked_by": [],
-  "overridden": false
+  "blocked_by": []
 }
 ```
 

@@ -1,0 +1,140 @@
+{
+ "request_sha256": "16edff715817b3a2de0e3cc0b98adb0746ca2388a05775260dc845e83e82eea0",
+ "response": {
+  "id": "ffc9ceed-d3a7-47c3-a71e-142af745d2ff",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[],\"concerns\":[],\"summary\":\"Starting required invoice checks.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-465c249a-8931-4d8e-b5e1-b72a78ebe04b-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-465c249a-8931-4d8e-b5e1-b72a78ebe04b-1",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-465c249a-8931-4d8e-b5e1-b72a78ebe04b-2",
+       "function": {
+        "arguments": "{\"line\":3}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-465c249a-8931-4d8e-b5e1-b72a78ebe04b-3",
+       "function": {
+        "arguments": "{\"line\":4}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-465c249a-8931-4d8e-b5e1-b72a78ebe04b-4",
+       "function": {
+        "arguments": "{\"line\":5}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-465c249a-8931-4d8e-b5e1-b72a78ebe04b-5",
+       "function": {
+        "arguments": "{\"line\":6}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-465c249a-8931-4d8e-b5e1-b72a78ebe04b-6",
+       "function": {
+        "arguments": "{\"line\":7}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-465c249a-8931-4d8e-b5e1-b72a78ebe04b-7",
+       "function": {
+        "arguments": "{\"line\":8}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-465c249a-8931-4d8e-b5e1-b72a78ebe04b-8",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-465c249a-8931-4d8e-b5e1-b72a78ebe04b-9",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-465c249a-8931-4d8e-b5e1-b72a78ebe04b-10",
+       "function": {
+        "arguments": "{\"name\":\"Atlas Industrial Supply\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will validate the invoice using the available tools."
+    }
+   }
+  ],
+  "created": 1795578829,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 126,
+   "prompt_tokens": 2546,
+   "total_tokens": 2859,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 187,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2048,
+    "image_tokens": 0,
+    "text_tokens": 2546
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 13253200
+  }
+ }
+}

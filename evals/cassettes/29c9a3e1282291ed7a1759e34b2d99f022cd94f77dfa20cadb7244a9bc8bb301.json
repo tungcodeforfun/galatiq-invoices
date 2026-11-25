@@ -1,0 +1,51 @@
+{
+ "request_sha256": "29c9a3e1282291ed7a1759e34b2d99f022cd94f77dfa20cadb7244a9bc8bb301",
+ "response": {
+  "id": "94fe7cc0-eefd-49e1-9c59-7bae054f2dae",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"check_stock(WidgetB)\",\"check_price(1)\",\"check_totals\",\"check_duplicate\",\"get_vendor(null)\"],\"concerns\":[\"Extracted vendor is null, so get_vendor was called with the literal name \\\"null\\\" and found no master record. There is no payable party, remit-to, or alias to match; payment cannot be released until a real vendor is identified.\"],\"summary\":\"Line 1 matched WidgetB exactly; stock (3 of 10), unit price ($500), and stated total ($1500) all checked out, and the invoice is not a duplicate. The document has no vendor name, so it cannot be tied to the vendor master.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks have completed. I will report the findings in JSON schema format.\n\nThe vendor field is null. The get_vendor tool returned unknown for \"null\". This is a concern because the invoice lacks a vendor name. Subtotal, tax, and shipping are also null, but check_totals confirmed the total matches the line amount.\n\nThe Net 30 payment terms align with the invoice date and due date.\n\nThe null vendor name is already flagged by the tool as unknown. It does not qualify as a concern beyond what the tools themselves would flag."
+    }
+   }
+  ],
+  "created": 1795578569,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 160,
+   "prompt_tokens": 2830,
+   "total_tokens": 3676,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 686,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 2830
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 22793600
+  }
+ }
+}

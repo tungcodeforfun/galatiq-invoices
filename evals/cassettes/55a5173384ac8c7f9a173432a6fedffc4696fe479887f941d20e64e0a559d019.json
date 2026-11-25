@@ -1,25 +1,25 @@
 {
  "request_sha256": "55a5173384ac8c7f9a173432a6fedffc4696fe479887f941d20e64e0a559d019",
  "response": {
-  "id": "8c7e13a2-c8ba-4baf-90d4-87e85b89c363",
+  "id": "8703e250-6633-9a05-a478-16ed3b4f3cb6",
   "choices": [
    {
     "finish_reason": "stop",
     "index": 0,
     "logprobs": null,
     "message": {
-     "content": "{\"invoice_number\":\"INV-1005\",\"vendor\":\"Global Supply Chain Partners\",\"invoice_date\":\"2026-01-18\",\"due_date\":\"2026-03-18\",\"due_date_as_written\":\"2026-03-18\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":14,\"unit_price\":250,\"amount\":null,\"note\":null},{\"description\":\"GadgetX\",\"quantity\":8,\"unit_price\":750,\"amount\":null,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":10,\"unit_price\":500,\"amount\":null,\"note\":null}],\"subtotal\":14500,\"tax\":725,\"shipping\":null,\"total\":15225,\"payment_terms\":\"Net 60\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
+     "content": "{\"invoice_number\":\"INV-1005\",\"vendor\":\"Global Supply Chain Partners\",\"invoice_date\":\"2026-01-18\",\"due_date\":\"2026-03-18\",\"due_date_as_written\":\"2026-03-18\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":14,\"unit_price\":250.00,\"amount\":null,\"note\":null},{\"description\":\"GadgetX\",\"quantity\":8,\"unit_price\":750.00,\"amount\":null,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":10,\"unit_price\":500.00,\"amount\":null,\"note\":null}],\"subtotal\":14500.00,\"tax\":725.00,\"shipping\":null,\"total\":15225.00,\"payment_terms\":\"Net 60\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
      "refusal": null,
      "role": "assistant",
      "annotations": null,
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "Extracting invoice data from the document and formatting it as JSON matching the schema.\n\nMapping the invoice fields and noting that the due date is a calendar date, so due_date_as_written will hold the original text.\n\nThe due date text is \"2026-03-18\". Line item amounts will be null since the schema forbids inferring missing values. Descriptions are being drafted for each line.\n\nThe remaining line items are GadgetX and WidgetB. Subtotal is 14500.00, tax is 725.00, and total is 15225.00. Payment terms are Net 60. Shipping, notes, revision, and corrections are null. The vendor address is not a free-text note.\n\nThe tax rate field is omitted from the output since the schema does not include it. The vendor address remains null because it is not a free-text message, note, request, or remittance instruction."
+     "reasoning_content": "I will extract structured data from the invoice document.\n\nI am mapping the invoice fields to the schema. The due date will be stored as a YYYY-MM-DD string in `due_date` and as the exact text in `due_date_as_written`.\n\nLine items will use the exact item text as description. Amount is null for each line. Vendor name and invoice date are extracted directly from the document.\n\nTax will be set to 725.00. Shipping is null.\n\nTotal is 15225.00. Payment terms are \"Net 60\". Notes, revision, and corrections are null."
     }
    }
   ],
-  "created": 1795570854,
+  "created": 1795577678,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -27,13 +27,13 @@
   "service_tier": "default",
   "system_fingerprint": "fp_bc4243bed6",
   "usage": {
-   "completion_tokens": 185,
+   "completion_tokens": 197,
    "prompt_tokens": 2974,
-   "total_tokens": 3934,
+   "total_tokens": 4698,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 775,
+    "reasoning_tokens": 1527,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 2974
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 33932000
+   "cost_in_usd_ticks": 49517600
   }
  }
 }

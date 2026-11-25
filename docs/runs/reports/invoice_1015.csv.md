@@ -1,8 +1,8 @@
 # invoice_1015.csv: PAID
 
-Paid 6,500.00 to Reliable Components Inc.: Approve INV-1015 for $6,500 to Reliable Components Inc. The vendor is on file, the math checks out, there are no findings, and the risk memo is low.
+Paid 6,500.00 to Reliable Components Inc.: Approve INV-1015 for $6,500 to Reliable Components Inc. Math and dates are clean, the vendor is on file, and the low-risk memo gives no reason to hold payment.
 
-Run `20261125-015807-invoice_1015-bab5` · seconds 48.5 · llm_calls 8 · tool_calls 14 · tiers ['live'] · tokens 21124 · cost_usd 0.0167
+Run `20261125-035625-invoice_1015-2321` · seconds 44.1 · llm_calls 8 · tool_calls 14 · tiers ['live'] · tokens 21355 · cost_usd 0.0154
 
 ## Extracted invoice
 
@@ -66,10 +66,11 @@ Run `20261125-015807-invoice_1015-bab5` · seconds 48.5 · llm_calls 8 · tool_c
     "get_vendor(Reliable Components Inc.)"
   ],
   "concerns": [
-    "Vendor is known (first seen 2022-03-27) but the ledger lists no earlier invoices, so this may be the first billed invoice from a long-standing vendor.",
-    "Currency and shipping are blank on the invoice; totals still reconciled with shipping omitted, and no currency was confirmed."
+    "Currency is null and payment terms are blank; tools do not validate either.",
+    "Vendor master lists Reliable Components Inc. as known since 2022-03-27, but earlier_invoices is empty, so this would be the first ledgered invoice from a long-known vendor.",
+    "Shipping is null rather than an explicit amount; totals still matched with tax 0."
   ],
-  "summary": "All three lines matched the catalog exactly; stock, unit prices, totals, and duplicate checks were clean, and the vendor is on the master file. Nothing the tools flag as a mismatch; only the empty invoice history and blank currency/shipping are worth a look before approval."
+  "summary": "All three lines matched the catalog exactly. Stock, prices, totals, and duplicate checks were clean, and the vendor name is on file."
 }
 ```
 
@@ -79,7 +80,7 @@ Run `20261125-015807-invoice_1015-bab5` · seconds 48.5 · llm_calls 8 · tool_c
 {
   "level": "low",
   "signals": [],
-  "summary": "Reliable Components Inc. is a known vendor, and the invoice contains only ordinary line items, dates, and totals. Nothing in the document suggests pressure, payment redirection, identity conflict, or instructions aimed at the reviewer."
+  "summary": "The invoice from known vendor Reliable Components Inc. shows ordinary line items, dates, and a Net-style due date with no pressure, payment-redirect, identity conflict, or reviewer instructions. Nothing beyond the automated findings suggests deception or a reason to withhold payment."
 }
 ```
 
@@ -90,16 +91,16 @@ Run `20261125-015807-invoice_1015-bab5` · seconds 48.5 · llm_calls 8 · tool_c
   "action": "approve",
   "reasons": [
     {
-      "text": "Vendor Reliable Components Inc. is on file (known since 2022-03-27). Invoice INV-1015 totals $6,500, under the $10,000 extra-scrutiny threshold, and line items (10 x $250 + 5 x $500 + 2 x $750) equal the stated subtotal and total.",
+      "text": "Vendor Reliable Components Inc. is on file (known since 2022-03-27). Line items 10×250, 5×500, and 2×750 sum to the $6,500 subtotal and total with tax 0; dates are ordinary (invoice 2026-01-29, due 2026-02-28). Amount is under $10,000.",
       "finding_ids": []
     },
     {
-      "text": "No automated findings were raised. The risk memo is low, with no signals of pressure, payment redirection, or identity conflict, so nothing outweighs a known vendor and an internally consistent invoice.",
+      "text": "Risk memo is low with no deception, payment-redirect, or identity signals. Blank currency, payment terms, and null shipping are not validated by the checks and are not enough, on the document itself, to withhold a first ledgered invoice from a long-known vendor.",
       "finding_ids": []
     }
   ],
   "addressed_findings": [],
-  "summary": "Approve INV-1015 for $6,500 to Reliable Components Inc. The vendor is on file, the math checks out, there are no findings, and the risk memo is low."
+  "summary": "Approve INV-1015 for $6,500 to Reliable Components Inc. Math and dates are clean, the vendor is on file, and the low-risk memo gives no reason to hold payment."
 }
 ```
 
@@ -108,8 +109,7 @@ Run `20261125-015807-invoice_1015-bab5` · seconds 48.5 · llm_calls 8 · tool_c
 ```json
 {
   "approved": true,
-  "blocked_by": [],
-  "overridden": false
+  "blocked_by": []
 }
 ```
 

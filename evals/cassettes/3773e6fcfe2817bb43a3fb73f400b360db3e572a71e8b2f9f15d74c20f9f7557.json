@@ -1,0 +1,60 @@
+{
+ "request_sha256": "3773e6fcfe2817bb43a3fb73f400b360db3e572a71e8b2f9f15d74c20f9f7557",
+ "response": {
+  "id": "3f29a7db-1809-485a-b784-c78f2b96703d",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-65e11939-64f2-4873-9f4f-b7b5dba10f30-0",
+       "function": {
+        "arguments": "{\"name\":\"Widgets Inc.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I am acting as VP of Finance to decide whether to pay this vendor invoice.\n\nThe invoice contains a line item with quantity -4.0. This triggers a finding with severity \"reject\". The policy requires rejecting any invoice with a reject finding. I will also check the vendor details for completeness."
+    }
+   }
+  ],
+  "created": 1795578685,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 13,
+   "prompt_tokens": 2286,
+   "total_tokens": 2599,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 300,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1792,
+    "image_tokens": 0,
+    "text_tokens": 2286
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 12790800
+  }
+ }
+}

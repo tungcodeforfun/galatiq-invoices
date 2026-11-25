@@ -1,4 +1,4 @@
-data/invoices/invoice_1003.txt  grok-4.7 · replay · run 20261125-020645-invoice_1003-7e04
+data/invoices/invoice_1003.txt  grok-4.7 · replay · run 20261125-041235-invoice_1003-9177
   ✓ Intake      INV-1003 · Fraudster LLC · 1 lines · 100000.0 USD
   ✓ Check       every value traces to the document
   ✓ Validator   6 tool calls so far
@@ -12,17 +12,15 @@ data/invoices/invoice_1003.txt  grok-4.7 · replay · run 20261125-020645-invoic
  F2  NEW_VENDOR      warn      'Fraudster LLC' is not in the vendor master                          
  F3  STOCK_EXCEEDED  reject    FakeItem: 100 requested across 1 line(s), 0 in stock                 
  F4  FRAUD_SIGNALS   reject    FakeItem is a catalog item we hold none of and never price           
- F5  FRAUD_SIGNALS   reject    Risk analyst: The invoice demands immediate payment under penalty    
-                               threat and prefers a wire, which is classic payment-fraud pressure   
-                               rather than a routine bill. Do not pay until the request is          
-                               independently verified outside this document.                        
+ F5  FRAUD_SIGNALS   reject    Risk analyst: The invoice presses for immediate payment under threat 
+                               of penalties and asks for a wire transfer. Do not pay until the      
+                               vendor and payment instructions are independently verified.          
 ╭─ REJECTED · void ────────────────────────────────────────────────────────────────────────────────╮
-│ INV-1003 is voided and must not be resubmitted. Findings F4 and F5 are fraud signals: FakeItem   │
-│ is a catalog item we hold none of and never price, and the memo uses urgency, a penalty threat,  │
-│ and a wire preference as payment-fraud pressure. F1, F2, and F3 further show this is not a       │
-│ payable bill (due date 'yesterday', unknown vendor Fraudster LLC, and quantity 100 against 0 in  │
-│ stock).                                                                                          │
+│ INV-1003 is voided and must not be resubmitted. F4 and F5 are fraud signals: FakeItem is a       │
+│ catalog item we never price, and the invoice demands immediate wire payment under threat of      │
+│ penalties. F3 also rejects the 100-unit request against zero stock, while F1 and F2 show a       │
+│ non-calendar due date and an unknown vendor.                                                     │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-0.0s · 10 model calls (replay) · 8 tool calls · 25546 tokens · $0.0237 recorded · log 
-runs/20261125-020645-invoice_1003-7e04/events.jsonl · 
-runs/20261125-020645-invoice_1003-7e04/report.md
+0.0s · 10 model calls (replay) · 8 tool calls · 26249 tokens · $0.0255 recorded · log 
+runs/20261125-041235-invoice_1003-9177/events.jsonl · 
+runs/20261125-041235-invoice_1003-9177/report.md

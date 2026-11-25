@@ -1,8 +1,8 @@
 # invoice_1007.csv: REJECTED (return_to_vendor)
 
-INV-1007 is rejected under F1 because line items of 14,750.00 plus tax of 885.00 equal 15,635.00, while the stated total is 15,525.00, short by 110.00. F2 and F3 are also reject findings: WidgetA quantity 20 exceeds the 15 units in stock, and WidgetB quantity 15 exceeds the 10 units in stock. These totals and quantities can be corrected and resubmitted, so the invoice is returned to the vendor rather than voided.
+INV-1007 is rejected under F1 because line items plus tax equal 15,635.00 while the stated total is 15,525.00, short by 110.00. F2 and F3 show WidgetA quantity 20 exceeds the 15 units in stock and WidgetB quantity 15 exceeds the 10 units in stock. These are correctable defects (wrong total and quantities over what we can accept), so the invoice is returned to the vendor rather than voided.
 
-Run `20261125-014332-invoice_1007-e3a8` · seconds 77.6 · llm_calls 9 · tool_calls 13 · tiers ['live'] · tokens 24448 · cost_usd 0.0227
+Run `20261125-034040-invoice_1007-ef5a` · seconds 101.6 · llm_calls 8 · tool_calls 12 · tiers ['live'] · tokens 22100 · cost_usd 0.0245
 
 ## Extracted invoice
 
@@ -52,32 +52,31 @@ Run `20261125-014332-invoice_1007-e3a8` · seconds 77.6 · llm_calls 9 · tool_c
 | validator | check_price | {"line": 1} | {"line": 1, "item": "WidgetA", "invoiced": 250.0, "catalog": 250.0, "variance_pct": 0.0, "within_tolerance": true} |
 | validator | check_price | {"line": 2} | {"line": 2, "item": "WidgetB", "invoiced": 500.0, "catalog": 500.0, "variance_pct": 0.0, "within_tolerance": true} |
 | validator | check_price | {"line": 3} | {"line": 3, "item": "GadgetX", "invoiced": 750.0, "catalog": 750.0, "variance_pct": 0.0, "within_tolerance": true} |
-| approver | get_vendor | {"name": "MegaWidgets Corp"} | {"known": true, "name": "MegaWidgets Corp", "aliases": [], "first_seen": "2024-05-02", "earlier_invoices": []} |
 
 ## Validator notes
 
 ```json
 {
   "checks_run": [
-    "resolve_item(line 1)",
-    "resolve_item(line 2)",
-    "resolve_item(line 3)",
+    "resolve_item(1)",
+    "resolve_item(2)",
+    "resolve_item(3)",
     "check_stock(WidgetA)",
     "check_stock(WidgetB)",
     "check_stock(GadgetX)",
-    "check_price(line 1)",
-    "check_price(line 2)",
-    "check_price(line 3)",
+    "check_price(1)",
+    "check_price(2)",
+    "check_price(3)",
     "check_totals",
     "check_duplicate",
     "get_vendor(MegaWidgets Corp)"
   ],
   "concerns": [
-    "Currency, shipping, and payment terms are all blank; the $110 total shortfall is not explained by a stated shipping charge.",
-    "Vendor is known since 2024-05-02 but the ledger lists no earlier invoices, so history may be incomplete.",
-    "Due date as written (02/28/2026) matches the parsed due date."
+    "Currency is null, so amounts are not tied to a stated currency.",
+    "Shipping is null; line math (20×250, 15×500, 3×750) matches the stated subtotal of 14,750.00 and tax is 885.00, but the stated total is 110.00 below subtotal plus tax.",
+    "Vendor is known since 2024-05-02, yet the ledger lists no earlier invoices for it."
   ],
-  "summary": "All three lines matched the catalog at catalog prices, and this invoice is not a duplicate. Tools flagged insufficient stock for WidgetA (20 vs 15) and WidgetB (15 vs 10), and a total that is $110 below lines plus tax plus shipping."
+  "summary": "All three lines matched the catalog at catalog prices, and this is not a duplicate. Tools flagged insufficient stock for WidgetA (20 requested, 15 on hand) and WidgetB (15 requested, 10 on hand), and a total that is 110.00 below lines plus tax plus shipping (15,525.00 stated vs 15,635.00 expected). GadgetX stock is sufficient."
 }
 ```
 
@@ -87,7 +86,7 @@ Run `20261125-014332-invoice_1007-e3a8` · seconds 77.6 · llm_calls 9 · tool_c
 {
   "level": "low",
   "signals": [],
-  "summary": "The invoice is a plain MegaWidgets Corp line-item bill with no pressure language, payment redirection, reviewer instructions, or conflicting vendor identity. Total and stock mismatches are already in the automated findings and are not separate fraud signals."
+  "summary": "The invoice is a plain MegaWidgets Corp bill with no pressure language, payment-redirect, instruction injection, or conflicting vendor identity. Nothing beyond the automated total and stock findings warrants a fraud hold."
 }
 ```
 
@@ -98,25 +97,25 @@ Run `20261125-014332-invoice_1007-e3a8` · seconds 77.6 · llm_calls 9 · tool_c
   "action": "reject",
   "reasons": [
     {
-      "text": "F1 is a reject-severity total mismatch: line items (14,750.00) plus tax (885.00) equal 15,635.00, but the invoice total is 15,525.00, short by 110.00. That blocks payment.",
+      "text": "F1 is a reject-severity total mismatch: line items plus tax equal 15,635.00 (subtotal 14,750.00 + tax 885.00; shipping null), but the invoice total is 15,525.00, short by 110.00. A reject finding blocks payment.",
       "finding_ids": [
         "F1"
       ]
     },
     {
-      "text": "F2 is a reject-severity stock breach: WidgetA requests 20 units and only 15 are in stock.",
+      "text": "F2 is a reject-severity stock exceedance: WidgetA quantity 20 exceeds the 15 units in stock, so the line cannot be fulfilled as billed.",
       "finding_ids": [
         "F2"
       ]
     },
     {
-      "text": "F3 is a reject-severity stock breach: WidgetB requests 15 units and only 10 are in stock.",
+      "text": "F3 is a reject-severity stock exceedance: WidgetB quantity 15 exceeds the 10 units in stock, so that line also cannot be fulfilled as billed.",
       "finding_ids": [
         "F3"
       ]
     },
     {
-      "text": "Risk memo is low, with no pressure language, payment redirection, or vendor-identity conflict, and MegaWidgets Corp is on file since 2024-05-02. That does not outweigh the reject findings on an invoice over $10,000.",
+      "text": "Amount is over $10,000 (stated total 15,525.00). The risk memo is low with no fraud signals (no pressure language, payment redirect, or conflicting vendor identity) and does not itself require a fraud hold, but it does not override the three reject findings. Currency is unstated and there are no prior invoices on file; neither changes the total or stock defects already shown on the document.",
       "finding_ids": [
         "F1",
         "F2",
@@ -129,7 +128,7 @@ Run `20261125-014332-invoice_1007-e3a8` · seconds 77.6 · llm_calls 9 · tool_c
     "F2",
     "F3"
   ],
-  "summary": "Reject INV-1007 ($15,525.00). The total is $110 short of lines plus tax, and WidgetA and WidgetB both exceed stock; the low risk memo does not clear those reject findings."
+  "summary": "Reject INV-1007. The stated total is 110.00 below lines plus tax, and WidgetA and WidgetB quantities both exceed stock; those reject findings block payment despite a low risk memo."
 }
 ```
 
@@ -149,8 +148,7 @@ Run `20261125-014332-invoice_1007-e3a8` · seconds 77.6 · llm_calls 9 · tool_c
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -159,7 +157,7 @@ Run `20261125-014332-invoice_1007-e3a8` · seconds 77.6 · llm_calls 9 · tool_c
 ```json
 {
   "disposition": "return_to_vendor",
-  "reasoning": "INV-1007 is rejected under F1 because line items of 14,750.00 plus tax of 885.00 equal 15,635.00, while the stated total is 15,525.00, short by 110.00. F2 and F3 are also reject findings: WidgetA quantity 20 exceeds the 15 units in stock, and WidgetB quantity 15 exceeds the 10 units in stock. These totals and quantities can be corrected and resubmitted, so the invoice is returned to the vendor rather than voided.",
-  "vendor_reply": "Dear MegaWidgets Corp billing team, we cannot process invoice INV-1007 as submitted. The line items total 14,750.00 and tax is 885.00, which sum to 15,635.00, but the invoice total is 15,525.00 (short by 110.00). Please send a corrected invoice whose total equals the sum of the line amounts and tax. Also, the WidgetA quantity of 20 and the WidgetB quantity of 15 exceed the quantities we can accept; please reduce those quantities and recalculate the related line amounts, tax, and total. Thank you, Acme Corp Accounts Payable"
+  "reasoning": "INV-1007 is rejected under F1 because line items plus tax equal 15,635.00 while the stated total is 15,525.00, short by 110.00. F2 and F3 show WidgetA quantity 20 exceeds the 15 units in stock and WidgetB quantity 15 exceeds the 10 units in stock. These are correctable defects (wrong total and quantities over what we can accept), so the invoice is returned to the vendor rather than voided.",
+  "vendor_reply": "Hello MegaWidgets Corp billing team,\n\nWe cannot process invoice INV-1007 as submitted. Line amounts plus tax equal 15,635.00 (subtotal 14,750.00 + tax 885.00; no shipping stated), but the invoice total is 15,525.00, which is 110.00 short. Please resubmit a corrected invoice whose total equals the sum of the line amounts, tax, and any shipping.\n\nWidgetA is billed at quantity 20 and WidgetB at quantity 15, both of which exceed the quantities we can accept. Please reduce those quantities and include the revised quantities and amounts on the corrected invoice.\n\nThank you,\nAcme Corp Accounts Payable"
 }
 ```

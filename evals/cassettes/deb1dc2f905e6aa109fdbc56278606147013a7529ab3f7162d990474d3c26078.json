@@ -1,7 +1,7 @@
 {
  "request_sha256": "deb1dc2f905e6aa109fdbc56278606147013a7529ab3f7162d990474d3c26078",
  "response": {
-  "id": "11379e65-7acc-4ac5-ab85-5a1fa60641be",
+  "id": "cb5ad8ea-90f8-9417-9e3c-1bd589eea85c",
   "choices": [
    {
     "finish_reason": "stop",
@@ -15,11 +15,11 @@
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I will extract the invoice data into structured JSON.\n\nThe invoice contains two line items: WidgetA (6 units at $250.00) and WidgetB (3 units at $500.00). Subtotal, tax, and total are all $3,000.00. Dates are in YYYY-MM-DD format.\n\nThe due date text will be stored in due_date_as_written. The structured due_date field will contain the parsed calendar date."
+     "reasoning_content": "I will extract the invoice data into structured JSON.\n\nI parsed the invoice fields. The document contains two line items, a subtotal of $3,000, zero tax, and a total of $3,000. The due date is 2026-02-20."
     }
    }
   ],
-  "created": 1795571367,
+  "created": 1795578417,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -29,23 +29,23 @@
   "usage": {
    "completion_tokens": 161,
    "prompt_tokens": 2879,
-   "total_tokens": 3498,
+   "total_tokens": 3465,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 458,
+    "reasoning_tokens": 425,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
    "prompt_tokens_details": {
     "audio_tokens": 0,
     "cache_write_tokens": null,
-    "cached_tokens": 1152,
+    "cached_tokens": 2688,
     "image_tokens": 0,
     "text_tokens": 2879
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 26329600
+   "cost_in_usd_ticks": 17822800
   }
  }
 }

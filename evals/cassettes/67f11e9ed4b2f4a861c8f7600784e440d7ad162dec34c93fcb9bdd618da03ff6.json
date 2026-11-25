@@ -1,0 +1,51 @@
+{
+ "request_sha256": "67f11e9ed4b2f4a861c8f7600784e440d7ad162dec34c93fcb9bdd618da03ff6",
+ "response": {
+  "id": "9801a120-2504-9844-867a-86941d176621",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"F1 is a reject-severity revision conflict: INV-1004 was already paid at $1,890.00, and this R1 totals $5,940.00 (+$4,050.00). The payment gate blocks it. The note claims extra items under a PO amendment, but no PO or amendment id is on the document, so the delta cannot be verified or netted against the amount already paid.\",\"finding_ids\":[\"F1\"]}],\"addressed_findings\":[\"F1\"],\"summary\":\"Reject INV-1004 R1 from Precision Parts Ltd. It was already paid at $1,890.00; paying the revised $5,940.00 would double-pay without a verified PO amendment or netting of the prior payment.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I am acting as VP of Finance to decide whether to pay this invoice.\n\nA prior finding of severity \"reject\" indicates this invoice was already paid at $1,890.00. The current total is $5,940.00, a $4,050.00 increase. This revision conflict blocks payment regardless of other factors."
+    }
+   }
+  ],
+  "created": 1795577623,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 173,
+   "prompt_tokens": 2440,
+   "total_tokens": 2869,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 256,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2440
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 19468400
+  }
+ }
+}

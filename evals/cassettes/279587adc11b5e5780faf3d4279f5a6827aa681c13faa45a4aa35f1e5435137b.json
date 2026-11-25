@@ -1,0 +1,51 @@
+{
+ "request_sha256": "279587adc11b5e5780faf3d4279f5a6827aa681c13faa45a4aa35f1e5435137b",
+ "response": {
+  "id": "6b5e6207-2796-9328-acef-50039dbf5e88",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"approve\",\"reasons\":[{\"text\":\"Widgets Inc. is on file since 2023-03-01. Automated checks returned no findings. No earlier invoices is a ledger gap the lookup did not flag, not a defect on the document.\",\"finding_ids\":[]},{\"text\":\"Line math holds: 10 x $250 + 5 x $500 = $5,000, matching subtotal, tax $0, and total. Blank line amounts recompute cleanly. Null shipping is an unverifiable omission, not a shown error, and the invoice states a payable of $5,000.\",\"finding_ids\":[]},{\"text\":\"Risk memo is low: ordinary Net 15 terms, no conflicting identity, payment redirect, urgency, or instruction text. Amount is under $10,000.\",\"finding_ids\":[]}],\"addressed_findings\":[],\"summary\":\"Approve INV-1101 for $5,000 to Widgets Inc. Vendor is on file, line math matches the stated total, and the low-risk memo shows no payment-blocking issue.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor Widgets Inc. has no earlier invoices in the ledger.\n\nThe risk memo is low. The validator notes that line amounts and shipping are blank. These unverified gaps do not justify rejection.\n\nThe line items sum to 5000. The validator notes that shipping is null rather than zero, so the payable amount may be incomplete.\n\nThe null shipping is a minor incompleteness, not a clear document flaw. The stated total of $5000 matches the line items and tax. I should not invent a shipping charge.\n\nThe invoice is approved. No findings were identified. Each reason will cite an empty finding ID array."
+    }
+   }
+  ],
+  "created": 1795579773,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 231,
+   "prompt_tokens": 2773,
+   "total_tokens": 3958,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 954,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2773
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 31932800
+  }
+ }
+}

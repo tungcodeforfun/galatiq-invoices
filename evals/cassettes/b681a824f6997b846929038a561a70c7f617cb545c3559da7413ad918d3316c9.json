@@ -1,0 +1,51 @@
+{
+ "request_sha256": "b681a824f6997b846929038a561a70c7f617cb545c3559da7413ad918d3316c9",
+ "response": {
+  "id": "1889bd2e-219c-4ff3-8258-152887526a68",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"return_to_vendor\",\"reasoning\":\"INV-1007 is rejected under F1 because line items plus tax equal 15,635.00 while the stated total is 15,525.00, short by 110.00. F2 and F3 show WidgetA quantity 20 exceeds the 15 units in stock and WidgetB quantity 15 exceeds the 10 units in stock. These are correctable defects (wrong total and quantities over what we can accept), so the invoice is returned to the vendor rather than voided.\",\"vendor_reply\":\"Hello MegaWidgets Corp billing team,\\n\\nWe cannot process invoice INV-1007 as submitted. Line amounts plus tax equal 15,635.00 (subtotal 14,750.00 + tax 885.00; no shipping stated), but the invoice total is 15,525.00, which is 110.00 short. Please resubmit a corrected invoice whose total equals the sum of the line amounts, tax, and any shipping.\\n\\nWidgetA is billed at quantity 20 and WidgetB at quantity 15, both of which exceed the quantities we can accept. Please reduce those quantities and include the revised quantities and amounts on the corrected invoice.\\n\\nThank you,\\nAcme Corp Accounts Payable\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Closing out the rejected invoice.\n\nThe findings require a return-to-vendor disposition. The total mismatch and stock-exceeded quantities both fall under that policy.\n\nNo fraud or duplicate issues are present. The audit log needs two to three sentences citing the finding IDs. The vendor email should list each problem with exact numbers and specify what a corrected invoice must contain. Internal stock levels and fraud suspicions must not appear in vendor correspondence. If a finding asks whether a catalog item was meant, the vendor should be asked directly rather than assumed.\n\nThe vendor email will cite the requested quantities: 20 WidgetA and 15 WidgetB. It will state those exceed our acceptance limits without revealing internal stock counts.\n\nThe corrected invoice must reconcile the total to 15,635.00. The line items plus tax equal 15,635.00, but the stated total is 15,525.00. Shipping is null and excluded from that sum.\n\nThe vendor email will request a corrected invoice with reduced quantities. The audit log reasoning may cite internal stock levels and the finding IDs.\n\nThe vendor email is drafted. It cites the 110.00 shortfall and the over-limit quantities for WidgetA and WidgetB, while noting GadgetX requires no change."
+    }
+   }
+  ],
+  "created": 1795578125,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 273,
+   "prompt_tokens": 2342,
+   "total_tokens": 3909,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1294,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2342
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 42017200
+  }
+ }
+}

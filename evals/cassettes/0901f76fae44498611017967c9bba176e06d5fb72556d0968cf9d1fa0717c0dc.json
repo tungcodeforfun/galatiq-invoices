@@ -1,0 +1,60 @@
+{
+ "request_sha256": "0901f76fae44498611017967c9bba176e06d5fb72556d0968cf9d1fa0717c0dc",
+ "response": {
+  "id": "f771a93e-0ad6-9662-90b2-9bdd164c1e85",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-2e2575ee-3f46-4116-9aec-d4255450b5b1-0",
+       "function": {
+        "arguments": "{\"name\":\"Atlas Industrial Supply\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I am acting as VP of Finance to evaluate whether to pay this invoice.\n\nFive findings are flagged. Three are reject-level stock exceedances for WidgetA, WidgetB, and GadgetX. A total mismatch adds $50.00. Another line duplicates INV-1013. All reject findings require non-payment.\n\nThe total exceeds $10,000, so every finding and the risk memo must be explicitly addressed in the rejection rationale. The low-risk memo does not change this outcome. I will also verify the vendor details."
+    }
+   }
+  ],
+  "created": 1795578868,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 13,
+   "prompt_tokens": 2644,
+   "total_tokens": 3219,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 562,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1792,
+    "image_tokens": 0,
+    "text_tokens": 2644
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 20570000
+  }
+ }
+}

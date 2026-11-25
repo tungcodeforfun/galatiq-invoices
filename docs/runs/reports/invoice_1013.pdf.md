@@ -1,8 +1,8 @@
 # invoice_1013.pdf: REJECTED (void)
 
-INV-1013 is voided and must not be resubmitted because F2 flags it as a duplicate of an already rejected invoice with the same vendor, lines, and total. F1 is a reject-severity total mismatch: lines plus tax equal $22,512.80, but the invoice total is $22,562.80. F3, F4, and F5 are additional reject findings for quantities that cannot be accepted.
+INV-1013 is voided because F2 identifies it as a duplicate of a previously rejected invoice with the same vendor, lines, and total, so it must not come back. F1 is a reject-severity total mismatch: lines plus tax equal 22,512.80 while the invoice total is 22,562.80. F3, F4, and F5 are reject-severity quantity overruns on WidgetA, WidgetB, and GadgetX.
 
-Run `20261125-015501-invoice_1013-fdfc` · seconds 101.6 · llm_calls 9 · tool_calls 23 · tiers ['live'] · tokens 26731 · cost_usd 0.0268
+Run `20261125-035339-invoice_1013-3728` · seconds 94.6 · llm_calls 10 · tool_calls 24 · tiers ['live'] · tokens 30773 · cost_usd 0.0305
 
 ## Extracted invoice
 
@@ -12,7 +12,7 @@ Run `20261125-015501-invoice_1013-fdfc` · seconds 101.6 · llm_calls 9 · tool_
 | vendor | Atlas Industrial Supply |
 | invoice_date | 2026-01-24 |
 | due_date | 2026-03-24 |
-| due_date_as_written | None |
+| due_date_as_written | 2026-03-24 |
 | currency | USD |
 | subtotal | 21040.0 |
 | tax | 1472.8 |
@@ -70,6 +70,7 @@ Run `20261125-015501-invoice_1013-fdfc` · seconds 101.6 · llm_calls 9 · tool_
 | validator | check_price | {"line": 7} | {"line": 7, "item": "WidgetA", "invoiced": 250.0, "catalog": 250.0, "variance_pct": 0.0, "within_tolerance": true} |
 | validator | check_price | {"line": 8} | {"line": 8, "item": "GadgetX", "invoiced": 750.0, "catalog": 750.0, "variance_pct": 0.0, "within_tolerance": true} |
 | risk | get_vendor | {"name": "Atlas Industrial Supply"} | {"known": true, "name": "Atlas Industrial Supply", "aliases": [], "first_seen": "2024-08-09", "earlier_invoices": [{"number": "INV-1013", "total": 22562.8, "sta |
+| approver | get_vendor | {"name": "Atlas Industrial Supply"} | {"known": true, "name": "Atlas Industrial Supply", "aliases": [], "first_seen": "2024-08-09", "earlier_invoices": [{"number": "INV-1013", "total": 22562.8, "sta |
 
 ## Validator notes
 
@@ -100,12 +101,10 @@ Run `20261125-015501-invoice_1013-fdfc` · seconds 101.6 · llm_calls 9 · tool_
     "get_vendor(Atlas Industrial Supply)"
   ],
   "concerns": [
-    "Same number and total were already REJECTED and returned to vendor; this copy does not look corrected.",
-    "Shipping is blank, so the $50 total gap is not explained by a stated freight charge.",
-    "Volume-discount notes apply only to lines 4 and 5 (still inside price tolerance); other WidgetA/WidgetB lines are at full catalog, and GadgetX is split across regular, expedited, and sample lines at the same unit price.",
-    "due_date_as_written is null."
+    "Same invoice number and stated total as the earlier REJECTED INV-1013 (return_to_vendor), and revision is null, so this looks like an uncorrected resubmission rather than a revised bill.",
+    "Line notes were not judged by the tools: line 8 is billed as a Sample at full catalog price, lines 4 and 7 mix a volume-discount price with full price on WidgetA, and line 6 is marked Expedited while shipping is null — the unexplained +50.00 on the total is not itemized."
   ],
-  "summary": "All eight lines matched the catalog. Tools flagged over-stock on WidgetA, WidgetB, and GadgetX, a $50 total overstatement, and an exact resubmission of rejected INV-1013. Prices were within tolerance, including the two discounted lines."
+  "summary": "All eight lines matched catalog items exactly. Stock is short on WidgetA, WidgetB, and GadgetX once quantities are summed; unit prices are within tolerance; the stated total is $50.00 high; and INV-1013 is a duplicate of a previously rejected invoice."
 }
 ```
 
@@ -115,7 +114,7 @@ Run `20261125-015501-invoice_1013-fdfc` · seconds 101.6 · llm_calls 9 · tool_
 {
   "level": "low",
   "signals": [],
-  "summary": "The invoice shows no pressure language, payment redirection, instruction injection, or conflicting vendor identity. Nothing in the document itself goes beyond the automated findings already in front of you."
+  "summary": "The invoice text shows no pressure language, payment redirection, reviewer instructions, or conflicting vendor identity. Nothing here suggests deception beyond the automated findings."
 }
 ```
 
@@ -126,19 +125,19 @@ Run `20261125-015501-invoice_1013-fdfc` · seconds 101.6 · llm_calls 9 · tool_
   "action": "reject",
   "reasons": [
     {
-      "text": "F1 is a reject-severity total mismatch: line items plus tax equal $22,512.80, but the invoice total is $22,562.80, a $50 overstatement. The payment gate blocks this regardless of any other factor.",
+      "text": "F1 is a reject-severity total mismatch: line items sum to 21,040.00 plus tax 1,472.80 equals 22,512.80, but the invoice total is 22,562.80. Shipping is null, so the extra 50.00 is not itemized and the bill is not payable as written.",
       "finding_ids": [
         "F1"
       ]
     },
     {
-      "text": "F2 is a reject-severity duplicate: same vendor, lines, and total as INV-1013, which was already rejected. Paying it would reprocess a declined bill.",
+      "text": "F2 is a reject-severity duplicate. Vendor master shows Atlas Industrial Supply on file since 2024-08-09, and earlier INV-1013 for the same 22,562.80 was REJECTED and returned to vendor. Revision is null, so this is an uncorrected resubmission of the same invoice number, lines, and total.",
       "finding_ids": [
         "F2"
       ]
     },
     {
-      "text": "F3, F4, and F5 are reject-severity stock shortfalls. WidgetA is billed for 22 units against 15 in stock, WidgetB for 18 against 10, and GadgetX for 9 against 5. Quantities cannot be fulfilled as invoiced.",
+      "text": "F3, F4, and F5 are reject-severity stock overruns: WidgetA 22 requested vs 15 in stock, WidgetB 18 vs 10, and GadgetX 9 vs 5. Quantities exceed available stock on every product.",
       "finding_ids": [
         "F3",
         "F4",
@@ -146,7 +145,7 @@ Run `20261125-015501-invoice_1013-fdfc` · seconds 101.6 · llm_calls 9 · tool_
       ]
     },
     {
-      "text": "The risk memo is low, with no pressure language, payment redirection, instruction injection, or conflicting vendor identity. That does not outweigh the five reject findings on an invoice over $10,000.",
+      "text": "The risk memo is low and reports no pressure language, payment redirection, or vendor-identity conflict. That low memo, and the vendor being on file, does not outweigh five reject findings on an invoice over $10,000. The payment gate would block this regardless.",
       "finding_ids": [
         "F1",
         "F2",
@@ -163,7 +162,7 @@ Run `20261125-015501-invoice_1013-fdfc` · seconds 101.6 · llm_calls 9 · tool_
     "F4",
     "F5"
   ],
-  "summary": "Reject INV-1013 from Atlas Industrial Supply for $22,562.80. The total is $50 over the lines plus tax, it duplicates a previously rejected invoice, and all three SKUs exceed stock. The low risk memo does not clear those blocks."
+  "summary": "Reject INV-1013 from Atlas Industrial Supply for 22,562.80. It is an uncorrected resubmission of a previously returned invoice, the total is 50.00 over lines plus tax, and all three products exceed stock."
 }
 ```
 
@@ -183,8 +182,7 @@ Run `20261125-015501-invoice_1013-fdfc` · seconds 101.6 · llm_calls 9 · tool_
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -193,7 +191,7 @@ Run `20261125-015501-invoice_1013-fdfc` · seconds 101.6 · llm_calls 9 · tool_
 ```json
 {
   "disposition": "void",
-  "reasoning": "INV-1013 is voided and must not be resubmitted because F2 flags it as a duplicate of an already rejected invoice with the same vendor, lines, and total. F1 is a reject-severity total mismatch: lines plus tax equal $22,512.80, but the invoice total is $22,562.80. F3, F4, and F5 are additional reject findings for quantities that cannot be accepted.",
+  "reasoning": "INV-1013 is voided because F2 identifies it as a duplicate of a previously rejected invoice with the same vendor, lines, and total, so it must not come back. F1 is a reject-severity total mismatch: lines plus tax equal 22,512.80 while the invoice total is 22,562.80. F3, F4, and F5 are reject-severity quantity overruns on WidgetA, WidgetB, and GadgetX.",
   "vendor_reply": null
 }
 ```

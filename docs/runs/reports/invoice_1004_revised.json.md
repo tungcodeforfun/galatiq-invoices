@@ -1,8 +1,8 @@
 # invoice_1004_revised.json: REJECTED (return_to_vendor)
 
-Finding F1 is a reject-severity revision conflict: INV-1004 was already paid at $1,890.00, and this revision totals $5,940.00, an increase of $4,050.00. Policy requires return_to_vendor when a revision conflicts with one already processed, so the vendor may correct and resubmit rather than having the invoice voided.
+INV-1004 R1 from Precision Parts Ltd. is rejected under finding F1: the invoice was already paid at $1,890.00, and this revision totals $5,940.00 (+$4,050.00), which conflicts with a version already processed. The note cites extra items under a PO amendment, but no PO or amendment id is on the document, so the increase cannot be verified or netted against the amount already paid. It is returned so the vendor can resubmit a corrected billing document that does not conflict with the paid invoice.
 
-Run `20261125-013955-invoice_1004_revised-c9fc` · seconds 58.6 · llm_calls 10 · tool_calls 14 · tiers ['live'] · tokens 26481 · cost_usd 0.0204
+Run `20261125-033240-invoice_1004_revised-1b74` · seconds 116.8 · llm_calls 9 · tool_calls 13 · tiers ['live'] · tokens 24495 · cost_usd 0.0219
 
 ## Extracted invoice
 
@@ -51,32 +51,31 @@ Run `20261125-013955-invoice_1004_revised-c9fc` · seconds 58.6 · llm_calls 10 
 | validator | check_price | {"line": 2} | {"line": 2, "item": "WidgetB", "invoiced": 500.0, "catalog": 500.0, "variance_pct": 0.0, "within_tolerance": true} |
 | validator | check_price | {"line": 3} | {"line": 3, "item": "GadgetX", "invoiced": 750.0, "catalog": 750.0, "variance_pct": 0.0, "within_tolerance": true} |
 | risk | get_vendor | {"name": "Precision Parts Ltd."} | {"known": true, "name": "Precision Parts Ltd.", "aliases": [], "first_seen": "2024-01-08", "earlier_invoices": [{"number": "INV-1004", "total": 1890.0, "status" |
-| approver | get_vendor | {"name": "Precision Parts Ltd."} | {"known": true, "name": "Precision Parts Ltd.", "aliases": [], "first_seen": "2024-01-08", "earlier_invoices": [{"number": "INV-1004", "total": 1890.0, "status" |
 
 ## Validator notes
 
 ```json
 {
   "checks_run": [
-    "resolve_item(line=1)",
-    "resolve_item(line=2)",
-    "resolve_item(line=3)",
+    "resolve_item(1)",
+    "resolve_item(2)",
+    "resolve_item(3)",
     "check_stock(WidgetA)",
     "check_stock(WidgetB)",
     "check_stock(GadgetX)",
-    "check_price(line=1)",
-    "check_price(line=2)",
-    "check_price(line=3)",
-    "check_totals()",
-    "check_duplicate()",
+    "check_price(1)",
+    "check_price(2)",
+    "check_price(3)",
+    "check_totals",
+    "check_duplicate",
     "get_vendor(Precision Parts Ltd.)"
   ],
   "concerns": [
-    "INV-1004 is already PAID at 1890.00; this R1 states 5940.00 (tool delta 4050.00). Confirm whether only the incremental amount is payable so the original 1890.00 is not paid twice, and whether a PO amendment actually authorizes the added lines — the note claims one but no PO number is on the invoice.",
-    "Shipping is blank and every line amount is blank; totals still reconciled only if shipping is treated as zero.",
-    "GadgetX requested quantity equals stock on hand (5 of 5), so approval would clear that item."
+    "INV-1004 R1 is a revision of an invoice already PAID at 1890.00 (delta 4050.00). The note claims extra items under a PO amendment, but no PO or amendment id is on the document and the tools do not show the paid invoice's lines, so the additional-items claim cannot be verified. Do not pay the full 5940.00 without confirming the amendment and netting the amount already paid.",
+    "Line amounts and shipping are blank. Totals still reconcile if shipping is treated as zero (5500.00 + 440.00 = 5940.00).",
+    "GadgetX requested quantity equals stock on hand (5 of 5); stock check passed, but this line would clear the shelf."
   ],
-  "summary": "All three lines matched the catalog at catalog prices, stock covers the summed quantities, and stated totals match the recomputed lines plus tax. The invoice is a revision of INV-1004, which the ledger already shows as PAID at a lower total."
+  "summary": "All three lines matched the catalog exactly, prices are at catalog, stock covers the quantities, and stated totals reconcile. The material issue is a revision conflict: the same invoice number was already paid at 1890.00, and this R1 total is 5940.00."
 }
 ```
 
@@ -86,7 +85,7 @@ Run `20261125-013955-invoice_1004_revised-c9fc` · seconds 58.6 · llm_calls 10 
 {
   "level": "low",
   "signals": [],
-  "summary": "No deception signals beyond the automated findings. The vendor matches the master record, and the revision note is ordinary invoice wording."
+  "summary": "The invoice is from known vendor Precision Parts Ltd. and contains only ordinary terms and a routine revision note. No pressure language, payment redirect, instruction injection, or vendor-identity conflict appears in the document beyond the automated revision finding."
 }
 ```
 
@@ -97,7 +96,7 @@ Run `20261125-013955-invoice_1004_revised-c9fc` · seconds 58.6 · llm_calls 10 
   "action": "reject",
   "reasons": [
     {
-      "text": "INV-1004 was already paid at $1,890.00. This revision totals $5,940.00, a $4,050.00 increase, and the payment gate blocks a reject-severity revision conflict.",
+      "text": "F1 is a reject-severity revision conflict: INV-1004 was already paid at $1,890.00, and this R1 totals $5,940.00 (+$4,050.00). The payment gate blocks it. The note claims extra items under a PO amendment, but no PO or amendment id is on the document, so the delta cannot be verified or netted against the amount already paid.",
       "finding_ids": [
         "F1"
       ]
@@ -106,7 +105,7 @@ Run `20261125-013955-invoice_1004_revised-c9fc` · seconds 58.6 · llm_calls 10 
   "addressed_findings": [
     "F1"
   ],
-  "summary": "Reject INV-1004. It was already paid at $1,890.00, and this revision raises the total to $5,940.00 under a reject-severity conflict."
+  "summary": "Reject INV-1004 R1 from Precision Parts Ltd. It was already paid at $1,890.00; paying the revised $5,940.00 would double-pay without a verified PO amendment or netting of the prior payment."
 }
 ```
 
@@ -126,8 +125,7 @@ Run `20261125-013955-invoice_1004_revised-c9fc` · seconds 58.6 · llm_calls 10 
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -136,7 +134,7 @@ Run `20261125-013955-invoice_1004_revised-c9fc` · seconds 58.6 · llm_calls 10 
 ```json
 {
   "disposition": "return_to_vendor",
-  "reasoning": "Finding F1 is a reject-severity revision conflict: INV-1004 was already paid at $1,890.00, and this revision totals $5,940.00, an increase of $4,050.00. Policy requires return_to_vendor when a revision conflicts with one already processed, so the vendor may correct and resubmit rather than having the invoice voided.",
-  "vendor_reply": "Hello Precision Parts Ltd. billing team, we cannot process revised invoice INV-1004 (revision R1, dated 2026-01-22). INV-1004 was already paid at $1,890.00, and this revision totals $5,940.00, which is $4,050.00 higher, so it conflicts with the invoice already processed. Please do not resubmit INV-1004 as a revision of the paid invoice. If the additional charges are valid, send them on a new invoice number with the line items, quantities, unit prices, subtotal, tax, and total that support only the unpaid amount. Thank you."
+  "reasoning": "INV-1004 R1 from Precision Parts Ltd. is rejected under finding F1: the invoice was already paid at $1,890.00, and this revision totals $5,940.00 (+$4,050.00), which conflicts with a version already processed. The note cites extra items under a PO amendment, but no PO or amendment id is on the document, so the increase cannot be verified or netted against the amount already paid. It is returned so the vendor can resubmit a corrected billing document that does not conflict with the paid invoice.",
+  "vendor_reply": "Hello Precision Parts Ltd. billing team,\n\nWe cannot process revised invoice INV-1004 R1 (dated 2026-01-22, total $5,940.00). INV-1004 was already paid at $1,890.00, so this revision conflicts with the invoice already processed. The note refers to additional items under a PO amendment, but no purchase order or amendment number is shown.\n\nPlease do not resubmit this revision of INV-1004. If further charges are due, send a new invoice (not a revision of the paid invoice) for only the incremental amount, with the PO number and amendment ID, each line item, quantity, unit price, and a total that does not include the $1,890.00 already paid.\n\nThank you,\nAcme Corp Accounts Payable"
 }
 ```

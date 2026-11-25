@@ -1,0 +1,51 @@
+{
+ "request_sha256": "d1b542b036e03b2f8ac6ac3a94555c1e9ee4427f1990e36d7f8d923e636b8a9f",
+ "response": {
+  "id": "8b743629-0bb5-9e74-b90f-b7cffec2b1dd",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"approve\",\"reasons\":[{\"text\":\"Precision Parts Ltd. is on file since 2024-01-08. Line math holds: 3\u00d7250 + 2\u00d7500 + 5\u00d7750 = 5,500 subtotal, tax 440, total 5,940. Amount is under $10,000, the risk memo is low, and there are no findings.\",\"finding_ids\":[]},{\"text\":\"Revision R1 and the PO-amendment note have no prior ledger match, and earlier invoices are empty; neither the document nor the checks show a defect. GadgetX qty of 5 equals stock on hand, the stock check passed, and exhausting catalog stock is not a payment defect.\",\"finding_ids\":[]}],\"addressed_findings\":[],\"summary\":\"Approve INV-1004 for $5,940. Known vendor, totals reconcile, low-risk memo, and no blocking findings.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor has been known since 2024-01-08. No aliases were found. Earlier invoices are empty.\n\nNo reject-severity findings were found. The invoice total is $5,940, so the extra scrutiny rule for amounts over $10,000 does not apply. The risk memo is low, which is acceptable. Math checks out: line item amounts are null but the subtotal matches the calculated values.\n\nThe revision note and missing prior version are only a validator observation. They do not indicate fraud. Unverified doubts about the empty earlier-invoice history are insufficient to reject.\n\nThe GadgetX stock check passed. It is an operational note, not a reason to block payment.\n\nThe invoice is sound and should be approved.\n\nReasons that do not rest on a finding can have empty finding_ids.\n\nThe due date is one day later than standard Net 30 from January 22. The document itself does not show this as a defect, so it is insufficient to reject."
+    }
+   }
+  ],
+  "created": 1795579400,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 201,
+   "prompt_tokens": 2924,
+   "total_tokens": 4484,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1359,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2304,
+    "image_tokens": 0,
+    "text_tokens": 2924
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 39956800
+  }
+ }
+}

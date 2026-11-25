@@ -1,0 +1,51 @@
+{
+ "request_sha256": "52d4da60297e128538cba2c88665915e53d1b3c08aa81a17a8a15bc58cdca92a",
+ "response": {
+  "id": "cc9c15d5-4cec-4936-8e50-0f30ac56cd55",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"approve\",\"reasons\":[{\"text\":\"Vendor Acme Industrial Supplies is on file (first seen 2022-11-30). There are no findings, and the risk memo is low: ordinary Net 15 terms, no payment redirect, identity conflict, or reviewer instructions.\",\"finding_ids\":[]},{\"text\":\"Amount is $2,750, under the $10,000 extra-scrutiny threshold. Line math reconciles (5 x 250 = 1,250; 3 x 500 = 1,500; tax 0; total 2,750). Null extracted currency, shipping, and line amounts do not contradict the stated total.\",\"finding_ids\":[]}],\"addressed_findings\":[],\"summary\":\"Approve INV-1006 for $2,750. Acme Industrial Supplies is a known vendor, the total matches the line math, and the low-risk memo has no blocking findings.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor is known and first appeared on 2022-11-30. No earlier invoices or aliases were found.\n\nThe invoice is sound. The $2,750 total matches the line items and tax. No reject-severity findings were found. Null currency, shipping, and line amounts are extraction gaps but do not justify rejection.\n\nNo findings were identified. The decision will use an empty array for addressed_findings and reasons.\n\nThe decision will cite two reasons. The vendor is on file and the risk memo is low. The line math reconciles to the stated total. Null extracted amounts do not contradict the document.\n\nThe invoice states Net 15 terms, yet the due date is one day later than the expected February 9. This one-day discrepancy is being weighed as a potential defect."
+    }
+   }
+  ],
+  "created": 1795577928,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 199,
+   "prompt_tokens": 2727,
+   "total_tokens": 3829,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 903,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2727
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 29926800
+  }
+ }
+}

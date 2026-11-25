@@ -1,8 +1,8 @@
 # invoice_1010.txt: PAID
 
-Paid 7,185.00 to Consolidated Materials Group: Approve INV-1010 for $7,185. The only finding is a +20% WidgetA rush-order price warning, which the invoice itself explains, and the vendor is on file with a low risk memo.
+Paid 7,185.00 to Consolidated Materials Group: Approve INV-1010 for $7,185. The only finding is a 20% rush-order price warning on WidgetA ($200); vendor is known and the risk memo is low.
 
-Run `20261125-014756-invoice_1010-aabd` · seconds 59.8 · llm_calls 9 · tool_calls 16 · tiers ['live'] · tokens 24328 · cost_usd 0.018
+Run `20261125-034512-invoice_1010-71dc` · seconds 70.5 · llm_calls 9 · tool_calls 16 · tiers ['live'] · tokens 24534 · cost_usd 0.0206
 
 ## Extracted invoice
 
@@ -61,27 +61,26 @@ Run `20261125-014756-invoice_1010-aabd` · seconds 59.8 · llm_calls 9 · tool_c
 ```json
 {
   "checks_run": [
-    "resolve_item(1)",
-    "resolve_item(2)",
-    "resolve_item(3)",
-    "resolve_item(4)",
+    "resolve_item(line 1)",
+    "resolve_item(line 2)",
+    "resolve_item(line 3)",
+    "resolve_item(line 4)",
+    "check_totals",
+    "check_duplicate",
+    "get_vendor(Consolidated Materials Group)",
     "check_stock(WidgetA)",
     "check_stock(WidgetB)",
     "check_stock(GadgetX)",
-    "check_price(1)",
-    "check_price(2)",
-    "check_price(3)",
-    "check_price(4)",
-    "check_totals",
-    "check_duplicate",
-    "get_vendor(Consolidated Materials Group)"
+    "check_price(line 1)",
+    "check_price(line 2)",
+    "check_price(line 3)",
+    "check_price(line 4)"
   ],
   "concerns": [
-    "Line 4 matched WidgetA only after normalizing away \"(rush order)\" and bills $300 vs the $250 catalog price (20% over, outside tolerance). The rush wording is only in the description, not a separate fee, and payment terms are still Net 30, so the premium is unexplained by the catalog.",
-    "WidgetA is split across line 1 at catalog price and line 4 at the higher price (12 units combined, within the 15 on hand). Approver should treat the rush premium as a pricing exception, not as a different item.",
-    "Vendor is on the master since 2023-09-14 but the ledger lists no earlier invoices, so there is no payment history to compare this rush markup against."
+    "Line 4 matched WidgetA only after normalizing \"WidgetA (rush order)\"; the 20% unit-price overage is labeled as a rush order, which the price check does not evaluate as authorized or not.",
+    "Vendor is on the master (first seen 2023-09-14) but the lookup returned no earlier invoices."
   ],
-  "summary": "All four lines resolved to catalog items (line 4 normalized to WidgetA). Totals, stock, and duplicate checks were clean, and the vendor is known. The only tool exception is line 4's unit price, 20% above catalog, labeled only as a rush order."
+  "summary": "All four lines resolved to catalog items (line 4 via normalization), stock covers the summed quantities, totals match, and the invoice is not a duplicate. The only tool problem is line 4's WidgetA unit price of 300 versus the catalog 250 (20%, outside tolerance)."
 }
 ```
 
@@ -91,7 +90,7 @@ Run `20261125-014756-invoice_1010-aabd` · seconds 59.8 · llm_calls 9 · tool_c
 {
   "level": "low",
   "signals": [],
-  "summary": "The invoice shows no pressure language, payment redirect, instruction injection, or unexplained vendor-identity conflict. Nothing here goes beyond the automated price-variance finding."
+  "summary": "No fraud or manipulation language appears on the invoice. The only issue is the catalog price variance already reported by automated checks; the vendor is known and payment terms are ordinary Net 30."
 }
 ```
 
@@ -102,20 +101,22 @@ Run `20261125-014756-invoice_1010-aabd` · seconds 59.8 · llm_calls 9 · tool_c
   "action": "approve",
   "reasons": [
     {
-      "text": "F1 is a warning only: line 4 is explicitly a WidgetA rush order at $300 vs the $250 catalog price (+20%). That premium is documented on the line and is a normal rush uplift, not an unexplained overcharge. Lines, tax, shipping, and the $7,185 total reconcile.",
+      "text": "F1 is a warning only: line 4 WidgetA is $300 vs catalog $250 (+20%), and the invoice itself labels that line as a rush order. Extra cost is $200 on a $7,185 total. Math on quantities, subtotal $6,700, tax $335, shipping $150, and total checks out. That variance does not make the invoice unsound.",
       "finding_ids": [
         "F1"
       ]
     },
     {
-      "text": "Vendor Consolidated Materials Group is on file (first seen 2023-09-14). The risk memo is low, with no pressure language, payment redirect, or identity conflict. A single explained price warning does not make this sub-$10,000 invoice unsound.",
-      "finding_ids": []
+      "text": "Vendor Consolidated Materials Group is on the master (first seen 2023-09-14). Risk memo is low, with no fraud or manipulation signals and ordinary Net 30 terms. No reject-severity finding. Amount is under $10,000. Nothing on the document shows a defect the checks missed.",
+      "finding_ids": [
+        "F1"
+      ]
     }
   ],
   "addressed_findings": [
     "F1"
   ],
-  "summary": "Approve INV-1010 for $7,185. The only finding is a +20% WidgetA rush-order price warning, which the invoice itself explains, and the vendor is on file with a low risk memo."
+  "summary": "Approve INV-1010 for $7,185. The only finding is a 20% rush-order price warning on WidgetA ($200); vendor is known and the risk memo is low."
 }
 ```
 
@@ -133,8 +134,7 @@ Run `20261125-014756-invoice_1010-aabd` · seconds 59.8 · llm_calls 9 · tool_c
 ```json
 {
   "approved": true,
-  "blocked_by": [],
-  "overridden": false
+  "blocked_by": []
 }
 ```
 

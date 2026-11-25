@@ -1,8 +1,8 @@
 # invoice_2001_over_10k.txt: PAID
 
-Paid 12,000.00 to Summit Manufacturing Co.: Approve INV-2001 for $12,000. Known vendor, low-risk memo, line math and Net 30 terms check out, and no findings block payment.
+Paid 12,000.00 to Summit Manufacturing Co.: Approve INV-2001 for $12,000. Summit Manufacturing is on file, the low-risk memo and invoice math are clean, and the older INV-1011 status conflict is not a duplicate of this bill.
 
-Run `20261125-015958-invoice_2001_over_10k-aaaf` · seconds 80.1 · llm_calls 9 · tool_calls 14 · tiers ['live'] · tokens 23727 · cost_usd 0.019
+Run `20261125-035755-invoice_2001_over_10k-8754` · seconds 75.3 · llm_calls 9 · tool_calls 14 · tiers ['live'] · tokens 24103 · cost_usd 0.0219
 
 ## Extracted invoice
 
@@ -52,24 +52,23 @@ Run `20261125-015958-invoice_2001_over_10k-aaaf` · seconds 80.1 · llm_calls 9 
 ```json
 {
   "checks_run": [
-    "resolve_item(line 1)",
-    "resolve_item(line 2)",
-    "resolve_item(line 3)",
+    "resolve_item(line=1)",
+    "resolve_item(line=2)",
+    "resolve_item(line=3)",
     "check_stock(WidgetA)",
     "check_stock(WidgetB)",
     "check_stock(GadgetX)",
-    "check_price(line 1)",
-    "check_price(line 2)",
-    "check_price(line 3)",
+    "check_price(line=1)",
+    "check_price(line=2)",
+    "check_price(line=3)",
     "check_totals",
     "check_duplicate",
     "get_vendor(Summit Manufacturing Co.)"
   ],
   "concerns": [
-    "Vendor history lists INV-1011 twice with conflicting outcomes (PAID, and REJECTED with disposition void). That is not this invoice, and check_duplicate found no match for INV-2001, but the ledger row looks inconsistent.",
-    "WidgetB quantity equals on-hand stock exactly (10 of 10). check_stock still returned ok, so fulfilling this invoice would leave zero of that item."
+    "Vendor history lists INV-1011 twice with the same total: once PAID and once REJECTED/void. That conflict is not on this invoice (check_duplicate found no match) but is worth a look before approving further Summit invoices."
   ],
-  "summary": "INV-2001 from Summit Manufacturing Co. matched WidgetA, WidgetB, and GadgetX exactly; prices, stock, totals, and duplicate checks all passed with no tool-flagged problems. The only items for the approver are a contradictory prior INV-1011 in the vendor history and WidgetB consuming the entire on-hand quantity."
+  "summary": "INV-2001 from Summit Manufacturing Co. matched catalog items WidgetA, WidgetB, and GadgetX. Stock, unit prices, totals, and duplicate checks all passed with no tool-flagged problems."
 }
 ```
 
@@ -79,7 +78,7 @@ Run `20261125-015958-invoice_2001_over_10k-aaaf` · seconds 80.1 · llm_calls 9 
 {
   "level": "low",
   "signals": [],
-  "summary": "The invoice is a routine Net 30 bill from a known vendor, Summit Manufacturing Co., with no wording that suggests pressure, payment diversion, or identity conflict. Nothing in the document itself goes beyond the automated checks."
+  "summary": "The invoice is from a known vendor and contains only ordinary commercial wording, including Net 30 terms and a PO reference. Nothing on the document indicates deception or manipulation beyond the automated checks."
 }
 ```
 
@@ -90,16 +89,20 @@ Run `20261125-015958-invoice_2001_over_10k-aaaf` · seconds 80.1 · llm_calls 9 
   "action": "approve",
   "reasons": [
     {
-      "text": "Risk memo is low: a routine Net 30 bill from Summit Manufacturing Co., on file since 2023-04-22, with no pressure, payment-diversion, or identity-conflict wording. Earlier INV-1011 was paid; the voided duplicate of that number does not affect this bill. No automated findings were raised.",
+      "text": "Risk memo is low: known vendor, ordinary commercial wording including Net 30, and no deception or manipulation signals. No automated findings were raised, so nothing blocks payment.",
       "finding_ids": []
     },
     {
-      "text": "Invoice is $12,000, so over the $10,000 scrutiny line. Line math holds (14×250=3,500; 10×500=5,000; 4×750=3,000; subtotal 11,500 plus shipping 500 = total 12,000). Due date 2026-03-04 matches Net 30 from 2026-02-02. The document itself shows no problem a check missed.",
+      "text": "Summit Manufacturing Co. is on file since 2023-04-22. Invoice math holds: 14×250 + 10×500 + 4×750 = 11,500 subtotal, plus 500 shipping = 12,000 total. Due date 2026-03-04 matches Net 30 from 2026-02-02.",
+      "finding_ids": []
+    },
+    {
+      "text": "Vendor history shows INV-1011 both PAID and REJECTED/void at $3,000, but that conflict is not on this invoice and the duplicate check found no match. It does not outweigh a clean low-risk bill from a vendor on file.",
       "finding_ids": []
     }
   ],
   "addressed_findings": [],
-  "summary": "Approve INV-2001 for $12,000. Known vendor, low-risk memo, line math and Net 30 terms check out, and no findings block payment."
+  "summary": "Approve INV-2001 for $12,000. Summit Manufacturing is on file, the low-risk memo and invoice math are clean, and the older INV-1011 status conflict is not a duplicate of this bill."
 }
 ```
 
@@ -117,8 +120,7 @@ Run `20261125-015958-invoice_2001_over_10k-aaaf` · seconds 80.1 · llm_calls 9 
 ```json
 {
   "approved": true,
-  "blocked_by": [],
-  "overridden": false
+  "blocked_by": []
 }
 ```
 

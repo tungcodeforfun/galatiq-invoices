@@ -1,0 +1,100 @@
+{
+ "request_sha256": "98b9dae64abf9d3ce6da1d5f192bb596cb5399678aa658f63f96e784ae60f414",
+ "response": {
+  "id": "81162268-c76a-4d6e-b7e5-f5305e66fb29",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-73d52cd6-e5fe-460c-b7a0-9df13d934db9-6",
+       "function": {
+        "arguments": "{\"item\":\"WidgetA\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-73d52cd6-e5fe-460c-b7a0-9df13d934db9-7",
+       "function": {
+        "arguments": "{\"item\":\"WidgetB\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-73d52cd6-e5fe-460c-b7a0-9df13d934db9-8",
+       "function": {
+        "arguments": "{\"item\":\"GadgetX\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-73d52cd6-e5fe-460c-b7a0-9df13d934db9-9",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-73d52cd6-e5fe-460c-b7a0-9df13d934db9-10",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-73d52cd6-e5fe-460c-b7a0-9df13d934db9-11",
+       "function": {
+        "arguments": "{\"line\":3}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "All three items matched exactly."
+    }
+   }
+  ],
+  "created": 1795578093,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 65,
+   "prompt_tokens": 2795,
+   "total_tokens": 2911,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 51,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2795
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15497200
+  }
+ }
+}

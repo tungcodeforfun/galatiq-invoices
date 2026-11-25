@@ -1,0 +1,100 @@
+{
+ "request_sha256": "cc880c591d3acce2a07e1486e8d9e3e8a0cfb57b530a1228dc978a1e3fb6cf4c",
+ "response": {
+  "id": "67a12fee-be53-9414-a32c-7ba848537a2e",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[],\"concerns\":[],\"summary\":\"Starting required validation checks.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-826a70d8-139c-485f-980e-7d0f20cf8b1c-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-826a70d8-139c-485f-980e-7d0f20cf8b1c-1",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-826a70d8-139c-485f-980e-7d0f20cf8b1c-2",
+       "function": {
+        "arguments": "{\"line\":3}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-826a70d8-139c-485f-980e-7d0f20cf8b1c-3",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-826a70d8-139c-485f-980e-7d0f20cf8b1c-4",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-826a70d8-139c-485f-980e-7d0f20cf8b1c-5",
+       "function": {
+        "arguments": "{\"name\":\"Summit Manufacturing Co.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will validate the invoice by calling the required tools."
+    }
+   }
+  ],
+  "created": 1795579086,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 77,
+   "prompt_tokens": 2350,
+   "total_tokens": 2600,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 173,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2350
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15204800
+  }
+ }
+}

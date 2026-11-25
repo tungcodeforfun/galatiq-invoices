@@ -1,0 +1,51 @@
+{
+ "request_sha256": "c85173f84a1b200917fb4ffa21fae9813414f7e5976399baa1967555a3da6e94",
+ "response": {
+  "id": "5f7f2a7c-6211-407e-8315-9909f059dda9",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"resolve_item(2)\",\"resolve_item(3)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_price(1)\",\"check_price(2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Widgets Inc.)\"],\"concerns\":[\"Line 3 (WidgetC) did not match any catalog item, so price and stock were not checked for it. Suggestions WidgetA and WidgetB are not matches.\"],\"summary\":\"Lines 1\u20132 match WidgetA and WidgetB at catalog price with sufficient stock; totals, vendor, and duplicate checks are clean. WidgetC is not in the catalog.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will report my checks and any tool results that the tools themselves would not flag.\n\nWidgetC had no catalog match. The resolve_item tool flagged this. No price or stock check was run for it. The approver should note they cannot verify WidgetC's details.\n\nTax is 6% and totals are correct. Shipping is null. Vendor is known from prior invoice INV-1001. No duplicate exists. Prices and stock for matched items are verified.\n\nWidgetC's unmatched status is a process gap rather than a tool-flagged issue. WidgetA and WidgetB are suggestions, not confirmed matches."
+    }
+   }
+  ],
+  "created": 1795579041,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 153,
+   "prompt_tokens": 3168,
+   "total_tokens": 3893,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 572,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2304,
+    "image_tokens": 0,
+    "text_tokens": 3168
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 24582000
+  }
+ }
+}

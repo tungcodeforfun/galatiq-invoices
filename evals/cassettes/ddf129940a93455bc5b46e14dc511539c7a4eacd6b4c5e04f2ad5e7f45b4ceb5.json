@@ -1,0 +1,51 @@
+{
+ "request_sha256": "ddf129940a93455bc5b46e14dc511539c7a4eacd6b4c5e04f2ad5e7f45b4ceb5",
+ "response": {
+  "id": "5d7807e6-87ff-9262-a236-a6d8e7777768",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"high\",\"signals\":[{\"kind\":\"pressure_language\",\"quote\":\"URGENT - Pay immediately to avoid penalties!!!\",\"why\":\"Threat of penalties and a demand to pay immediately are classic pressure tactics meant to rush approval before the payment can be verified.\"},{\"kind\":\"pressure_language\",\"quote\":\"Payment Terms: Immediate\",\"why\":\"Immediate terms reinforce the urgency and leave no normal payment window for verification.\"},{\"kind\":\"payment_redirect\",\"quote\":\"Wire transfer preferred.\",\"why\":\"A wire-transfer preference on an invoice is a common way to divert funds and should be confirmed out of band before any payment.\"}],\"summary\":\"The invoice presses for immediate payment under threat of penalties and asks for a wire transfer. Do not pay until the vendor and payment instructions are independently verified.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The unknown vendor is not a vendor change.\n\nThe notes contain pressure language. \"URGENT - Pay immediately to avoid penalties!!!\" and \"Immediate\" payment terms are unusual and constitute fraud signals.\n\n\"Wire transfer preferred.\" is a payment redirect signal.\n\nThe combination of pressure language, immediate payment terms, and wire transfer preference indicates classic business email compromise. This warrants a high-level signal: evidence of fraud or manipulation, do not pay.\n\nThe automated checks already reject the invoice for stock and fraud signals. I will only add human-visible signals that the system cannot detect. The summary will be two sentences maximum, in JSON format with no surrounding text."
+    }
+   }
+  ],
+  "created": 1795577974,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_c60958d81f66f847",
+  "usage": {
+   "completion_tokens": 172,
+   "prompt_tokens": 2635,
+   "total_tokens": 3400,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 593,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2635
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 22426400
+  }
+ }
+}

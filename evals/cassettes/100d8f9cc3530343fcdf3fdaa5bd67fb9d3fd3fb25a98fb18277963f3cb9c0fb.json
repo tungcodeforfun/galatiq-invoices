@@ -1,7 +1,7 @@
 {
  "request_sha256": "100d8f9cc3530343fcdf3fdaa5bd67fb9d3fd3fb25a98fb18277963f3cb9c0fb",
  "response": {
-  "id": "42e5d521-6ef0-91ad-9b3f-818d8e7089c9",
+  "id": "023a2a92-7991-489d-a496-30e6d08cabe3",
   "choices": [
    {
     "finish_reason": "stop",
@@ -15,11 +15,11 @@
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I will extract structured data from the invoice document.\n\nThe invoice contains vendor Fraudster LLC, invoice number INV-1003, date 2026-01-20, and due date yesterday. Item FakeItem has quantity 100 at unit price $1,000.00. Total amount is $100,000.00. Payment terms are Immediate. Notes warn of penalties if payment is delayed.\n\nThe due date will be null with \"yesterday\" stored in due_date_as_written. The vendor is Fraudster LLC. Notes will hold the full warning text verbatim. Each line item gets its own entry. The unit price drops the dollar sign and comma.\n\nThe line item amount is null because the invoice omits a line total. Subtotal, tax, and shipping are also null. The currency is USD."
+     "reasoning_content": "I will extract structured data from the invoice document.\n\nThe invoice number is INV-1003. The vendor is Fraudster LLC. The date is 2026-01-20. The due date is yesterday. The total amount is $100,000.00. Payment terms are Immediate. The item is FakeItem with quantity 100 and unit price $1,000.00."
     }
    }
   ],
-  "created": 1795570651,
+  "created": 1795577433,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -29,11 +29,11 @@
   "usage": {
    "completion_tokens": 133,
    "prompt_tokens": 2832,
-   "total_tokens": 3592,
+   "total_tokens": 3297,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 627,
+    "reasoning_tokens": 332,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 2832
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 28886400
+   "cost_in_usd_ticks": 22868400
   }
  }
 }

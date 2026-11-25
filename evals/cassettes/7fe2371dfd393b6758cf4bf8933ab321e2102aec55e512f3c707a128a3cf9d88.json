@@ -1,0 +1,51 @@
+{
+ "request_sha256": "7fe2371dfd393b6758cf4bf8933ab321e2102aec55e512f3c707a128a3cf9d88",
+ "response": {
+  "id": "1ef78bfd-7cf2-9859-9b41-021cad3bcef1",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(line=1)\",\"resolve_item(line=2)\",\"resolve_item(line=3)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_stock(GadgetX)\",\"check_price(line=1)\",\"check_price(line=2)\",\"check_price(line=3)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Summit Manufacturing Co.)\"],\"concerns\":[\"Vendor history lists INV-1011 twice with the same total: once PAID and once REJECTED/void. That conflict is not on this invoice (check_duplicate found no match) but is worth a look before approving further Summit invoices.\"],\"summary\":\"INV-2001 from Summit Manufacturing Co. matched catalog items WidgetA, WidgetB, and GadgetX. Stock, unit prices, totals, and duplicate checks all passed with no tool-flagged problems.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks passed. I will report the findings and any tool results that require manual review.\n\nVendor history shows invoice number INV-1011 appears twice with the same total. One record is PAID and another is REJECTED or void. The duplicate check tool did not flag this discrepancy. This may require manual review.\n\nWidgetB stock depletion is exact and within limits. Tax is null but shipping and total are correct. The due date matches the written date."
+    }
+   }
+  ],
+  "created": 1795579090,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 204,
+   "prompt_tokens": 3265,
+   "total_tokens": 3878,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 409,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2816,
+    "image_tokens": 0,
+    "text_tokens": 3265
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 20345600
+  }
+ }
+}

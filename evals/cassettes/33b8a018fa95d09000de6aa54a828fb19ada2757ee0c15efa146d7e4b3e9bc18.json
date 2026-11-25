@@ -1,14 +1,14 @@
 {
  "request_sha256": "33b8a018fa95d09000de6aa54a828fb19ada2757ee0c15efa146d7e4b3e9bc18",
  "response": {
-  "id": "5976be07-701c-99ea-a0e0-f036da124ba7",
+  "id": "429d8b02-8b3a-445b-8b15-64eb38c55204",
   "choices": [
    {
     "finish_reason": "tool_calls",
     "index": 0,
     "logprobs": null,
     "message": {
-     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"Vendor master lookup is needed before a final read; automated stock finding is already visible to the VP and is not restated as a fraud signal.\"}",
+     "content": "",
      "refusal": null,
      "role": "assistant",
      "annotations": null,
@@ -16,7 +16,7 @@
      "function_call": null,
      "tool_calls": [
       {
-       "id": "call-8c6fbd6c-8a70-4c83-ae01-632b0e0d086c-0",
+       "id": "call-309dcd19-ae3d-4357-ad8c-b5154a9a4deb-0",
        "function": {
         "arguments": "{\"name\":\"Global Supply Chain Partners\"}",
         "name": "get_vendor"
@@ -24,11 +24,11 @@
        "type": "function"
       }
      ],
-     "reasoning_content": "I am reviewing the invoice as a fraud analyst."
+     "reasoning_content": "I am analyzing the invoice for fraud signals."
     }
    }
   ],
-  "created": 1795570880,
+  "created": 1795577725,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -36,13 +36,13 @@
   "service_tier": "default",
   "system_fingerprint": "fp_b507827d1c19f448",
   "usage": {
-   "completion_tokens": 57,
+   "completion_tokens": 14,
    "prompt_tokens": 2258,
-   "total_tokens": 2363,
+   "total_tokens": 2415,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 48,
+    "reasoning_tokens": 143,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -54,7 +54,7 @@
     "text_tokens": 2258
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 11621200
+   "cost_in_usd_ticks": 12682000
   }
  }
 }

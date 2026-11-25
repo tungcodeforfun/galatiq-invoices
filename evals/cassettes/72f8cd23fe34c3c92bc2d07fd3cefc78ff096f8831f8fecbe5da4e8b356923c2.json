@@ -1,0 +1,51 @@
+{
+ "request_sha256": "72f8cd23fe34c3c92bc2d07fd3cefc78ff096f8831f8fecbe5da4e8b356923c2",
+ "response": {
+  "id": "062b18bd-81f4-46b5-9f70-f48b0b8e9ca4",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"resolve_item(2)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_price(1)\",\"check_price(2)\",\"check_totals()\",\"check_duplicate()\",\"get_vendor(Acme Industrial Supplies)\"],\"concerns\":[\"Vendor is known (first seen 2022-11-30) but the ledger lists no earlier invoices.\",\"Currency, shipping, and both line amounts are null on the extraction; totals still matched the stated 2750 with no tool problem.\"],\"summary\":\"Checked both lines against the catalog, stock, and price, plus totals, duplicates, and the vendor master. No tool flagged a mismatch, stock issue, price variance, total error, or duplicate.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks passed. I will report the findings and any tool results that require manual review.\n\nThe invoice has null currency and shipping. Line amounts are also null. The due date is February 10, which is 16 days after January 25, not the stated Net 15 terms. I will flag this discrepancy for manual review.\n\nI am uncertain whether manual date arithmetic is permitted. The instructions prohibit computing numbers myself, yet the response format asks for points beyond what the tools flag.\n\nI will not flag the due date discrepancy. The instructions require tool results only, and no tool flagged that mismatch. I will report only verified findings: exact line-item matches, correct totals, no duplicates, a known vendor with no aliases, and sufficient stock.\n\nThe vendor has been known since November 2022 but the ledger shows no earlier invoices. This gap is worth flagging for manual review."
+    }
+   }
+  ],
+  "created": 1795577903,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 170,
+   "prompt_tokens": 2957,
+   "total_tokens": 4211,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1084,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2560,
+    "image_tokens": 0,
+    "text_tokens": 2957
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 32633200
+  }
+ }
+}

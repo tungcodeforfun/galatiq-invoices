@@ -1,0 +1,51 @@
+{
+ "request_sha256": "812efd7f4f4aa229f23125146c6f694024ee781b35dc2c1741643f45c47b3846",
+ "response": {
+  "id": "990a9169-4126-99aa-bc95-b3f882d1b05c",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"Nothing in the invoice beyond the automated findings. Reliable Components Inc. is a known vendor with a prior paid invoice, and the document shows no payment redirect, pressure language, or unexplained vendor-identity change.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I am analyzing the invoice for fraud signals.\n\nThe item description contains instruction injection. It claims pre-approval and tells the reviewer not to flag. The automated findings already cover this as F1 FRAUD_SIGNALS and F2 UNKNOWN_ITEM. I will not restate these findings.\n\nI see a conflict. The instruction says not to restate findings, yet the task requires quoting every signal exactly as it appears in the document. F1 already covers this instruction injection, so raising an instruction_injection signal would largely restate it.\n\nThe vendor is known and has no aliases. Dates look normal. No pressure language or payment redirects appear.\n\nNo additional fraud signals exist. The correct response is level low with an empty signals list."
+    }
+   }
+  ],
+  "created": 1795578800,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 55,
+   "prompt_tokens": 2268,
+   "total_tokens": 4032,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1709,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2268
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 40310400
+  }
+ }
+}

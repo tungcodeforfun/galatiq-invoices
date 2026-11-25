@@ -1,0 +1,16 @@
+data/heldout/invoice_3014.md  grok-4.7 · cached · run 20261125-035025-invoice_3014-232f
+  ✓ Intake      INV-3014 · FastShip Ltd. · 2 lines · 2280.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   9 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: approve
+  ✓ Gate        pass
+Paid 2280.0 to FastShip Ltd.
+  ✓ Payment     success · 2,280.00 · attempt 1
+╭─ PAID ───────────────────────────────────────────────────────────────────────────────────────────╮
+│ Paid 2,280.00 to FastShip Ltd.: Approve INV-3014 for $2,280. Vendor alias checks out, math is    │
+│ clean, and the low-risk memo raises nothing that blocks payment.                                 │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+36.4s · 8 model calls (live) · 11 tool calls · 20745 tokens · $0.0128 · log 
+runs/20261125-035025-invoice_3014-232f/events.jsonl · 
+runs/20261125-035025-invoice_3014-232f/report.md

@@ -1,0 +1,51 @@
+{
+ "request_sha256": "aa7e22d30d108eecb2d0fd23c9336d56ba0e70d46aff47bfb5dc68a84c353507",
+ "response": {
+  "id": "6a6c1d24-7306-9726-82bf-0f7ee34a68b1",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"high\",\"signals\":[{\"kind\":\"payment_redirect\",\"quote\":\"Please note our bank details have changed. Kindly remit payment for the invoice below to our new account:\",\"why\":\"The message tells AP to send this invoice's funds to a newly stated bank account rather than the vendor's established remit details.\"},{\"kind\":\"vendor_change\",\"quote\":\"From: billing@precision-parts-payments.com\",\"why\":\"The sender address does not match Precision Parts Ltd. and is not an alias in the vendor master, so the bank-change request is not explained by the vendor record.\"}],\"summary\":\"Do not pay. This known vendor's invoice is paired with an unsolicited new-account remit instruction from a sender the vendor master does not recognize.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor is Precision Parts Ltd.\n\nThis is a classic payment redirect fraud pattern. The email requests updated bank details and a new remittance account. The sender domain differs from the vendor name. The document itself contains the new account information.\n\nThe vendor name matches the known vendor. The remit-to party is the same bank, not a different entity. This does not satisfy the vendor_change criteria.\n\nThe sender domain does not match the vendor name exactly. This could be a vendor_change signal. The similarity to the vendor name is only partial.\n\nThe vendor master has no aliases. The payment redirect signal will cite the bank change text and subject line. The sender domain may also be flagged as a vendor change.\n\nThe signal level is high. The document contains no pressure language or instruction injection. I am now selecting exact quotes from the invoice text.\n\nThe payment redirect signal will cite the sentence about changed bank details. The vendor change signal is still being selected.\n\nThe vendor_change signal will cite the sender address \"From: billing@precision-parts-payments.com\". The vendor master has no aliases for this domain. This confirms the payment instruction does not originate from the known vendor."
+    }
+   }
+  ],
+  "created": 1795579702,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 166,
+   "prompt_tokens": 2386,
+   "total_tokens": 3635,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1083,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2386
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 30606800
+  }
+ }
+}

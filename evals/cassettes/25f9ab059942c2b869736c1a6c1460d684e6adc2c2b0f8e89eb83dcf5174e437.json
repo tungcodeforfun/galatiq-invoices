@@ -1,0 +1,51 @@
+{
+ "request_sha256": "25f9ab059942c2b869736c1a6c1460d684e6adc2c2b0f8e89eb83dcf5174e437",
+ "response": {
+  "id": "d97871bb-aba3-96bb-86fe-a78f5a09e680",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"F3 is a reject finding: FakeItem requests 100 units with 0 on hand, so the payment gate blocks this invoice regardless of other factors.\",\"finding_ids\":[\"F3\"]},{\"text\":\"F4 is a reject finding: FakeItem is a catalog item we hold none of and never price, so there is no legitimate basis to pay $100,000.\",\"finding_ids\":[\"F4\"]},{\"text\":\"F5 is a reject finding and the risk memo is high: keyword screen matched payment_redirect and pressure_language on the urgent wire demand. High-risk memos must be rejected.\",\"finding_ids\":[\"F5\"]},{\"text\":\"F2 warns that Fraudster LLC is not in the vendor master and has no prior invoices, which reinforces the fraud picture on this $100,000 invoice.\",\"finding_ids\":[\"F2\"]},{\"text\":\"F1 warns that the due date is written as 'yesterday' rather than a calendar date, with Immediate terms and an urgent wire note. That date oddity is additional evidence the invoice is not sound.\",\"finding_ids\":[\"F1\"]}],\"addressed_findings\":[\"F1\",\"F2\",\"F3\",\"F4\",\"F5\"],\"summary\":\"Reject INV-1003 for $100,000 from Fraudster LLC. Reject findings F3, F4, and F5 block payment, and the high-risk memo (urgent wire / pressure language) must be rejected. The vendor is not on file and the due date is not a real date.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I am acting as VP of Finance to evaluate whether to pay this invoice.\n\nThe invoice contains five findings. Two are warnings: an invalid due date and an unverified vendor. Three are rejections: the item is out of stock, it is a fraud catalog item, and keyword screening flagged two fraud signals. The policy requires rejecting any finding with severity \"reject\". Payment must be denied.\n\nThe payment gate will block this regardless of my decision. Because the invoice exceeds $10,000, I must address every finding and the risk memo in my reasons. A high-risk memo requires rejection. I may verify the vendor through the available tool."
+    }
+   }
+  ],
+  "created": 1795577461,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 339,
+   "prompt_tokens": 2446,
+   "total_tokens": 3180,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 395,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1792,
+    "image_tokens": 0,
+    "text_tokens": 2446
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 22467200
+  }
+ }
+}

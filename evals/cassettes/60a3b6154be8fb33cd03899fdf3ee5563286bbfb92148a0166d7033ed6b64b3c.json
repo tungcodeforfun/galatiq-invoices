@@ -1,0 +1,51 @@
+{
+ "request_sha256": "60a3b6154be8fb33cd03899fdf3ee5563286bbfb92148a0166d7033ed6b64b3c",
+ "response": {
+  "id": "d71228e1-5bb8-44df-bad0-405287ed13b9",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"F1 is a reject-severity duplicate: same vendor, lines, and total as INV-1011, which is already PAID. The payment gate blocks this invoice regardless of any other weighing.\",\"finding_ids\":[\"F1\"]}],\"addressed_findings\":[\"F1\"],\"summary\":\"Reject INV-1011 from Summit Manufacturing Co. for $3,000. It is a duplicate of an invoice already paid (F1), so it must not be paid again.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I need to decide whether to pay this vendor invoice.\n\nFinding F1 is a duplicate with severity \"reject\". The policy blocks payment for any invoice with a reject finding. I must reject this invoice. The risk memo is low risk."
+    }
+   }
+  ],
+  "created": 1795578441,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 114,
+   "prompt_tokens": 2228,
+   "total_tokens": 2638,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 296,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1792,
+    "image_tokens": 0,
+    "text_tokens": 2228
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14375200
+  }
+ }
+}

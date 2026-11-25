@@ -1,0 +1,60 @@
+{
+ "request_sha256": "a208b496c54a1fafbe5ef7577d1c4146b61a9c7e60e9b62d3358f651a12c96d2",
+ "response": {
+  "id": "93cfefe9-bc9e-9258-8436-305d3bf2e8f6",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-a3b18a7f-1682-42e1-9ae3-20ddc8f7f811-0",
+       "function": {
+        "arguments": "{\"name\":\"Summit Manufacturing Co.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "The user wants me to decide whether to pay a vendor invoice as VP of Finance at Acme Corp.\n\nThe invoice is a standard Net 30 bill from a known vendor with no findings or risk signals. No rejection severity applies, so it should be paid."
+    }
+   }
+  ],
+  "created": 1795579437,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 14,
+   "prompt_tokens": 2201,
+   "total_tokens": 2524,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 309,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1792,
+    "image_tokens": 0,
+    "text_tokens": 2201
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 12416800
+  }
+ }
+}

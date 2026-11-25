@@ -1,0 +1,51 @@
+{
+ "request_sha256": "3a3a7f5e99d62ddba8ec882d0cc02f6ad29f2775b1d243c954fef16dcd581e3b",
+ "response": {
+  "id": "757b8581-fea2-9190-90c3-ec253dc29402",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"INV-3002\",\"vendor\":\"Gadgets Co.\",\"invoice_date\":\"2026-02-05\",\"due_date\":\"2026-03-07\",\"due_date_as_written\":\"2026-03-07\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"GadgetX\",\"quantity\":2,\"unit_price\":750.0,\"amount\":1500.0,\"note\":null},{\"description\":\"WidgetA\",\"quantity\":4,\"unit_price\":250.0,\"amount\":1000.0,\"note\":null}],\"subtotal\":2500.0,\"tax\":null,\"shipping\":45.0,\"total\":2545.0,\"payment_terms\":\"Net 30\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract the invoice data and return it as JSON matching the schema.\n\nMapping the extracted fields to the required schema. The due date is a calendar date, so I am deciding whether to populate `due_date_as_written` with that value or leave it null.\n\nThe rule applies only to non-calendar dates. Since the due date is already a calendar date, `due_date_as_written` will contain the exact text \"2026-03-07\".\n\nI have mapped the remaining fields. The currency is USD. The line items are GadgetX (2 @ $750) and WidgetA (4 @ $250). Subtotal is 2500. Tax is null.\n\nShipping is 45.0 and total is 2545.0. Payment terms are Net 30. Notes is null because the supplier email is not a free-text message. No corrections are needed. I am deciding whether to use whole numbers or decimals for the numeric fields."
+    }
+   }
+  ],
+  "created": 1795577929,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 175,
+   "prompt_tokens": 2957,
+   "total_tokens": 4590,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1458,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2957
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 47545600
+  }
+ }
+}

@@ -1,25 +1,25 @@
 {
  "request_sha256": "ead9477f9883b49544ca8fe196b1d873400a200b4b0d333195cc28e6eb49a892",
  "response": {
-  "id": "1da2bd06-968e-9d96-abca-d059f507cede",
+  "id": "d3d18c8e-b28f-4a7c-bf97-dcfdda82b45d",
   "choices": [
    {
     "finish_reason": "stop",
     "index": 0,
     "logprobs": null,
     "message": {
-     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"The invoice itself shows ordinary terms and no payment-redirect, pressure, vendor-identity conflict, or instruction aimed at the reviewer. The duplicate finding is already covered by automated checks and is not restated here.\"}",
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"The invoice text has ordinary Net 15 terms and no pressure language, payment redirect, instruction injection, or conflicting vendor identity. Nothing beyond the automated duplicate finding warrants a separate fraud signal.\"}",
      "refusal": null,
      "role": "assistant",
      "annotations": null,
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I am acting as a fraud analyst to examine the invoice for signs of deception.\n\nThe invoice is a duplicate of INV-1001 and will be rejected. I will check the vendor master for changes and scan for pressure language or payment redirects."
+     "reasoning_content": "Analyzing the invoice for fraud signals.\n\nThe automated check flagged a duplicate invoice. I am now checking for pressure language, payment redirects, instruction injection, and vendor changes.\n\nNo fraud signals found. The invoice contains no pressure language, payment redirects, instruction injection, or vendor changes. Net 15 is standard payment terms. The duplicate is already covered by automated checks. Level: low."
     }
    }
   ],
-  "created": 1795572256,
+  "created": 1795579346,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -27,25 +27,25 @@
   "service_tier": "default",
   "system_fingerprint": "fp_b507827d1c19f448",
   "usage": {
-   "completion_tokens": 56,
+   "completion_tokens": 51,
    "prompt_tokens": 2211,
-   "total_tokens": 2501,
+   "total_tokens": 2854,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 234,
+    "reasoning_tokens": 592,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
    "prompt_tokens_details": {
     "audio_tokens": 0,
     "cache_write_tokens": null,
-    "cached_tokens": 1152,
+    "cached_tokens": 1920,
     "image_tokens": 0,
     "text_tokens": 2211
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 15075600
+   "cost_in_usd_ticks": 18360000
   }
  }
 }

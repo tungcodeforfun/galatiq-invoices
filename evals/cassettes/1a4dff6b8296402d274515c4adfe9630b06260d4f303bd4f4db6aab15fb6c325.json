@@ -1,0 +1,51 @@
+{
+ "request_sha256": "1a4dff6b8296402d274515c4adfe9630b06260d4f303bd4f4db6aab15fb6c325",
+ "response": {
+  "id": "fd0f659a-5270-9f0f-85df-01f81e7ac507",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"approve\",\"reasons\":[{\"text\":\"Gadgets Co. is on the vendor master (first seen 2023-06-12). Automated checks returned no findings, and the low-risk memo cites no pressure language, payment redirection, or conflicting identity.\",\"finding_ids\":[]},{\"text\":\"Invoice math holds: 2 x $750 + 4 x $250 = $2,500 subtotal, plus $45 shipping = $2,545. Amount is under $10,000 and Net 30 matches the written due date of 2026-03-07. Nothing on the document itself warrants rejection.\",\"finding_ids\":[]}],\"addressed_findings\":[],\"summary\":\"Approve INV-3002 for $2,545. Known vendor, no check findings, low-risk memo, and consistent math and terms.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor is known and on file since June 12, 2023.\n\nNo earlier invoices were found. The total of $2,545 is under $10,000 and the math checks out. The Net 30 due date of March 7, 2026 is correct.\n\nNo findings exist, so addressed_findings will be empty. Reason entries can have empty finding_ids. The invoice is approved.\n\nThe low risk memo reinforces approval. The response will be a bare JSON schema with no surrounding text."
+    }
+   }
+  ],
+  "created": 1795577967,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 181,
+   "prompt_tokens": 2540,
+   "total_tokens": 3423,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 702,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2540
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 24187600
+  }
+ }
+}

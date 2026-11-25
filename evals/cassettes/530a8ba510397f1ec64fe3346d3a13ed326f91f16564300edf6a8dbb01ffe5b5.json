@@ -1,0 +1,51 @@
+{
+ "request_sha256": "530a8ba510397f1ec64fe3346d3a13ed326f91f16564300edf6a8dbb01ffe5b5",
+ "response": {
+  "id": "1858a0c5-19df-99d8-b5d9-2201d1f80b40",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(line=1)\",\"resolve_item(line=2)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_price(line=1)\",\"check_price(line=2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Widgets Inc.)\"],\"concerns\":[\"Line 1 is a negative quantity (-4 WidgetA, amount -1000) mixed with a positive WidgetB line. Stock, price, and totals checks all returned ok and did not flag the credit/return-style line; confirm it is an authorized credit rather than a data error before paying the net 2000.\"],\"summary\":\"Both lines matched the catalog (WidgetA, WidgetB); prices match catalog, stock checks passed (including the negative WidgetA quantity), totals reconcile to 2000, no duplicate, and Widgets Inc. is a known vendor. Tools did not flag the negative-quantity credit line.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All tools have finished running. I will report the checked items and any findings that the tools did not flag.\n\nWidgetA has a negative quantity of -4.0 and amount of -1000.0. The stock check tool approved this despite the negative value. Totals are correct and prices match. This credit line mixes with WidgetB to net to 2000. The vendor has prior invoices: INV-3001 was PAID and INV-3011 was REJECTED."
+    }
+   }
+  ],
+  "created": 1795578673,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 207,
+   "prompt_tokens": 2938,
+   "total_tokens": 3464,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 319,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 2938
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 17000000
+  }
+ }
+}

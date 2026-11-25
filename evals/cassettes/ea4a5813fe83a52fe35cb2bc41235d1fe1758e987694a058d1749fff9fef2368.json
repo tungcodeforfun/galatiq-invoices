@@ -1,0 +1,60 @@
+{
+ "request_sha256": "ea4a5813fe83a52fe35cb2bc41235d1fe1758e987694a058d1749fff9fef2368",
+ "response": {
+  "id": "e04a8198-1910-4245-a6d3-8d1f522e0649",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-db99c243-7ecc-4fb8-a15f-59c2729990c4-0",
+       "function": {
+        "arguments": "{\"name\":\"Acme Industrial Supplies\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I am analyzing the invoice for fraud signals."
+    }
+   }
+  ],
+  "created": 1795578958,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 14,
+   "prompt_tokens": 2151,
+   "total_tokens": 2290,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 125,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2151
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 11587200
+  }
+ }
+}

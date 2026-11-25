@@ -1,4 +1,4 @@
-data/invoices/invoice_1013.json  grok-4.7 · live · run 20261125-015332-invoice_1013-d1b2
+data/invoices/invoice_1013.json  grok-4.7 · cached · run 20261125-035150-invoice_1013-6122
   ✓ Intake      INV-1013 · Atlas Industrial Supply · 8 lines · 22562.8 USD
   ✓ Check       every value traces to the document
   ✓ Validator   22 tool calls so far
@@ -13,20 +13,30 @@ data/invoices/invoice_1013.json  grok-4.7 · live · run 20261125-015332-invoice
  F3  STOCK_EXCEEDED  reject    WidgetB: 18 requested across 2 line(s), 10 in stock               
  F4  STOCK_EXCEEDED  reject    GadgetX: 9 requested across 3 line(s), 5 in stock                 
 ╭─ REJECTED · return_to_vendor ────────────────────────────────────────────────────────────────────╮
-│ INV-1013 is returned to the vendor because F1, F2, F3, and F4 are correctable reject findings.   │
-│ F1 is a total mismatch: line items plus tax equal $22,512.80, but the invoice total is           │
-│ $22,562.80, which is $50.00 higher. F2, F3, and F4 show quantities over what we can              │
-│ accept—WidgetA 22 against 15 in stock, WidgetB 18 against 10, and GadgetX 9 against 5—so the     │
-│ vendor can revise and resubmit.                                                                  │
+│ INV-1013 is returned because F1 is a reject-severity total mismatch: line items sum to           │
+│ $21,040.00 plus tax of $1,472.80 equals $22,512.80, but the invoice total is $22,562.80, a       │
+│ $50.00 gap with shipping blank. F2, F3, and F4 are reject-severity quantity exceptions: WidgetA  │
+│ is billed for 22 units against 15 in stock, WidgetB for 18 against 10, and GadgetX for 9 against │
+│ 5. These findings can be corrected and resubmitted and are not grounds to void the invoice.      │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
 ╭─ Draft reply to vendor ──────────────────────────────────────────────────────────────────────────╮
-│ Hello Atlas Industrial Supply billing team, we cannot process invoice INV-1013 as submitted. The │
-│ line items and tax sum to $22,512.80, but the invoice total is $22,562.80, which is $50.00       │
-│ higher; please correct the total so it equals the sum of the line amounts, tax, and any          │
-│ shipping. The billed quantities also exceed what we can accept: WidgetA 22 units, WidgetB 18     │
-│ units, and GadgetX 9 units. Please resubmit a corrected invoice with reduced quantities we can   │
-│ accept and a total that matches the revised lines plus tax. Thank you.                           │
+│ Hello Atlas Industrial Supply billing team,                                                      │
+│                                                                                                  │
+│ We cannot process invoice INV-1013 as submitted and are returning it so you can correct and      │
+│ resubmit it.                                                                                     │
+│                                                                                                  │
+│ The line items sum to $21,040.00 and tax is $1,472.80, which equals $22,512.80, but the invoice  │
+│ total is $22,562.80. Shipping is blank. Please make the total equal the sum of the line items,   │
+│ tax, and any shipping. If the $50.00 difference is a shipping or expedite charge, itemize it;    │
+│ otherwise remove it so the total is $22,512.80, or revise the lines and tax so they reconcile to │
+│ the stated total.                                                                                │
+│                                                                                                  │
+│ The billed quantities also exceed what we can accept: WidgetA is billed for 22 units across      │
+│ three lines, WidgetB for 18 units across two lines, and GadgetX for 9 units across three lines.  │
+│ Please reduce those quantities to amounts we can accept and send a corrected invoice.            │
+│                                                                                                  │
+│ Thank you.                                                                                       │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-88.0s · 9 model calls (live) · 23 tool calls · 27592 tokens · $0.0261 · log 
-runs/20261125-015332-invoice_1013-d1b2/events.jsonl · 
-runs/20261125-015332-invoice_1013-d1b2/report.md
+107.9s · 9 model calls (live) · 23 tool calls · 28459 tokens · $0.0317 · log 
+runs/20261125-035150-invoice_1013-6122/events.jsonl · 
+runs/20261125-035150-invoice_1013-6122/report.md

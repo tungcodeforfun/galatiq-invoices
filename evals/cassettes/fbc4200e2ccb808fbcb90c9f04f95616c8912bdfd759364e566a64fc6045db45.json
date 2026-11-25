@@ -1,0 +1,75 @@
+{
+ "request_sha256": "fbc4200e2ccb808fbcb90c9f04f95616c8912bdfd759364e566a64fc6045db45",
+ "response": {
+  "id": "f7342a87-35b6-4cfa-941c-165ad7e51c1e",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-ef8703d0-c77c-40bb-8879-63e5d5d6ab08-5",
+       "function": {
+        "arguments": "{\"item\":\"WidgetB\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-ef8703d0-c77c-40bb-8879-63e5d5d6ab08-6",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-ef8703d0-c77c-40bb-8879-63e5d5d6ab08-7",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ]
+    }
+   }
+  ],
+  "created": 1795578202,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 32,
+   "prompt_tokens": 2702,
+   "total_tokens": 2769,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 35,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2702
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 13865200
+  }
+ }
+}

@@ -1,0 +1,21 @@
+data/heldout/invoice_3013.txt  grok-4.7 · cached · run 20261125-034920-invoice_3013-b12d
+  ✓ Intake      INV-3013 · no vendor · 1 lines · 1500.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   6 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: reject
+  ✓ Critic      accept
+  ✓ Gate        blocked: approver rejected
+  ✓ Resolution  void
+ ID  Code            Severity  Finding                            
+ F1  DATA_INTEGRITY  reject    vendor name is missing             
+ F2  NEW_VENDOR      warn      'null' is not in the vendor master 
+╭─ REJECTED · void ────────────────────────────────────────────────────────────────────────────────╮
+│ INV-3013 is voided because F1 is a reject-severity data-integrity failure: the vendor name is    │
+│ missing, so there is no payable party, remit-to, or alias and payment cannot be released. F2     │
+│ confirms the literal name 'null' is not in the vendor master, so there is no vendor on file to   │
+│ pay or to return the invoice to. Corrupt identity data of this kind must not come back.          │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+64.3s · 8 model calls (live) · 6 tool calls · 19832 tokens · $0.0181 · log 
+runs/20261125-034920-invoice_3013-b12d/events.jsonl · 
+runs/20261125-034920-invoice_3013-b12d/report.md

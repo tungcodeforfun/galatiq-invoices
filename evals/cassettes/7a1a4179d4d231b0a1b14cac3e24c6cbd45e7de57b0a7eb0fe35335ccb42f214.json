@@ -1,0 +1,60 @@
+{
+ "request_sha256": "7a1a4179d4d231b0a1b14cac3e24c6cbd45e7de57b0a7eb0fe35335ccb42f214",
+ "response": {
+  "id": "8fd296d3-bebb-465d-9eb6-35ffa9287735",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-b7799a9a-04af-4eb7-9789-d1a75d3795ed-0",
+       "function": {
+        "arguments": "{\"name\":\"Summit Manufacturing Co.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I am acting as VP of Finance to evaluate whether to pay this vendor invoice."
+    }
+   }
+  ],
+  "created": 1795578109,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 14,
+   "prompt_tokens": 2307,
+   "total_tokens": 2530,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 209,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2307
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14361600
+  }
+ }
+}

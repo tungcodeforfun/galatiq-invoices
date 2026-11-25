@@ -1,8 +1,8 @@
 # invoice_1013.json: REJECTED (return_to_vendor)
 
-INV-1013 is returned to the vendor because F1, F2, F3, and F4 are correctable reject findings. F1 is a total mismatch: line items plus tax equal $22,512.80, but the invoice total is $22,562.80, which is $50.00 higher. F2, F3, and F4 show quantities over what we can accept—WidgetA 22 against 15 in stock, WidgetB 18 against 10, and GadgetX 9 against 5—so the vendor can revise and resubmit.
+INV-1013 is returned because F1 is a reject-severity total mismatch: line items sum to $21,040.00 plus tax of $1,472.80 equals $22,512.80, but the invoice total is $22,562.80, a $50.00 gap with shipping blank. F2, F3, and F4 are reject-severity quantity exceptions: WidgetA is billed for 22 units against 15 in stock, WidgetB for 18 against 10, and GadgetX for 9 against 5. These findings can be corrected and resubmitted and are not grounds to void the invoice.
 
-Run `20261125-015332-invoice_1013-d1b2` · seconds 87.9 · llm_calls 9 · tool_calls 23 · tiers ['live'] · tokens 27592 · cost_usd 0.0261
+Run `20261125-035150-invoice_1013-6122` · seconds 107.9 · llm_calls 9 · tool_calls 23 · tiers ['live'] · tokens 28459 · cost_usd 0.0317
 
 ## Extracted invoice
 
@@ -12,7 +12,7 @@ Run `20261125-015332-invoice_1013-d1b2` · seconds 87.9 · llm_calls 9 · tool_c
 | vendor | Atlas Industrial Supply |
 | invoice_date | 2026-01-24 |
 | due_date | 2026-03-24 |
-| due_date_as_written | 2026-03-24 |
+| due_date_as_written | None |
 | currency | USD |
 | subtotal | 21040.0 |
 | tax | 1472.8 |
@@ -68,43 +68,43 @@ Run `20261125-015332-invoice_1013-d1b2` · seconds 87.9 · llm_calls 9 · tool_c
 | validator | check_price | {"line": 6} | {"line": 6, "item": "GadgetX", "invoiced": 750.0, "catalog": 750.0, "variance_pct": 0.0, "within_tolerance": true} |
 | validator | check_price | {"line": 7} | {"line": 7, "item": "WidgetA", "invoiced": 250.0, "catalog": 250.0, "variance_pct": 0.0, "within_tolerance": true} |
 | validator | check_price | {"line": 8} | {"line": 8, "item": "GadgetX", "invoiced": 750.0, "catalog": 750.0, "variance_pct": 0.0, "within_tolerance": true} |
-| risk | get_vendor | {"name": "Atlas Industrial Supply"} | {"known": true, "name": "Atlas Industrial Supply", "aliases": [], "first_seen": "2024-08-09", "earlier_invoices": []} |
+| approver | get_vendor | {"name": "Atlas Industrial Supply"} | {"known": true, "name": "Atlas Industrial Supply", "aliases": [], "first_seen": "2024-08-09", "earlier_invoices": []} |
 
 ## Validator notes
 
 ```json
 {
   "checks_run": [
-    "resolve_item(line 1)",
-    "resolve_item(line 2)",
-    "resolve_item(line 3)",
-    "resolve_item(line 4)",
-    "resolve_item(line 5)",
-    "resolve_item(line 6)",
-    "resolve_item(line 7)",
-    "resolve_item(line 8)",
+    "resolve_item(1)",
+    "resolve_item(2)",
+    "resolve_item(3)",
+    "resolve_item(4)",
+    "resolve_item(5)",
+    "resolve_item(6)",
+    "resolve_item(7)",
+    "resolve_item(8)",
     "check_stock(WidgetA)",
     "check_stock(WidgetB)",
     "check_stock(GadgetX)",
-    "check_price(line 1)",
-    "check_price(line 2)",
-    "check_price(line 3)",
-    "check_price(line 4)",
-    "check_price(line 5)",
-    "check_price(line 6)",
-    "check_price(line 7)",
-    "check_price(line 8)",
+    "check_price(1)",
+    "check_price(2)",
+    "check_price(3)",
+    "check_price(4)",
+    "check_price(5)",
+    "check_price(6)",
+    "check_price(7)",
+    "check_price(8)",
     "check_totals",
     "check_duplicate",
     "get_vendor(Atlas Industrial Supply)"
   ],
   "concerns": [
-    "WidgetA, WidgetB, and GadgetX are split across multiple lines; lines 4 and 5 are 4% under catalog with a volume-discount note while other lines of the same items are at list, and price checks still passed tolerance, so discount authorization is not flagged.",
-    "Sample, Replacement, and Expedited notes are included in the same stock totals as regular lines; the stock tool only reports the combined shortfall, not whether those special quantities need separate approval.",
-    "Shipping is null, so the $50 total gap the totals check reported is not explained by a stated shipping amount.",
-    "Vendor is known since 2024-08-09 but the lookup returned no earlier invoices, which is odd for an established vendor and was not flagged as a problem."
+    "Shipping is null while the stated total is $50 above lines plus tax; line 6 is marked Expedited, so the gap may be an unstated shipping or expedite fee rather than a random total error.",
+    "Line 7 (Replacement) and line 8 (Sample) are billed at full catalog price; the tools did not treat those notes as exceptions.",
+    "Lines 4 and 5 are 4% under catalog and labeled volume discount, but still within tolerance, so price checks did not flag them.",
+    "Vendor has been on file since 2024-08-09 yet has no earlier invoices in the ledger."
   ],
-  "summary": "All eight lines matched the catalog exactly. Prices were within tolerance, the invoice is not a duplicate, and Atlas Industrial Supply is a known vendor. Tools flagged stock shortfalls on WidgetA (22 vs 15), WidgetB (18 vs 10), and GadgetX (9 vs 5), and a total that is $50 above lines plus tax with shipping blank."
+  "summary": "All eight lines matched WidgetA, WidgetB, or GadgetX exactly. Stock is short on every item (22/15, 18/10, and 9/5), the stated total is $50 above lines plus tax, prices are within tolerance, and the invoice is not a duplicate of a processed one."
 }
 ```
 
@@ -114,7 +114,7 @@ Run `20261125-015332-invoice_1013-d1b2` · seconds 87.9 · llm_calls 9 · tool_c
 {
   "level": "low",
   "signals": [],
-  "summary": "Atlas Industrial Supply is a known vendor, and the invoice contains only ordinary wording (Net 60 and routine line notes). Nothing in the document suggests pressure, a payment redirect, instruction injection, or a conflicting vendor identity beyond the automated checks."
+  "summary": "No deception or manipulation signals beyond the automated findings. Payment terms, vendor identity, and line notes are ordinary commercial wording with no redirect, pressure, or instruction to the reviewer."
 }
 ```
 
@@ -125,13 +125,13 @@ Run `20261125-015332-invoice_1013-d1b2` · seconds 87.9 · llm_calls 9 · tool_c
   "action": "reject",
   "reasons": [
     {
-      "text": "F1 is a reject-severity total mismatch: line items sum to the stated subtotal of $21,040.00 and subtotal plus tax of $1,472.80 equals $22,512.80, but the invoice total is $22,562.80, $50.00 higher. The payment gate blocks this regardless of other factors.",
+      "text": "F1 is a reject-severity total mismatch: line items sum to $21,040.00 plus tax $1,472.80 equals $22,512.80, but the invoice total is $22,562.80. Shipping is blank, so the $50 gap is not an itemized charge even if line 6's Expedited note might explain it. The gate blocks payment.",
       "finding_ids": [
         "F1"
       ]
     },
     {
-      "text": "F2, F3, and F4 are reject-severity stock shortfalls. WidgetA is billed for 22 units against 15 in stock, WidgetB for 18 against 10, and GadgetX for 9 against 5. Those quantities cannot be fulfilled as invoiced, so payment is blocked.",
+      "text": "F2, F3, and F4 are reject-severity stock exceptions. WidgetA is billed for 22 units against 15 in stock, WidgetB for 18 against 10, and GadgetX for 9 against 5. Replacement and sample notes were not treated as exceptions, so the quantities cannot be paid as billed.",
       "finding_ids": [
         "F2",
         "F3",
@@ -139,8 +139,13 @@ Run `20261125-015332-invoice_1013-d1b2` · seconds 87.9 · llm_calls 9 · tool_c
       ]
     },
     {
-      "text": "The risk memo is low and does not itself require rejection: Atlas Industrial Supply is described as a known vendor with ordinary Net 60 terms and routine line notes, and no pressure, payment redirect, or identity conflict. It does not outweigh the reject findings on an invoice of $22,562.80.",
-      "finding_ids": []
+      "text": "Risk memo is low: no deception, pressure, or reviewer-redirect signals, and ordinary Net 60 terms. Vendor Atlas Industrial Supply has been on file since 2024-08-09 with no earlier invoices. A low memo does not clear reject findings on a $22,562.80 invoice.",
+      "finding_ids": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ]
     }
   ],
   "addressed_findings": [
@@ -149,7 +154,7 @@ Run `20261125-015332-invoice_1013-d1b2` · seconds 87.9 · llm_calls 9 · tool_c
     "F3",
     "F4"
   ],
-  "summary": "Reject INV-1013 for $22,562.80. The total is $50.00 above lines plus tax, and WidgetA, WidgetB, and GadgetX quantities all exceed stock. The low risk memo does not clear those reject findings."
+  "summary": "Reject INV-1013. The stated total is $50 above lines plus tax, and every SKU is billed above stock; those reject findings block payment despite a low risk memo and a known vendor."
 }
 ```
 
@@ -169,8 +174,7 @@ Run `20261125-015332-invoice_1013-d1b2` · seconds 87.9 · llm_calls 9 · tool_c
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -179,7 +183,7 @@ Run `20261125-015332-invoice_1013-d1b2` · seconds 87.9 · llm_calls 9 · tool_c
 ```json
 {
   "disposition": "return_to_vendor",
-  "reasoning": "INV-1013 is returned to the vendor because F1, F2, F3, and F4 are correctable reject findings. F1 is a total mismatch: line items plus tax equal $22,512.80, but the invoice total is $22,562.80, which is $50.00 higher. F2, F3, and F4 show quantities over what we can accept—WidgetA 22 against 15 in stock, WidgetB 18 against 10, and GadgetX 9 against 5—so the vendor can revise and resubmit.",
-  "vendor_reply": "Hello Atlas Industrial Supply billing team, we cannot process invoice INV-1013 as submitted. The line items and tax sum to $22,512.80, but the invoice total is $22,562.80, which is $50.00 higher; please correct the total so it equals the sum of the line amounts, tax, and any shipping. The billed quantities also exceed what we can accept: WidgetA 22 units, WidgetB 18 units, and GadgetX 9 units. Please resubmit a corrected invoice with reduced quantities we can accept and a total that matches the revised lines plus tax. Thank you."
+  "reasoning": "INV-1013 is returned because F1 is a reject-severity total mismatch: line items sum to $21,040.00 plus tax of $1,472.80 equals $22,512.80, but the invoice total is $22,562.80, a $50.00 gap with shipping blank. F2, F3, and F4 are reject-severity quantity exceptions: WidgetA is billed for 22 units against 15 in stock, WidgetB for 18 against 10, and GadgetX for 9 against 5. These findings can be corrected and resubmitted and are not grounds to void the invoice.",
+  "vendor_reply": "Hello Atlas Industrial Supply billing team,\n\nWe cannot process invoice INV-1013 as submitted and are returning it so you can correct and resubmit it.\n\nThe line items sum to $21,040.00 and tax is $1,472.80, which equals $22,512.80, but the invoice total is $22,562.80. Shipping is blank. Please make the total equal the sum of the line items, tax, and any shipping. If the $50.00 difference is a shipping or expedite charge, itemize it; otherwise remove it so the total is $22,512.80, or revise the lines and tax so they reconcile to the stated total.\n\nThe billed quantities also exceed what we can accept: WidgetA is billed for 22 units across three lines, WidgetB for 18 units across two lines, and GadgetX for 9 units across three lines. Please reduce those quantities to amounts we can accept and send a corrected invoice.\n\nThank you."
 }
 ```

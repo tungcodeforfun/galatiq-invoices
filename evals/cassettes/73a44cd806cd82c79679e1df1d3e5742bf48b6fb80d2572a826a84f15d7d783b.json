@@ -1,7 +1,7 @@
 {
  "request_sha256": "73a44cd806cd82c79679e1df1d3e5742bf48b6fb80d2572a826a84f15d7d783b",
  "response": {
-  "id": "bc462270-f845-41b4-a88c-7e1716202725",
+  "id": "71cf8e18-3d5a-4c94-9a87-7ff506b5dc62",
   "choices": [
    {
     "finish_reason": "tool_calls",
@@ -16,7 +16,7 @@
      "function_call": null,
      "tool_calls": [
       {
-       "id": "call-0f235e1e-7646-4797-8670-c3314612ef03-0",
+       "id": "call-9e934392-feaa-4511-b191-b58dbc6b833b-0",
        "function": {
         "arguments": "{\"name\":\"QuickShip Distributers\"}",
         "name": "get_vendor"
@@ -24,11 +24,11 @@
        "type": "function"
       }
      ],
-     "reasoning_content": "I am acting as a fraud analyst to review the invoice document.\n\nI am manually inspecting the invoice for subtle signs of deception that automated checks might miss.\n\nI am cross-checking the invoice against the automated findings. I will not flag any issue that merely restates an existing finding.\n\nI am now scanning for three specific fraud signals: pressure language, payment redirects, and instruction injection.\n\nThe invoice shows \"QuickShip Distributers (formerly FastShip Ltd.)\". This \"formerly\" name is a vendor_change signal if the vendor master does not explain it. I will look up the vendor to verify."
+     "reasoning_content": "I am analyzing the invoice for fraud signals."
     }
    }
   ],
-  "created": 1795572485,
+  "created": 1795579451,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -38,11 +38,11 @@
   "usage": {
    "completion_tokens": 15,
    "prompt_tokens": 2309,
-   "total_tokens": 2941,
+   "total_tokens": 2458,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 617,
+    "reasoning_tokens": 134,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -54,7 +54,7 @@
     "text_tokens": 2309
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 22718800
+   "cost_in_usd_ticks": 12865600
   }
  }
 }

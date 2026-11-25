@@ -1,0 +1,51 @@
+{
+ "request_sha256": "ead5e47eacec47fa81bd99f901e7b471ece129419446feb5d5efb690fd6ca35a",
+ "response": {
+  "id": "7e560ef7-df24-913b-a382-abe2ae23a7e5",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"resolve_item(2)\",\"check_stock(GadgetX)\",\"check_stock(WidgetA)\",\"check_price(1)\",\"check_price(2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Gadgets Co.)\"],\"concerns\":[\"INV-3002 is already PAID at 2545.00; this Revision 2 totals 2795.00 (delta 250.00, one WidgetA at the catalog price). Do not pay the full amount \u2014 at most the unpaid increment, and only after confirming the paid invoice's WidgetA quantity.\"],\"summary\":\"Both lines match the catalog exactly; stock, unit prices, and stated totals check out. The invoice is a revision of an already paid INV-3002, so full payment would duplicate the prior 2545.00.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks have completed. I will report the findings and any tool results that require manual review.\n\nTools flagged a revision conflict. The prior invoice INV-3002 was paid at 2545.0. This revision totals 2795.0. The delta of 250.0 matches exactly one WidgetA unit at 250.0. The note says the quantity was corrected. The approver should verify this adjustment.\n\nPaying this revision in full would double-pay the original invoice. The null tax is acceptable because totals still balance. The due date correctly follows Net 30 terms."
+    }
+   }
+  ],
+  "created": 1795578508,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 187,
+   "prompt_tokens": 3042,
+   "total_tokens": 3932,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 703,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2304,
+    "image_tokens": 0,
+    "text_tokens": 3042
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 27091200
+  }
+ }
+}

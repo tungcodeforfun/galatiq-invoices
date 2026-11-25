@@ -1,0 +1,60 @@
+{
+ "request_sha256": "a94a8ac041d6a9627f726c9b518dabaf9dd68c2a404ed6b67aa4d5306c7b893b",
+ "response": {
+  "id": "b0a66eb9-5e0d-4d23-99bc-bd883f1cb17a",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-af63fc9c-253f-4c59-a9d4-7e88d72c299e-0",
+       "function": {
+        "arguments": "{\"name\":\"Atlas Industrial Supply\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I am acting as VP of Finance to evaluate whether to approve payment for this invoice.\n\nThree reject-level findings block payment. The total is $50 short. WidgetA, WidgetB, and GadgetX each exceed available stock. The policy requires rejecting any invoice with a reject finding.\n\nThe invoice exceeds $10,000, so I will scrutinize every finding and the risk memo in my rejection reasons. The low-level risk memo does not override the reject findings. I may also look up the vendor master to be thorough.\n\nThe line-item math confirms the $50 total mismatch. WidgetA totals 22 units at $5,450, WidgetB 18 at $8,840, and GadgetX 9 at $6,750. Subtotal is $21,040 plus $1,472.80 tax equals $22,512.80. The invoice total of $22,562.80 is exactly $50 over. I will cite each finding ID in my rejection reasons."
+    }
+   }
+  ],
+  "created": 1795579513,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 13,
+   "prompt_tokens": 2689,
+   "total_tokens": 3446,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 744,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1792,
+    "image_tokens": 0,
+    "text_tokens": 2689
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 24588800
+  }
+ }
+}

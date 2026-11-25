@@ -1,7 +1,7 @@
 {
  "request_sha256": "e0ef89b74496f97e12e5bea2d9272a8e232c3bf641b7501f30976e4af07e8f58",
  "response": {
-  "id": "785c22ef-ac10-43ec-a436-e764ab927d63",
+  "id": "dacbde3f-1833-4663-b16c-8411f72ca061",
   "choices": [
    {
     "finish_reason": "tool_calls",
@@ -16,7 +16,7 @@
      "function_call": null,
      "tool_calls": [
       {
-       "id": "call-f4d420a0-8fa5-4b18-aa2d-cd71f88bfd76-0",
+       "id": "call-f822040d-a3a1-4256-b31a-56d60c5ed40e-0",
        "function": {
         "arguments": "{\"name\":\"Widgets Inc.\"}",
         "name": "get_vendor"
@@ -24,11 +24,11 @@
        "type": "function"
       }
      ],
-     "reasoning_content": "I am reviewing the invoice for signs of deception."
+     "reasoning_content": "I am reviewing the invoice for signs of fraud or deception."
     }
    }
   ],
-  "created": 1795572829,
+  "created": 1795579764,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -38,11 +38,11 @@
   "usage": {
    "completion_tokens": 13,
    "prompt_tokens": 2191,
-   "total_tokens": 2443,
+   "total_tokens": 2451,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 239,
+    "reasoning_tokens": 247,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -54,7 +54,7 @@
     "text_tokens": 2191
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 14164400
+   "cost_in_usd_ticks": 14327600
   }
  }
 }

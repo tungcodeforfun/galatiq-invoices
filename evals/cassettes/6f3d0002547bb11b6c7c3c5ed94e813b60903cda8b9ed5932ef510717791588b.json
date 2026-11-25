@@ -1,7 +1,7 @@
 {
  "request_sha256": "6f3d0002547bb11b6c7c3c5ed94e813b60903cda8b9ed5932ef510717791588b",
  "response": {
-  "id": "7447feef-75f0-9e79-9371-78eacc464fdc",
+  "id": "5d64029d-f920-95b6-b038-b7edf8dea16e",
   "choices": [
    {
     "finish_reason": "stop",
@@ -15,11 +15,11 @@
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "Extracting invoice data from the provided document and formatting it as JSON to match the schema.\n\nThe invoice contains two line items: WidgetA with quantity -5 and WidgetB with quantity 2. The total is negative (-250.00). Vendor name and address are empty strings, due date is null, tax rate is zero, and payment terms are blank.\n\nBlank fields will be null rather than empty strings. The vendor is the party billing Acme, not Acme itself. WidgetA has no amount shown.\n\nShipping, notes, revision, and corrections are absent. The due date text is null."
+     "reasoning_content": "I will extract the invoice data into a structured JSON format following the schema and rules.\n\nI parsed the invoice document. I noted that WidgetA has a negative quantity of -5 and the total is -250.00. I will extract only the data provided and use null for any missing fields.\n\nI will treat blank vendor names and payment terms as null. Line items lack written amounts, so those should be null.\n\nI will not compute line amounts by multiplying quantity and unit price. I have mapped all remaining fields: invoice number INV-1009, invoice date 2026-01-15, subtotal 1000.00, tax 0.00, total -250.00, and shipping null."
     }
    }
   ],
-  "created": 1795571174,
+  "created": 1795578225,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -29,11 +29,11 @@
   "usage": {
    "completion_tokens": 141,
    "prompt_tokens": 2921,
-   "total_tokens": 3807,
+   "total_tokens": 4103,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 745,
+    "reasoning_tokens": 1041,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 2921
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 32062000
+   "cost_in_usd_ticks": 38100400
   }
  }
 }

@@ -1,8 +1,8 @@
 # invoice_1012.txt: REJECTED (void)
 
-This invoice is voided because F3 identifies it as a duplicate of INV 1012, already PAID, with the same vendor, lines, and total. F1 (total 9,975.00 just under the 10,000 approval line) and F2 (OCR normalizations of the invoice date and a line amount) are informational and do not repair the duplicate. A duplicate must not be resubmitted, so the disposition is void.
+F3 is a reject-severity duplicate: this document matches already-paid INV 1012 from QuickShip Distributers on vendor, lines, and total 9,975.00, so it must not be paid again or returned for resubmission. F1 (total just under the 10,000 approval line) and F2 (OCR normalizations of the invoice date and a line amount) are informational only and do not create a new payable or offset the duplicate. Disposition is void.
 
-Run `20261125-015137-invoice_1012-bb8b` · seconds 113.7 · llm_calls 9 · tool_calls 13 · tiers ['live'] · tokens 24679 · cost_usd 0.029
+Run `20261125-034942-invoice_1012-25d0` · seconds 127.1 · llm_calls 10 · tool_calls 15 · tiers ['live', 'replay'] · tokens 27836 · cost_usd 0.0322
 
 ## Extracted invoice
 
@@ -53,6 +53,8 @@ Run `20261125-015137-invoice_1012-bb8b` · seconds 113.7 · llm_calls 9 · tool_
 | validator | check_price | {"line": 2} | {"line": 2, "item": "WidgetB", "invoiced": 500.0, "catalog": 500.0, "variance_pct": 0.0, "within_tolerance": true} |
 | validator | check_price | {"line": 3} | {"line": 3, "item": "GadgetX", "invoiced": 750.0, "catalog": 750.0, "variance_pct": 0.0, "within_tolerance": true} |
 | risk | get_vendor | {"name": "QuickShip Distributers"} | {"known": true, "name": "QuickShip Distributers", "aliases": ["FastShip Ltd."], "first_seen": "2021-07-01", "earlier_invoices": [{"number": "INV 1012", "total": |
+| risk | get_vendor | {"name": "FastShip Ltd."} | {"known": true, "name": "QuickShip Distributers", "aliases": ["FastShip Ltd."], "first_seen": "2021-07-01", "earlier_invoices": []} |
+| approver | get_vendor | {"name": "QuickShip Distributers"} | {"known": true, "name": "QuickShip Distributers", "aliases": ["FastShip Ltd."], "first_seen": "2021-07-01", "earlier_invoices": [{"number": "INV 1012", "total": |
 
 ## Validator notes
 
@@ -73,10 +75,12 @@ Run `20261125-015137-invoice_1012-bb8b` · seconds 113.7 · llm_calls 9 · tool_
     "get_vendor(QuickShip Distributers)"
   ],
   "concerns": [
-    "Vendor master lists an alias, FastShip Ltd., which this invoice does not use; payment identity was not otherwise distinguished from the canonical name.",
-    "Notes cite PO-20260115 and an internal contact; neither was verified by these tools. Shipping is blank rather than an explicit zero, though totals still reconciled."
+    "Notes cite PO-20260115, which no tool verified against a purchase order.",
+    "Shipping is null rather than an explicit amount; totals still matched without a shipping charge.",
+    "After this invoice, stock headroom is thin even though check_stock was ok: WidgetA 12 of 15 and GadgetX 4 of 5.",
+    "Vendor master alias FastShip Ltd. is on file; the invoice uses the canonical name QuickShip Distributers, so pay the master record rather than the alias."
   ],
-  "summary": "All three lines matched the catalog (WidgetA, WidgetB, GadgetX). Stock, unit prices, and stated totals checked out, but check_duplicate and the vendor ledger both show INV 1012 for $9975.00 already PAID, so this looks like a resubmission of a paid invoice."
+  "summary": "All three lines matched the catalog (WidgetA, WidgetB, GadgetX); prices, stock, and stated totals checked out. check_duplicate reports this is a resubmission of INV 1012, already PAID for the same $9975.00."
 }
 ```
 
@@ -86,7 +90,7 @@ Run `20261125-015137-invoice_1012-bb8b` · seconds 113.7 · llm_calls 9 · tool_
 {
   "level": "low",
   "signals": [],
-  "summary": "No pressure language, payment redirection, instruction injection, or unexplained vendor change appears in the invoice text. The formerly name is already an alias on the vendor master, so there is nothing beyond the automated findings."
+  "summary": "The “formerly FastShip Ltd.” line matches a known vendor alias, so it is not an unexplained vendor change. Nothing else on the document suggests deception beyond the automated duplicate and near-threshold findings."
 }
 ```
 
@@ -97,27 +101,21 @@ Run `20261125-015137-invoice_1012-bb8b` · seconds 113.7 · llm_calls 9 · tool_
   "action": "reject",
   "reasons": [
     {
-      "text": "F3 is a reject-severity duplicate: this invoice matches vendor, lines, and total of INV 1012, which is already PAID. The payment gate blocks it; approving would miss a clear duplicate.",
+      "text": "F3 is a reject-severity duplicate: this document is the same vendor, lines, and total as INV 1012, which vendor master shows already PAID. The payment gate blocks it; do not pay again.",
       "finding_ids": [
         "F3"
       ]
     },
     {
-      "text": "F1 notes the total of 9,975.00 sits just under the 10,000 line. That is informational only and does not change the duplicate block. The invoice is under 10,000, so the over-threshold extra-scrutiny rule does not apply.",
+      "text": "F1 is info only. The $9,975 total sits just under the $10,000 line, so it does not by itself require the over-threshold write-up, and it does not offset the duplicate.",
       "finding_ids": [
         "F1"
       ]
     },
     {
-      "text": "F2 records routine OCR normalizations (date '26-Jan-2O26' and line amount '$3,500.O0'). Those corrections are consistent with the extracted amounts and do not repair the duplicate.",
+      "text": "F2 is info only. OCR fixes (date 26-Jan-2O26 to 2026-01-26; line amount $3,500.O0 to 3500.00) are transcription normalizations and do not create a new payable.",
       "finding_ids": [
         "F2"
-      ]
-    },
-    {
-      "text": "The risk memo is low, with no pressure language, payment redirection, or unexplained vendor change. A low memo does not outweigh F3.",
-      "finding_ids": [
-        "F3"
       ]
     }
   ],
@@ -126,7 +124,7 @@ Run `20261125-015137-invoice_1012-bb8b` · seconds 113.7 · llm_calls 9 · tool_
     "F2",
     "F3"
   ],
-  "summary": "Reject. INV 1012 is a duplicate of an invoice already paid for the same vendor, lines, and total (F3). Info findings and the low risk memo do not override that block."
+  "summary": "Reject. INV 1012 from QuickShip Distributers ($9,975) is already paid; this is the same invoice, so it must not be paid again. Near-threshold and OCR notes are informational only, and the risk memo is low."
 }
 ```
 
@@ -146,8 +144,7 @@ Run `20261125-015137-invoice_1012-bb8b` · seconds 113.7 · llm_calls 9 · tool_
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -156,7 +153,7 @@ Run `20261125-015137-invoice_1012-bb8b` · seconds 113.7 · llm_calls 9 · tool_
 ```json
 {
   "disposition": "void",
-  "reasoning": "This invoice is voided because F3 identifies it as a duplicate of INV 1012, already PAID, with the same vendor, lines, and total. F1 (total 9,975.00 just under the 10,000 approval line) and F2 (OCR normalizations of the invoice date and a line amount) are informational and do not repair the duplicate. A duplicate must not be resubmitted, so the disposition is void.",
+  "reasoning": "F3 is a reject-severity duplicate: this document matches already-paid INV 1012 from QuickShip Distributers on vendor, lines, and total 9,975.00, so it must not be paid again or returned for resubmission. F1 (total just under the 10,000 approval line) and F2 (OCR normalizations of the invoice date and a line amount) are informational only and do not create a new payable or offset the duplicate. Disposition is void.",
   "vendor_reply": null
 }
 ```

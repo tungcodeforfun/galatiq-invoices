@@ -1,0 +1,16 @@
+data/heldout/invoice_3002.json  grok-4.7 · cached · run 20261125-033848-invoice_3002-c1d8
+  ✓ Intake      INV-3002 · Gadgets Co. · 2 lines · 2545.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   9 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: approve
+  ✓ Gate        pass
+Paid 2545.0 to Gadgets Co.
+  ✓ Payment     success · 2,545.00 · attempt 1
+╭─ PAID ───────────────────────────────────────────────────────────────────────────────────────────╮
+│ Paid 2,545.00 to Gadgets Co.: Approve INV-3002 for $2,545. Known vendor, no check findings,      │
+│ low-risk memo, and consistent math and terms.                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+50.4s · 8 model calls (live) · 11 tool calls · 21188 tokens · $0.0172 · log 
+runs/20261125-033848-invoice_3002-c1d8/events.jsonl · 
+runs/20261125-033848-invoice_3002-c1d8/report.md

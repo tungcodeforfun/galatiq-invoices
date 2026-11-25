@@ -1,0 +1,100 @@
+{
+ "request_sha256": "cd88e45a7868e1bbbb1b95d72b100c2b9e3b3efc204b989753a5c2ae5c3948e2",
+ "response": {
+  "id": "ace4a218-c5ef-9ef7-b470-c72b93c5499e",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"summary\":\"Running catalog resolution, totals, duplicate, and vendor checks first.\",\"checks_run\":[],\"concerns\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-8e356ea1-2532-4150-a628-4682a532ccc8-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-8e356ea1-2532-4150-a628-4682a532ccc8-1",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-8e356ea1-2532-4150-a628-4682a532ccc8-2",
+       "function": {
+        "arguments": "{\"line\":3}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-8e356ea1-2532-4150-a628-4682a532ccc8-3",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-8e356ea1-2532-4150-a628-4682a532ccc8-4",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-8e356ea1-2532-4150-a628-4682a532ccc8-5",
+       "function": {
+        "arguments": "{\"name\":\"Global Supply Chain Partners\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "Validating the invoice using the available tools."
+    }
+   }
+  ],
+  "created": 1795577697,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 84,
+   "prompt_tokens": 2341,
+   "total_tokens": 2558,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 133,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2341
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14470400
+  }
+ }
+}

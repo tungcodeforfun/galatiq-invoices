@@ -1,8 +1,8 @@
 # invoice_2003_bank_change.eml: REJECTED (void)
 
-INV-2003 is voided under F1, a reject-severity fraud finding: a non-matching sender redirected payment to a bank account that the vendor master does not explain. Policy requires void for fraud signals so this invoice must not be resubmitted or paid. The payment gate and the high-risk memo independently require rejection.
+INV-2003 is voided under F1, a reject-severity fraud finding: the invoice asks AP to remit to new First Coastal Bank details (routing 021000089, account 4481 2290 7731) and arrived from a sender domain not on the vendor master. Policy requires void for fraud signals, so this invoice must not be paid or resubmitted. Bank details must not be updated from this document; payment remains blocked.
 
-Run `20261125-020228-invoice_2003_bank_change-cdfb` · seconds 79.1 · llm_calls 9 · tool_calls 10 · tiers ['live'] · tokens 23476 · cost_usd 0.0192
+Run `20261125-040041-invoice_2003_bank_change-1e52` · seconds 80.8 · llm_calls 9 · tool_calls 10 · tiers ['live'] · tokens 24446 · cost_usd 0.023
 
 ## Extracted invoice
 
@@ -19,7 +19,7 @@ Run `20261125-020228-invoice_2003_bank_change-cdfb` · seconds 79.1 · llm_calls
 | shipping | None |
 | total | 3500.0 |
 | payment_terms | None |
-| notes | Please note our bank details have changed. Kindly remit payment for the invoice below to our new account:    Bank: First Coastal Bank   Routing: 021000089   Account: 4481 2290 7731  Please confirm once your records are updated. |
+| notes | Hello Accounts Payable,  Please note our bank details have changed. Kindly remit payment for the invoice below to our new account:    Bank: First Coastal Bank   Routing: 021000089   Account: 4481 2290 7731  Please confirm once your records are updated.  Billing Team Precision Parts Ltd. |
 | revision | None |
 
 | # | description | qty | unit price | amount | note |
@@ -31,7 +31,7 @@ Run `20261125-020228-invoice_2003_bank_change-cdfb` · seconds 79.1 · llm_calls
 
 | id | code | severity | message | source |
 |---|---|---|---|---|
-| F1 | FRAUD_SIGNALS | reject | Risk analyst: Do not pay. A non-matching sender is redirecting INV-2003 to a new bank account that the vendor master does not explain. | risk |
+| F1 | FRAUD_SIGNALS | reject | Risk analyst: Do not pay. This known vendor's invoice is paired with a request to use new bank details and arrives from a sender domain the vendor master does not recognize. | risk |
 
 ## Tool calls
 
@@ -53,21 +53,21 @@ Run `20261125-020228-invoice_2003_bank_change-cdfb` · seconds 79.1 · llm_calls
 ```json
 {
   "checks_run": [
-    "resolve_item(line 1)",
-    "resolve_item(line 2)",
-    "check_stock(WidgetB)",
-    "check_stock(GadgetX)",
-    "check_price(line 1)",
-    "check_price(line 2)",
+    "resolve_item(1)",
+    "resolve_item(2)",
     "check_totals",
     "check_duplicate",
-    "get_vendor(Precision Parts Ltd.)"
+    "get_vendor(Precision Parts Ltd.)",
+    "check_stock(WidgetB)",
+    "check_stock(GadgetX)",
+    "check_price(1)",
+    "check_price(2)"
   ],
   "concerns": [
-    "Invoice notes ask AP to ignore the usual payee and remit to a newly stated First Coastal Bank account. That bank-detail change was not verified by any tool and is a payment-diversion risk; confirm through a known vendor channel before updating records.",
-    "Vendor master lists two earlier invoices both numbered INV-1004, one PAID at 1890.00 and one REJECTED at 5940.00 (return_to_vendor). This invoice is not a ledger duplicate, but that conflicting history is worth a look before approval."
+    "Invoice notes instruct AP to remit to a new First Coastal Bank account (routing 021000089, account 4481 2290 7731). Do not update payee details from the invoice; confirm any bank change with the vendor through a known channel before payment.",
+    "Vendor history lists INV-1004 twice with different totals and outcomes (PAID 1890.00 and REJECTED 5940.00, return_to_vendor). This invoice was not flagged as a duplicate, but the conflicting prior number is worth a look."
   ],
-  "summary": "Both lines matched the catalog (WidgetB, GadgetX). Stock, unit prices, totals, and duplicate lookup all came back clean for a known vendor. The unflagged issues are a bank-account change in the notes and two prior INV-1004 records with opposite dispositions."
+  "summary": "INV-2003 from Precision Parts Ltd. matched WidgetB and GadgetX exactly; stock, unit prices, totals, and duplicate checks were clean. The only material issue is the unsolicited bank-detail change in the notes, plus a conflicting prior INV-1004 on the vendor record."
 }
 ```
 
@@ -80,15 +80,20 @@ Run `20261125-020228-invoice_2003_bank_change-cdfb` · seconds 79.1 · llm_calls
     {
       "kind": "payment_redirect",
       "quote": "Please note our bank details have changed. Kindly remit payment for the invoice below to our new account:",
-      "why": "The message asks AP to send this payment to a newly stated bank account rather than the vendor's established remit-to."
+      "why": "The document asks AP to send this payment to a newly stated bank account, which is a classic payment-diversion request."
+    },
+    {
+      "kind": "payment_redirect",
+      "quote": "Bank: First Coastal Bank\n  Routing: 021000089\n  Account: 4481 2290 7731",
+      "why": "Specific new routing and account numbers are given as the remit destination and are not explained by the vendor master."
     },
     {
       "kind": "vendor_change",
       "quote": "From: billing@precision-parts-payments.com",
-      "why": "The sender domain is not Precision Parts Ltd. and is not an alias on the vendor master, so the party demanding the new account does not match the known vendor."
+      "why": "The sender address does not match Precision Parts Ltd., and the vendor master lists no alias that would explain that identity."
     }
   ],
-  "summary": "Do not pay. A non-matching sender is redirecting INV-2003 to a new bank account that the vendor master does not explain."
+  "summary": "Do not pay. This known vendor's invoice is paired with a request to use new bank details and arrives from a sender domain the vendor master does not recognize."
 }
 ```
 
@@ -99,7 +104,13 @@ Run `20261125-020228-invoice_2003_bank_change-cdfb` · seconds 79.1 · llm_calls
   "action": "reject",
   "reasons": [
     {
-      "text": "F1 is a reject-severity fraud finding: a non-matching sender is redirecting INV-2003 to a new bank account not on the vendor master. The payment gate blocks this invoice, and the high-risk memo independently requires rejection.",
+      "text": "F1 is a reject-severity fraud finding: the invoice asks AP to remit to new First Coastal Bank details (routing 021000089, account 4481 2290 7731) and the sender domain is not on the vendor master. Payment is blocked.",
+      "finding_ids": [
+        "F1"
+      ]
+    },
+    {
+      "text": "The risk memo is high, driven by payment-redirect and unrecognized sender (billing@precision-parts-payments.com). A high-risk memo requires rejection; bank changes must be confirmed on a known channel, not taken from the invoice.",
       "finding_ids": [
         "F1"
       ]
@@ -108,7 +119,7 @@ Run `20261125-020228-invoice_2003_bank_change-cdfb` · seconds 79.1 · llm_calls
   "addressed_findings": [
     "F1"
   ],
-  "summary": "Reject INV-2003 ($3,500). A reject-severity fraud finding and a high-risk memo both flag a payment redirect from a sender that does not match Precision Parts Ltd."
+  "summary": "Reject INV-2003 ($3,500). A reject-severity fraud finding and a high-risk payment-diversion memo block payment; do not update payee bank details from this invoice."
 }
 ```
 
@@ -128,8 +139,7 @@ Run `20261125-020228-invoice_2003_bank_change-cdfb` · seconds 79.1 · llm_calls
   "approved": false,
   "blocked_by": [
     "approver rejected"
-  ],
-  "overridden": false
+  ]
 }
 ```
 
@@ -138,7 +148,7 @@ Run `20261125-020228-invoice_2003_bank_change-cdfb` · seconds 79.1 · llm_calls
 ```json
 {
   "disposition": "void",
-  "reasoning": "INV-2003 is voided under F1, a reject-severity fraud finding: a non-matching sender redirected payment to a bank account that the vendor master does not explain. Policy requires void for fraud signals so this invoice must not be resubmitted or paid. The payment gate and the high-risk memo independently require rejection.",
+  "reasoning": "INV-2003 is voided under F1, a reject-severity fraud finding: the invoice asks AP to remit to new First Coastal Bank details (routing 021000089, account 4481 2290 7731) and arrived from a sender domain not on the vendor master. Policy requires void for fraud signals, so this invoice must not be paid or resubmitted. Bank details must not be updated from this document; payment remains blocked.",
   "vendor_reply": null
 }
 ```

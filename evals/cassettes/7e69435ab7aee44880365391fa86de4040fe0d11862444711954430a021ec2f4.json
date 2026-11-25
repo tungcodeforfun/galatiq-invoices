@@ -1,0 +1,51 @@
+{
+ "request_sha256": "7e69435ab7aee44880365391fa86de4040fe0d11862444711954430a021ec2f4",
+ "response": {
+  "id": "03c363e7-14d8-9fc0-82e4-ccf36ab1504c",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"verdict\":\"accept\",\"objections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Reviewing the VP's draft payment decision to identify the error.\n\nThe draft decision is correct. The $5,940 revision would double-pay the already-paid $1,890 invoice. No PO amendment ID appears on the document, so the delta cannot be netted against prior payment.\n\nThe draft's summary uses the phrase \"double-pay,\" which is slightly imprecise. Paying the full revised $5,940 would overpay by $1,890\u2014the already-paid amount\u2014plus any unverified delta.\n\nThe draft is sound. The \"double-pay\" phrasing is acceptable under the instruction to ignore style. No concrete objection exists."
+    }
+   }
+  ],
+  "created": 1795577631,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 11,
+   "prompt_tokens": 2387,
+   "total_tokens": 3872,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1474,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2387
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 40650400
+  }
+ }
+}

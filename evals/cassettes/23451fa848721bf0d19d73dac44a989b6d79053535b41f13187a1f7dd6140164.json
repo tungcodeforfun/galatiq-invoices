@@ -1,7 +1,7 @@
 {
  "request_sha256": "23451fa848721bf0d19d73dac44a989b6d79053535b41f13187a1f7dd6140164",
  "response": {
-  "id": "1054b69b-ecfa-932a-8446-85c6e0ab6552",
+  "id": "60adeba1-37e9-46fd-80d3-ea366a576668",
   "choices": [
    {
     "finish_reason": "stop",
@@ -15,11 +15,11 @@
      "audio": null,
      "function_call": null,
      "tool_calls": null,
-     "reasoning_content": "I will extract the invoice data into a structured JSON format following the provided schema and rules.\n\nI am mapping the invoice fields to the required schema. The vendor is \"Precision Parts Ltd.\" and the invoice date is 2026-01-22. I will use null for any missing values.\n\nThe due date text \"2026-02-22\" will be placed in the due_date_as_written field.\n\nThe line items are WidgetA (3 @ $250.00) and WidgetB (2 @ $500.00). Both amounts are null because the document omits them. The tax field is 140.00.\n\nShipping, revision, and corrections are null. The total is 1890.00 and payment terms are \"Net 30\". No notes or free-text messages appear on the document."
+     "reasoning_content": "Extracting invoice data from the document into a JSON schema.\n\nApplying strict extraction rules: no computation, null for missing values, exact item descriptions. Tax is 140.00. Shipping, revision, and corrections are null or empty.\n\nThe due date is a calendar date, so due_date_as_written will contain the exact text \"2026-02-22\".\n\nInvoice date is 2026-01-22. Vendor is Precision Parts Ltd. Line items are WidgetA (3 @ $250) and WidgetB (2 @ $500). Amounts and notes are null.\n\nPlain numbers will be used for all numeric fields. The tax_rate field is absent from the schema and will be omitted."
     }
    }
   ],
-  "created": 1795570741,
+  "created": 1795577499,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -29,11 +29,11 @@
   "usage": {
    "completion_tokens": 159,
    "prompt_tokens": 2947,
-   "total_tokens": 4840,
+   "total_tokens": 4177,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 1734,
+    "reasoning_tokens": 1071,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
@@ -45,7 +45,7 @@
     "text_tokens": 2947
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 52781600
+   "cost_in_usd_ticks": 39256400
   }
  }
 }

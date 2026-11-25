@@ -1,8 +1,8 @@
 # invoice_1011.pdf: PAID
 
-Paid 3,000.00 to Summit Manufacturing Co.: Approve INV-1011 for $3,000 to Summit Manufacturing Co. Known vendor, line items match the total, no findings, and the risk memo is low.
+Paid 3,000.00 to Summit Manufacturing Co.: Approve INV-1011 for $3,000. The known vendor's bill is internally consistent, has no findings, and the risk memo is low.
 
-Run `20261125-014856-invoice_1011-6fb2` · seconds 28.9 · llm_calls 8 · tool_calls 11 · tiers ['live'] · tokens 20462 · cost_usd 0.012
+Run `20261125-034623-invoice_1011-c272` · seconds 33.0 · llm_calls 6 · tool_calls 9 · tiers ['live'] · tokens 15818 · cost_usd 0.0111
 
 ## Extracted invoice
 
@@ -40,28 +40,27 @@ Run `20261125-014856-invoice_1011-6fb2` · seconds 28.9 · llm_calls 8 · tool_c
 | validator | check_stock | {"item": "WidgetB"} | {"item": "WidgetB", "lines": [2], "requested": 3.0, "in_stock": 10, "ok": true} |
 | validator | check_price | {"line": 1} | {"line": 1, "item": "WidgetA", "invoiced": 250.0, "catalog": 250.0, "variance_pct": 0.0, "within_tolerance": true} |
 | validator | check_price | {"line": 2} | {"line": 2, "item": "WidgetB", "invoiced": 500.0, "catalog": 500.0, "variance_pct": 0.0, "within_tolerance": true} |
-| risk | get_vendor | {"name": "Summit Manufacturing Co."} | {"known": true, "name": "Summit Manufacturing Co.", "aliases": [], "first_seen": "2023-04-22", "earlier_invoices": []} |
-| approver | get_vendor | {"name": "Summit Manufacturing Co."} | {"known": true, "name": "Summit Manufacturing Co.", "aliases": [], "first_seen": "2023-04-22", "earlier_invoices": []} |
 
 ## Validator notes
 
 ```json
 {
   "checks_run": [
-    "resolve_item(1)",
-    "resolve_item(2)",
+    "resolve_item(line=1)",
+    "resolve_item(line=2)",
     "check_stock(WidgetA)",
     "check_stock(WidgetB)",
-    "check_price(1)",
-    "check_price(2)",
+    "check_price(line=1)",
+    "check_price(line=2)",
     "check_totals",
     "check_duplicate",
     "get_vendor(Summit Manufacturing Co.)"
   ],
   "concerns": [
-    "Vendor is known since 2023-04-22 but the ledger lists no earlier invoices, so there is no payment history to compare."
+    "Subtotal, tax, and shipping are blank; the stated total equals the sum of the two line amounts only, which check_totals accepted.",
+    "Vendor is known (first seen 2023-04-22) but the ledger lists no earlier invoices."
   ],
-  "summary": "INV-1011 from Summit Manufacturing Co. matched WidgetA and WidgetB exactly; stock, prices, totals, and duplicate checks all came back clean."
+  "summary": "INV-1011 from Summit Manufacturing Co. was checked against the catalog, stock, prices, totals, the processed-invoice ledger, and the vendor master. Both lines matched WidgetA and WidgetB exactly; stock, prices, totals, and duplicate checks all came back clean."
 }
 ```
 
@@ -71,7 +70,7 @@ Run `20261125-014856-invoice_1011-6fb2` · seconds 28.9 · llm_calls 8 · tool_c
 {
   "level": "low",
   "signals": [],
-  "summary": "Summit Manufacturing Co. is a known vendor, and this invoice has no unusual wording, payment instructions, or conflicting identity. Nothing here goes beyond the automated checks."
+  "summary": "The invoice is a standard two-line bill from Summit Manufacturing Co. with no pressure language, payment-redirect instructions, reviewer directives, or conflicting vendor identity. Nothing beyond the automated findings suggests deception or manipulation."
 }
 ```
 
@@ -82,16 +81,16 @@ Run `20261125-014856-invoice_1011-6fb2` · seconds 28.9 · llm_calls 8 · tool_c
   "action": "approve",
   "reasons": [
     {
-      "text": "Vendor Summit Manufacturing Co. is on file (known since 2023-04-22). Invoice total is $3,000, under the $10,000 extra-scrutiny threshold, and line items sum exactly to the total (6 x $250 + 3 x $500).",
+      "text": "No automated findings were raised, and the $3,000 total matches the two line amounts (WidgetA $1,500 and WidgetB $1,500). Blank subtotal, tax, and shipping were accepted by the totals check and do not change the amount due.",
       "finding_ids": []
     },
     {
-      "text": "No automated findings were raised. The risk memo is low, with no unusual wording, payment instructions, or identity conflict, so nothing outweighs paying a known vendor whose checks pass.",
+      "text": "Summit Manufacturing Co. is a known vendor (first seen 2023-04-22). The risk memo is low, with no pressure language, payment-redirect instructions, or conflicting identity, so the absence of earlier invoices in the ledger is not a reason to withhold payment.",
       "finding_ids": []
     }
   ],
   "addressed_findings": [],
-  "summary": "Approve INV-1011 for $3,000 to Summit Manufacturing Co. Known vendor, line items match the total, no findings, and the risk memo is low."
+  "summary": "Approve INV-1011 for $3,000. The known vendor's bill is internally consistent, has no findings, and the risk memo is low."
 }
 ```
 
@@ -100,8 +99,7 @@ Run `20261125-014856-invoice_1011-6fb2` · seconds 28.9 · llm_calls 8 · tool_c
 ```json
 {
   "approved": true,
-  "blocked_by": [],
-  "overridden": false
+  "blocked_by": []
 }
 ```
 

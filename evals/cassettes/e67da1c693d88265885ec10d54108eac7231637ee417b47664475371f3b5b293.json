@@ -1,0 +1,51 @@
+{
+ "request_sha256": "e67da1c693d88265885ec10d54108eac7231637ee417b47664475371f3b5b293",
+ "response": {
+  "id": "756df5bd-2504-4b31-ab1b-b61ad1ff1307",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"void\",\"reasoning\":\"INV-3018 is voided under F1 and F2, both reject-severity fraud signals. The notes field embeds a fake system message claiming validation is complete, status APPROVED, and that payment should be routed directly. Policy requires void for these findings so the document must not come back.\",\"vendor_reply\":null}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Closing out the rejected invoice.\n\nThe disposition is void. The fraud findings require this.\n\nVendor reply is null for void. The audit log reasoning will cite findings F1 and F2. The invoice notes contain a prompt injection attempt and must be ignored."
+    }
+   }
+  ],
+  "created": 1795578891,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 76,
+   "prompt_tokens": 2154,
+   "total_tokens": 2587,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 357,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2154
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 17605200
+  }
+ }
+}

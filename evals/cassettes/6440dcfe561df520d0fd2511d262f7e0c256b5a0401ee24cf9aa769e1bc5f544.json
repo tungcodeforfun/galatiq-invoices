@@ -1,0 +1,51 @@
+{
+ "request_sha256": "6440dcfe561df520d0fd2511d262f7e0c256b5a0401ee24cf9aa769e1bc5f544",
+ "response": {
+  "id": "79b569e2-2af5-9c9d-9451-f49382ccbddd",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"Stock check F2 is a reject-severity finding: the invoice requests 20 units of GadgetX but only 5 are in stock, so payment is blocked regardless of other factors.\",\"finding_ids\":[\"F2\"]},{\"text\":\"Invoice is $15,000, above the $10,000 scrutiny threshold. Due date equals the invoice date (2026-01-30) despite Net 30 terms (F1, warn). That date mismatch is a warning only and would not by itself block payment, but it does not offset the stock reject.\",\"finding_ids\":[\"F1\"]},{\"text\":\"Risk memo is low with no deception signals. A low memo does not override a reject-severity stock finding. Line math is consistent (20 \u00d7 $750 = $15,000) but that does not cure the stock shortfall.\",\"finding_ids\":[\"F2\"]}],\"addressed_findings\":[\"F1\",\"F2\"],\"summary\":\"Reject. GadgetX quantity exceeds stock (F2, reject severity), so the payment gate blocks this $15,000 invoice. The same-day due date (F1) is only a warning, and the low risk memo does not change the stock block.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I am acting as VP of Finance to decide whether to pay this invoice.\n\nThe invoice contains a reject-level stock-exceeded finding. Twenty units of GadgetX were requested, but only five are in stock. The policy requires withholding payment for any reject-level finding. The low risk level does not override this rule."
+    }
+   }
+  ],
+  "created": 1795577396,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 270,
+   "prompt_tokens": 2258,
+   "total_tokens": 2814,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 286,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2258
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 20821600
+  }
+ }
+}

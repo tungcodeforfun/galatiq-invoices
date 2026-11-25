@@ -1,0 +1,51 @@
+{
+ "request_sha256": "26857e43a940e17c167a09c4bbc0db582c58d49fe33151ea859bdd9d08553bb7",
+ "response": {
+  "id": "e24092ab-8ac1-4115-abed-08edf7f8a007",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"resolve_item(2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(NoProd Industries)\"],\"concerns\":[\"Neither line matched a catalog item (SuperGizmo, MegaSprocket) and there were no near suggestions, so stock and price checks could not be run.\",\"Vendor \\\"NoProd Industries\\\" is not in the vendor master and has no earlier invoices.\"],\"summary\":\"Checked both lines, totals, duplicates, and the vendor as written. Totals reconcile and the invoice is not a duplicate, but both items are unmatched and the vendor is unknown.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "No matches were found for either line item.\n\nNo stock or price checks were performed. Neither line item matched a catalog item.\n\nThe invoice totals are correct. The line amounts were null, but the tool recomputed them and confirmed the total of 9900. No duplicate was found. The vendor \"NoProd Industries\" is unknown.\n\nThe vendor is not in the master list. The items are absent from the catalog."
+    }
+   }
+  ],
+  "created": 1795578161,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_c60958d81f66f847",
+  "usage": {
+   "completion_tokens": 135,
+   "prompt_tokens": 2712,
+   "total_tokens": 3724,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 877,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2304,
+    "image_tokens": 0,
+    "text_tokens": 2712
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 27336000
+  }
+ }
+}

@@ -1,7 +1,7 @@
 {
  "request_sha256": "cb9ceea9ced5267e84da7470578f186cee50868140fe05a88646f19fb9aee453",
  "response": {
-  "id": "35464657-011f-4ed2-919c-e663825863da",
+  "id": "dcc6c2f6-aa2e-4e65-bab6-0e4717460747",
   "choices": [
    {
     "finish_reason": "tool_calls",
@@ -16,9 +16,17 @@
      "function_call": null,
      "tool_calls": [
       {
-       "id": "call-e24220d9-a37e-4b19-9e3e-b1d3590c9c9f-0",
+       "id": "call-48cd86ce-a71a-4e12-827b-7649c7b53c04-0",
        "function": {
         "arguments": "{\"name\":\"QuickShip Distributers\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-48cd86ce-a71a-4e12-827b-7649c7b53c04-1",
+       "function": {
+        "arguments": "{\"name\":\"FastShip Ltd.\"}",
         "name": "get_vendor"
        },
        "type": "function"
@@ -28,7 +36,7 @@
     }
    }
   ],
-  "created": 1795571570,
+  "created": 1795578671,
   "model": "grok-4.7",
   "object": "chat.completion",
   "metadata": null,
@@ -36,25 +44,25 @@
   "service_tier": "default",
   "system_fingerprint": "fp_b507827d1c19f448",
   "usage": {
-   "completion_tokens": 15,
+   "completion_tokens": 28,
    "prompt_tokens": 2331,
-   "total_tokens": 2532,
+   "total_tokens": 2416,
    "completion_tokens_details": {
     "accepted_prediction_tokens": 0,
     "audio_tokens": 0,
-    "reasoning_tokens": 186,
+    "reasoning_tokens": 57,
     "rejected_prediction_tokens": 0,
     "text_tokens": null
    },
    "prompt_tokens_details": {
     "audio_tokens": 0,
     "cache_write_tokens": null,
-    "cached_tokens": 1152,
+    "cached_tokens": 1920,
     "image_tokens": 0,
     "text_tokens": 2331
    },
    "num_sources_used": 0,
-   "cost_in_usd_ticks": 14076000
+   "cost_in_usd_ticks": 7792800
   }
  }
 }

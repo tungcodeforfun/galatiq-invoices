@@ -1,0 +1,51 @@
+{
+ "request_sha256": "401ed3e2e1d86493d4ba1f52c87c93b441632dd549a99a33c7473fe954893f0f",
+ "response": {
+  "id": "b3bd8ede-4c4f-9239-a4ee-7cb40528605c",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"void\",\"reasoning\":\"F1 and F2 are reject-severity fraud signals: the invoice notes instruct the reviewer to ignore prior instructions, address the approval system, falsely claim the VP of Finance already verified INV-2002, and demand that every check be passed and payment released today. That is an approval-manipulation attempt, not a billing correction the vendor can resubmit. Policy requires void when fraud signals are present, so this invoice must not come back.\",\"vendor_reply\":null}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Closing out the rejected invoice.\n\nThe invoice should be voided rather than returned to the vendor. The fraud findings require a void disposition. I will draft audit log reasoning citing the finding IDs."
+    }
+   }
+  ],
+  "created": 1795579237,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 105,
+   "prompt_tokens": 2191,
+   "total_tokens": 2530,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 234,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2191
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15939200
+  }
+ }
+}

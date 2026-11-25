@@ -1,0 +1,51 @@
+{
+ "request_sha256": "608ca007688510aee2ebbf24037bb4e8f483803c7e7b204b4b03f2ea81efe37a",
+ "response": {
+  "id": "d417ad31-a594-48b0-bd5a-53299dabf097",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"return_to_vendor\",\"reasoning\":\"INV-1016 is rejected under F1 because line item WidgetC is not in the inventory catalog. Unknown items can be corrected and resubmitted, so policy requires return_to_vendor rather than void. The vendor must identify the intended catalog item and resubmit a corrected invoice before payment can proceed.\",\"vendor_reply\":\"Hello Widgets Inc. billing team, we cannot process invoice INV-1016 ($3,233.00) as submitted. Line item WidgetC (quantity 3, unit price $350.00, amount $1,050.00) is not in our catalog. Did you mean WidgetA or WidgetB? Please resubmit a corrected invoice that replaces WidgetC with the correct catalog item, with matching quantity, unit price, line amount, subtotal, tax, and total.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Closing out the rejected invoice.\n\nThe disposition is return_to_vendor. The unknown item finding falls under the policy's \"unknown items\" category.\n\nDrafting the audit log reasoning and vendor email. The email will ask whether WidgetC was intended to be WidgetA or WidgetB, since the finding does not confirm which item is correct. Internal fraud suspicions and stock levels will be omitted."
+    }
+   }
+  ],
+  "created": 1795579069,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 182,
+   "prompt_tokens": 2072,
+   "total_tokens": 2688,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 434,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2072
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 20780800
+  }
+ }
+}
