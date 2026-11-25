@@ -36,7 +36,7 @@ About **9 model calls per invoice**, where a rules-first design would make one o
 
 ## Risks
 
-- **Well-written fraud.** With a key, the risk analyst reads the whole document. In both sets every bank change and planted instruction was stopped, by that analyst or by an English keyword screen in code, but a judgment and a keyword list are not guarantees. With no key, any invoice with text the rules don't read is held for a person.
+- **Well-written fraud.** With a key, the risk analyst reads the whole document. In both sets every bank change and planted instruction was stopped, by that analyst or by an English keyword screen in code, but a judgment and a keyword list are not guarantees. With no model, the system can reject an invoice by rule but never pays one.
 - **Answers vary between runs.** The scorecards catch drift; policy code, not the model, decides what gets paid.
 - **Stand-ins.** Stock stands in for a three-way match and the vendor list was seeded from the samples. Week 2 replaces both.
 - **Payments that fail mid-call** stay pending and block a retry until someone checks with the bank.

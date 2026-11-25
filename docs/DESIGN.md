@@ -61,8 +61,8 @@ Code-only guards: the extraction check (`rules.extraction_errors`), the coverage
 | `DATA_INTEGRITY` | rules | missing vendor or number (as read by a model), quantity ≤ 0, total ≤ 0 | reject, void |
 | `DUPLICATE` | `check_duplicate` | same vendor, lines and total as an invoice already paid or rejected, under any number | reject, void |
 | `FRAUD_SIGNALS` | `check_stock`, rules, risk analyst | zero-stock item; instruction-like text aimed at the reviewer; a high-risk memo with a verified quote of pressure, redirection, injection or a vendor change | reject, void |
-| `NEEDS_MODEL` | intake or risk fallback | no model answered, and either the rules can't read the layout or the document has text they don't read: notes, an email body, a letterhead, any line outside the invoice fields, a prose field in JSON, CSV or XML | reject, manual entry |
-| `UNREAD_VALUE` | rules | a quantity or total nobody could read as a number (written in words, say); when the rules read the file, a vendor or invoice number they couldn't find | reject, manual entry |
+| `NEEDS_MODEL` | extraction check or gate | no model answered, and either the rules can't read the layout or the invoice passed every check and only an approval is missing | reject, manual entry |
+| `UNREAD_VALUE` | rules | a quantity, unit price or total nobody could read as a number (written in words, say); when the rules read the file, a vendor or invoice number they couldn't find | reject, manual entry |
 | `UNREADABLE` | extraction check | values still don't trace after one retry | reject, return |
 | `REVISION_CONFLICT` | `check_duplicate` | same number and vendor as a decided invoice, different content; shows the delta | reject, return |
 | `STOCK_EXCEEDED` | `check_stock` | quantity summed across all lines for an item exceeds stock | reject, return |
@@ -86,7 +86,7 @@ Severities, dispositions, tolerances and the $10K line live in `policy.yaml`.
 - every required check ran (a check that kept failing blocks payment),
 - the total is positive,
 - anything over the approval line went through the critic, and the critic's last word was not an open objection,
-- in degraded mode, the invoice has no warnings and is under the line.
+- every model step was answered, live or from a recording. With no model, the system can reject an invoice by rule but never pays one; a run that no finding rejects gets `NEEDS_MODEL` and goes to manual entry.
 
 Disposition is decided by policy whenever a finding decides it (`void`, then `manual_entry`, then `return_to_vendor`); the resolution agent only chooses when no finding does.
 
@@ -100,7 +100,7 @@ Disposition is decided by policy whenever a finding decides it (`void`, then `ma
 |---|---|---|
 | Live | `XAI_API_KEY` is set | Calls `grok-4.7` at `https://api.x.ai/v1` and saves each response under `evals/cassettes/<sha256>.json` |
 | Replay | no key | Looks up each request by the SHA-256 of (model, messages, tools, response format) and returns the recorded response, with the cost and seconds the call took live. Tools still run for real |
-| Degraded | no key and no recording for a request | That agent falls back to rules (`fallback.py`, `structured.py`) and the run is labeled degraded. JSON, CSV and XML are read by field name (a CSV with no total row is totalled from its lines) and labelled text by pattern; any other layout is held for manual entry. If the risk analyst fell back, any text the rules don't read holds the invoice for manual entry too. The gate then pays only spotless invoices under the line |
+| Degraded | no key and no recording for a request | That agent falls back to rules (`fallback.py`, `structured.py`) and the run is labeled degraded. JSON, CSV and XML are read by field name (a CSV with no total row is totalled from its lines) and labelled text by pattern; any other layout is held for manual entry. With no model, the system can reject an invoice by rule but never pays one |
 
 Recordings hold the request digest, the response body and how long the call took: no headers, no credentials. The 449 committed recordings predate the time field; their live times, taken from the recording runs' logs, are in `evals/recorded_latency.json`.
 
