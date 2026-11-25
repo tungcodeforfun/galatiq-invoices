@@ -57,10 +57,11 @@ class RunLog:
         )
 
     def totals(self) -> dict[str, Any]:
-        """Seconds, model calls, tool calls, tokens and Grok cost for this run; replayed cost is the recorded cost."""
+        """Seconds, model calls, tool calls, tokens and Grok cost; a replayed call counts its recorded time and cost."""
         calls = [e for e in self.events if e["kind"] == "llm_call"]
+        replayed = sum(c["latency_ms"] for c in calls if c["tier"] == "replay") / 1000
         return {
-            "seconds": round((time.perf_counter() - self._started), 1),
+            "seconds": round(time.perf_counter() - self._started + replayed, 1),
             "llm_calls": len(calls),
             "tool_calls": sum(e["kind"] == "tool_call" for e in self.events),
             "tiers": sorted({c["tier"] for c in calls}),
@@ -157,8 +158,8 @@ def usage_summary(totals: list[dict[str, Any]]) -> str:
     llm, tools = sum(t["llm_calls"] for t in totals), sum(t["tool_calls"] for t in totals)
     recorded = any(t["tiers"] for t in totals) and all("live" not in t["tiers"] for t in totals)
     return (f"{secs:.1f}s ({secs / n:.1f}s per invoice) · {llm} model calls ({llm / n:.1f}) · "
-            f"{tools} tool calls ({tools / n:.1f}) · ${cost:.4f} Grok (${cost / n:.4f} per invoice"
-            + (", as recorded)" if recorded else ")"))
+            f"{tools} tool calls ({tools / n:.1f}) · ${cost:.4f} Grok (${cost / n:.4f} per invoice)"
+            + (" · model time and cost as recorded" if recorded else ""))
 
 
 def usage_cell(t: dict[str, Any]) -> str:

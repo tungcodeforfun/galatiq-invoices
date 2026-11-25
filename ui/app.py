@@ -173,7 +173,7 @@ def detail(s: dict[str, Any]) -> None:
     cols[1].metric("Findings", len(s.get("findings") or []))
     cols[2].metric("Model / tool calls", f"{t.get('llm_calls', 0)} / {t.get('tool_calls', 0)}")
     cols[3].metric("Grok cost" + (" (recorded)" if recorded else ""), f"${t.get('cost_usd', 0):.4f}")
-    cols[4].metric("Time" + (" (replay)" if recorded else ""), f"{t.get('seconds', 0)} s")
+    cols[4].metric("Time" + (" (recorded)" if recorded else ""), f"{t.get('seconds', 0)} s")
     tabs = st.tabs(["Findings", "Document", "Agents", "Vendor reply"])
     with tabs[0]:
         findings_table(s.get("findings") or [])

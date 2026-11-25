@@ -7,6 +7,7 @@ import json
 import os
 import time
 from collections.abc import Callable
+from functools import cache
 from pathlib import Path
 from typing import Any, Protocol, TypeVar
 
@@ -18,6 +19,7 @@ MODEL = os.environ.get("XAI_MODEL", "grok-4.7")
 BASE_URL = os.environ.get("XAI_BASE_URL", "https://api.x.ai/v1")
 CASSETTES = Path(__file__).resolve().parent.parent / "evals" / "cassettes"
 HIGH_EFFORT_AGENTS = {"approver", "critic"}
+LATENCY_FILE = CASSETTES.parent / "recorded_latency.json"
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -42,6 +44,12 @@ def request_key(model: str, messages: list[dict[str, Any]], tools: list[dict[str
     """Recording key: SHA-256 of the exact request content, so any prompt or input change misses."""
     payload = {"model": model, "messages": messages, "tools": tools, "response_format": response_format}
     return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+@cache
+def recorded_latency() -> dict[str, int]:
+    """Milliseconds each committed recording took live, by request key, for recordings saved before they kept it."""
+    return json.loads(LATENCY_FILE.read_text()) if LATENCY_FILE.exists() else {}
 
 
 def untrusted(label: str, text: str) -> str:
@@ -130,15 +138,17 @@ class LLM:
         path = self.cassettes / f"{key}.json"
         started = time.perf_counter()
         if self.mode in ("replay", "cached") and path.exists():
-            body = json.loads(path.read_text())["response"]
-            self.on_call(agent=agent, tier="replay", key=key, latency_ms=0, usage=body.get("usage") or {})
+            record = json.loads(path.read_text())
+            body = record["response"]
+            latency = record.get("latency_ms", recorded_latency().get(key, 0))
+            self.on_call(agent=agent, tier="replay", key=key, latency_ms=latency, usage=body.get("usage") or {})
             return body
         if self.mode == "replay":
             raise ModelUnavailable("no recording for this request")
         body = self._live(agent, messages, tools, response_format)
-        self.cassettes.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps({"request_sha256": key, "response": body}, indent=1))
         latency = round((time.perf_counter() - started) * 1000)
+        self.cassettes.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"request_sha256": key, "latency_ms": latency, "response": body}, indent=1))
         self.on_call(agent=agent, tier="live", key=key, latency_ms=latency, usage=body.get("usage") or {})
         return body
 
