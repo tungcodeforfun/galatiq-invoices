@@ -3,11 +3,15 @@
 from __future__ import annotations
 
 import json
+import re
 import time
 import uuid
+from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+
+from invoice_agents.fallback import notice
 
 RUNS_DIR = Path("runs")
 TICKS_PER_USD = 10**10
@@ -119,7 +123,7 @@ def write_report(log: RunLog, state: dict[str, Any]) -> Path:
     parts = [f"# {Path(state['path']).name}: {out.status}" + (f" ({out.disposition})" if out.disposition else ""),
              "", out.summary, "", f"Run `{log.run_id}` · " + " · ".join(f"{k} {v}" for k, v in log.totals().items())]
     if state.get("degraded"):
-        parts += ["", "**Degraded mode:** " + "; ".join(state["degraded"])]
+        parts += ["", "**Degraded mode:** " + notice(state["degraded"], "live" in log.totals()["tiers"])]
     if inv:
         parts += ["", "## Extracted invoice", "", _table(
             [[k, v] for k, v in inv.model_dump(exclude={"line_items", "corrections"}).items()], ["field", "value"]),
@@ -155,3 +159,15 @@ def usage_summary(totals: list[dict[str, Any]]) -> str:
     return (f"{secs:.1f}s ({secs / n:.1f}s per invoice) · {llm} model calls ({llm / n:.1f}) · "
             f"{tools} tool calls ({tools / n:.1f}) · ${cost:.4f} Grok (${cost / n:.4f} per invoice"
             + (", as recorded)" if recorded else ")"))
+
+
+def usage_cell(t: dict[str, Any]) -> str:
+    """Seconds, model calls / tool calls and Grok cost for one run, as one table cell."""
+    return f"{t['seconds']}s · {t['llm_calls']}/{t['tool_calls']} · ${t['cost_usd']:.4f}"
+
+
+def short_labels(names: list[str]) -> dict[str, str]:
+    """Narrow-table file labels: 'invoice_2002_prompt_injection.txt' becomes '2002.txt' unless two files would clash."""
+    short = {n: re.sub(r"^invoice_(\d+)[^.]*", r"\1", n) for n in names}
+    clashes = Counter(short.values())
+    return {n: s if clashes[s] == 1 else n.removeprefix("invoice_") for n, s in short.items()}

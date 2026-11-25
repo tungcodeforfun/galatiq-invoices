@@ -9,14 +9,16 @@ import subprocess
 import sys
 from pathlib import Path
 
+from rich import box
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
+from invoice_agents import fallback
 from invoice_agents.db import DEFAULT_DB, Store
 from invoice_agents.graph import stream
 from invoice_agents.nodes import Deps, State
-from invoice_agents.observability import cost_label, usage_summary
+from invoice_agents.observability import cost_label, short_labels, usage_cell, usage_summary
 
 SUFFIXES = {".txt", ".json", ".csv", ".xml", ".pdf", ".md", ".eml"}
 STYLE = {"PAID": "green", "REJECTED": "red", "PAYMENT_FAILED": "yellow"}
@@ -42,7 +44,7 @@ def step_line(node: str, s: State) -> str | None:
             return f"Coverage    ran {len(forced)} skipped check(s) in code" if forced else None
         case "risk" if s.get("risk"):
             memo = s["risk"]
-            return f"Risk        {memo.level} · {len(memo.signals)} signal(s)"  # type: ignore[union-attr]
+            return f"Risk        {memo.level} · {len(memo.signals)} signal(s)"
         case "approver":
             d = s["drafts"][-1]
             return f"VP          draft {len(s['drafts'])}: {d.action}"
@@ -54,9 +56,9 @@ def step_line(node: str, s: State) -> str | None:
             return "Gate        pass" if g.approved else f"Gate        blocked: {', '.join(g.blocked_by)}"
         case "payment" if s.get("payment"):
             p = s["payment"]
-            return f"Payment     {p.status} · {p.amount:,.2f} · attempt {p.attempts}"  # type: ignore[union-attr]
+            return f"Payment     {p.status} · {p.amount:,.2f} · attempt {p.attempts}"
         case "resolution" if s.get("resolution"):
-            return f"Resolution  {s['resolution'].disposition}"  # type: ignore[union-attr]
+            return f"Resolution  {s['resolution'].disposition}"
     return None
 
 
@@ -87,11 +89,11 @@ def show_result(s: State, deps: Deps, console: Console) -> None:
     out = s["outcome"]
     title = out.status + (f" · {out.disposition}" if out.disposition else "")
     console.print(Panel(out.summary, title=title, title_align="left", border_style=STYLE[out.status]))
-    if s.get("resolution") and s["resolution"].vendor_reply:  # type: ignore[union-attr]
-        console.print(Panel(s["resolution"].vendor_reply, title="Draft reply to vendor",  # type: ignore[union-attr,arg-type]
-                            title_align="left", border_style="dim"))
+    reply = s["resolution"].vendor_reply if s.get("resolution") else None
+    if reply:
+        console.print(Panel(reply, title="Draft reply to vendor", title_align="left", border_style="dim"))
     if s.get("degraded"):
-        console.print("[yellow]Degraded mode:[/] " + "; ".join(s["degraded"]))
+        console.print("[yellow]" + fallback.notice(s["degraded"], deps.llm.mode != "replay") + "[/]")
     t = deps.log.totals()
     console.print(f"[dim]{t['seconds']}s · {t['llm_calls']} model calls ({', '.join(t['tiers']) or 'none'}) · "
                   f"{t['tool_calls']} tool calls · {t['tokens']} tokens · {cost_label(t)} · "
@@ -104,12 +106,16 @@ def invoice_files(folder: Path) -> list[Path]:
 
 
 def run_batch(paths: list[Path], db: Path, console: Console) -> list[tuple[Path, State]]:
-    """Process several invoices in order and print a summary table."""
+    """Process several invoices in order and print a summary table that fits 80 columns."""
     results = []
     totals = []
-    table = Table(header_style="bold")
-    for col in ("File", "Outcome", "Disposition", "Amount", "Findings", "Time", "Calls", "Cost"):
-        table.add_column(col)
+    labels = short_labels([p.name for p in paths])
+    table = Table(header_style="bold", box=box.SIMPLE_HEAD, show_edge=False, pad_edge=False)
+    table.add_column("File", no_wrap=True)
+    table.add_column("Outcome")
+    table.add_column("Amount", justify="right")
+    table.add_column("Findings")
+    table.add_column("Time · calls · cost", min_width=len("$0.0000"))
     with console.status("") as status:
         for path in paths:
             status.update(f"Processing {path.name}")
@@ -117,9 +123,11 @@ def run_batch(paths: list[Path], db: Path, console: Console) -> list[tuple[Path,
             out, t = state["outcome"], deps.log.totals()
             results.append((path, state))
             totals.append(t)
-            table.add_row(path.name, f"[{STYLE[out.status]}]{out.status}[/]", out.disposition or "",
-                          f"{out.amount:,.2f}" if out.amount else "", ", ".join(f.code for f in state["findings"]),
-                          f"{t['seconds']}s", f"{t['llm_calls']}/{t['tool_calls']}", f"${t['cost_usd']:.4f}")
+            outcome = f"[{STYLE[out.status]}]{out.status}[/]" + (f" · {out.disposition.replace('_', ' ')}"
+                                                                 if out.disposition else "")
+            table.add_row(labels[path.name], outcome, f"{out.amount:,.2f}" if out.amount else "",
+                          ", ".join(f.code for f in state["findings"]), usage_cell(t))
+    table.columns[3].min_width = max((len(f.code) for _, s in results for f in s["findings"]), default=0)
     console.print(table)
     paid = [s["outcome"].amount or 0 for _, s in results if s["outcome"].status == "PAID"]
     console.print(f"{len(paid)} of {len(results)} paid · {sum(paid):,.2f} paid")
@@ -136,6 +144,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--db", type=Path, default=DEFAULT_DB, help="SQLite database file")
     parser.add_argument("--json", action="store_true", help="print the outcome as JSON")
     parser.add_argument("--port", type=int, default=8501, help="dashboard port for demo")
+    parser.add_argument("--set", default="samples", choices=["samples", "heldout"],
+                        help="answer key for eval: the samples and extras, or the held-out set")
     args = parser.parse_args(argv)
     console = Console()
 
@@ -146,7 +156,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "eval":
         from evals.scorecard import run_scorecard
 
-        return run_scorecard(console)
+        return run_scorecard(console, args.set)
     if args.command == "batch":
         run_batch(invoice_files(Path(args.target or "data/invoices")), args.db, console)
         return 0
