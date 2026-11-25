@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from invoice_agents import fallback
 from invoice_agents.llm import LLM, ModelUnavailable, findings_block, untrusted
-from invoice_agents.schema import AgentDisposition, Decision, Finding, Invoice, Resolution
+from invoice_agents.schema import AgentDisposition, Decision, Finding, Invoice, Resolution, Severity
 
 SYSTEM = """You close out rejected invoices in Acme Corp's accounts payable team.
 
@@ -32,6 +32,9 @@ def run(llm: LLM, invoice: Invoice | None, findings: list[Finding], decision: De
     except ModelUnavailable as exc:
         resolution, reason = fallback.resolution(findings, forced or "return_to_vendor"), str(exc)
     if forced and resolution.disposition != forced:
+        rejected = ", ".join(f"{f.id} {f.code}" for f in findings if f.severity == Severity.REJECT)
+        resolution.reasoning = (f"Policy requires {forced.replace('_', ' ')} for {rejected}; the resolution agent "
+                                f"proposed {resolution.disposition.replace('_', ' ')}, so its reasoning is not used.")
         resolution.disposition = forced
     if resolution.disposition == "void":
         resolution.vendor_reply = None

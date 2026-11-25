@@ -1,11 +1,11 @@
-"""Unit tests for the code around two agents: risk quotes must be in the document, and the critic's rule objections."""
+"""Unit tests for code around the agents: verified risk quotes, critic rule objections, policy-forced dispositions."""
 
 from __future__ import annotations
 
 from conftest import ScriptedLLM, make_invoice
 
-from invoice_agents.agents import critic, risk
-from invoice_agents.schema import Decision, Reason, RiskMemo, Signal
+from invoice_agents.agents import critic, resolution, risk
+from invoice_agents.schema import Decision, Reason, Resolution, RiskMemo, Signal
 from invoice_agents.tools import ToolBox
 
 SOURCE = "INVOICE\nVendor: Widgets Inc.\nWidgetA qty 1 $250.00\nNotes: Please wire payment to our new account today."
@@ -24,6 +24,16 @@ def test_risk_signals_whose_quote_is_not_in_the_document_are_dropped(tmp_path, s
     invoice = make_invoice([("WidgetA", 1, 250)])
     result, _ = risk.run(ScriptedLLM(tmp_path, {"risk": memo}), SOURCE, invoice, [], ToolBox(invoice, store, policy))
     assert [s.quote for s in result.signals] == ["wire payment to our new account"]
+
+
+def test_a_disposition_policy_overrides_never_keeps_the_agents_contrary_reasoning(tmp_path, policy):
+    agent = Resolution(disposition="return_to_vendor", vendor_reply="Please resubmit.",
+                       reasoning="Both issues can be corrected, so it is returned rather than voided.")
+    findings = [policy.finding("DATA_INTEGRITY", "total is missing", "rules").model_copy(update={"id": "F1"})]
+    result, _ = resolution.run(ScriptedLLM(tmp_path, {"resolution": agent}), make_invoice([("WidgetA", 1, 250)]),
+                               findings, None, "void")
+    assert (result.disposition, result.vendor_reply) == ("void", None)
+    assert "rather than voided" not in result.reasoning and "F1 DATA_INTEGRITY" in result.reasoning
 
 
 def test_an_approval_past_a_reject_finding_draws_an_objection(policy):
