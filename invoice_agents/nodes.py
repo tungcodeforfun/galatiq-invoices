@@ -266,9 +266,11 @@ def payment_node(state: State, config: RunnableConfig) -> State:
     key = payment.idempotency_key(invoice, content_hash(invoice, deps.store.catalog()))
     result = payment.pay(deps.store, invoice, key, deps.policy)
     deps.log.emit("stage", agent="payment", **result.model_dump())
-    if result.status in ("success", "already_paid"):
+    if result.status == "success":
         outcome = Outcome(status="PAID", amount=result.amount,
                           summary=f"Paid {result.amount:,.2f} to {invoice.vendor}: {state['drafts'][-1].summary}")
+    elif result.status == "already_paid":
+        outcome = Outcome(status="REJECTED", disposition="void", summary=f"Not paid again: {result.detail}.")
     else:
         outcome = Outcome(status="PAYMENT_FAILED", amount=result.amount,
                           summary=f"Approved, but payment did not go through: {result.detail}")
