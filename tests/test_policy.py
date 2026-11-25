@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from invoice_agents.policy import gate, required_disposition
+from invoice_agents.policy import NO_MODEL, gate, required_disposition
 from invoice_agents.schema import Critique, Decision, Reason
 
 ACCEPTED = [Critique(verdict="accept", objections=[])]
@@ -56,12 +56,10 @@ def test_nothing_to_pay_is_blocked(policy):
     assert not gate(decision("approve"), [], -250.0, ACCEPTED, [], False, policy).approved
 
 
-def test_degraded_mode_pays_only_spotless_invoices_under_threshold(policy):
-    warn = numbered(policy.finding("NEW_VENDOR", "unknown", "test"))
-    info = numbered(policy.finding("NEAR_THRESHOLD", "close to the limit", "test"))
-    assert not gate(decision("approve"), warn, 500.0, ACCEPTED, [], True, policy).approved
-    assert not gate(decision("approve"), [], 12000.0, ACCEPTED, [], True, policy).approved
-    assert gate(decision("approve"), info, 500.0, [], [], True, policy).approved
+def test_an_approved_clean_run_with_any_step_made_without_a_model_is_never_paid(policy):
+    held = gate(decision("approve"), [], 500.0, ACCEPTED, [], True, policy)
+    assert not held.approved and held.blocked_by == [NO_MODEL]
+    assert gate(decision("approve"), [], 500.0, ACCEPTED, [], False, policy).approved
 
 
 def test_void_beats_return_to_vendor(policy):

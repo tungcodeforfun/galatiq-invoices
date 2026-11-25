@@ -8,16 +8,15 @@ from typing import Any, TypedDict
 
 from langchain_core.runnables import RunnableConfig
 
-from invoice_agents import fallback
 from invoice_agents.agents import approver, critic, intake, payment, resolution, risk, validator
 from invoice_agents.db import Store
 from invoice_agents.llm import LLM
 from invoice_agents.loaders import UnreadableDocument, file_digest, read_document
 from invoice_agents.matching import content_hash, number_key, text_key
 from invoice_agents.observability import RunLog, save_state, write_report
-from invoice_agents.policy import GateResult, Policy, gate, load_policy, required_disposition
+from invoice_agents.policy import NO_MODEL, GateResult, Policy, gate, load_policy, required_disposition
 from invoice_agents.rules import extraction_errors, invoice_findings
-from invoice_agents.schema import Critique, Decision, Finding, Invoice, Outcome, Payment, Resolution, RiskMemo
+from invoice_agents.schema import Critique, Decision, Finding, Invoice, Outcome, Payment, Resolution, RiskMemo, Severity
 from invoice_agents.tools import ToolBox
 
 
@@ -129,11 +128,11 @@ def after_check(state: State, config: RunnableConfig) -> str:
     return "unreadable"
 
 
-def _needs_model(deps: Deps, what: str, source: str, subject: str) -> Finding:
-    """Manual entry because no model read part of the document; the message says what to do in this mode."""
-    then = ("no API key is set. Enter the invoice by hand, or set XAI_API_KEY (export XAI_API_KEY=your-key) and "
+def _needs_model(deps: Deps, what: str, by_hand: str, source: str, subject: str) -> Finding:
+    """Manual entry because no model answered for part of the run; the message says what to do in this mode."""
+    then = (f"no API key is set. {by_hand} by hand, or set XAI_API_KEY (export XAI_API_KEY=your-key) and "
             "process it again." if deps.llm.mode == "replay" else
-            "Grok did not answer. Enter the invoice by hand, or process it again.")
+            f"Grok did not answer. {by_hand} by hand, or process it again.")
     return deps.policy.finding("NEEDS_MODEL", f"{what} needs Grok, and {then}", source, subject=subject)
 
 
@@ -141,7 +140,7 @@ def unreadable_node(state: State, config: RunnableConfig) -> State:
     """Record why the document could not be read: a layout the rules can't read is entered by hand."""
     deps = _deps(config)
     if "intake" in state.get("degraded", []):
-        finding = _needs_model(deps, "Reading this layout", "extraction_check", "unreadable")
+        finding = _needs_model(deps, "Reading this layout", "Enter the invoice", "extraction_check", "unreadable")
     else:
         finding = deps.policy.finding("UNREADABLE", "Could not extract a consistent invoice: "
                                       + "; ".join(state["extraction_errors"]), "extraction_check", subject="unreadable")
@@ -189,13 +188,9 @@ def risk_node(state: State, config: RunnableConfig) -> State:
     box = _toolbox(state, deps)
     memo, reason = risk.run(deps.llm, state["source"], state["invoice"], state["findings"], box)  # type: ignore[arg-type]
     findings = state["findings"]
-    extra = [f for f in [risk.finding(memo, deps.policy)] if f]
-    if reason and fallback.unread_text(state["source"]):
-        extra.append(_needs_model(deps, "Reading the text outside the invoice fields (notes, a message, other lines)",
-                                  "risk", "free_text"))
-    new = [f for f in extra if not any(f.code == g.code and f.subject == g.subject for g in findings)]
-    if new:
-        findings = _numbered(findings + new)
+    extra = risk.finding(memo, deps.policy)
+    if extra and not any(f.code == extra.code and f.subject == extra.subject for f in findings):
+        findings = _numbered(findings + [extra])
     deps.log.emit("stage", agent="risk", memo=memo.model_dump(), degraded=reason)
     return {"risk": memo, "findings": findings, "drafts": [], "critiques": [],
             "tool_calls": _logged_calls(state, box, deps), "degraded": _degraded(state, "risk", reason)}
@@ -244,14 +239,17 @@ def after_critic(state: State, config: RunnableConfig) -> str:
 
 
 def gate_node(state: State, config: RunnableConfig) -> State:
-    """Policy gate on the final draft."""
-    deps = _deps(config)
+    """Policy gate on the final draft; a run no check rejected but some step made without a model waits for a person."""
+    deps, findings = _deps(config), state["findings"]
     decision = state["drafts"][-1]
     unchecked = [f"{tool}({args})" for tool, args in _toolbox(state, deps).missing_checks()]
-    result = gate(decision, state["findings"], state["invoice"].total, state.get("critiques", []),  # type: ignore[union-attr]
+    result = gate(decision, findings, state["invoice"].total, state.get("critiques", []),  # type: ignore[union-attr]
                   unchecked, bool(state.get("degraded")), deps.policy)
+    if NO_MODEL in result.blocked_by and not any(f.severity == Severity.REJECT for f in findings):
+        findings = _numbered(findings + [_needs_model(deps, "Every check passed. Approval needs the VP review, which",
+                                                      "Approve it", "policy_gate", "approval")])
     deps.log.emit("stage", agent="policy_gate", **result.model_dump(), decision=decision.action)
-    return {"gate": result}
+    return {"gate": result, "findings": findings}
 
 
 def after_gate(state: State) -> str:

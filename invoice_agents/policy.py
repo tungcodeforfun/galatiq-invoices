@@ -56,6 +56,9 @@ def load_policy(path: Path = DEFAULT_POLICY) -> Policy:
     return Policy.model_validate(yaml.safe_load(path.read_text()))
 
 
+NO_MODEL = "a step ran on built-in rules, and rules never pay"
+
+
 def gate(
     decision: Decision | None,
     findings: list[Finding],
@@ -76,11 +79,9 @@ def gate(
         blocked_by.append(f"over ${policy.approval_threshold:,.0f} without critic review")
     elif total > policy.approval_threshold and critiques[-1].verdict == "revise":
         blocked_by.append(f"over ${policy.approval_threshold:,.0f} with the critic's objections still open")
-    # Without a model nobody has read the free text, so rules alone may only pay small, spotless invoices.
-    if degraded and (
-        (total or 0) > policy.approval_threshold or any(f.severity != Severity.INFO for f in findings)
-    ):
-        blocked_by.append("degraded mode pays only clean invoices under the approval threshold")
+    # The model is the only reader of free text, so a run that any step made without one is never trusted to pay.
+    if degraded:
+        blocked_by.append(NO_MODEL)
     return GateResult(approved=not blocked_by, blocked_by=blocked_by)
 
 

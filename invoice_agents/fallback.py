@@ -18,7 +18,7 @@ from invoice_agents.schema import (
     Severity,
     Signal,
 )
-from invoice_agents.structured import free_text, read_structured, to_date, to_number
+from invoice_agents.structured import read_structured, to_date, to_number
 
 MONEY = r"\$?\s*(-?[\d,]+(?:\.\d+)?)"
 VALUE = r"[ \t]*[:=][ \t]*(\S.*?)[ \t]*$"
@@ -41,8 +41,6 @@ LINE = re.compile(
     r"\$?([\d,]+(?:\.\d+)?)(?:\s*ea(?:ch)?)?(?:\s+\$?([\d,]+\.\d{2}))?\s*$",
     re.IGNORECASE,
 )
-LAYOUT_WORDS = {"invoice", "items", "item", "line", "description", "desc", "product", "qty", "quantity", "units",
-                "unit", "price", "rate", "cost", "each", "amount", "total"}
 
 
 def _item(line: str) -> LineItem | None:
@@ -75,31 +73,6 @@ def extract(source: str) -> Invoice | None:
         subtotal=to_number(found["subtotal"]), tax=to_number(found["tax"]), shipping=to_number(found["shipping"]),
         total=total, payment_terms=found["payment_terms"], notes=found["notes"], revision=None, corrections=[],
     )
-
-
-def _layout(line: str) -> bool:
-    """Blank, a rule of dashes, a heading such as INVOICE, or a row of column names."""
-    words = set(re.findall(r"[a-z]+", line.lower()))
-    return not re.search(r"[A-Za-z0-9]", line) or (not re.search(r"\d", line) and words <= LAYOUT_WORDS)
-
-
-def _read_line(line: str) -> bool:
-    """Layout, a line item, or one labelled field (not notes) that fills the whole line."""
-    if _layout(line) or _item(line):
-        return True
-    for name, pattern in FIELDS.items():
-        m = re.match(rf"\s*(?:{pattern})", line, re.IGNORECASE | re.MULTILINE)
-        if m and name != "notes" and not line[m.end():].strip():
-            return True
-    return False
-
-
-def unread_text(source: str) -> list[str]:
-    """Free text no rule reads: notes, prose fields of JSON, XML or CSV, and any other line of a text document."""
-    found = free_text(source)
-    if found is not None:
-        return found
-    return [line.strip() for line in ocr_digits(source).splitlines() if not _read_line(line)]
 
 
 SIGNAL_WORDS: list[tuple[Literal["payment_redirect", "pressure_language"], str]] = [
@@ -150,6 +123,7 @@ def resolution(findings: list[Finding], disposition: AgentDisposition) -> Resolu
 
 STEP_NAMES = {"intake": "Intake", "validator": "Validator", "risk": "Risk", "approver": "VP", "critic": "Critic",
               "resolution": "Resolution"}
+RULES_NEVER_PAY = "Rules can reject an invoice but never pay one."
 
 
 def notice(agents: list[str], live: bool, reset: str = "`python main.py reset`") -> str:
@@ -158,9 +132,10 @@ def notice(agents: list[str], live: bool, reset: str = "`python main.py reset`")
         return ""
     steps = ", ".join(STEP_NAMES.get(a, a) for a in agents)
     if live:
-        return f"Grok did not answer for {steps}, so built-in rules handled those steps. The run log has the error."
+        return (f"Grok did not answer for {steps}, so built-in rules handled those steps. {RULES_NEVER_PAY} "
+                "The run log has the error.")
     if "intake" in agents:
         return ("Grok has no recorded answer for this file and no API key is set, so built-in rules read it. "
-                "Rules pay only clean invoices under the approval limit. Set XAI_API_KEY to have Grok read it.")
-    return (f"No recording exists for this ledger state, so {steps} used built-in rules. "
+                f"{RULES_NEVER_PAY} Set XAI_API_KEY to have Grok read it.")
+    return (f"No recording exists for this ledger state, so {steps} used built-in rules. {RULES_NEVER_PAY} "
             f"{reset} replays Grok's recorded answers, or set XAI_API_KEY.")
