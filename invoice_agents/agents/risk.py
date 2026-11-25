@@ -4,10 +4,11 @@ from __future__ import annotations
 
 from invoice_agents import fallback
 from invoice_agents.llm import LLM, ModelUnavailable, findings_block, untrusted
+from invoice_agents.matching import text_key
 from invoice_agents.policy import Policy
 from invoice_agents.rules import ocr_digits
 from invoice_agents.schema import Finding, Invoice, RiskMemo
-from invoice_agents.tools import ToolBox, text_key
+from invoice_agents.tools import ToolBox
 
 FRAUD_KINDS = {"pressure_language", "payment_redirect", "instruction_injection", "vendor_change"}
 

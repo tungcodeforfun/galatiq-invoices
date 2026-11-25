@@ -12,11 +12,12 @@ from invoice_agents.agents import approver, critic, intake, payment, resolution,
 from invoice_agents.db import Store
 from invoice_agents.llm import LLM
 from invoice_agents.loaders import UnreadableDocument, file_digest, read_document
+from invoice_agents.matching import content_hash, number_key, text_key
 from invoice_agents.observability import RunLog, save_state, write_report
 from invoice_agents.policy import GateResult, Policy, gate, load_policy, required_disposition
 from invoice_agents.rules import extraction_errors, invoice_findings
 from invoice_agents.schema import Critique, Decision, Finding, Invoice, Outcome, Payment, Resolution, RiskMemo, Severity
-from invoice_agents.tools import ToolBox, content_hash, number_key, text_key
+from invoice_agents.tools import ToolBox
 
 
 class State(TypedDict, total=False):

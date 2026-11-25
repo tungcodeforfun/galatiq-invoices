@@ -5,9 +5,9 @@ from __future__ import annotations
 import re
 from datetime import date
 
+from invoice_agents.matching import text_key
 from invoice_agents.policy import Policy
 from invoice_agents.schema import Finding, Invoice
-from invoice_agents.tools import text_key
 
 NUMBER = re.compile(r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?")
 PLAIN_NUMBER = re.compile(r"\d+(?:\.\d+)?")

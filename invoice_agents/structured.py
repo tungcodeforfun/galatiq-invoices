@@ -10,8 +10,8 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 from typing import Any
 
+from invoice_agents.matching import text_key
 from invoice_agents.schema import Invoice, LineItem
-from invoice_agents.tools import text_key
 
 DATE_FORMATS = ("%Y-%m-%d", "%m/%d/%Y", "%B %d, %Y", "%b %d %Y", "%d-%b-%Y", "%b %d, %Y", "%d %B %Y", "%d %b %Y")
 
@@ -171,7 +171,7 @@ def _parse(source: str) -> Any:
     return _csv_tree(text)
 
 
-def read(source: str) -> Invoice | None:
+def read_structured(source: str) -> Invoice | None:
     """The invoice in a JSON, XML or CSV document; None if it is none of them or has no line items or total."""
     tree = _parse(source)
     fields: dict[str, Any] = {}

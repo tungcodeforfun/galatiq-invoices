@@ -5,7 +5,6 @@ from __future__ import annotations
 import re
 from typing import Literal
 
-from invoice_agents import structured
 from invoice_agents.rules import INSTRUCTION_LIKE, ocr_digits
 from invoice_agents.schema import (
     AgentDisposition,
@@ -19,7 +18,7 @@ from invoice_agents.schema import (
     Severity,
     Signal,
 )
-from invoice_agents.structured import to_date, to_number
+from invoice_agents.structured import read_structured, to_date, to_number
 
 MONEY = r"\$?\s*(-?[\d,]+(?:\.\d+)?)"
 VALUE = r"[ \t]*[:=][ \t]*(\S.*?)[ \t]*$"
@@ -46,7 +45,7 @@ LINE = re.compile(
 
 def extract(source: str) -> Invoice | None:
     """Read JSON, XML and CSV by field name, labelled text by pattern. None when no line items or total is found."""
-    invoice = structured.read(source)
+    invoice = read_structured(source)
     if invoice is not None:
         return invoice
     text = ocr_digits(source)

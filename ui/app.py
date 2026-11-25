@@ -16,9 +16,9 @@ from invoice_agents.db import DEFAULT_DB, Store
 from invoice_agents.fallback import notice
 from invoice_agents.graph import stream
 from invoice_agents.llm import LLM
+from invoice_agents.matching import invoice_key
 from invoice_agents.nodes import Deps
 from invoice_agents.observability import RUNS_DIR, load_state
-from invoice_agents.tools import number_key, text_key
 from main import SUFFIXES, step_line
 from ui.words import call_in_words
 
@@ -207,9 +207,8 @@ def decisions(store: Store) -> None:
     paid = frame[frame.Outcome == "PAID"]
     rejected = frame[frame.Outcome == "REJECTED"]
     usd = rejected[(rejected.Currency == "USD") & (rejected.Total > 0)]
-    keys = pd.Series([f"{text_key(v)}|{number_key(n)}" for v, n in zip(usd.Vendor, usd.Invoice, strict=True)],
-                     index=usd.index, dtype=str)
-    once = usd[~keys.duplicated()]
+    once = usd[~pd.Series([invoice_key(v, n) for v, n in zip(usd.Vendor, usd.Invoice, strict=True)],
+                          index=usd.index, dtype=str).duplicated()]
     cols = st.columns(4)
     cols[0].metric("Processed", len(frame))
     cols[1].metric(f"Paid · {len(paid)}", f"${paid.Total.sum():,.0f}")

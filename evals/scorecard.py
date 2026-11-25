@@ -58,8 +58,8 @@ def score_all(db: Path, key: Path = ANSWER_KEYS["samples"]) -> list[Score]:
     """Process every file in the answer key, in order, on the given database."""
     from invoice_agents.db import Store
     from invoice_agents.graph import process
+    from invoice_agents.matching import invoice_key
     from invoice_agents.nodes import Deps
-    from invoice_agents.tools import number_key, text_key
 
     Store(db).reset()
     scores = []
@@ -69,7 +69,7 @@ def score_all(db: Path, key: Path = ANSWER_KEYS["samples"]) -> list[Score]:
         out, inv = state["outcome"], state.get("invoice")
         scores.append(Score(file=file, expected=expected, outcome=out.status, disposition=out.disposition,
                             amount=out.amount, codes=[f.code for f in state.get("findings", [])],
-                            invoice_key=f"{text_key(inv.vendor)}|{number_key(inv.invoice_number)}" if inv else file,
+                            invoice_key=invoice_key(inv.vendor, inv.invoice_number) if inv else file,
                             total=inv.total if inv else None, currency=inv.currency if inv else None,
                             usage=deps.log.totals(), degraded=bool(state.get("degraded"))))
     return scores

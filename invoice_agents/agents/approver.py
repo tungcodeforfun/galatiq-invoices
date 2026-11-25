@@ -26,7 +26,7 @@ check here are not enough.
 Be brief and concrete: a finance manager reads your summary."""
 
 
-def brief(invoice: Invoice, findings: list[Finding], risk: RiskMemo | None, concerns: list[str]) -> str:
+def brief(invoice: Invoice, findings: list[Finding], concerns: list[str], risk: RiskMemo | None) -> str:
     """The case file every reviewer sees: invoice, findings, the validator's notes and the risk memo."""
     memo = risk.model_dump_json() if risk else "not available"
     notes = "\n".join(f"- {c}" for c in concerns) or "none"
@@ -39,7 +39,7 @@ def run(llm: LLM, invoice: Invoice, findings: list[Finding], concerns: list[str]
         tools: ToolBox, policy: Policy, previous: Decision | None, critique: Critique | None
         ) -> tuple[Decision, str | None]:
     """Draft or revise the decision. Returns (decision, degraded_reason)."""
-    user = brief(invoice, findings, risk, concerns)
+    user = brief(invoice, findings, concerns, risk)
     if previous and critique:
         user += (f"\n\nYour previous draft:\n{previous.model_dump_json()}\n\nA reviewer objected:\n"
                  + "\n".join(f"- {o}" for o in critique.objections)

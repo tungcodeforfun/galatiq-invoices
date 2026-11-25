@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from invoice_agents.fallback import STEP_NAMES
+
 
 def _money(value: Any) -> str:
     return f"{value:,.2f}" if isinstance(value, int | float) else "—"
@@ -54,7 +56,7 @@ RESULTS = {"resolve_item": _resolve, "check_stock": _stock, "check_price": _pric
            "check_duplicate": _duplicate, "get_vendor": _vendor}
 NAMES = {"resolve_item": "Match item", "check_stock": "Stock", "check_price": "Price", "check_totals": "Totals",
          "check_duplicate": "Duplicates", "get_vendor": "Vendor"}
-CALLERS = {"validator": "Validator", "coverage": "Coverage check", "risk": "Risk", "approver": "VP"}
+CALLERS = STEP_NAMES | {"coverage": "Coverage check"}
 
 
 def call_in_words(call: dict[str, Any]) -> dict[str, str]:

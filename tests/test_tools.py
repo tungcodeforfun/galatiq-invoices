@@ -4,8 +4,9 @@ from __future__ import annotations
 
 from conftest import make_invoice
 
+from invoice_agents.matching import content_hash, number_key, resolve_item, text_key
 from invoice_agents.schema import LineItem
-from invoice_agents.tools import ToolBox, content_hash, number_key, resolve_item, text_key
+from invoice_agents.tools import ToolBox
 
 CATALOG = {"WidgetA": {}, "WidgetB": {}, "GadgetX": {}}
 

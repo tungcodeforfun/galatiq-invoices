@@ -6,9 +6,9 @@ import hashlib
 from typing import Any
 
 from invoice_agents.db import Store
+from invoice_agents.matching import invoice_key
 from invoice_agents.policy import Policy
 from invoice_agents.schema import Invoice, Payment
-from invoice_agents.tools import number_key, text_key
 
 
 def mock_payment(vendor: str, amount: float) -> dict[str, Any]:
@@ -19,7 +19,7 @@ def mock_payment(vendor: str, amount: float) -> dict[str, Any]:
 
 def idempotency_key(invoice: Invoice, content: str) -> str:
     """One key per vendor, invoice number and content: the same bill can only ever be paid once."""
-    raw = f"{text_key(invoice.vendor)}|{number_key(invoice.invoice_number)}|{content}"
+    raw = f"{invoice_key(invoice.vendor, invoice.invoice_number)}|{content}"
     return hashlib.sha256(raw.encode()).hexdigest()[:24]
 
 
