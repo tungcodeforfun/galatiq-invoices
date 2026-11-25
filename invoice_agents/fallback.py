@@ -109,6 +109,13 @@ def review(findings: list[Finding], memo: RiskMemo | None) -> Decision:
                     summary=f"Rule-based review: {action}.")
 
 
+def _for_vendor(finding: Finding) -> str:
+    """A problem as the vendor may read it: never our stock levels."""
+    if finding.code == "STOCK_EXCEEDED":
+        return f"{finding.subject}: the quantity exceeds what we can accept"
+    return finding.message
+
+
 def resolution(findings: list[Finding], disposition: AgentDisposition) -> Resolution:
     """List the problems; draft a plain correction request when the vendor can fix them."""
     problems = [f"{f.id} {f.code}: {f.message}" for f in findings if f.severity == Severity.REJECT]
@@ -116,7 +123,7 @@ def resolution(findings: list[Finding], disposition: AgentDisposition) -> Resolu
     reply = None
     if disposition == "return_to_vendor":
         reply = ("Hello,\n\nWe could not process this invoice:\n"
-                 + "\n".join(f"- {f.message}" for f in findings if f.severity == Severity.REJECT)
+                 + "\n".join(f"- {_for_vendor(f)}" for f in findings if f.severity == Severity.REJECT)
                  + "\n\nPlease send a corrected invoice.\n\nAccounts Payable, Acme Corp")
     return Resolution(disposition=disposition, reasoning=reasoning, vendor_reply=reply)
 

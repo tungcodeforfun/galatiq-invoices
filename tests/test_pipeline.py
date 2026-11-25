@@ -196,6 +196,20 @@ def test_no_key_names_the_warnings_that_still_stand_when_holding_for_approval(tm
     assert state["outcome"].summary.startswith("Every check passed except warnings: F1 PRICE_VARIANCE. ")
 
 
+def test_no_key_vendor_email_never_reveals_stock_levels(tmp_path, monkeypatch):
+    monkeypatch.setenv("LLM_MODE", "replay")
+    path = tmp_path / "over_stock.json"
+    path.write_text('{"invoice_number": "WI-5122", "vendor": "Widgets Inc.", "invoice_date": "2026-03-02", '
+                    '"due_date": "2026-04-01", "currency": "USD", "payment_terms": "Net 30",\n'
+                    ' "line_items": [{"item": "WidgetB", "quantity": 12, "unit_price": 500.0, "amount": 6000.0}],\n'
+                    ' "total": 6000.0}\n')
+    state = run(path, tmp_path / "t.db")
+    reply = state["resolution"].vendor_reply or ""
+    assert state["outcome"].disposition == "return_to_vendor" and "STOCK_EXCEEDED" in codes(state)
+    assert "WidgetB: the quantity exceeds what we can accept" in reply
+    assert "stock" not in reply and "10" not in reply
+
+
 def test_a_layout_the_rules_cannot_read_is_held_for_manual_entry_without_a_vendor_email(tmp_path, monkeypatch):
     monkeypatch.setenv("LLM_MODE", "replay")
     path = tmp_path / "invoice.md"
