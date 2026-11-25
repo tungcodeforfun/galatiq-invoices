@@ -122,6 +122,16 @@ def test_the_briefs_exact_cli_command(tmp_path):
     assert "PAID" in result.stdout and "built-in rules" not in result.stdout
 
 
+def test_live_mode_without_a_key_stops_with_one_line_and_writes_nothing(tmp_path):
+    env = {k: v for k, v in os.environ.items() if k != "XAI_API_KEY"}
+    env.update(INVOICE_DB=str(tmp_path / "cli.db"), LLM_MODE="live")
+    result = subprocess.run([sys.executable, "main.py", "--invoice_path=data/invoices/invoice_1001.txt"],
+                            cwd=ROOT, env=env, capture_output=True, text=True, timeout=120)
+    assert result.returncode == 2 and result.stdout == ""
+    assert result.stderr.count("\n") == 1 and "XAI_API_KEY" in result.stderr
+    assert not (tmp_path / "cli.db").exists()
+
+
 def cli(*args: str, tmp_path: Path) -> str:
     env = {k: v for k, v in os.environ.items() if k != "XAI_API_KEY"}
     env.update(INVOICE_DB=str(tmp_path / "cli.db"), LLM_MODE="replay", COLUMNS="80")
