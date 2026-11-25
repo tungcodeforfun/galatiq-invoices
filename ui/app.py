@@ -124,13 +124,13 @@ def review_view(s: dict[str, Any]) -> None:
     critiques = s.get("critiques") or []
     for n, draft in enumerate(s.get("drafts") or [], 1):
         with st.chat_message("VP", avatar=":material/gavel:"):
-            st.markdown(f"**Draft {n}: {draft['action']}**  \n{draft['summary']}")
+            st.markdown(f"**VP draft {n}: {draft['action']}**  \n{draft['summary']}")
             for r in draft["reasons"]:
                 st.markdown(f"- {r['text']}" + (f" ({', '.join(r['finding_ids'])})" if r["finding_ids"] else ""))
         if n <= len(critiques):
             c = critiques[n - 1]
             with st.chat_message("Critic", avatar=":material/rate_review:"):
-                st.markdown(f"**{c['verdict'].title()}**")
+                st.markdown(f"**Critic: {c['verdict']}**")
                 for o in c["objections"]:
                     st.markdown(f"- {o}")
 
@@ -171,7 +171,7 @@ def detail(s: dict[str, Any]) -> None:
     cols[1].metric("Findings", len(s.get("findings") or []))
     cols[2].metric("Model / tool calls", f"{t.get('llm_calls', 0)} / {t.get('tool_calls', 0)}")
     cols[3].metric("Grok cost" + (" (recorded)" if recorded else ""), f"${t.get('cost_usd', 0):.4f}")
-    cols[4].metric("Time", f"{t.get('seconds', 0)} s")
+    cols[4].metric("Time" + (" (replay)" if recorded else ""), f"{t.get('seconds', 0)} s")
     tabs = st.tabs(["Findings", "Document", "Agents", "Vendor reply"])
     with tabs[0]:
         findings_table(s.get("findings") or [])
@@ -207,8 +207,8 @@ def decisions(store: Store) -> None:
     usd = rejected[(rejected.Currency == "USD") & (rejected.Total > 0)]
     cols = st.columns(4)
     cols[0].metric("Processed", len(frame))
-    cols[1].metric("Paid", f"{len(paid)} · ${paid.Total.sum():,.0f}")
-    cols[2].metric("Rejected", f"{len(rejected)} · ${usd.Total.sum():,.0f} stopped")
+    cols[1].metric(f"Paid · {len(paid)}", f"${paid.Total.sum():,.0f}")
+    cols[2].metric(f"Rejected · {len(rejected)}", f"${usd.Total.sum():,.0f}", help="USD stopped from going out")
     cols[3].metric("Straight-through", f"{len(paid) / len(frame):.0%}")
     left, right = st.columns([1, 2])
     status = left.segmented_control("Outcome", ["PAID", "REJECTED", "PAYMENT_FAILED"], selection_mode="multi",
@@ -236,13 +236,12 @@ def decisions(store: Store) -> None:
 
 def inbox() -> None:
     """Inbox tab: pick or upload an invoice, process it, and show the run."""
-    left, right = st.columns([1, 2], gap="large")
-    with left:
-        source = st.radio("Invoice", ["Sample", "Upload"], horizontal=True, label_visibility="collapsed")
-        path: Path | None = None
+    source = st.radio("Invoice", ["Sample", "Upload"], horizontal=True, label_visibility="collapsed")
+    pick, button = st.columns([3, 1], vertical_alignment="bottom")
+    path: Path | None = None
+    with pick:
         if source == "Sample":
-            files = samples()
-            path = st.selectbox("Sample invoice", files, format_func=lambda p: f"{p.parent.name}/{p.name}")
+            path = st.selectbox("Sample invoice", samples(), format_func=lambda p: f"{p.parent.name}/{p.name}")
         else:
             upload = st.file_uploader("Invoice file", type=[s.lstrip(".") for s in SUFFIXES])
             if upload:
@@ -250,17 +249,16 @@ def inbox() -> None:
                 folder.mkdir(parents=True, exist_ok=True)
                 path = folder / Path(upload.name).name
                 path.write_bytes(upload.getvalue())
-        go = st.button("Process invoice", type="primary", disabled=path is None, width="stretch")
-    with right:
-        if go and path:
-            st.session_state["last_run"] = process(path)
-        run_id = st.session_state.get("last_run")
-        state = load_state(RUNS_DIR / run_id) if run_id else None
-        if state:
-            detail(state)
-        elif not go:
-            st.markdown(stage_strip({}))
-            st.caption("Pick an invoice and process it to watch each agent work.")
+    go = button.button("Process invoice", type="primary", disabled=path is None, width="stretch")
+    if go and path:
+        st.session_state["last_run"] = process(path)
+    run_id = st.session_state.get("last_run")
+    state = load_state(RUNS_DIR / run_id) if run_id else None
+    if state:
+        detail(state)
+    elif not go:
+        st.markdown(stage_strip({}))
+        st.caption("Pick an invoice and process it to watch each agent work.")
 
 
 def sidebar(store: Store) -> None:
