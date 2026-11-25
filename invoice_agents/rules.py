@@ -95,7 +95,9 @@ def _integrity_problems(invoice: Invoice, read_by_rules: bool) -> list[str]:
 
 def _unread_values(invoice: Invoice, read_by_rules: bool) -> list[str]:
     """Blank values nothing could read: a number written in words, or a vendor only in a letterhead the rules skip."""
-    unread = [f"the quantity on line {n}" for n, li in enumerate(invoice.line_items, 1) if li.quantity is None]
+    unread = [f"the {name} on line {n}" for n, li in enumerate(invoice.line_items, 1)
+              for name, blank in (("quantity", li.quantity is None),
+                                  ("unit price", li.unit_price is None and li.amount is None)) if blank]
     unread += ["the total"] if invoice.total is None else []
     if read_by_rules:
         unread += ["the vendor name"] if not (invoice.vendor or "").strip() else []

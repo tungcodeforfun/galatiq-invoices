@@ -46,6 +46,9 @@ def test_a_value_nobody_could_read_is_held_for_manual_entry_not_voided(policy):
     words.line_items[0].quantity = None
     found = invoice_findings(words, "", policy)
     assert [f.code for f in found] == ["UNREAD_VALUE"] and "None" not in found[0].message
+    priceless = make_invoice([("WidgetA", 2, 250)])
+    priceless.line_items[0].unit_price = None
+    assert codes(priceless, "", policy) == ["UNREAD_VALUE"]
     letterhead = make_invoice([("WidgetA", 1, 250)], vendor=None)
     assert codes(letterhead, "", policy) == ["DATA_INTEGRITY"]
     assert [f.code for f in invoice_findings(letterhead, "", policy, read_by_rules=True)] == ["UNREAD_VALUE"]
