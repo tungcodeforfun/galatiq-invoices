@@ -27,11 +27,13 @@ st.set_page_config(page_title="Accounts payable agents", page_icon=":material/re
 
 
 def samples() -> list[Path]:
+    """Every sample and extra invoice shipped in data/."""
     return sorted(p for d in ("data/invoices", "data/invoices_extra") for p in (ROOT / d).iterdir()
                   if p.suffix.lower() in SUFFIXES)
 
 
 def money(value: float | None, currency: str | None = None) -> str:
+    """Money with its currency code when it isn't USD; a dash when missing."""
     if value is None:
         return "—"
     return f"{value:,.2f}" + (f" {currency}" if currency and currency != "USD" else "")
@@ -43,6 +45,7 @@ def stage_strip(done: dict[str, str]) -> str:
 
 
 def stage_color(node: str, s: Any) -> str:
+    """Badge color for a finished agent: green for go, red for stop, orange for caution."""
     if node == "approver":
         return "green" if s["drafts"][-1].action == "approve" else "red"
     if node == "critic":
@@ -76,6 +79,7 @@ def process(path: Path) -> str:
 
 
 def outcome_banner(s: dict[str, Any]) -> None:
+    """Paid, rejected or failed, with the one-paragraph reason and any degraded-mode note."""
     out = s["outcome"]
     title = out["status"].replace("_", " ").title() + (f" · {out['disposition'].replace('_', ' ')}"
                                                        if out["disposition"] else "")
@@ -85,6 +89,7 @@ def outcome_banner(s: dict[str, Any]) -> None:
 
 
 def findings_table(findings: list[dict[str, Any]]) -> None:
+    """One line per finding, colored by severity."""
     if not findings:
         st.caption("No findings")
         return
@@ -94,6 +99,7 @@ def findings_table(findings: list[dict[str, Any]]) -> None:
 
 
 def document_view(s: dict[str, Any]) -> None:
+    """The source document beside the extracted fields, line items and corrections."""
     left, right = st.columns(2)
     with left:
         st.markdown("**Source document**")
@@ -113,9 +119,10 @@ def document_view(s: dict[str, Any]) -> None:
 
 
 def agents_view(s: dict[str, Any]) -> None:
+    """The agent transcript: tool calls, risk memo, VP drafts and critiques, gate, payment."""
     calls = s.get("tool_calls") or []
     if calls:
-        st.markdown("**Validator tool calls**")
+        st.markdown("**Tool calls**")
         st.dataframe(pd.DataFrame([{"by": c["by"], "tool": c["tool"], "args": str(c["args"]),
                                     "result": str(c["result"])} for c in calls]),
                      hide_index=True, width="stretch")
@@ -153,11 +160,13 @@ def detail(s: dict[str, Any]) -> None:
     outcome_banner(s)
     t = s.get("totals", {})
     inv = s.get("invoice") or {}
-    cols = st.columns(4)
+    recorded = "live" not in t.get("tiers", [])
+    cols = st.columns(5)
     cols[0].metric("Total", money(inv.get("total"), inv.get("currency")))
     cols[1].metric("Findings", len(s.get("findings") or []))
-    cols[2].metric("Model calls", f"{t.get('llm_calls', 0)} {'/'.join(t.get('tiers', []))}")
-    cols[3].metric("Seconds", t.get("seconds", 0))
+    cols[2].metric("Model / tool calls", f"{t.get('llm_calls', 0)} / {t.get('tool_calls', 0)}")
+    cols[3].metric("Grok cost" + (" (recorded)" if recorded else ""), f"${t.get('cost_usd', 0):.4f}")
+    cols[4].metric("Time", f"{t.get('seconds', 0)} s")
     tabs = st.tabs(["Findings", "Document", "Agents", "Vendor reply"])
     with tabs[0]:
         findings_table(s.get("findings") or [])
@@ -174,6 +183,7 @@ def detail(s: dict[str, Any]) -> None:
 
 
 def ledger_frame(store: Store) -> pd.DataFrame:
+    """The ledger as a table, newest first."""
     rows = store.ledger()
     return pd.DataFrame([{"File": r["source_file"], "Invoice": r["number"], "Vendor": r["vendor"],
                           "Total": r["total"], "Currency": r["currency"] or "USD", "Outcome": r["status"],
@@ -182,6 +192,7 @@ def ledger_frame(store: Store) -> pd.DataFrame:
 
 
 def decisions(store: Store) -> None:
+    """Decisions tab: totals, filters, the ledger, and the full run for the selected row."""
     frame = ledger_frame(store)
     if frame.empty:
         st.info("No invoices processed yet. Process one from the Inbox tab, or run `python main.py demo`.")
@@ -219,6 +230,7 @@ def decisions(store: Store) -> None:
 
 
 def inbox() -> None:
+    """Inbox tab: pick or upload an invoice, process it, and show the run."""
     left, right = st.columns([1, 2], gap="large")
     with left:
         source = st.radio("Invoice", ["Sample", "Upload"], horizontal=True, label_visibility="collapsed")
@@ -247,10 +259,14 @@ def inbox() -> None:
 
 
 def sidebar(store: Store) -> None:
+    """Model mode and the reset control."""
     with st.sidebar:
         st.markdown("### Acme accounts payable")
-        mode = LLM().mode
-        st.markdown(f":{'green' if mode == 'live' else 'blue'}-badge[{mode}] model calls")
+        llm = LLM()
+        if llm.mode == "live":
+            st.markdown(f":green-badge[Live] {llm.model}")
+        else:
+            st.markdown(f":blue-badge[Replay] recorded {llm.model} responses")
         with st.popover("Reset ledger", width="stretch"):
             st.markdown("Clears every processed invoice and payment.")
             if st.button("Reset", type="primary"):
@@ -260,6 +276,7 @@ def sidebar(store: Store) -> None:
 
 
 def main() -> None:
+    """Render the dashboard."""
     store = Store(DEFAULT_DB)
     sidebar(store)
     inbox_tab, decisions_tab = st.tabs(["Inbox", "Decisions"])
