@@ -26,6 +26,7 @@ STAGES = [("intake", "Intake"), ("validator", "Validator"), ("risk", "Risk"), ("
           ("critic", "Critic"), ("gate", "Gate"), ("payment", "Payment"), ("resolution", "Resolution")]
 SEVERITY_COLOR = {"reject": "red", "warn": "orange", "info": "blue"}
 RISK_COLOR = {"low": "green", "medium": "orange", "high": "red"}
+OUTCOME_RANK = {"PAID": 0, "PAYMENT_FAILED": 1, "REJECTED": 2}
 
 st.set_page_config(page_title="Accounts payable agents", page_icon=":material/receipt_long:", layout="wide")
 
@@ -201,22 +202,36 @@ def ledger_frame(store: Store) -> pd.DataFrame:
                          for r in rows])
 
 
+def by_invoice(frame: pd.DataFrame) -> pd.DataFrame:
+    """One row per invoice number however often it came back: paid if any copy was paid, then failed, then rejected."""
+    return frame.iloc[frame.Outcome.map(OUTCOME_RANK).argsort(kind="stable")].drop_duplicates("key")
+
+
+def totals_row(frame: pd.DataFrame) -> None:
+    """Processed, paid, rejected and any failed payments, all counted by invoice number so the parts add up."""
+    invoices = by_invoice(frame)
+    paid = invoices[invoices.Outcome == "PAID"]
+    rejected = invoices[invoices.Outcome == "REJECTED"]
+    failed = invoices[invoices.Outcome == "PAYMENT_FAILED"]
+    stopped = rejected[(rejected.Currency == "USD") & (rejected.Total > 0)].Total.sum()
+    metrics = [("Invoices processed", f"{len(invoices)}", None),
+               (f"Paid · {len(paid)}", f"${paid.Total.sum():,.0f}", None),
+               (f"Rejected · {len(rejected)}", f"${stopped:,.0f}", "USD stopped from going out")]
+    if len(failed):
+        metrics.append((f"Payment failed · {len(failed)}", f"${failed.Total.sum():,.0f}", None))
+    metrics.append(("Straight-through", f"{len(paid) / len(invoices):.0%}", None))
+    for col, (label, value, tip) in zip(st.columns(len(metrics)), metrics, strict=True):
+        col.metric(label, value, help=tip)
+    st.caption("Counted by invoice number: one sent more than once counts once, as paid if any copy was paid.")
+
+
 def decisions(store: Store) -> None:
     """Decisions tab: totals, filters, the ledger, and the full run for the selected row."""
     frame = ledger_frame(store)
     if frame.empty:
         st.info("No invoices processed yet. Process one from the Inbox tab, or run `python main.py demo`.")
         return
-    paid = frame[frame.Outcome == "PAID"]
-    rejected = frame[frame.Outcome == "REJECTED"]
-    usd = rejected[(rejected.Currency == "USD") & (rejected.Total > 0)].drop_duplicates("key")
-    cols = st.columns(4)
-    cols[0].metric("Processed", len(frame))
-    cols[1].metric(f"Paid · {len(paid)}", f"${paid.Total.sum():,.0f}")
-    cols[2].metric(f"Rejected · {rejected.key.nunique()}", f"${usd.Total.sum():,.0f}",
-                   help="Each invoice number counted once, however often it came back; the amount is USD stopped "
-                        "from going out")
-    cols[3].metric("Straight-through", f"{len(paid) / len(frame):.0%}")
+    totals_row(frame)
     left, right = st.columns([1, 2])
     status = left.segmented_control("Outcome", ["PAID", "REJECTED", "PAYMENT_FAILED"], selection_mode="multi",
                                     default=["PAID", "REJECTED", "PAYMENT_FAILED"],
