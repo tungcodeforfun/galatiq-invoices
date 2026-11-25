@@ -18,7 +18,9 @@ from invoice_agents.graph import stream
 from invoice_agents.llm import LLM
 from invoice_agents.nodes import Deps
 from invoice_agents.observability import RUNS_DIR, load_state
+from invoice_agents.tools import number_key, text_key
 from main import SUFFIXES, step_line
+from ui.words import call_in_words
 
 STAGES = [("intake", "Intake"), ("validator", "Validator"), ("risk", "Risk"), ("approver", "VP"),
           ("critic", "Critic"), ("gate", "Gate"), ("payment", "Payment"), ("resolution", "Resolution")]
@@ -142,9 +144,7 @@ def agents_view(s: dict[str, Any]) -> None:
     calls = s.get("tool_calls") or []
     if calls:
         st.markdown("**Tool calls**")
-        st.dataframe(pd.DataFrame([{"by": c["by"], "tool": c["tool"], "args": str(c["args"]),
-                                    "result": str(c["result"])} for c in calls]),
-                     hide_index=True, width="stretch")
+        st.dataframe(pd.DataFrame([call_in_words(c) for c in calls]), hide_index=True, width="stretch")
     if s.get("coverage_forced"):
         st.markdown("Coverage ran in code: " + ", ".join(s["coverage_forced"]))
     if s.get("risk"):
@@ -207,10 +207,14 @@ def decisions(store: Store) -> None:
     paid = frame[frame.Outcome == "PAID"]
     rejected = frame[frame.Outcome == "REJECTED"]
     usd = rejected[(rejected.Currency == "USD") & (rejected.Total > 0)]
+    keys = pd.Series([f"{text_key(v)}|{number_key(n)}" for v, n in zip(usd.Vendor, usd.Invoice, strict=True)],
+                     index=usd.index, dtype=str)
+    once = usd[~keys.duplicated()]
     cols = st.columns(4)
     cols[0].metric("Processed", len(frame))
     cols[1].metric(f"Paid · {len(paid)}", f"${paid.Total.sum():,.0f}")
-    cols[2].metric(f"Rejected · {len(rejected)}", f"${usd.Total.sum():,.0f}", help="USD stopped from going out")
+    cols[2].metric(f"Rejected · {len(rejected)}", f"${once.Total.sum():,.0f}",
+                   help="USD stopped from going out, each invoice number counted once")
     cols[3].metric("Straight-through", f"{len(paid) / len(frame):.0%}")
     left, right = st.columns([1, 2])
     status = left.segmented_control("Outcome", ["PAID", "REJECTED", "PAYMENT_FAILED"], selection_mode="multi",
@@ -221,6 +225,7 @@ def decisions(store: Store) -> None:
     if query:
         mask = view[["File", "Invoice", "Vendor"]].astype(str).apply(lambda c: c.str.contains(query, case=False))
         view = view[mask.any(axis=1)]
+    st.caption("Select a row to see the full run.")
     picked = st.dataframe(view.drop(columns="run_id"), hide_index=True, width="stretch",
                           on_select="rerun", selection_mode="single-row",
                           column_config={"Total": st.column_config.NumberColumn(format="%.2f")})
@@ -232,8 +237,6 @@ def decisions(store: Store) -> None:
             detail(state)
         else:
             st.warning("The run log for this invoice is missing.")
-    else:
-        st.caption("Select a row to see the full run.")
 
 
 def inbox() -> None:
