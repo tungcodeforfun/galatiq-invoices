@@ -1,0 +1,22 @@
+order: Files run in this order against an empty ledger, samples first, then extras.
+invoices:
+  data/invoices/invoice_1001.txt:          {outcome: PAID, amount: 5000.00}
+  data/invoices/invoice_1002.txt:          {outcome: REJECTED, disposition: return_to_vendor, findings: [STOCK_EXCEEDED, DATE_ODDITY]}
+  data/invoices/invoice_1003.txt:          {outcome: REJECTED, disposition: void, findings: [FRAUD_SIGNALS, STOCK_EXCEEDED]}
+  data/invoices/invoice_1004.json:         {outcome: PAID, amount: 1890.00}
+  data/invoices/invoice_1004_revised.json: {outcome: REJECTED, disposition: return_to_vendor, findings: [REVISION_CONFLICT]}
+  data/invoices/invoice_1005.json:         {outcome: REJECTED, disposition: return_to_vendor, findings: [STOCK_EXCEEDED]}
+  data/invoices/invoice_1006.csv:          {outcome: PAID, amount: 2750.00}
+  data/invoices/invoice_1007.csv:          {outcome: REJECTED, disposition: return_to_vendor, findings: [STOCK_EXCEEDED, TOTAL_MISMATCH]}
+  data/invoices/invoice_1008.txt:          {outcome: REJECTED, disposition: return_to_vendor, findings: [UNKNOWN_ITEM, NEAR_THRESHOLD]}
+  data/invoices/invoice_1009.json:         {outcome: REJECTED, disposition: void, findings: [DATA_INTEGRITY]}
+  data/invoices/invoice_1010.txt:          {outcome: PAID, amount: 7185.00, findings: [PRICE_VARIANCE]}
+  data/invoices/invoice_1011.pdf:          {outcome: PAID, amount: 3000.00}
+  data/invoices/invoice_1011.txt:          {outcome: REJECTED, disposition: void, findings: [DUPLICATE]}
+  data/invoices/invoice_1012.pdf:          {outcome: PAID, amount: 9975.00, findings: [OCR_CORRECTED, NEAR_THRESHOLD]}
+  data/invoices/invoice_1012.txt:          {outcome: REJECTED, disposition: void, findings: [DUPLICATE]}
+  data/invoices/invoice_1013.json:         {outcome: REJECTED, disposition: return_to_vendor, findings: [STOCK_EXCEEDED, TOTAL_MISMATCH]}
+  data/invoices/invoice_1013.pdf:          {outcome: REJECTED, disposition: void, findings: [DUPLICATE]}
+  data/invoices/invoice_1014.xml:          {outcome: REJECTED, disposition: return_to_vendor, findings: [CURRENCY, PRICE_VARIANCE]}
+  data/invoices/invoice_1015.csv:          {outcome: PAID, amount: 6500.00}
+  data/invoices/invoice_1016.json:         {outcome: REJECTED, disposition: return_to_vendor, findings: [UNKNOWN_ITEM]}
