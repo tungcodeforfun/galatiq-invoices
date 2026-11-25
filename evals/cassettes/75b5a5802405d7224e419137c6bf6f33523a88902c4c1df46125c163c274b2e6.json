@@ -1,0 +1,84 @@
+{
+ "request_sha256": "75b5a5802405d7224e419137c6bf6f33523a88902c4c1df46125c163c274b2e6",
+ "response": {
+  "id": "24b16e47-2e3c-9f26-b55d-b7ea5f5b47c4",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[],\"concerns\":[],\"summary\":\"Catalog matches found; running stock and price checks.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-2524c2ae-0a9d-469c-8ec8-340ba545929c-5",
+       "function": {
+        "arguments": "{\"item\":\"WidgetA\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-2524c2ae-0a9d-469c-8ec8-340ba545929c-6",
+       "function": {
+        "arguments": "{\"item\":\"WidgetB\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-2524c2ae-0a9d-469c-8ec8-340ba545929c-7",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-2524c2ae-0a9d-469c-8ec8-340ba545929c-8",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "Both line items matched. I will check stock for WidgetA and WidgetB and verify prices for lines 1 and 2."
+    }
+   }
+  ],
+  "created": 1795571822,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 69,
+   "prompt_tokens": 2743,
+   "total_tokens": 2855,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 43,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2743
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 9839600
+  }
+ }
+}

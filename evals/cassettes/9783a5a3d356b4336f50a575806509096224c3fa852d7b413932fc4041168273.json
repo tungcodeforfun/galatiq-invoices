@@ -1,0 +1,51 @@
+{
+ "request_sha256": "9783a5a3d356b4336f50a575806509096224c3fa852d7b413932fc4041168273",
+ "response": {
+  "id": "ed182140-ef16-9dc1-b9ae-8f3ee583e2f9",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"verdict\":\"accept\",\"objections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Reviewing the VP's draft payment decision for errors against the provided criteria.\n\nThe draft will be judged against four concrete rules. Objections are only valid for ignored findings, unsupported reasons, approvals while reject-severity issues remain, or rejections without a hard stop and no high risk memo.\n\nThe invoice shows a null vendor and a negative quantity on WidgetA. The draft must explicitly address any finding or risk signal for amounts over $10,000. Objections must cite specific finding IDs or claims. The vendor master record is trusted. Style issues are not grounds for objection.\n\nThe invoice total is negative 250.0. The vendor master record confirms the vendor is unknown and the invoice names no vendor. The draft rejects the invoice citing findings F1, F3, and F2. I am now verifying the line-item math.\n\nThe line-item math is correct. The draft's parenthetical expression properly shows the total equals negative 250, not that negative five times two hundred fifty equals negative two hundred fifty. F1 is also addressed accurately.\n\nF2 is correctly noted as a warning that does not block payment. F3 is accurately addressed. The rejection is supported by the two reject-severity findings. The amount is well under $10,000, so that rule does not apply. The low risk memo is acceptable because the rejection is grounded in hard stops."
+    }
+   }
+  ],
+  "created": 1795571238,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 11,
+   "prompt_tokens": 2205,
+   "total_tokens": 4681,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 2465,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2205
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 59629200
+  }
+ }
+}

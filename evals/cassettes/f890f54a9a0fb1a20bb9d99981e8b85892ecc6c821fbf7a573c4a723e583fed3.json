@@ -1,0 +1,84 @@
+{
+ "request_sha256": "f890f54a9a0fb1a20bb9d99981e8b85892ecc6c821fbf7a573c4a723e583fed3",
+ "response": {
+  "id": "f88923f9-05f3-91f6-be72-2d9793792c2a",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-c7f69644-4cc6-489e-b89f-2a1fd2867b9f-5",
+       "function": {
+        "arguments": "{\"item\":\"WidgetA\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-c7f69644-4cc6-489e-b89f-2a1fd2867b9f-6",
+       "function": {
+        "arguments": "{\"item\":\"WidgetB\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-c7f69644-4cc6-489e-b89f-2a1fd2867b9f-7",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-c7f69644-4cc6-489e-b89f-2a1fd2867b9f-8",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will complete all required checks on the extracted invoice."
+    }
+   }
+  ],
+  "created": 1795572242,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 43,
+   "prompt_tokens": 2571,
+   "total_tokens": 2686,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 72,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2571
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 8731200
+  }
+ }
+}

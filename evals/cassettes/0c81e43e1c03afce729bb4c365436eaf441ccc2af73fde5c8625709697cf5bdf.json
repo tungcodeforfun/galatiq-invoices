@@ -1,0 +1,60 @@
+{
+ "request_sha256": "0c81e43e1c03afce729bb4c365436eaf441ccc2af73fde5c8625709697cf5bdf",
+ "response": {
+  "id": "be940160-2f91-42e4-b932-b027feef9263",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-2c63c032-fef6-4ba3-a38c-34b1b2e09066-0",
+       "function": {
+        "arguments": "{\"name\":\"Acme Industrial Supplies\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I am analyzing the invoice for fraud signals.\n\nThe automated checks found no issues. I am now looking for pressure language and payment redirect signals."
+    }
+   }
+  ],
+  "created": 1795570996,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_c60958d81f66f847",
+  "usage": {
+   "completion_tokens": 14,
+   "prompt_tokens": 2108,
+   "total_tokens": 2356,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 234,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2108
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 13518400
+  }
+ }
+}

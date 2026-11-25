@@ -1,0 +1,51 @@
+{
+ "request_sha256": "6b69513be7ebfb8b1ade6432a355ea329de532470665813f67af2a37fb94673e",
+ "response": {
+  "id": "079dc5ac-c659-9397-acb3-7ff05fd5bd18",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"void\",\"reasoning\":\"This invoice is voided because F3 identifies it as a duplicate of INV 1012, already PAID, with the same vendor, lines, and total. F1 (total 9,975.00 just under the 10,000 approval line) and F2 (OCR normalizations of the invoice date and a line amount) are informational and do not repair the duplicate. A duplicate must not be resubmitted, so the disposition is void.\",\"vendor_reply\":null}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Closing out the rejected invoice.\n\nPolicy requires void disposition for this invoice. Findings F1 and F2 are only informational and do not override the duplicate block.\n\nF3 confirms this invoice duplicates an already paid one. The disposition is void with no vendor reply. The audit log will cite the finding IDs."
+    }
+   }
+  ],
+  "created": 1795571606,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_c60958d81f66f847",
+  "usage": {
+   "completion_tokens": 109,
+   "prompt_tokens": 2367,
+   "total_tokens": 2888,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 412,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2367
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 20848800
+  }
+ }
+}

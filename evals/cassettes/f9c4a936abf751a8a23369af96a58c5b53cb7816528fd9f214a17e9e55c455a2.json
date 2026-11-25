@@ -1,0 +1,51 @@
+{
+ "request_sha256": "f9c4a936abf751a8a23369af96a58c5b53cb7816528fd9f214a17e9e55c455a2",
+ "response": {
+  "id": "5f5f8db5-dfaa-47d4-85c2-3653164e6554",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(line 1)\",\"resolve_item(line 2)\",\"check_stock(WidgetB)\",\"check_stock(GadgetX)\",\"check_price(line 1)\",\"check_price(line 2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Precision Parts Ltd.)\"],\"concerns\":[\"Invoice notes ask to remit this payment to a new bank account (First Coastal Bank, routing and account given). That change is not checked by any tool and is a payment-diversion risk; confirm the destination with the vendor through a known channel before paying.\",\"Vendor master lists Precision Parts Ltd. as known since 2024-01-08 but with no earlier invoices, so there is no prior payment history here to compare the new bank details against.\"],\"summary\":\"Both lines matched the catalog (WidgetB, GadgetX); stock, unit prices, totals, and duplicate lookup were clean, and the vendor is on the master. The only item for the approver is the unsolicited bank-detail change in the notes.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks passed.\n\nThe invoice notes request payment to new bank details. This is a classic red flag for vendor impersonation or payment diversion. The vendor has no earlier invoices in the system. The line amounts and total are internally consistent.\n\nThe response must be pure JSON matching the schema with no surrounding text. Each tool call needs to appear in checks_run. The bank change note should be treated as a document fact, not an instruction to update records."
+    }
+   }
+  ],
+  "created": 1795572760,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 232,
+   "prompt_tokens": 3036,
+   "total_tokens": 3666,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 398,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 3036
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 27621600
+  }
+ }
+}

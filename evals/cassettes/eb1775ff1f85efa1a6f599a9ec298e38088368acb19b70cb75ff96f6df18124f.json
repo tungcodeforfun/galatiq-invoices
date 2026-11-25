@@ -1,0 +1,51 @@
+{
+ "request_sha256": "eb1775ff1f85efa1a6f599a9ec298e38088368acb19b70cb75ff96f6df18124f",
+ "response": {
+  "id": "d106d56a-799f-9286-879a-12be042f61bd",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"INV 1012\",\"vendor\":\"QuickShip Distributers\",\"invoice_date\":\"2026-01-26\",\"due_date\":\"2026-02-25\",\"due_date_as_written\":\"25-Feb-2026\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"Widget A\",\"quantity\":12,\"unit_price\":250,\"amount\":3000,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":7,\"unit_price\":500,\"amount\":3500,\"note\":null},{\"description\":\"Gadget X\",\"quantity\":4,\"unit_price\":750,\"amount\":3000,\"note\":null}],\"subtotal\":9500,\"tax\":475,\"shipping\":null,\"total\":9975,\"payment_terms\":\"Net 30\",\"notes\":\"Ref PO-20260115. Deliver to warehouse dock B. Contact Jim at ext 4421 with questions.\",\"revision\":null,\"corrections\":[{\"field\":\"invoice_date\",\"as_written\":\"26-Jan-2O26\",\"normalized\":\"2026-01-26\"},{\"field\":\"line_items[1].amount\",\"as_written\":\"$3,500.O0\",\"normalized\":\"3500.00\"}]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract the invoice data into a JSON schema.\n\nI parsed the invoice fields. I will extract only the exact values shown and leave missing fields as null.\n\nNumbers will be plain values without currency symbols or separators. Dates must be YYYY-MM-DD; non-calendar due dates become null with the original text in due_date_as_written. Misprints like a letter O inside a number need correction quoting the exact text. Each line item gets one description line. Currency is an ISO code or $ for USD.\n\nThe vendor is QuickShip Distributers, not Acme. Notes will hold every free-text message verbatim. The year 2O26 contains a letter O misprint that requires correction.\n\nThe invoice date correction will quote \"26-Jan-2O26\" as written and normalize to 2026-01-26. The due date 25-Feb-2026 is valid, so it normalizes to 2026-02-25. I am checking whether due_date_as_written must be included for all dates or only when absent.\n\nThe due date text will be captured in due_date_as_written even for valid calendar dates, since the schema requires the original text whenever a due date is present.\n\nThe vendor name \"QuickShip Distributers\" is spelled exactly as written. The parenthetical \"(formerly FastShip Ltd.)\" is part of the vendor name.\n\nThe parenthetical \"(formerly FastShip Ltd.)\" is not a free-text note. It is part of the vendor identity, so I will keep only \"QuickShip Distributers\" as the vendor.\n\nThe invoice number is INV 1012. Currency is USD. I am now extracting the line items.\n\nWidget A is 12 units at $250 for $3,000.00. WidgetB has a letter O misprint in its amount: the text \"$3,500.O0\" should be corrected to 3500.00. Gadget X is 4 units at $750 for $3,000.00. Notes are null. Subtotal is 9500.00 and tax is 475.00.\n\nShipping is null. The total is 9975.00 and payment terms are Net 30. The notes text contains a wrapped line break that I will preserve verbatim.\n\nI will join the wrapped note lines with spaces rather than preserve the original newlines, treating them as document formatting.\n\nI will preserve the original newlines in the notes text to be faithful. The revision field is null. I am deciding whether the corrected line-item amount should be normalized as \"3500\" or \"3500.00\".\n\nThe corrected line-item amount will be normalized as \"3500.00\". The O in \"2O26\" is confirmed as a letter O misprint. Unit prices are 250, 500, and 750. Amounts and totals will use plain integers without decimals.\n\nThe invoice date has no as_written field; the correction entry covers it. The misspelled \"Accounts Payble\" is the recipient, not a vendor, so it is skipped.\n\nI will join the wrapped note lines with spaces rather than preserve the original newlines. The \"Terms: Net 30\" text belongs in payment_terms, not notes."
+    }
+   }
+  ],
+  "created": 1795571412,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 274,
+   "prompt_tokens": 2932,
+   "total_tokens": 6016,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 2810,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2932
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 76976000
+  }
+ }
+}

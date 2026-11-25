@@ -1,0 +1,83 @@
+{
+ "request_sha256": "e50e58d7ba9352b488e5954b09b48d77b81edc6b08a46048cb4b844484c63c81",
+ "response": {
+  "id": "9667978a-5e22-45b8-a8ae-f4e1644ebaa9",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[],\"concerns\":[],\"summary\":\"Running stock and price checks.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-59599fb8-f1b8-4bec-a2c9-85ee37e5decb-5",
+       "function": {
+        "arguments": "{\"item\":\"WidgetA\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-59599fb8-f1b8-4bec-a2c9-85ee37e5decb-6",
+       "function": {
+        "arguments": "{\"item\":\"WidgetB\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-59599fb8-f1b8-4bec-a2c9-85ee37e5decb-7",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-59599fb8-f1b8-4bec-a2c9-85ee37e5decb-8",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ]
+    }
+   }
+  ],
+  "created": 1795570762,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 65,
+   "prompt_tokens": 2727,
+   "total_tokens": 2833,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 41,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2727
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 9608400
+  }
+ }
+}

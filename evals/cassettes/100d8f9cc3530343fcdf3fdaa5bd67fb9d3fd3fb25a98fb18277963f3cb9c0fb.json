@@ -1,0 +1,51 @@
+{
+ "request_sha256": "100d8f9cc3530343fcdf3fdaa5bd67fb9d3fd3fb25a98fb18277963f3cb9c0fb",
+ "response": {
+  "id": "42e5d521-6ef0-91ad-9b3f-818d8e7089c9",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"INV-1003\",\"vendor\":\"Fraudster LLC\",\"invoice_date\":\"2026-01-20\",\"due_date\":null,\"due_date_as_written\":\"yesterday\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"FakeItem\",\"quantity\":100,\"unit_price\":1000,\"amount\":null,\"note\":null}],\"subtotal\":null,\"tax\":null,\"shipping\":null,\"total\":100000,\"payment_terms\":\"Immediate\",\"notes\":\"URGENT - Pay immediately to avoid penalties!!! Wire transfer preferred.\",\"revision\":null,\"corrections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract structured data from the invoice document.\n\nThe invoice contains vendor Fraudster LLC, invoice number INV-1003, date 2026-01-20, and due date yesterday. Item FakeItem has quantity 100 at unit price $1,000.00. Total amount is $100,000.00. Payment terms are Immediate. Notes warn of penalties if payment is delayed.\n\nThe due date will be null with \"yesterday\" stored in due_date_as_written. The vendor is Fraudster LLC. Notes will hold the full warning text verbatim. Each line item gets its own entry. The unit price drops the dollar sign and comma.\n\nThe line item amount is null because the invoice omits a line total. Subtotal, tax, and shipping are also null. The currency is USD."
+    }
+   }
+  ],
+  "created": 1795570651,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 133,
+   "prompt_tokens": 2832,
+   "total_tokens": 3592,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 627,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2832
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 28886400
+  }
+ }
+}

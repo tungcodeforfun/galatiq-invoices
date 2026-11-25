@@ -1,0 +1,51 @@
+{
+ "request_sha256": "44a740f714a4aad2c9c6be0230ba32d99b2b68e86ef7ef4a352ee4efc122a004",
+ "response": {
+  "id": "d27d13c3-743e-9a06-8b1e-2aafd857ed0d",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"F1 is a reject-severity total mismatch: line items plus tax equal $22,512.80, but the invoice total is $22,562.80, a $50 overstatement. The payment gate blocks this regardless of any other factor.\",\"finding_ids\":[\"F1\"]},{\"text\":\"F2 is a reject-severity duplicate: same vendor, lines, and total as INV-1013, which was already rejected. Paying it would reprocess a declined bill.\",\"finding_ids\":[\"F2\"]},{\"text\":\"F3, F4, and F5 are reject-severity stock shortfalls. WidgetA is billed for 22 units against 15 in stock, WidgetB for 18 against 10, and GadgetX for 9 against 5. Quantities cannot be fulfilled as invoiced.\",\"finding_ids\":[\"F3\",\"F4\",\"F5\"]},{\"text\":\"The risk memo is low, with no pressure language, payment redirection, instruction injection, or conflicting vendor identity. That does not outweigh the five reject findings on an invoice over $10,000.\",\"finding_ids\":[\"F1\",\"F2\",\"F3\",\"F4\",\"F5\"]}],\"addressed_findings\":[\"F1\",\"F2\",\"F3\",\"F4\",\"F5\"],\"summary\":\"Reject INV-1013 from Atlas Industrial Supply for $22,562.80. The total is $50 over the lines plus tax, it duplicates a previously rejected invoice, and all three SKUs exceed stock. The low risk memo does not clear those blocks.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I need to decide whether to pay this vendor invoice.\n\nFive automated findings are marked \"reject\": a total mismatch, a duplicate invoice, and three stock exceedances. The policy requires rejecting invoices with any reject-level finding.\n\nThe payment gate will block this invoice regardless of my decision. The low-risk memo does not override the reject findings. I should verify the vendor details before finalizing the rejection.\n\nThe line items subtotal to $21,040. Adding tax of $1,472.80 yields $22,512.80. This confirms the $50 total mismatch in F1. The duplicate invoice is INV-1013.\n\nNo instruction injection is present. I will reject the invoice and cite findings F1 through F5 in the JSON response."
+    }
+   }
+  ],
+  "created": 1795571757,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 345,
+   "prompt_tokens": 2515,
+   "total_tokens": 3689,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 829,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1792,
+    "image_tokens": 0,
+    "text_tokens": 2515
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 31912400
+  }
+ }
+}

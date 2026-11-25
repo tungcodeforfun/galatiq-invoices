@@ -1,0 +1,59 @@
+{
+ "request_sha256": "62dd2c3a53deca40727868f8460bb52c8f1e97da98dfebfe13dbd2a9188e5897",
+ "response": {
+  "id": "f6b68b76-c5df-4e2e-ad68-a573170244d3",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-6b004a1c-1442-4d45-b874-56d7c8adb700-0",
+       "function": {
+        "arguments": "{\"name\":\"Widgets Inc.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ]
+    }
+   }
+  ],
+  "created": 1795570559,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 13,
+   "prompt_tokens": 2115,
+   "total_tokens": 2182,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 54,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 0,
+    "image_tokens": 0,
+    "text_tokens": 2115
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15748800
+  }
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "request_sha256": "7f60fe1fb85edb572dcd2addfffb7c20b5b459348910673cd0a185e16ac9b774",
+ "response": {
+  "id": "e5030652-a358-9be7-9d0d-41115c734cac",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-98d2fc4d-b49d-4529-9253-33b7d017d4d3-0",
+       "function": {
+        "arguments": "{\"name\":\"Atlas Industrial Supply\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I am reviewing the invoice as a fraud analyst to identify signs of deception or manipulation.\n\nThe automated checks already flag a 50.00 total mismatch and three stock exceedances. I will not duplicate these findings in the risk memo.\n\nI am now scanning the invoice text for manual fraud signals. I will look for pressure language, payment redirects, instruction injection, vendor changes, and unusual terms."
+    }
+   }
+  ],
+  "created": 1795572566,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 13,
+   "prompt_tokens": 2330,
+   "total_tokens": 2725,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 382,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1920,
+    "image_tokens": 0,
+    "text_tokens": 2330
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14110000
+  }
+ }
+}

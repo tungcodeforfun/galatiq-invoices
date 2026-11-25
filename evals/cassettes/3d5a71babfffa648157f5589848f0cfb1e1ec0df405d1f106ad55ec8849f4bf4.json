@@ -1,0 +1,51 @@
+{
+ "request_sha256": "3d5a71babfffa648157f5589848f0cfb1e1ec0df405d1f106ad55ec8849f4bf4",
+ "response": {
+  "id": "85856cf5-e679-426a-b810-38cfe44aa90d",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"INV-2001\",\"vendor\":\"Summit Manufacturing Co.\",\"invoice_date\":\"2026-02-02\",\"due_date\":\"2026-03-04\",\"due_date_as_written\":\"2026-03-04\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":14,\"unit_price\":250,\"amount\":3500,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":10,\"unit_price\":500,\"amount\":5000,\"note\":null},{\"description\":\"GadgetX\",\"quantity\":4,\"unit_price\":750,\"amount\":3000,\"note\":null}],\"subtotal\":11500,\"tax\":null,\"shipping\":500,\"total\":12000,\"payment_terms\":\"Net 30\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract the invoice data and return it as JSON matching the schema.\n\nExtracting the invoice number, vendor, dates, and line items. The due date is a calendar date, so due_date_as_written will be null.\n\nThe due date text will be included in due_date_as_written as \"2026-03-04\".\n\nCurrency is USD. The first line item is WidgetA, quantity 14, unit price $250.00, amount $3,500.00.\n\nWidgetB is quantity 10 at $500.00 per unit for $5,000.00 total. GadgetX is quantity 4 at $750.00 per unit for $3,000.00 total. Subtotal is $11,500.00. Shipping is $500.00. Total is $12,000.00. Payment terms are Net 30. Tax and notes are null. PO reference is ignored. Vendor is Summit Manufacturing Co."
+    }
+   }
+  ],
+  "created": 1795571998,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 188,
+   "prompt_tokens": 2902,
+   "total_tokens": 4175,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1085,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 2902
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 31994000
+  }
+ }
+}

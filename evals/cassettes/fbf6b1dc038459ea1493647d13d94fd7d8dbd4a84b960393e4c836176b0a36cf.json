@@ -1,0 +1,84 @@
+{
+ "request_sha256": "fbf6b1dc038459ea1493647d13d94fd7d8dbd4a84b960393e4c836176b0a36cf",
+ "response": {
+  "id": "d704166c-1341-4fe5-8ffa-061669973f4f",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-63b0605c-d107-4162-918b-8a827ccad950-0",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "resolve_item"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-63b0605c-d107-4162-918b-8a827ccad950-1",
+       "function": {
+        "arguments": "{}",
+        "name": "check_totals"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-63b0605c-d107-4162-918b-8a827ccad950-2",
+       "function": {
+        "arguments": "{}",
+        "name": "check_duplicate"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-63b0605c-d107-4162-918b-8a827ccad950-3",
+       "function": {
+        "arguments": "{\"name\":\"Gadgets Co.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will validate the provided invoice."
+    }
+   }
+  ],
+  "created": 1795570588,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 35,
+   "prompt_tokens": 2247,
+   "total_tokens": 2489,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 207,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2048,
+    "image_tokens": 0,
+    "text_tokens": 2247
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 9771600
+  }
+ }
+}

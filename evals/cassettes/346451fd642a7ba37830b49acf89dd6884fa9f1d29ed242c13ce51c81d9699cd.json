@@ -1,0 +1,60 @@
+{
+ "request_sha256": "346451fd642a7ba37830b49acf89dd6884fa9f1d29ed242c13ce51c81d9699cd",
+ "response": {
+  "id": "b9a37470-d3ec-40fe-88da-436d5985e621",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-8eaa6bd2-36df-4d6b-b76b-21f2230392df-0",
+       "function": {
+        "arguments": "{\"name\":\"Atlas Industrial Supply\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I am analyzing the invoice for fraud signals."
+    }
+   }
+  ],
+  "created": 1795571745,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 13,
+   "prompt_tokens": 2352,
+   "total_tokens": 2537,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 172,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2352
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 13892400
+  }
+ }
+}

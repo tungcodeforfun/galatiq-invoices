@@ -1,0 +1,51 @@
+{
+ "request_sha256": "575e085b7752889528683ec73debae39cb91891cab9d467de7277f2a77cd70ea",
+ "response": {
+  "id": "a4542f8a-cfa8-44e3-ba3d-198304286599",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"INV-1001\",\"vendor\":\"Widgets Inc.\",\"invoice_date\":\"2026-01-15\",\"due_date\":\"2026-02-01\",\"due_date_as_written\":\"2026-02-01\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":10,\"unit_price\":250,\"amount\":null,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":5,\"unit_price\":500,\"amount\":null,\"note\":null}],\"subtotal\":5000,\"tax\":0,\"shipping\":null,\"total\":5000,\"payment_terms\":\"Net 15\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract the invoice data into structured JSON.\n\nI parsed the invoice fields. I will use null for missing values and follow the formatting rules.\n\nThe currency is USD. Notes and revision are null. Line item amounts are null because the document only shows quantity and unit price.\n\nSubtotal is 5000.00 and tax is 0.00. Shipping is null. Payment terms are \"Net 15\". The due date as written is \"2026-02-01\".\n\nInvoice date is 2026-01-15. Tax is 0.00. Corrections is an empty array."
+    }
+   }
+  ],
+  "created": 1795570532,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 158,
+   "prompt_tokens": 2858,
+   "total_tokens": 3832,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 816,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2858
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 33428800
+  }
+ }
+}

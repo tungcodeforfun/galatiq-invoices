@@ -1,0 +1,51 @@
+{
+ "request_sha256": "0339bfaea55792a3346be3998e8b1f9fde8e97f79a8325b1ec298dcd1459d16d",
+ "response": {
+  "id": "7555c73e-11c6-43e5-ba3c-2915fef5e285",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"resolve_item(2)\",\"resolve_item(3)\",\"resolve_item(4)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_stock(GadgetX)\",\"check_price(1)\",\"check_price(2)\",\"check_price(3)\",\"check_price(4)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Consolidated Materials Group)\"],\"concerns\":[\"Line 4 matched WidgetA only after normalizing away \\\"(rush order)\\\" and bills $300 vs the $250 catalog price (20% over, outside tolerance). The rush wording is only in the description, not a separate fee, and payment terms are still Net 30, so the premium is unexplained by the catalog.\",\"WidgetA is split across line 1 at catalog price and line 4 at the higher price (12 units combined, within the 15 on hand). Approver should treat the rush premium as a pricing exception, not as a different item.\",\"Vendor is on the master since 2023-09-14 but the ledger lists no earlier invoices, so there is no payment history to compare this rush markup against.\"],\"summary\":\"All four lines resolved to catalog items (line 4 normalized to WidgetA). Totals, stock, and duplicate checks were clean, and the vendor is known. The only tool exception is line 4's unit price, 20% above catalog, labeled only as a rush order.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The tools flagged a price variance on line 4.\n\nThe 20% price difference on line 4 is a rush order surcharge. The tool flagged the variance but did not note that the description justifies it.\n\nThe vendor has no prior invoices in the ledger, suggesting a new relationship. Stock levels are sufficient. Totals and duplicate checks are clean.\n\nThe due date written matches the stated Net 30 terms. Payment terms do not mention rush fees."
+    }
+   }
+  ],
+  "created": 1795571291,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 324,
+   "prompt_tokens": 3282,
+   "total_tokens": 4079,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 473,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2816,
+    "image_tokens": 0,
+    "text_tokens": 3282
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 24214800
+  }
+ }
+}

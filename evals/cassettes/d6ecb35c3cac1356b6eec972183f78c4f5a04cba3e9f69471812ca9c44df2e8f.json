@@ -1,0 +1,60 @@
+{
+ "request_sha256": "d6ecb35c3cac1356b6eec972183f78c4f5a04cba3e9f69471812ca9c44df2e8f",
+ "response": {
+  "id": "c98ad48b-1b18-96b6-8e04-5452e6eca990",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-eca48841-a5f5-4f8f-b7bd-aca8f6cdfb24-0",
+       "function": {
+        "arguments": "{\"name\":\"Reliable Components Inc.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I am acting as VP of Finance to decide whether to pay this vendor invoice."
+    }
+   }
+  ],
+  "created": 1795571927,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 14,
+   "prompt_tokens": 2217,
+   "total_tokens": 2479,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 248,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2217
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14545200
+  }
+ }
+}

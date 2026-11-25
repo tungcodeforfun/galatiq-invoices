@@ -1,0 +1,51 @@
+{
+ "request_sha256": "62977d6e21fd2a8e8f971c100bec1733267bbd77a0ac36aa8d7e4c401b0462c1",
+ "response": {
+  "id": "2095f138-0afd-4bc6-871a-496824ce06f3",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"verdict\":\"accept\",\"objections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Reviewing the VP's draft payment decision for errors.\n\nThe draft rejects INV-1016 based on F1. The low-risk memo and known vendor do not override a reject finding. This appears to be an error.\n\nReconsidering the draft. The rejection is supported by a reject-severity finding and the invoice total is under $10,000. The low-risk memo does not override this. The draft appears sound."
+    }
+   }
+  ],
+  "created": 1795571983,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 11,
+   "prompt_tokens": 2116,
+   "total_tokens": 2577,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 450,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2116
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 17918000
+  }
+ }
+}

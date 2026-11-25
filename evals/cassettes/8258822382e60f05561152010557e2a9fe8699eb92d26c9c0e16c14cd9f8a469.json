@@ -1,0 +1,51 @@
+{
+ "request_sha256": "8258822382e60f05561152010557e2a9fe8699eb92d26c9c0e16c14cd9f8a469",
+ "response": {
+  "id": "f843da99-507d-49e8-9ed5-5a9efa94e146",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"high\",\"signals\":[{\"kind\":\"pressure_language\",\"quote\":\"URGENT - Pay immediately to avoid penalties!!!\",\"why\":\"Urgency plus a penalty threat is meant to push approval before normal review.\"},{\"kind\":\"payment_redirect\",\"quote\":\"Wire transfer preferred.\",\"why\":\"A wire preference on the invoice itself is a common way to divert payment off the usual method.\"},{\"kind\":\"unusual_terms\",\"quote\":\"Payment Terms: Immediate\",\"why\":\"Immediate terms, paired with the urgency note, demand payment outside ordinary terms.\"}],\"summary\":\"The invoice demands immediate payment under penalty threat and prefers a wire, which is classic payment-fraud pressure rather than a routine bill. Do not pay until the request is independently verified outside this document.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor is unknown, not a vendor change.\n\nThe invoice contains fraud signals. The note \"URGENT - Pay immediately to avoid penalties!!!\" indicates pressure language. \"Wire transfer preferred\" indicates payment redirect. \"Immediate\" terms add urgency.\n\nThis is a textbook BEC fraud invoice. The combination of pressure language and wire transfer redirect strongly indicates fraud intent.\n\nThe fraud signal is high severity. The VP should not pay. I will provide a two-sentence JSON summary with exact quotes."
+    }
+   }
+  ],
+  "created": 1795570676,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_c60958d81f66f847",
+  "usage": {
+   "completion_tokens": 167,
+   "prompt_tokens": 2592,
+   "total_tokens": 3254,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 495,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2592
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 20032800
+  }
+ }
+}

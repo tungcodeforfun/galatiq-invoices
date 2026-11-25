@@ -1,0 +1,51 @@
+{
+ "request_sha256": "0a90a3e30c0571eeaffda94271b613f9811e4fcde8a4abfa1d335091ae4c3329",
+ "response": {
+  "id": "37de9cc3-f8db-9474-83d8-878578ae920e",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"The invoice is a standard Net 30 bill from known vendor TechParts International, with no pressure language, bank-detail changes, remit-to mismatch, or instructions aimed at a reviewer. Nothing in the document itself suggests deception beyond the automated currency and price findings.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Vendor TechParts International is known. First seen 2025-01-15. No aliases or earlier invoices found."
+    }
+   }
+  ],
+  "created": 1795571845,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 67,
+   "prompt_tokens": 2419,
+   "total_tokens": 2628,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 142,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2419
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14837600
+  }
+ }
+}

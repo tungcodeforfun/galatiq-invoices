@@ -1,0 +1,51 @@
+{
+ "request_sha256": "5df71cdd87b652d234d89b1bc0a48d9433cbcb29c2bee99f9c3f5935d2849aa0",
+ "response": {
+  "id": "717ff6ae-4dc8-9598-ad92-78cc08878a69",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"INV-1004\",\"vendor\":\"Precision Parts Ltd.\",\"invoice_date\":\"2026-01-22\",\"due_date\":\"2026-02-22\",\"due_date_as_written\":\"2026-02-22\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":3,\"unit_price\":250.00,\"amount\":null,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":2,\"unit_price\":500.00,\"amount\":null,\"note\":null},{\"description\":\"GadgetX\",\"quantity\":5,\"unit_price\":750.00,\"amount\":null,\"note\":null}],\"subtotal\":5500.00,\"tax\":440.00,\"shipping\":null,\"total\":5940.00,\"payment_terms\":\"Net 30\",\"notes\":\"Revised invoice - additional items added per PO amendment\",\"revision\":\"R1\",\"corrections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract the invoice data and return it as JSON matching the schema.\n\nI am extracting the invoice number, revision, vendor, dates, and line items from the document. I need to verify whether due_date_as_written should match the exact text \"2026-02-22\" as written in the document.\n\nThe due date text \"2026-02-22\" will be stored in due_date_as_written. Currency is USD.\n\nThe three line items have no amounts shown, so those fields will be null. Subtotal is 5500.00, tax is 440.00, and total is 5940.00. Shipping is null and payment terms are Net 30."
+    }
+   }
+  ],
+  "created": 1795570795,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_c60958d81f66f847",
+  "usage": {
+   "completion_tokens": 208,
+   "prompt_tokens": 2998,
+   "total_tokens": 3831,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 625,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2998
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 31504400
+  }
+ }
+}

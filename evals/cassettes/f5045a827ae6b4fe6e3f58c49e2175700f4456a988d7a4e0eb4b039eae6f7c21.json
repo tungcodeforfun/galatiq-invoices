@@ -1,0 +1,51 @@
+{
+ "request_sha256": "f5045a827ae6b4fe6e3f58c49e2175700f4456a988d7a4e0eb4b039eae6f7c21",
+ "response": {
+  "id": "83f58afb-9a85-974a-a686-eae80187b12d",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"verdict\":\"accept\",\"objections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I need to review the VP's draft payment decision and identify what is wrong with it.\n\nThe invoice total is $9,975.00. F1 is a near-threshold finding. F2 is an OCR correction. F3 is a duplicate of paid INV 1012. The draft decision rejects the invoice based on F3. I am now checking the rules for objections.\n\nI checked the objection rules. The draft correctly rejects on F3, a reject-severity duplicate. No obvious error stands out yet.\n\nThe risk memo text is garbled but consistent with the vendor master. The OCR corrections were normalized correctly.\n\nLine item math checks out. The draft appears sound. The verdict should be accept with no objections."
+    }
+   }
+  ],
+  "created": 1795571591,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 11,
+   "prompt_tokens": 2482,
+   "total_tokens": 3859,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1366,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2482
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 39093200
+  }
+ }
+}

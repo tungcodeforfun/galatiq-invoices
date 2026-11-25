@@ -1,0 +1,51 @@
+{
+ "request_sha256": "58f2ec610536f499d49174be34d15d81f45e67329bac4dd9068aaa0e751d8adf",
+ "response": {
+  "id": "a6badeb8-e172-483a-8987-fb6f32304946",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"1002\",\"vendor\":\"Gadgets Co.\",\"invoice_date\":\"2026-01-30\",\"due_date\":\"2026-01-30\",\"due_date_as_written\":\"2026-01-30\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"GadgetX\",\"quantity\":20,\"unit_price\":750,\"amount\":null,\"note\":null}],\"subtotal\":null,\"tax\":null,\"shipping\":null,\"total\":15000.00,\"payment_terms\":\"Net 30\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract the invoice data from the document and format it as JSON.\n\nI parsed the invoice fields. The due date is a calendar date, so it belongs in `due_date` and `due_date_as_written` should be null.\n\nThe due date text \"2026-01-30\" belongs in `due_date_as_written`. The currency is USD.\n\nThe line item description is \"GadgetX\". The line total is null because the invoice omits it. Subtotal, tax, and shipping are also null. The total amount is 15000.00.\n\nPayment terms are \"Net 30\". Notes and revision are null. Corrections is an empty array."
+    }
+   }
+  ],
+  "created": 1795570576,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 133,
+   "prompt_tokens": 2820,
+   "total_tokens": 3950,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 997,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2820
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 36352800
+  }
+ }
+}

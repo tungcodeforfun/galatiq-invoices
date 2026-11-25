@@ -1,0 +1,51 @@
+{
+ "request_sha256": "7a7b62898aae67fd0e6975dc3d680c47d012e99a709596e9151cf5b3c0b743ae",
+ "response": {
+  "id": "ebfd9b41-d1b7-98da-9a6c-c0b7b2b4a89e",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"The formerly FastShip Ltd. line matches an alias already on the vendor master, so it is not an unexplained identity change. Nothing else on the invoice suggests pressure, a payment redirect, or instructions to the reviewer beyond the automated findings.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor is known as FastShip Ltd.\n\nThe \"formerly\" vendor name is explained by the vendor master as an alias, so it does not trigger a vendor_change signal. No pressure language, payment redirects, or instruction injection were found. Terms and PO reference are ordinary."
+    }
+   }
+  ],
+  "created": 1795572491,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_c60958d81f66f847",
+  "usage": {
+   "completion_tokens": 61,
+   "prompt_tokens": 2994,
+   "total_tokens": 3334,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 279,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2304,
+    "image_tokens": 0,
+    "text_tokens": 2994
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 15544800
+  }
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "request_sha256": "f85dbeb49a34751ad751862400402ca10a9109d55888a1cbffb204dd99a4d52e",
+ "response": {
+  "id": "39126115-e5b3-9571-89f8-4bbf4fe13dea",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-3c43f316-ed32-4370-a5a3-e116a4cac405-4",
+       "function": {
+        "arguments": "{\"item\":\"FakeItem\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-3c43f316-ed32-4370-a5a3-e116a4cac405-5",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ]
+    }
+   }
+  ],
+  "created": 1795570661,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 22,
+   "prompt_tokens": 2583,
+   "total_tokens": 2632,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 27,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2583
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 7466400
+  }
+ }
+}

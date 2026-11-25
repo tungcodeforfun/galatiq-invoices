@@ -1,0 +1,51 @@
+{
+ "request_sha256": "b126462f27f7fe6b54fe558ae2a23d45390f8f2468d2eccd1d43f11fe1bff95d",
+ "response": {
+  "id": "879072c1-f9ab-45c3-a8db-b27127d3b5c1",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"The invoice shows no pressure language, payment redirection, instruction injection, or conflicting vendor identity. Nothing beyond the automated duplicate finding warrants a separate fraud signal.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor is known with no aliases. It was first seen in 2023.\n\nThe invoice is a duplicate of a paid invoice. No pressure language, payment redirects, or deception indicators were found. The signals array should be empty and the level set to low."
+    }
+   }
+  ],
+  "created": 1795572863,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 44,
+   "prompt_tokens": 2626,
+   "total_tokens": 2840,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 170,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2048,
+    "image_tokens": 0,
+    "text_tokens": 2626
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 11777600
+  }
+ }
+}

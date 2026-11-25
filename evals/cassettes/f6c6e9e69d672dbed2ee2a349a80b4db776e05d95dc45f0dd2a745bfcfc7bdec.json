@@ -1,0 +1,51 @@
+{
+ "request_sha256": "f6c6e9e69d672dbed2ee2a349a80b4db776e05d95dc45f0dd2a745bfcfc7bdec",
+ "response": {
+  "id": "d61fc9fb-5bd0-9afc-a824-a7534ced8a8b",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"F1 is a reject-severity fraud finding: a non-matching sender is redirecting INV-2003 to a new bank account not on the vendor master. The payment gate blocks this invoice, and the high-risk memo independently requires rejection.\",\"finding_ids\":[\"F1\"]}],\"addressed_findings\":[\"F1\"],\"summary\":\"Reject INV-2003 ($3,500). A reject-severity fraud finding and a high-risk memo both flag a payment redirect from a sender that does not match Precision Parts Ltd.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I am evaluating whether to pay this invoice. The extracted data shows a non-matching sender redirecting payment to an unverified bank account."
+    }
+   }
+  ],
+  "created": 1795572206,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 125,
+   "prompt_tokens": 2385,
+   "total_tokens": 2710,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 200,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2385
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 16972800
+  }
+ }
+}

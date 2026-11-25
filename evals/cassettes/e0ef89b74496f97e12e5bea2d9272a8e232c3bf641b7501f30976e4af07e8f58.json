@@ -1,0 +1,60 @@
+{
+ "request_sha256": "e0ef89b74496f97e12e5bea2d9272a8e232c3bf641b7501f30976e4af07e8f58",
+ "response": {
+  "id": "785c22ef-ac10-43ec-a436-e764ab927d63",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-f4d420a0-8fa5-4b18-aa2d-cd71f88bfd76-0",
+       "function": {
+        "arguments": "{\"name\":\"Widgets Inc.\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I am reviewing the invoice for signs of deception."
+    }
+   }
+  ],
+  "created": 1795572829,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_c60958d81f66f847",
+  "usage": {
+   "completion_tokens": 13,
+   "prompt_tokens": 2191,
+   "total_tokens": 2443,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 239,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2191
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14164400
+  }
+ }
+}

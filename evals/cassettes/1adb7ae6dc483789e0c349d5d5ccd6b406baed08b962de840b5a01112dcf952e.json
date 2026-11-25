@@ -1,0 +1,51 @@
+{
+ "request_sha256": "1adb7ae6dc483789e0c349d5d5ccd6b406baed08b962de840b5a01112dcf952e",
+ "response": {
+  "id": "a358bfbf-01ee-41d8-9d22-607d4ec94305",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"INV-1101\",\"vendor\":\"Widgets Inc.\",\"invoice_date\":\"2026-02-05\",\"due_date\":\"2026-02-20\",\"due_date_as_written\":\"2026-02-20\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":10,\"unit_price\":250,\"amount\":null,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":5,\"unit_price\":500,\"amount\":null,\"note\":null}],\"subtotal\":5000,\"tax\":0,\"shipping\":null,\"total\":5000,\"payment_terms\":\"Net 15\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract the invoice data into the requested JSON schema.\n\nI need to decide whether to set due_date_as_written to null or preserve the exact text \"2026-02-20\". The schema says to use null if the date is not a calendar date, but the value appears to be a standard calendar date.\n\nValid calendar dates should populate both due_date and due_date_as_written. The null rule applies only to non-calendar date text.\n\nLine item amounts should be null since the document omits them. Notes are absent too. The subtotal is 5000.00.\n\nI will preserve the exact numeric values from the document, including decimals. The tax amount is 0.00, so tax should be 0 rather than null. Shipping, notes, revision, and corrections are absent and will be set to null."
+    }
+   }
+  ],
+  "created": 1795572228,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 158,
+   "prompt_tokens": 2934,
+   "total_tokens": 4140,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1048,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2934
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 38678400
+  }
+ }
+}

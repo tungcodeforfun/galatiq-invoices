@@ -1,0 +1,51 @@
+{
+ "request_sha256": "fbf844eb00de0398259f9c04075bffcda1d96dd56f9fe648e66979f79e60bffd",
+ "response": {
+  "id": "980a7bfe-d88a-43dd-80b2-67e298f9425a",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(line=1)\",\"resolve_item(line=2)\",\"resolve_item(line=3)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_stock(GadgetX)\",\"check_price(line=1)\",\"check_price(line=2)\",\"check_price(line=3)\",\"check_totals()\",\"check_duplicate()\",\"get_vendor(Precision Parts Ltd.)\"],\"concerns\":[\"INV-1004 is already PAID at 1890.00; this R1 states 5940.00 (tool delta 4050.00). Confirm whether only the incremental amount is payable so the original 1890.00 is not paid twice, and whether a PO amendment actually authorizes the added lines \u2014 the note claims one but no PO number is on the invoice.\",\"Shipping is blank and every line amount is blank; totals still reconciled only if shipping is treated as zero.\",\"GadgetX requested quantity equals stock on hand (5 of 5), so approval would clear that item.\"],\"summary\":\"All three lines matched the catalog at catalog prices, stock covers the summed quantities, and stated totals match the recomputed lines plus tax. The invoice is a revision of INV-1004, which the ledger already shows as PAID at a lower total.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks have completed. I will report the findings in JSON schema format.\n\nTools flagged a revision conflict: prior invoice INV-1004 was PAID for 1890. The delta is 4050. Shipping is null. Line amounts are null but totals reconcile. Tax of 440 on 5500 equals 8% and passes validation.\n\nGadgetX stock is exactly 5 and fully depleted. The revision notes cite a PO amendment. I am identifying concerns beyond the tool flags.\n\nThe null shipping amount is consistent with the total. The Net 30 due date aligns with the invoice date. Tools do not validate date relationships.\n\nThe approver should decide whether to pay the full 5940 or only the 4050 delta. They must also confirm if revising a paid invoice under the same number is appropriate.\n\nThe invoice notes cite a PO amendment but contain no PO number. Tools cannot verify whether that amendment exists."
+    }
+   }
+  ],
+  "created": 1795570807,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 289,
+   "prompt_tokens": 3272,
+   "total_tokens": 4308,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 747,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 3272
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 37508800
+  }
+ }
+}

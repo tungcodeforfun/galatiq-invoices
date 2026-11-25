@@ -1,0 +1,84 @@
+{
+ "request_sha256": "c186a3e0c54320db4fa935a44c74888e9c50d23eb64c4c9ddf9090866bf7ac85",
+ "response": {
+  "id": "828a558d-8881-99eb-9347-ba08c5a5b78a",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-a88fb38d-f128-4217-b97c-cc4af756ba63-5",
+       "function": {
+        "arguments": "{\"item\":\"WidgetA\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-a88fb38d-f128-4217-b97c-cc4af756ba63-6",
+       "function": {
+        "arguments": "{\"item\":\"WidgetB\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-a88fb38d-f128-4217-b97c-cc4af756ba63-7",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-a88fb38d-f128-4217-b97c-cc4af756ba63-8",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "I will complete all required checks."
+    }
+   }
+  ],
+  "created": 1795570977,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 43,
+   "prompt_tokens": 2494,
+   "total_tokens": 2613,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 76,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2494
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 8289200
+  }
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "request_sha256": "9d7c07900d937f37049ea7987c681edf41f5031e133bf517afff53910732f584",
+ "response": {
+  "id": "5a8aa5ad-41f8-9c5e-8a19-d7c980408e41",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(line 1)\",\"resolve_item(line 2)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_price(line 1)\",\"check_price(line 2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(\\\"\\\")\"],\"concerns\":[\"Line 1 quantity is negative (\u22125 WidgetA). check_stock returned ok only because \u22125 is below on-hand stock, so the sign itself was not treated as a problem. A negative quantity on a payable invoice may be a return, a credit, or an extraction error.\",\"Stated total is negative (\u2212250) and matches the recomputed line sum, so this may be a credit rather than an amount to pay. check_totals only flagged that the stated subtotal (1,000) does not match that line sum.\",\"No vendor name is on the invoice, so there is no payee to match even though prices matched the catalog and no duplicate was found. Due date, payment terms, shipping, and line amounts are also blank.\"],\"summary\":\"Both lines matched the catalog (WidgetA, WidgetB); unit prices match and stock checks passed, including a negative WidgetA quantity that was not flagged. Totals do not: lines and the stated total are \u2212250 while the subtotal says 1,000, the vendor field is empty, and the invoice is not a known duplicate.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I need to report my checks and any tool results that the tools themselves would not flag.\n\nTools flagged a total mismatch: line items sum to -250.00 while the subtotal is 1,000.00. Stock checks and price validations passed for both items. The negative quantity on WidgetA is unusual for an AP invoice and could indicate a credit or data error.\n\nThe negative total of -250 matches the line items exactly, so the tool did not flag it as a problem. The subtotal of 1,000 only reflects the positive line and ignores the negative quantity on WidgetA. Due date, payment terms, shipping, and line amounts are all null.\n\nThe stock check passed the negative quantity only because the requested amount was below available stock. It did not flag that a negative quantity does not reduce a purchase obligation or could indicate a return."
+    }
+   }
+  ],
+  "created": 1795571190,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 305,
+   "prompt_tokens": 3179,
+   "total_tokens": 4646,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1162,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 3179
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 45668800
+  }
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "request_sha256": "5f1d92c3e43d6e6c0b8f2faa4b964053271ac4da2bb196d4f0745259815e7f50",
+ "response": {
+  "id": "74da0def-02cf-4d74-ac0a-d0f89f808352",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"INV-1013\",\"vendor\":\"Atlas Industrial Supply\",\"invoice_date\":\"2026-01-24\",\"due_date\":\"2026-03-24\",\"due_date_as_written\":null,\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":15,\"unit_price\":250,\"amount\":3750,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":10,\"unit_price\":500,\"amount\":5000,\"note\":null},{\"description\":\"GadgetX\",\"quantity\":5,\"unit_price\":750,\"amount\":3750,\"note\":null},{\"description\":\"WidgetA\",\"quantity\":5,\"unit_price\":240,\"amount\":1200,\"note\":\"Volume discount\"},{\"description\":\"WidgetB\",\"quantity\":8,\"unit_price\":480,\"amount\":3840,\"note\":\"Volume discount\"},{\"description\":\"GadgetX\",\"quantity\":3,\"unit_price\":750,\"amount\":2250,\"note\":\"Expedited\"},{\"description\":\"WidgetA\",\"quantity\":2,\"unit_price\":250,\"amount\":500,\"note\":\"Replacement\"},{\"description\":\"GadgetX\",\"quantity\":1,\"unit_price\":750,\"amount\":750,\"note\":\"Sample\"}],\"subtotal\":21040,\"tax\":1472.8,\"shipping\":null,\"total\":22562.8,\"payment_terms\":\"Net 60\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract the invoice data into structured JSON.\n\nThe invoice INV-1013 from Atlas Industrial Supply is dated 2026-01-24 with a due date of 2026-03-24 and Net 60 terms. It contains eight line items across WidgetA, WidgetB, and GadgetX, with notes for volume discounts, expedited shipping, replacement, and sample. The subtotal is $21,040.00, tax is $1,472.80, and the grand total is $22,562.80.\n\nI am checking the schema rules for due dates. Since 2026-03-24 is a calendar date, it should be stored as due_date and its text as due_date_as_written.\n\nThe exact due date text will be stored in due_date_as_written. The YYYY-MM-DD value goes into due_date.\n\nI now realize the due date text is already in YYYY-MM-DD format, so both fields would contain the same value. The schema rule appears to reserve due_date_as_written specifically for non-calendar dates, making it null when the date is standard.\n\nI will set due_date_as_written to \"2026-03-24\" because the text is present. No corrections are needed. Shipping and revision fields will be null.\n\nNo free-text notes exist at the invoice level, so the notes field is null. The tax amount is 1472.80. I am deciding whether to include the 7% tax rate in the JSON.\n\nI will use plain numbers without currency symbols or thousands separators. Values like 3750.00 and 250.00 become 3750 and 250. The tax amount is 1472.8. The subtotal is 21040 and the grand total is 22562.8.\n\nThe corrections array will be empty. The \"Bulk Order Invoice\" header is not a structured field."
+    }
+   }
+  ],
+  "created": 1795571701,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 325,
+   "prompt_tokens": 2955,
+   "total_tokens": 4881,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1601,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2688,
+    "image_tokens": 0,
+    "text_tokens": 2955
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 45675600
+  }
+ }
+}

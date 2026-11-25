@@ -1,0 +1,51 @@
+{
+ "request_sha256": "6abf1dd0d395436d9bd2cecfc8f3187c11ff1437344b5d3aa60f6e146f465558",
+ "response": {
+  "id": "7e1b47bc-434c-968c-a5e0-b3747e76b3e2",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"resolve_item(2)\",\"resolve_item(3)\",\"resolve_item(4)\",\"resolve_item(5)\",\"resolve_item(6)\",\"resolve_item(7)\",\"resolve_item(8)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_stock(GadgetX)\",\"check_price(1)\",\"check_price(2)\",\"check_price(3)\",\"check_price(4)\",\"check_price(5)\",\"check_price(6)\",\"check_price(7)\",\"check_price(8)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Atlas Industrial Supply)\"],\"concerns\":[\"Same number and total were already REJECTED and returned to vendor; this copy does not look corrected.\",\"Shipping is blank, so the $50 total gap is not explained by a stated freight charge.\",\"Volume-discount notes apply only to lines 4 and 5 (still inside price tolerance); other WidgetA/WidgetB lines are at full catalog, and GadgetX is split across regular, expedited, and sample lines at the same unit price.\",\"due_date_as_written is null.\"],\"summary\":\"All eight lines matched the catalog. Tools flagged over-stock on WidgetA, WidgetB, and GadgetX, a $50 total overstatement, and an exact resubmission of rejected INV-1013. Prices were within tolerance, including the two discounted lines.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I need to report my checks and any tool results that the tools themselves would not flag.\n\nTools flagged a total mismatch of $50.00, a duplicate invoice number, and stock shortages for WidgetA, WidgetB, and GadgetX. Prices are within tolerance with volume discounts applied. I also noticed the due date may not align with the Net 60 payment terms.\n\nI considered calculating the due date manually, but I will not estimate or compute numbers myself. The tools flagged the invoice, so I should report only their findings.\n\nThe due_date_as_written field is null. Shipping is null in the data, but the tool treated it as zero for the total calculation. The invoice contains repeated lines for identical items with mixed prices and inconsistent volume discount notes.\n\nThe same invoice number and total were previously rejected with a return-to-vendor disposition. It is being resubmitted unchanged."
+    }
+   }
+  ],
+  "created": 1795571725,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 329,
+   "prompt_tokens": 3954,
+   "total_tokens": 5514,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1231,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 3200,
+    "image_tokens": 0,
+    "text_tokens": 3954
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 42391200
+  }
+ }
+}

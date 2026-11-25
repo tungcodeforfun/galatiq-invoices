@@ -1,0 +1,51 @@
+{
+ "request_sha256": "99e8296972fe0c43d4afdca553eec9769cedffca7f7194a798ba30557b65a3c5",
+ "response": {
+  "id": "f50f700e-3ac3-93f3-a010-b9c58eebfdcd",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"F1 is a reject finding: vendor name is missing, WidgetA quantity is -5, and the invoice total is -250. There is no payee and this is not a valid payable.\",\"finding_ids\":[\"F1\"]},{\"text\":\"F3 is a reject finding: lines compute to -250.00 (-5 \u00d7 250 + 2 \u00d7 500) but the subtotal is stated as 1,000.00, so the amount does not reconcile and cannot be paid.\",\"finding_ids\":[\"F3\"]},{\"text\":\"F2 warns there is no due date. That alone would not block payment, but it does not cure the reject findings. The risk memo is low and adds no offsetting comfort.\",\"finding_ids\":[\"F2\"]}],\"addressed_findings\":[\"F1\",\"F2\",\"F3\"],\"summary\":\"Reject INV-1009. Missing vendor, a negative quantity and total, and a subtotal that does not match the lines are hard stops; the missing due date and low risk memo do not make it payable.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I am acting as VP of Finance to decide whether to pay this invoice.\n\nThe invoice shows a missing vendor name and a negative line quantity of -5.0. The total is -250.0, which conflicts with the 1,000.00 subtotal. No due date or payment terms are present.\n\nThe reject finding blocks payment. The low-risk memo is acceptable. The invoice is under $10,000. I will reject it.\n\nThe rejection reasons are being structured with concrete findings. The missing vendor and negative quantity map to F1. The total mismatch maps to F3. The missing due date is noted as a warning.\n\nAll three findings will be listed in the addressed_findings field. The low-risk memo requires no special treatment beyond the reject findings."
+    }
+   }
+  ],
+  "created": 1795571218,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 240,
+   "prompt_tokens": 2239,
+   "total_tokens": 3999,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1520,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2239
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 45254000
+  }
+ }
+}

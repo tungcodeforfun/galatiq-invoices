@@ -1,0 +1,51 @@
+{
+ "request_sha256": "94a377d83ec91d6483b8a203f8ebc33a6042cb68e1e5ca3cde47dd82d975b3c7",
+ "response": {
+  "id": "c9333eb0-db0b-4c94-b851-234fc4e66755",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"F1 is a reject-severity total mismatch: line items sum to $21,040.00 and tax is $1,472.80, so lines + tax equal $22,512.80, but the invoice total is $22,562.80 ($50.00 high). Payment cannot go out on a total that does not reconcile.\",\"finding_ids\":[\"F1\"]},{\"text\":\"F2, F3, and F4 are reject-severity stock breaches on every SKU: WidgetA 22 requested vs 15 in stock, WidgetB 18 vs 10, and GadgetX 9 vs 5. Those quantities cannot be paid.\",\"finding_ids\":[\"F2\",\"F3\",\"F4\"]},{\"text\":\"The risk memo is low: no pressure language, payment redirection, instruction injection, or conflicting vendor identity, and Atlas Industrial Supply is on file (first seen 2024-08-09). That low memo does not outweigh or cure the reject findings on an invoice over $10,000.\",\"finding_ids\":[\"F1\",\"F2\",\"F3\",\"F4\"]}],\"addressed_findings\":[\"F1\",\"F2\",\"F3\",\"F4\"],\"summary\":\"Reject INV-1013 ($22,562.80). The stated total is $50 over lines plus tax, and WidgetA, WidgetB, and GadgetX all exceed stock; the low risk memo and known vendor do not clear those blocks.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor is known and on file since 2024-08-09. No aliases or earlier invoices were found.\n\nThe reject findings block payment. I will structure the rejection with concrete reasons, cite each finding ID, and list all four findings in addressed_findings.\n\nF1 shows a $50 total mismatch: line items and tax sum to $22,512.80, but the invoice total is $22,562.80. F2 through F4 each flag stock exceeded for WidgetA, WidgetB, and GadgetX.\n\nPolicy mandates rejection for reject-severity findings, so no override is possible. The low risk memo does not cure the total mismatch or stock issues. I will cite all four findings in the finding_ids field.\n\nThe schema likely permits an empty finding_ids array. I will weave the risk memo into reasons that cite the findings."
+    }
+   }
+  ],
+  "created": 1795572585,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 323,
+   "prompt_tokens": 3213,
+   "total_tokens": 4196,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 660,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 3213
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 36026400
+  }
+ }
+}

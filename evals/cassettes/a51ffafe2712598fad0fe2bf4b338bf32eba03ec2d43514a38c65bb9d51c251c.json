@@ -1,0 +1,51 @@
+{
+ "request_sha256": "a51ffafe2712598fad0fe2bf4b338bf32eba03ec2d43514a38c65bb9d51c251c",
+ "response": {
+  "id": "f3ab75a7-757c-4da4-98fa-65e6f240d190",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"approve\",\"reasons\":[{\"text\":\"Widgets Inc. is on file since 2023-03-01. Line items reconcile (10\u00d7250 + 5\u00d7500 = 5,000) and match subtotal and total. No automated findings; risk memo is low. Earlier INV-1001 for the same amount is PAYMENT_FAILED, so this is a retry of an unpaid invoice, not a second payment of a settled one.\",\"finding_ids\":[]}],\"addressed_findings\":[],\"summary\":\"Approve INV-1001 for $5,000 to Widgets Inc. Amounts check out, the vendor is known, risk is low, and the prior same-numbered invoice failed payment rather than settling.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor is known and first appeared on 2023-03-01.\n\nAn earlier invoice with the same number shows a failed payment status. No findings block payment, and the low risk level is acceptable.\n\nThe prior failed payment might indicate a resubmission or a duplicate invoice number.\n\nThe prior failure likely reflects a bank issue rather than fraud. The invoice itself contains no duplicate or suspicious text. Math checks out.\n\nThe prior invoice with the same number was PAYMENT_FAILED, not PAID. This means the payment never actually went through. Approving this resubmission is reasonable because it would be the first successful payment attempt.\n\nThe prior invoice shows no disposition, confirming it was not rejected. No findings were considered, so addressed_findings should be empty. The earlier failed payment will be noted in the reasons."
+    }
+   }
+  ],
+  "created": 1795572909,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 156,
+   "prompt_tokens": 2432,
+   "total_tokens": 3618,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 1030,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2176,
+    "image_tokens": 0,
+    "text_tokens": 2432
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 29634400
+  }
+ }
+}

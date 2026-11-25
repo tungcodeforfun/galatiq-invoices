@@ -1,0 +1,51 @@
+{
+ "request_sha256": "79d5b7c5dbcbe26d66ca683300d1b5ec73635b938825785819e9a1576fb747eb",
+ "response": {
+  "id": "38cb15c1-30ce-9443-857f-d062a5009c85",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(1)\",\"resolve_item(2)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_price(1)\",\"check_price(2)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Summit Manufacturing Co.)\"],\"concerns\":[\"Vendor is known since 2023-04-22 but the ledger lists no earlier invoices, so there is no payment history to compare.\"],\"summary\":\"INV-1011 from Summit Manufacturing Co. matched WidgetA and WidgetB exactly; stock, prices, totals, and duplicate checks all came back clean.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks passed. I will report the verification results and any tool findings.\n\nWidgetA and WidgetB both match the extracted line items exactly. Stock levels cover the requested quantities. Unit prices align with the invoice. Totals reconcile correctly. No duplicates were found. The vendor is known and has no aliases.\n\nThe vendor has no prior invoices in the ledger. This is a data gap rather than a tool error."
+    }
+   }
+  ],
+  "created": 1795571345,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 136,
+   "prompt_tokens": 2982,
+   "total_tokens": 3557,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 439,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2560,
+    "image_tokens": 0,
+    "text_tokens": 2982
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 18951600
+  }
+ }
+}

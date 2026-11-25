@@ -1,0 +1,51 @@
+{
+ "request_sha256": "92fbfba84da07771b3a605588471a8a8213b82501ea95ffe74aa2bb3cad67118",
+ "response": {
+  "id": "6aa89933-595d-4c7a-98a9-942df09a630b",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"The invoice has no pressure language, payment-redirect instructions, reviewer-directed text, or conflicting vendor identity beyond the missing name already flagged. Nothing in the document itself adds a fraud signal past the automated data-integrity and total findings.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I am reviewing this invoice as a fraud analyst. The automated checks reveal several red flags: a missing vendor name, a negative line quantity, and a total that conflicts with the subtotal.\n\nI will prepare a RiskMemo JSON response. I must avoid restating any finding already covered by the automated checks.\n\nNo pressure language, payment redirects, instruction injection, or vendor changes appear in the document. The empty payment terms and lack of urgency signals also do not indicate deception.\n\nThe risk level is low. No additional signals are needed. The summary will be brief."
+    }
+   }
+  ],
+  "created": 1795571211,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 61,
+   "prompt_tokens": 2249,
+   "total_tokens": 2872,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 562,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2249
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 22127200
+  }
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "request_sha256": "218b16c4ccf8e2a7a4d5e6cb6524067b30aad2ad11c69623cc90f919a89d0516",
+ "response": {
+  "id": "7b30e682-bfd6-92f2-9209-aca92eae9984",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-7e1f2e96-d3ac-404f-925c-598f383ca7d2-6",
+       "function": {
+        "arguments": "{\"item\":\"WidgetA\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-7e1f2e96-d3ac-404f-925c-598f383ca7d2-7",
+       "function": {
+        "arguments": "{\"item\":\"WidgetB\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-7e1f2e96-d3ac-404f-925c-598f383ca7d2-8",
+       "function": {
+        "arguments": "{\"item\":\"GadgetX\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-7e1f2e96-d3ac-404f-925c-598f383ca7d2-9",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-7e1f2e96-d3ac-404f-925c-598f383ca7d2-10",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-7e1f2e96-d3ac-404f-925c-598f383ca7d2-11",
+       "function": {
+        "arguments": "{\"line\":3}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "All three invoice line items matched the provided list."
+    }
+   }
+  ],
+  "created": 1795572385,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 65,
+   "prompt_tokens": 2787,
+   "total_tokens": 2900,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 48,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2048,
+    "image_tokens": 0,
+    "text_tokens": 2787
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 10812000
+  }
+ }
+}

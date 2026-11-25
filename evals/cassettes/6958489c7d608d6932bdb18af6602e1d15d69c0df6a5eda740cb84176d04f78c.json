@@ -1,0 +1,83 @@
+{
+ "request_sha256": "6958489c7d608d6932bdb18af6602e1d15d69c0df6a5eda740cb84176d04f78c",
+ "response": {
+  "id": "48242618-4e5b-931e-a630-7e8dc1e80f6b",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-e219623b-9a0b-4e25-b198-0082abc246ab-5",
+       "function": {
+        "arguments": "{\"item\":\"WidgetA\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-e219623b-9a0b-4e25-b198-0082abc246ab-6",
+       "function": {
+        "arguments": "{\"item\":\"GadgetX\"}",
+        "name": "check_stock"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-e219623b-9a0b-4e25-b198-0082abc246ab-7",
+       "function": {
+        "arguments": "{\"line\":1}",
+        "name": "check_price"
+       },
+       "type": "function"
+      },
+      {
+       "id": "call-e219623b-9a0b-4e25-b198-0082abc246ab-8",
+       "function": {
+        "arguments": "{\"line\":2}",
+        "name": "check_price"
+       },
+       "type": "function"
+      }
+     ]
+    }
+   }
+  ],
+  "created": 1795572091,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 44,
+   "prompt_tokens": 2808,
+   "total_tokens": 2882,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 30,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2808
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14728800
+  }
+ }
+}

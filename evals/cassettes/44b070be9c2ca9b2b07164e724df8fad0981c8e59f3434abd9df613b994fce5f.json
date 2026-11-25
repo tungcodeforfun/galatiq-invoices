@@ -1,0 +1,51 @@
+{
+ "request_sha256": "44b070be9c2ca9b2b07164e724df8fad0981c8e59f3434abd9df613b994fce5f",
+ "response": {
+  "id": "24c3b5e8-8ed7-4676-b4c7-6ccf6b009e64",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"INV 1012\",\"vendor\":\"QuickShip Distributers\",\"invoice_date\":\"2026-01-26\",\"due_date\":\"2026-02-25\",\"due_date_as_written\":\"25-Feb-2026\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"Widget A\",\"quantity\":12,\"unit_price\":250,\"amount\":3000,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":7,\"unit_price\":500,\"amount\":3500,\"note\":null},{\"description\":\"Gadget X\",\"quantity\":4,\"unit_price\":750,\"amount\":3000,\"note\":null}],\"subtotal\":9500,\"tax\":475,\"shipping\":null,\"total\":9975,\"payment_terms\":\"Net 30\",\"notes\":\"Ref PO-20260115. Deliver to warehouse dock B. Contact Jim at ext 4421 with questions.\",\"revision\":null,\"corrections\":[{\"field\":\"invoice_date\",\"as_written\":\"26-Jan-2O26\",\"normalized\":\"2026-01-26\"},{\"field\":\"line_items[1].amount\",\"as_written\":\"$3,500.O0\",\"normalized\":\"3500.00\"}]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract the invoice data into a structured JSON format.\n\nI parsed the invoice fields. The document shows QuickShip Distributers as the vendor, INV 1012 dated 26-Jan-2O26 with a due date of 25-Feb-2026, and ACME Corp as the recipient. Three line items are present: Widget A (12 @ $250), WidgetB (7 @ $500), and Gadget X (4 @ $750). Subtotal is $9,500.00, tax is $475.00, and total is $9,975.00. Notes reference PO-20260115 and warehouse dock B. Terms are Net 30.\n\nI will follow the formatting rules. Missing values become null. Numbers are plain numbers without currency symbols or separators. Dates use YYYY-MM-DD. A due date that is not a calendar date becomes null and its original text goes in due_date_as_written. Misprints like the letter O in WidgetB's total are corrected to the intended value with an exact quote. Each line item stays on one line with the description exactly as written.\n\nCurrency is USD. The vendor is QuickShip Distributers. Notes are verbatim. Invoice number is INV 1012. I will not correct the vendor spelling.\n\nThe invoice date 26-Jan-2O26 is corrected to 2026-01-26.\n\nThe due date 25-Feb-2026 is a valid calendar date, so it normalizes to 2026-02-25. The as_written field should still capture the original text even for valid dates.\n\nNo line-item notes are present. Shipping is null. The notes field will preserve the original text verbatim, including its line breaks.\n\nThe wrapped note text will be joined into a single continuous sentence rather than preserving line breaks. The revision field is null because the document does not indicate a revision.\n\nThe corrected amount for WidgetB will be normalized to \"3500.00\". Unit prices without decimals, such as $250, remain as plain numbers. The invoice number is extracted exactly as written, including the space.\n\nThe WidgetB amount will be quoted exactly as `$3,500.O0`, including the dollar sign. The due date text is present in the document, so `due_date_as_written` will be populated with `25-Feb-2026`.\n\nThe notes field will contain only the message text, omitting the \"NOTES:\" label.\n\nThe invoice date will be recorded as a single correction, since the letter O is the only misprint. The WidgetB description contains no space and will be preserved exactly as written."
+    }
+   }
+  ],
+  "created": 1795571498,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 274,
+   "prompt_tokens": 2971,
+   "total_tokens": 7062,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 3817,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2971
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 97784000
+  }
+ }
+}

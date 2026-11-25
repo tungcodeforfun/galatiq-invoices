@@ -1,0 +1,51 @@
+{
+ "request_sha256": "8fb22f5625710c5a1555b4dd36f1177b60b59060b821a39bade641e278f21c8b",
+ "response": {
+  "id": "cfc6aca8-4d7c-4234-9563-eafb2b7bf0c0",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"disposition\":\"void\",\"reasoning\":\"INV-1001 from Widgets Inc. is rejected under F1 because it matches the vendor, lines, and $5,000 total of INV-1001, which is already paid. A confirmed duplicate must not be paid or resubmitted. Disposition is void so the invoice cannot come back.\",\"vendor_reply\":null}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The rejected invoice will be closed out.\n\nF1 is a duplicate. The policy requires a void disposition, so vendor_reply will be null."
+    }
+   }
+  ],
+  "created": 1795572957,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 76,
+   "prompt_tokens": 1984,
+   "total_tokens": 2316,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 256,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 1984
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 14388800
+  }
+ }
+}

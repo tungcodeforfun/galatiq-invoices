@@ -1,0 +1,51 @@
+{
+ "request_sha256": "deb1dc2f905e6aa109fdbc56278606147013a7529ab3f7162d990474d3c26078",
+ "response": {
+  "id": "11379e65-7acc-4ac5-ab85-5a1fa60641be",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"invoice_number\":\"INV-1011\",\"vendor\":\"Summit Manufacturing Co.\",\"invoice_date\":\"2026-01-20\",\"due_date\":\"2026-02-20\",\"due_date_as_written\":\"2026-02-20\",\"currency\":\"USD\",\"line_items\":[{\"description\":\"WidgetA\",\"quantity\":6,\"unit_price\":250,\"amount\":1500,\"note\":null},{\"description\":\"WidgetB\",\"quantity\":3,\"unit_price\":500,\"amount\":1500,\"note\":null}],\"subtotal\":3000,\"tax\":0,\"shipping\":null,\"total\":3000,\"payment_terms\":\"Net 30\",\"notes\":null,\"revision\":null,\"corrections\":[]}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "I will extract the invoice data into structured JSON.\n\nThe invoice contains two line items: WidgetA (6 units at $250.00) and WidgetB (3 units at $500.00). Subtotal, tax, and total are all $3,000.00. Dates are in YYYY-MM-DD format.\n\nThe due date text will be stored in due_date_as_written. The structured due_date field will contain the parsed calendar date."
+    }
+   }
+  ],
+  "created": 1795571367,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 161,
+   "prompt_tokens": 2879,
+   "total_tokens": 3498,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 458,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2879
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 26329600
+  }
+ }
+}

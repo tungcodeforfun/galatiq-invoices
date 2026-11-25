@@ -1,0 +1,51 @@
+{
+ "request_sha256": "de67e5bc0366a982b99b84a531dd21ff8199d067144f0e361c97054bc65e2117",
+ "response": {
+  "id": "0d097550-43ce-4292-8e56-6dcd5bc5864a",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"action\":\"reject\",\"reasons\":[{\"text\":\"F1 is a reject-severity duplicate: same vendor, line items, and $5,000 total as INV-1001, which is already PAID. The payment gate blocks this invoice regardless of any other factor.\",\"finding_ids\":[\"F1\"]}],\"addressed_findings\":[\"F1\"],\"summary\":\"Reject INV-1101. It duplicates paid invoice INV-1001 (same vendor, lines, and $5,000 total), and that reject-severity finding blocks payment. Vendor is on file; the low risk memo does not change the duplicate block.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "The vendor is known. INV-1001 was paid for the same total of $5000."
+    }
+   }
+  ],
+  "created": 1795572264,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 134,
+   "prompt_tokens": 2623,
+   "total_tokens": 2910,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 153,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2623
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 17816000
+  }
+ }
+}

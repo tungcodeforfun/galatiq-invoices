@@ -1,0 +1,60 @@
+{
+ "request_sha256": "b8d6b32cd9048420be654eca5de067a1b22ac705a0ae19324de13e50f6d0b0c1",
+ "response": {
+  "id": "79011b7f-48e4-9b61-80e2-a7b8c5da07cc",
+  "choices": [
+   {
+    "finish_reason": "tool_calls",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": [
+      {
+       "id": "call-067fb525-cfa5-4796-aced-eee55879d783-0",
+       "function": {
+        "arguments": "{\"name\":\"Acme Industrial Supplies\"}",
+        "name": "get_vendor"
+       },
+       "type": "function"
+      }
+     ],
+     "reasoning_content": "The user wants to know whether to pay a vendor invoice."
+    }
+   }
+  ],
+  "created": 1795571003,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_b507827d1c19f448",
+  "usage": {
+   "completion_tokens": 14,
+   "prompt_tokens": 2186,
+   "total_tokens": 2428,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 228,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1152,
+    "image_tokens": 0,
+    "text_tokens": 2186
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 13926400
+  }
+ }
+}

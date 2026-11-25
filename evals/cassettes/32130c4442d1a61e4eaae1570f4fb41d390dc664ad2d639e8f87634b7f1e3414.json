@@ -1,0 +1,51 @@
+{
+ "request_sha256": "32130c4442d1a61e4eaae1570f4fb41d390dc664ad2d639e8f87634b7f1e3414",
+ "response": {
+  "id": "917123e4-a3c6-92f2-a6d0-3e400659da3e",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"checks_run\":[\"resolve_item(line 1)\",\"resolve_item(line 2)\",\"resolve_item(line 3)\",\"check_stock(WidgetA)\",\"check_stock(WidgetB)\",\"check_stock(GadgetX)\",\"check_price(line 1)\",\"check_price(line 2)\",\"check_price(line 3)\",\"check_totals\",\"check_duplicate\",\"get_vendor(Summit Manufacturing Co.)\"],\"concerns\":[\"Vendor history lists INV-1011 twice with conflicting outcomes (PAID, and REJECTED with disposition void). That is not this invoice, and check_duplicate found no match for INV-2001, but the ledger row looks inconsistent.\",\"WidgetB quantity equals on-hand stock exactly (10 of 10). check_stock still returned ok, so fulfilling this invoice would leave zero of that item.\"],\"summary\":\"INV-2001 from Summit Manufacturing Co. matched WidgetA, WidgetB, and GadgetX exactly; prices, stock, totals, and duplicate checks all passed with no tool-flagged problems. The only items for the approver are a contradictory prior INV-1011 in the vendor history and WidgetB consuming the entire on-hand quantity.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "All checks are complete. I will report the findings and any issues the tools did not flag.\n\nThe vendor is known. Invoice INV-1011 appears twice in earlier records with conflicting statuses, but the current invoice has no duplicate match. Tax is null while shipping is 500; totals check out because tax was treated as zero.\n\nStock levels are tight but the tools passed all checks. WidgetB would exactly deplete its stock, though the tools did not flag this.\n\nThe duplicate INV-1011 entry is a prior ledger data quality issue, not a problem with this invoice. The due date of March 4 correctly follows the Net 30 payment terms."
+    }
+   }
+  ],
+  "created": 1795572017,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 265,
+   "prompt_tokens": 3179,
+   "total_tokens": 4080,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 636,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 2816,
+    "image_tokens": 0,
+    "text_tokens": 3179
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 25636000
+  }
+ }
+}

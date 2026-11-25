@@ -1,0 +1,51 @@
+{
+ "request_sha256": "db51e35bfce02d40e40bbd7c24d1609aa91794199d5f5b01425fff28f033ef5d",
+ "response": {
+  "id": "f8add5da-b6ee-9412-a251-c3a829c40feb",
+  "choices": [
+   {
+    "finish_reason": "stop",
+    "index": 0,
+    "logprobs": null,
+    "message": {
+     "content": "{\"level\":\"low\",\"signals\":[],\"summary\":\"The invoice is from known vendor Widgets Inc. and contains no pressure language, payment-redirect instructions, reviewer-directed text, or conflicting vendor identity. Nothing beyond the automated findings suggests deception or manipulation.\"}",
+     "refusal": null,
+     "role": "assistant",
+     "annotations": null,
+     "audio": null,
+     "function_call": null,
+     "tool_calls": null,
+     "reasoning_content": "Vendor history shows no aliases or earlier invoices. The vendor was first known on 2023-03-01.\n\nNo fraud signals were found. The invoice contains no pressure language, payment redirects, instruction injection, or vendor changes."
+    }
+   }
+  ],
+  "created": 1795572647,
+  "model": "grok-4.7",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": "default",
+  "system_fingerprint": "fp_bc4243bed6",
+  "usage": {
+   "completion_tokens": 54,
+   "prompt_tokens": 2508,
+   "total_tokens": 2834,
+   "completion_tokens_details": {
+    "accepted_prediction_tokens": 0,
+    "audio_tokens": 0,
+    "reasoning_tokens": 272,
+    "rejected_prediction_tokens": 0,
+    "text_tokens": null
+   },
+   "prompt_tokens_details": {
+    "audio_tokens": 0,
+    "cache_write_tokens": null,
+    "cached_tokens": 1920,
+    "image_tokens": 0,
+    "text_tokens": 2508
+   },
+   "num_sources_used": 0,
+   "cost_in_usd_ticks": 13912800
+  }
+ }
+}
