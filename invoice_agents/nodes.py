@@ -8,6 +8,7 @@ from typing import Any, TypedDict
 
 from langchain_core.runnables import RunnableConfig
 
+from invoice_agents import fallback
 from invoice_agents.agents import approver, critic, intake, payment, resolution, risk, validator
 from invoice_agents.db import Store
 from invoice_agents.llm import LLM
@@ -128,19 +129,12 @@ def after_check(state: State, config: RunnableConfig) -> str:
     return "unreadable"
 
 
-def _needs_model(deps: Deps, what: str, by_hand: str, source: str, subject: str) -> Finding:
-    """Manual entry because no model answered for part of the run; the message says what to do in this mode."""
-    then = (f"no API key is set. {by_hand} by hand, or set XAI_API_KEY (export XAI_API_KEY=your-key) and "
-            "process it again." if deps.llm.mode == "replay" else
-            f"Grok did not answer. {by_hand} by hand, or process it again.")
-    return deps.policy.finding("NEEDS_MODEL", f"{what} needs Grok, and {then}", source, subject=subject)
-
-
 def unreadable_node(state: State, config: RunnableConfig) -> State:
     """Record why the document could not be read: a layout the rules can't read is entered by hand."""
     deps = _deps(config)
     if "intake" in state.get("degraded", []):
-        finding = _needs_model(deps, "Reading this layout", "Enter the invoice", "extraction_check", "unreadable")
+        finding = fallback.needs_model(deps.policy, deps.llm.mode != "replay", "Reading this layout",
+                                       "Enter the invoice", "extraction_check", "unreadable")
     else:
         finding = deps.policy.finding("UNREADABLE", "Could not extract a consistent invoice: "
                                       + "; ".join(state["extraction_errors"]), "extraction_check", subject="unreadable")
@@ -248,15 +242,11 @@ def gate_node(state: State, config: RunnableConfig) -> State:
     if NO_MODEL in result.blocked_by and not any(f.severity == Severity.REJECT for f in findings):
         warned = ", ".join(f"{f.id} {f.code}" for f in findings if f.severity == Severity.WARN)
         passed = f"Every check passed except warnings: {warned}." if warned else "Every check passed."
-        findings = _numbered(findings + [_needs_model(deps, f"{passed} Approval needs the VP review, which",
-                                                      "Approve it", "policy_gate", "approval")])
+        findings = _numbered(findings + [fallback.needs_model(
+            deps.policy, deps.llm.mode != "replay", f"{passed} Approval needs the VP review, which", "Approve it",
+            "policy_gate", "approval")])
     deps.log.emit("stage", agent="policy_gate", **result.model_dump(), decision=decision.action)
     return {"gate": result, "findings": findings}
-
-
-def after_gate(state: State) -> str:
-    """Pay only what the gate passed."""
-    return "payment" if state["gate"].approved else "resolution"
 
 
 def payment_node(state: State, config: RunnableConfig) -> State:
@@ -296,17 +286,12 @@ def resolution_node(state: State, config: RunnableConfig) -> State:
 def record_node(state: State, config: RunnableConfig) -> State:
     """Write the ledger row, the outcome event, report.md and state.json."""
     deps, invoice, outcome = _deps(config), state.get("invoice"), state["outcome"]
-    catalog = deps.store.catalog()
-    deps.store.record_invoice(
-        number=invoice.invoice_number if invoice else None,
-        number_key=number_key(invoice.invoice_number) if invoice else "",
-        vendor=invoice.vendor if invoice else None,
-        vendor_key=text_key(invoice.vendor) if invoice else "",
-        content_hash=content_hash(invoice, catalog) if invoice else "",
-        status=outcome.status, disposition=outcome.disposition, total=invoice.total if invoice else None,
-        currency=invoice.currency if invoice else None, source_file=Path(state["path"]).name,
-        run_id=deps.log.run_id, lines=[li.model_dump() for li in invoice.line_items] if invoice else [],
-    )
+    facts = dict(number=invoice.invoice_number, number_key=number_key(invoice.invoice_number), vendor=invoice.vendor,
+                 vendor_key=text_key(invoice.vendor), content_hash=content_hash(invoice, deps.store.catalog()),
+                 total=invoice.total, currency=invoice.currency, lines=[li.model_dump() for li in invoice.line_items],
+                 ) if invoice else dict(number_key="", vendor_key="", content_hash="")
+    deps.store.record_invoice(**facts, status=outcome.status, disposition=outcome.disposition,
+                              source_file=Path(state["path"]).name, run_id=deps.log.run_id)
     deps.log.emit("outcome", **outcome.model_dump(), degraded=state.get("degraded", []), **deps.log.totals())
     write_report(deps.log, dict(state))
     save_state(deps.log, dict(state))

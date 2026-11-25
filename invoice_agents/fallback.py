@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 from typing import Literal
 
+from invoice_agents.policy import Policy
 from invoice_agents.rules import INSTRUCTION_LIKE, ocr_digits
 from invoice_agents.schema import (
     AgentDisposition,
@@ -146,3 +147,11 @@ def notice(agents: list[str], live: bool, reset: str = "`python main.py reset`")
                 f"{RULES_NEVER_PAY} Set XAI_API_KEY to have Grok read it.")
     return (f"No recording exists for this ledger state, so {steps} used built-in rules. {RULES_NEVER_PAY} "
             f"{reset} replays Grok's recorded answers, or set XAI_API_KEY.")
+
+
+def needs_model(policy: Policy, live: bool, what: str, by_hand: str, source: str, subject: str) -> Finding:
+    """Manual entry because no model answered for part of the run; the message says what to do in this mode."""
+    then = (f"Grok did not answer. {by_hand} by hand, or process it again." if live else
+            f"no API key is set. {by_hand} by hand, or set XAI_API_KEY (export XAI_API_KEY=your-key) and "
+            "process it again.")
+    return policy.finding("NEEDS_MODEL", f"{what} needs Grok, and {then}", source, subject=subject)

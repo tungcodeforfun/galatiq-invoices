@@ -33,7 +33,7 @@ def build_graph() -> Any:
     g.add_edge("risk", "approver")
     g.add_conditional_edges("approver", nodes.after_approver)
     g.add_conditional_edges("critic", nodes.after_critic)
-    g.add_conditional_edges("gate", nodes.after_gate)
+    g.add_conditional_edges("gate", lambda s: "payment" if s["gate"].approved else "resolution")
     g.add_edge("payment", "record")
     g.add_edge("resolution", "record")
     g.add_edge("record", END)
