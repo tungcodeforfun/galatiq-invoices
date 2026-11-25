@@ -9,7 +9,8 @@ from invoice_agents.policy import Policy
 from invoice_agents.schema import Finding, Invoice
 from invoice_agents.tools import text_key
 
-NUMBER = re.compile(r"\d[\d,]*(?:\.\d+)?")
+NUMBER = re.compile(r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?")
+PLAIN_NUMBER = re.compile(r"\d+(?:\.\d+)?")
 
 INSTRUCTION_LIKE = re.compile(
     r"ignore (?:all |any |the )?(?:previous|prior|above|earlier|your) (?:instructions|rules|checks)"
@@ -28,9 +29,11 @@ def ocr_digits(text: str) -> str:
 
 
 def numbers_in(text: str) -> set[float]:
-    """Every number written in the text, raw and with OCR letter fixes."""
-    found = NUMBER.findall(text) + NUMBER.findall(ocr_digits(text))
-    return {float(n.replace(",", "")) for n in found if n.replace(",", "").replace(".", "").isdigit()}
+    """Every number written in the text, raw and with OCR letter fixes, read with and without thousands commas."""
+    found: list[str] = []
+    for variant in (text, ocr_digits(text)):
+        found += NUMBER.findall(variant) + PLAIN_NUMBER.findall(variant)
+    return {float(n.replace(",", "")) for n in found}
 
 
 def extraction_errors(invoice: Invoice, source: str) -> list[str]:

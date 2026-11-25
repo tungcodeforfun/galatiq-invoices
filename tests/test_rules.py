@@ -15,6 +15,12 @@ def test_values_that_appear_in_the_document_trace():
     assert extraction_errors(invoice, DOC) == []
 
 
+def test_csv_separators_are_not_read_as_thousands_commas():
+    row = "INV-1007,MegaWidgets Corp,01/28/2026,02/28/2026,WidgetA,20,250.00,5000.00\nTotal:,5000.00"
+    invoice = make_invoice([("WidgetA", 20, 250)], vendor="MegaWidgets Corp", number="INV-1007")
+    assert extraction_errors(invoice, row) == []
+
+
 def test_an_invented_number_is_sent_back():
     invoice = make_invoice([("WidgetA", 2, 250), ("WidgetB", 1, 500)], tax=80.0)
     assert extraction_errors(invoice, DOC) == ["tax 80 does not appear in the document; use null if it is not written"]
