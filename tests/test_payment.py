@@ -1,4 +1,4 @@
-"""Unit tests for the payment agent: idempotency, retry, and no double payment after a failure."""
+"""Unit tests for the payment agent: idempotency, retrying declines, and no double payment after a failure."""
 
 from __future__ import annotations
 
@@ -9,24 +9,27 @@ from invoice_agents.agents import payment
 
 
 class Bank:
-    """Stands in for the external banking API: fails a set number of times, then succeeds."""
+    """Stands in for the external banking API: declines a set number of times, then succeeds."""
 
-    def __init__(self, failures: int = 0):
-        self.failures = failures
+    def __init__(self, declines: int = 0, timeout: bool = False):
+        self.declines = declines
+        self.timeout = timeout
         self.paid: list[tuple[str, float]] = []
 
     def __call__(self, vendor: str, amount: float) -> dict:
-        if self.failures:
-            self.failures -= 1
-            raise ConnectionError("bank timeout")
+        if self.timeout:
+            raise TimeoutError("bank did not answer")
+        if self.declines:
+            self.declines -= 1
+            return {"status": "declined"}
         self.paid.append((vendor, amount))
         return {"status": "success"}
 
 
 @pytest.fixture
 def bank(monkeypatch):
-    def install(failures: int = 0) -> Bank:
-        fake = Bank(failures)
+    def install(declines: int = 0, timeout: bool = False) -> Bank:
+        fake = Bank(declines, timeout)
         monkeypatch.setattr(payment, "mock_payment", fake)
         return fake
     return install
@@ -40,8 +43,8 @@ def test_pays_once_and_refuses_the_same_key_again(store, policy, bank):
     assert fake.paid == [("Widgets Inc.", 500.0)]
 
 
-def test_transient_failure_is_retried_to_one_payment(store, policy, bank):
-    fake = bank(failures=2)
+def test_declines_are_retried_to_one_payment(store, policy, bank):
+    fake = bank(declines=2)
     result = payment.pay(store, make_invoice([("WidgetA", 2, 250)]), "k2", policy)
     assert (result.status, result.attempts) == ("success", 3)
     assert len(fake.paid) == 1
@@ -49,13 +52,22 @@ def test_transient_failure_is_retried_to_one_payment(store, policy, bank):
 
 def test_exhausted_retries_fail_and_a_later_run_pays_exactly_once(store, policy, bank):
     invoice = make_invoice([("WidgetA", 2, 250)])
-    bank(failures=99)
+    bank(declines=99)
     assert payment.pay(store, invoice, "k3", policy).status == "failed"
     assert store.payment("k3")["status"] == "failed"
     recovered = bank()
     assert payment.pay(store, invoice, "k3", policy).status == "success"
     assert payment.pay(store, invoice, "k3", policy).status == "already_paid"
     assert len(recovered.paid) == 1
+
+
+def test_a_timeout_is_not_retried_and_blocks_later_runs(store, policy, bank):
+    invoice = make_invoice([("WidgetA", 2, 250)])
+    bank(timeout=True)
+    assert (payment.pay(store, invoice, "k5", policy).attempts, store.payment("k5")["status"]) == (1, "pending")
+    recovered = bank()
+    assert payment.pay(store, invoice, "k5", policy).status == "blocked"
+    assert recovered.paid == []
 
 
 def test_an_attempt_with_no_recorded_result_is_not_retried_blindly(store, policy, bank):

@@ -1,4 +1,4 @@
-"""Payment agent: the only holder of mock_payment. Runs after the gate, idempotent, retries, never pays twice."""
+"""Payment agent: the only holder of mock_payment. Runs after the gate, retries declines, never pays twice."""
 
 from __future__ import annotations
 
@@ -34,7 +34,7 @@ def pay(store: Store, invoice: Invoice, key: str, policy: Policy) -> Payment:
         return Payment(status="blocked", idempotency_key=key, amount=amount, attempts=existing["attempts"],
                        detail="an earlier attempt has no recorded result; reconcile with the bank first")
     attempts = existing["attempts"] if existing else 0
-    detail = ""
+    result: dict[str, Any] = {}
     for _ in range(policy.payment_attempts):
         attempts += 1
         # Written before the call: if the process dies mid-call, the next run sees "pending" and stops.
@@ -42,10 +42,12 @@ def pay(store: Store, invoice: Invoice, key: str, policy: Policy) -> Payment:
         try:
             result = mock_payment(vendor, amount)
         except Exception as exc:
-            result, detail = {"status": "error"}, f"{type(exc).__name__}: {exc}"
+            # A timeout or dropped connection may still have moved money; only a reconciled answer may retry.
+            return Payment(status="blocked", idempotency_key=key, amount=amount, attempts=attempts,
+                           detail=f"{type(exc).__name__}: {exc}; result unknown, reconcile with the bank first")
         if result.get("status") == "success":
             store.save_payment(key, number, vendor, amount, "success", attempts)
             return Payment(status="success", idempotency_key=key, amount=amount, attempts=attempts)
         store.save_payment(key, number, vendor, amount, "failed", attempts)
-        detail = detail or f"bank returned {result}"
-    return Payment(status="failed", idempotency_key=key, amount=amount, attempts=attempts, detail=detail)
+    return Payment(status="failed", idempotency_key=key, amount=amount, attempts=attempts,
+                   detail=f"bank declined {attempts} times: {result}")
