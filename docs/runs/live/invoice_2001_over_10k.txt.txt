@@ -1,0 +1,18 @@
+data/invoices_extra/invoice_2001_over_10k.txt  grok-4.7 · live · run 
+20261125-015958-invoice_2001_over_10k-aaaf
+  ✓ Intake      INV-2001 · Summit Manufacturing Co. · 3 lines · 12000.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   12 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: approve
+  ✓ Critic      accept
+  ✓ Gate        pass
+Paid 12000.0 to Summit Manufacturing Co.
+  ✓ Payment     success · 12,000.00 · attempt 1
+╭─ PAID ───────────────────────────────────────────────────────────────────────────────────────────╮
+│ Paid 12,000.00 to Summit Manufacturing Co.: Approve INV-2001 for $12,000. Known vendor, low-risk │
+│ memo, line math and Net 30 terms check out, and no findings block payment.                       │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+80.1s · 9 model calls (live) · 14 tool calls · 23727 tokens · $0.0190 · log 
+runs/20261125-015958-invoice_2001_over_10k-aaaf/events.jsonl · 
+runs/20261125-015958-invoice_2001_over_10k-aaaf/report.md

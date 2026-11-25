@@ -1,0 +1,20 @@
+data/invoices_extra/invoice_2004_resubmitted.json  grok-4.7 · replay · run 
+20261125-020701-invoice_2004_resubmitted-de04
+  ✓ Intake      INV-1101 · Widgets Inc. · 2 lines · 5000.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   9 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: reject
+  ✓ Critic      accept
+  ✓ Gate        blocked: approver rejected
+  ✓ Resolution  void
+ ID  Code       Severity  Finding                                         
+ F1  DUPLICATE  reject    Same vendor, lines and total as INV-1001 (PAID) 
+╭─ REJECTED · void ────────────────────────────────────────────────────────────────────────────────╮
+│ INV-1101 is rejected under finding F1 as a duplicate of INV-1001, which is already PAID, with    │
+│ the same vendor, line items, and $5,000 total. Policy requires void for duplicates so the        │
+│ invoice cannot be resubmitted. The payment gate blocks this invoice regardless of other factors. │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+0.0s · 9 model calls (replay) · 10 tool calls · 22768 tokens · $0.0178 recorded · log 
+runs/20261125-020701-invoice_2004_resubmitted-de04/events.jsonl · 
+runs/20261125-020701-invoice_2004_resubmitted-de04/report.md

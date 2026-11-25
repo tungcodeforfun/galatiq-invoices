@@ -1,0 +1,20 @@
+data/invoices/invoice_1010.txt  grok-4.7 · live · run 20261125-014756-invoice_1010-aabd
+  ✓ Intake      INV-1010 · Consolidated Materials Group · 4 lines · 7185.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   14 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: approve
+  ✓ Critic      accept
+  ✓ Gate        pass
+Paid 7185.0 to Consolidated Materials Group
+  ✓ Payment     success · 7,185.00 · attempt 1
+ ID  Code            Severity  Finding                                           
+ F1  PRICE_VARIANCE  warn      Line 4 WidgetA at 300.00 vs catalog 250.00 (+20%) 
+╭─ PAID ───────────────────────────────────────────────────────────────────────────────────────────╮
+│ Paid 7,185.00 to Consolidated Materials Group: Approve INV-1010 for $7,185. The only finding is  │
+│ a +20% WidgetA rush-order price warning, which the invoice itself explains, and the vendor is on │
+│ file with a low risk memo.                                                                       │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+59.8s · 9 model calls (live) · 16 tool calls · 24328 tokens · $0.0180 · log 
+runs/20261125-014756-invoice_1010-aabd/events.jsonl · 
+runs/20261125-014756-invoice_1010-aabd/report.md

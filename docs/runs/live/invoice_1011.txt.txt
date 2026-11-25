@@ -1,0 +1,19 @@
+data/invoices/invoice_1011.txt  grok-4.7 · live · run 20261125-014926-invoice_1011-e106
+  ✓ Intake      INV-1011 · Summit Manufacturing Co. · 2 lines · 3000.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   9 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: reject
+  ✓ Critic      accept
+  ✓ Gate        blocked: approver rejected
+  ✓ Resolution  void
+ ID  Code       Severity  Finding                                         
+ F1  DUPLICATE  reject    Same vendor, lines and total as INV-1011 (PAID) 
+╭─ REJECTED · void ────────────────────────────────────────────────────────────────────────────────╮
+│ F1 is a reject-severity duplicate: this invoice matches the vendor, lines, and total of          │
+│ INV-1011, which is already paid. A duplicate must not be paid again and must not be returned for │
+│ resubmission. Disposition is void under policy for F1.                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+44.4s · 8 model calls (live) · 9 tool calls · 20057 tokens · $0.0145 · log 
+runs/20261125-014926-invoice_1011-e106/events.jsonl · 
+runs/20261125-014926-invoice_1011-e106/report.md

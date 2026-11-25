@@ -1,0 +1,30 @@
+data/invoices/invoice_1016.json  grok-4.7 · replay · run 20261125-020658-invoice_1016-07ac
+  ✓ Intake      INV-1016 · Widgets Inc. · 3 lines · 3233.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   10 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: reject
+  ✓ Critic      accept
+  ✓ Gate        blocked: approver rejected
+  ✓ Resolution  return_to_vendor
+ ID  Code          Severity  Finding                                   
+ F1  UNKNOWN_ITEM  reject    'WidgetC' is not in the inventory catalog 
+╭─ REJECTED · return_to_vendor ────────────────────────────────────────────────────────────────────╮
+│ Invoice INV-1016 is rejected under finding F1 because line item WidgetC is an unknown item not   │
+│ in the inventory catalog. Unknown items can be corrected and resubmitted, so policy requires     │
+│ return_to_vendor rather than void. A corrected invoice must omit or replace WidgetC and          │
+│ recalculate the related amounts.                                                                 │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Draft reply to vendor ──────────────────────────────────────────────────────────────────────────╮
+│ Hello Widgets Inc. billing team,                                                                 │
+│                                                                                                  │
+│ We cannot process invoice INV-1016 as submitted. Line item WidgetC (quantity 3 at $350.00,       │
+│ amount $1,050.00) is not a recognized catalog item. Please resubmit a corrected invoice that     │
+│ removes WidgetC or replaces it with a valid item, and that recalculates the subtotal (currently  │
+│ $3,050.00), tax (currently $183.00), and total (currently $3,233.00) accordingly.                │
+│                                                                                                  │
+│ Thank you.                                                                                       │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+0.0s · 9 model calls (replay) · 11 tool calls · 23172 tokens · $0.0183 recorded · log 
+runs/20261125-020658-invoice_1016-07ac/events.jsonl · 
+runs/20261125-020658-invoice_1016-07ac/report.md

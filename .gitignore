@@ -4,8 +4,7 @@ __pycache__/
 .env
 inventory.db
 *.db
-runs/
+/runs/
 .mypy_cache/
 .ruff_cache/
 .pytest_cache/
-tasks/

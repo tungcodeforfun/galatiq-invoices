@@ -1,0 +1,30 @@
+data/invoices/invoice_1004_revised.json  grok-4.7 · replay · run 
+20261125-020646-invoice_1004_revised-d435
+  ✓ Intake      INV-1004 · Precision Parts Ltd. · 3 lines · 5940.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   12 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: reject
+  ✓ Critic      accept
+  ✓ Gate        blocked: approver rejected
+  ✓ Resolution  return_to_vendor
+ ID  Code               Severity  Finding                                                           
+ F1  REVISION_CONFLICT  reject    INV-1004 was already PAID at 1,890.00; this version totals        
+                                  5,940.00 (+4,050.00)                                              
+╭─ REJECTED · return_to_vendor ────────────────────────────────────────────────────────────────────╮
+│ Finding F1 is a reject-severity revision conflict: INV-1004 was already paid at $1,890.00, and   │
+│ this revision totals $5,940.00, an increase of $4,050.00. Policy requires return_to_vendor when  │
+│ a revision conflicts with one already processed, so the vendor may correct and resubmit rather   │
+│ than having the invoice voided.                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Draft reply to vendor ──────────────────────────────────────────────────────────────────────────╮
+│ Hello Precision Parts Ltd. billing team, we cannot process revised invoice INV-1004 (revision    │
+│ R1, dated 2026-01-22). INV-1004 was already paid at $1,890.00, and this revision totals          │
+│ $5,940.00, which is $4,050.00 higher, so it conflicts with the invoice already processed. Please │
+│ do not resubmit INV-1004 as a revision of the paid invoice. If the additional charges are valid, │
+│ send them on a new invoice number with the line items, quantities, unit prices, subtotal, tax,   │
+│ and total that support only the unpaid amount. Thank you.                                        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+0.0s · 10 model calls (replay) · 14 tool calls · 26481 tokens · $0.0204 recorded · log 
+runs/20261125-020646-invoice_1004_revised-d435/events.jsonl · 
+runs/20261125-020646-invoice_1004_revised-d435/report.md

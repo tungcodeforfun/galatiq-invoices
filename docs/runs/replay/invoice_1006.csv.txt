@@ -1,0 +1,16 @@
+data/invoices/invoice_1006.csv  grok-4.7 · replay · run 20261125-020648-invoice_1006-1892
+  ✓ Intake      INV-1006 · Acme Industrial Supplies · 2 lines · 2750.0 
+  ✓ Check       every value traces to the document
+  ✓ Validator   9 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: approve
+  ✓ Gate        pass
+Paid 2750.0 to Acme Industrial Supplies
+  ✓ Payment     success · 2,750.00 · attempt 1
+╭─ PAID ───────────────────────────────────────────────────────────────────────────────────────────╮
+│ Paid 2,750.00 to Acme Industrial Supplies: Approve INV-1006 for $2,750. Known vendor, totals tie │
+│ out, no findings, and a low-risk memo.                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+0.1s · 8 model calls (replay) · 11 tool calls · 20415 tokens · $0.0151 recorded · log 
+runs/20261125-020648-invoice_1006-1892/events.jsonl · 
+runs/20261125-020648-invoice_1006-1892/report.md

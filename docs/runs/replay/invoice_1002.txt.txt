@@ -1,0 +1,30 @@
+data/invoices/invoice_1002.txt  grok-4.7 · replay · run 20261125-020644-invoice_1002-10e3
+  ✓ Intake      1002 · Gadgets Co. · 1 lines · 15000.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   6 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: reject
+  ✓ Critic      accept
+  ✓ Gate        blocked: approver rejected
+  ✓ Resolution  return_to_vendor
+ ID  Code            Severity  Finding                                                 
+ F1  DATE_ODDITY     warn      Due 2026-01-30 is not after the invoice date 2026-01-30 
+ F2  STOCK_EXCEEDED  reject    GadgetX: 20 requested across 1 line(s), 5 in stock      
+╭─ REJECTED · return_to_vendor ────────────────────────────────────────────────────────────────────╮
+│ Invoice 1002 is returned under F2 because it bills 20 units of GadgetX, a quantity over what we  │
+│ can accept (5 in stock), so it must not be paid as submitted. F1 is also cited: the due date     │
+│ equals the invoice date (2026-01-30) and does not match the stated Net 30 terms, and that date   │
+│ should be corrected on resubmission. There is no duplicate, corrupt data, or fraud signal that   │
+│ would require voiding.                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Draft reply to vendor ──────────────────────────────────────────────────────────────────────────╮
+│ Dear Gadgets Co. billing team, we are returning invoice 1002 (dated 2026-01-30, total            │
+│ $15,000.00) for correction and cannot process it as submitted. The GadgetX line bills a quantity │
+│ of 20 at $750.00, which is more than we can accept; please resubmit a corrected invoice with a   │
+│ reduced quantity and a matching line amount and total. The due date is written as 2026-01-30,    │
+│ the same day as the invoice date, which does not match the stated Net 30 terms; please set the   │
+│ due date to 30 days after the invoice date. Thank you.                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+0.0s · 8 model calls (replay) · 6 tool calls · 20014 tokens · $0.0197 recorded · log 
+runs/20261125-020644-invoice_1002-10e3/events.jsonl · 
+runs/20261125-020644-invoice_1002-10e3/report.md

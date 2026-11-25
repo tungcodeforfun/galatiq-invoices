@@ -1,0 +1,31 @@
+data/invoices/invoice_1007.csv  grok-4.7 · replay · run 20261125-020649-invoice_1007-c71f
+  ✓ Intake      INV-1007 · MegaWidgets Corp · 3 lines · 15525.0 
+  ✓ Check       every value traces to the document
+  ✓ Validator   12 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: reject
+  ✓ Critic      accept
+  ✓ Gate        blocked: approver rejected
+  ✓ Resolution  return_to_vendor
+ ID  Code            Severity  Finding                                                            
+ F1  TOTAL_MISMATCH  reject    lines + tax + shipping = 15,635.00, total says 15,525.00 (-110.00) 
+ F2  STOCK_EXCEEDED  reject    WidgetA: 20 requested across 1 line(s), 15 in stock                
+ F3  STOCK_EXCEEDED  reject    WidgetB: 15 requested across 1 line(s), 10 in stock                
+╭─ REJECTED · return_to_vendor ────────────────────────────────────────────────────────────────────╮
+│ INV-1007 is rejected under F1 because line items of 14,750.00 plus tax of 885.00 equal           │
+│ 15,635.00, while the stated total is 15,525.00, short by 110.00. F2 and F3 are also reject       │
+│ findings: WidgetA quantity 20 exceeds the 15 units in stock, and WidgetB quantity 15 exceeds the │
+│ 10 units in stock. These totals and quantities can be corrected and resubmitted, so the invoice  │
+│ is returned to the vendor rather than voided.                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Draft reply to vendor ──────────────────────────────────────────────────────────────────────────╮
+│ Dear MegaWidgets Corp billing team, we cannot process invoice INV-1007 as submitted. The line    │
+│ items total 14,750.00 and tax is 885.00, which sum to 15,635.00, but the invoice total is        │
+│ 15,525.00 (short by 110.00). Please send a corrected invoice whose total equals the sum of the   │
+│ line amounts and tax. Also, the WidgetA quantity of 20 and the WidgetB quantity of 15 exceed the │
+│ quantities we can accept; please reduce those quantities and recalculate the related line        │
+│ amounts, tax, and total. Thank you, Acme Corp Accounts Payable                                   │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+0.0s · 9 model calls (replay) · 13 tool calls · 24448 tokens · $0.0227 recorded · log 
+runs/20261125-020649-invoice_1007-c71f/events.jsonl · 
+runs/20261125-020649-invoice_1007-c71f/report.md

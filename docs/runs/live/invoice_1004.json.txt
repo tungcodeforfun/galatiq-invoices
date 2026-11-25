@@ -1,0 +1,16 @@
+data/invoices/invoice_1004.json  grok-4.7 · live · run 20261125-013900-invoice_1004-1b08
+  ✓ Intake      INV-1004 · Precision Parts Ltd. · 2 lines · 1890.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   9 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: approve
+  ✓ Gate        pass
+Paid 1890.0 to Precision Parts Ltd.
+  ✓ Payment     success · 1,890.00 · attempt 1
+╭─ PAID ───────────────────────────────────────────────────────────────────────────────────────────╮
+│ Paid 1,890.00 to Precision Parts Ltd.: Approve INV-1004 for $1,890. Known vendor, low-risk memo, │
+│ totals reconcile, and automated checks found nothing to block payment.                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+53.4s · 8 model calls (live) · 11 tool calls · 20944 tokens · $0.0159 · log 
+runs/20261125-013900-invoice_1004-1b08/events.jsonl · 
+runs/20261125-013900-invoice_1004-1b08/report.md

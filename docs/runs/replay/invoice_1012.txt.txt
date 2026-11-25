@@ -1,0 +1,23 @@
+data/invoices/invoice_1012.txt  grok-4.7 · replay · run 20261125-020654-invoice_1012-2551
+  ✓ Intake      INV 1012 · QuickShip Distributers · 3 lines · 9975.0 USD
+  ✓ Check       every value traces to the document
+  ✓ Validator   12 tool calls so far
+  ✓ Risk        low · 0 signal(s)
+  ✓ VP          draft 1: reject
+  ✓ Critic      accept
+  ✓ Gate        blocked: approver rejected
+  ✓ Resolution  void
+ ID  Code            Severity  Finding                                                              
+ F1  NEAR_THRESHOLD  info      Total 9,975.00 sits just under the 10,000 approval line              
+ F2  OCR_CORRECTED   info      invoice_date: '26-Jan-2O26' read as '2026-01-26';                    
+                               line_items[1].amount: '$3,500.O0' read as '3500.00'                  
+ F3  DUPLICATE       reject    Same vendor, lines and total as INV 1012 (PAID)                      
+╭─ REJECTED · void ────────────────────────────────────────────────────────────────────────────────╮
+│ This invoice is voided because F3 identifies it as a duplicate of INV 1012, already PAID, with   │
+│ the same vendor, lines, and total. F1 (total 9,975.00 just under the 10,000 approval line) and   │
+│ F2 (OCR normalizations of the invoice date and a line amount) are informational and do not       │
+│ repair the duplicate. A duplicate must not be resubmitted, so the disposition is void.           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+0.0s · 9 model calls (replay) · 13 tool calls · 24679 tokens · $0.0290 recorded · log 
+runs/20261125-020654-invoice_1012-2551/events.jsonl · 
+runs/20261125-020654-invoice_1012-2551/report.md
