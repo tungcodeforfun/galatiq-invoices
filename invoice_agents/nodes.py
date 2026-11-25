@@ -246,7 +246,9 @@ def gate_node(state: State, config: RunnableConfig) -> State:
     result = gate(decision, findings, state["invoice"].total, state.get("critiques", []),  # type: ignore[union-attr]
                   unchecked, bool(state.get("degraded")), deps.policy)
     if NO_MODEL in result.blocked_by and not any(f.severity == Severity.REJECT for f in findings):
-        findings = _numbered(findings + [_needs_model(deps, "Every check passed. Approval needs the VP review, which",
+        warned = ", ".join(f"{f.id} {f.code}" for f in findings if f.severity == Severity.WARN)
+        passed = f"Every check passed except warnings: {warned}." if warned else "Every check passed."
+        findings = _numbered(findings + [_needs_model(deps, f"{passed} Approval needs the VP review, which",
                                                       "Approve it", "policy_gate", "approval")])
     deps.log.emit("stage", agent="policy_gate", **result.model_dump(), decision=decision.action)
     return {"gate": result, "findings": findings}

@@ -184,6 +184,18 @@ def test_structured_files_never_recorded_are_read_and_held_for_approval_without_
     assert "resolution" not in state and Store(tmp_path / "t.db").payments() == []
 
 
+def test_no_key_names_the_warnings_that_still_stand_when_holding_for_approval(tmp_path, monkeypatch):
+    monkeypatch.setenv("LLM_MODE", "replay")
+    path = tmp_path / "price_rise.json"
+    path.write_text('{"invoice_number": "WI-5121", "vendor": "Widgets Inc.", "invoice_date": "2026-03-02", '
+                    '"due_date": "2026-04-01", "currency": "USD", "payment_terms": "Net 30",\n'
+                    ' "line_items": [{"item": "WidgetA", "quantity": 2, "unit_price": 275.0, "amount": 550.0}],\n'
+                    ' "total": 550.0}\n')
+    state = run(path, tmp_path / "t.db")
+    assert (state["outcome"].status, state["outcome"].disposition) == ("REJECTED", "manual_entry")
+    assert state["outcome"].summary.startswith("Every check passed except warnings: F1 PRICE_VARIANCE. ")
+
+
 def test_a_layout_the_rules_cannot_read_is_held_for_manual_entry_without_a_vendor_email(tmp_path, monkeypatch):
     monkeypatch.setenv("LLM_MODE", "replay")
     path = tmp_path / "invoice.md"
