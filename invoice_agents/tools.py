@@ -259,6 +259,8 @@ class ToolBox:
     def get_vendor(self, name: str) -> dict[str, Any]:
         """Vendor master record and earlier invoices; an unknown vendor is noted, never blocked."""
         key = text_key(name)
+        if not key:
+            return {"known": False, "name": name, "note": "the invoice names no vendor"}
         match = next(
             (v for v in self.store.vendors() if key in {text_key(v["name"]), *map(text_key, v["aliases"])}), None
         )
@@ -274,29 +276,22 @@ class ToolBox:
         return {"known": True, "name": match["name"], "aliases": match["aliases"],
                 "first_seen": match["first_seen"], "earlier_invoices": history}
 
+    def _signature(self, tool: str, args: dict[str, Any]) -> tuple[str, str | None]:
+        if tool == "check_stock":
+            return tool, resolve_item(args.get("item", ""), self.catalog)[0]
+        return tool, None if tool == "get_vendor" else json.dumps(args, sort_keys=True)
+
     def missing_checks(self) -> list[tuple[str, dict[str, Any]]]:
         """Checks the coverage rule requires that have not run yet."""
-        ran = {(c["tool"], json.dumps(c["args"], sort_keys=True)) for c in self.calls if "error" not in c["result"]}
         required: list[tuple[str, dict[str, Any]]] = []
-        items: list[str] = []
         for n, li in enumerate(self.invoice.line_items, 1):
-            required.append(("resolve_item", {"line": n}))
             item, _ = resolve_item(li.description, self.catalog)
-            if item:
-                required.append(("check_price", {"line": n}))
-                if item not in items:
-                    items.append(item)
-        required += [("check_stock", {"item": i}) for i in items]
+            required += [("resolve_item", {"line": n})] + ([("check_price", {"line": n})] if item else [])
+            if item and ("check_stock", {"item": item}) not in required:
+                required.append(("check_stock", {"item": item}))
         required += [("check_totals", {}), ("check_duplicate", {}), ("get_vendor", {"name": self.invoice.vendor or ""})]
-        done_stock = {
-            resolve_item(c["args"].get("item", ""), self.catalog)[0] for c in self.calls if c["tool"] == "check_stock"
-        }
-        return [
-            (tool, args) for tool, args in required
-            if (tool, json.dumps(args, sort_keys=True)) not in ran
-            and not (tool == "check_stock" and args["item"] in done_stock)
-            and not (tool == "get_vendor" and any(c["tool"] == "get_vendor" for c in self.calls))
-        ]
+        ran = {self._signature(c["tool"], c["args"]) for c in self.calls if "error" not in c["result"]}
+        return [(tool, args) for tool, args in required if self._signature(tool, args) not in ran]
 
     def run_missing(self) -> list[tuple[str, dict[str, Any]]]:
         """Run every check the agent skipped, in code, and return what had to be run."""

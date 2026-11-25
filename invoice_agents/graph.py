@@ -17,16 +17,7 @@ from invoice_agents.loaders import UnreadableDocument, file_digest, read_documen
 from invoice_agents.observability import RunLog, save_state, write_report
 from invoice_agents.policy import GateResult, Policy, gate
 from invoice_agents.rules import extraction_errors, invoice_findings
-from invoice_agents.schema import (
-    Critique,
-    Decision,
-    Finding,
-    Invoice,
-    Outcome,
-    Payment,
-    Resolution,
-    RiskMemo,
-)
+from invoice_agents.schema import Critique, Decision, Finding, Invoice, Outcome, Payment, Resolution, RiskMemo
 from invoice_agents.tools import ToolBox, content_hash, number_key, text_key
 
 
@@ -155,7 +146,10 @@ def coverage_node(state: State, config: RunnableConfig) -> State:
 
 
 def after_coverage(state: State, config: RunnableConfig) -> str:
-    return "validator" if _toolbox(state, _deps(config)).missing_checks() else "risk"
+    deps = _deps(config)
+    if state["coverage_rounds"] >= deps.policy.max_rounds:
+        return "risk"
+    return "validator" if _toolbox(state, deps).missing_checks() else "risk"
 
 
 def risk_node(state: State, config: RunnableConfig) -> State:
