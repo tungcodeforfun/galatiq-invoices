@@ -101,19 +101,10 @@ class ToolBox:
     def specs(self, names: list[str]) -> list[dict[str, Any]]:
         """OpenAI-style function specs for the named tools."""
         return [
-            {
-                "type": "function",
-                "function": {
-                    "name": name,
-                    "description": TOOL_SPECS[name]["description"],
-                    "parameters": {
-                        "type": "object",
-                        "properties": TOOL_SPECS[name]["parameters"],
-                        "required": list(TOOL_SPECS[name]["parameters"]),
-                        "additionalProperties": False,
-                    },
-                },
-            }
+            {"type": "function", "function": {
+                "name": name, "description": TOOL_SPECS[name]["description"],
+                "parameters": {"type": "object", "properties": TOOL_SPECS[name]["parameters"],
+                               "required": list(TOOL_SPECS[name]["parameters"]), "additionalProperties": False}}}
             for name in names
         ]
 

@@ -54,6 +54,7 @@ def _flatten(text: str) -> str:
     lines: list[str] = []
 
     def walk(node: Any, key: str = "") -> None:
+        """Emit 'key: value' lines; a dict holding an item and a quantity becomes one line-item row."""
         if isinstance(node, dict):
             if {"item", "quantity"} <= node.keys() or {"name", "quantity"} <= node.keys():
                 name = node.get("item") or node.get("name")

@@ -30,10 +30,12 @@ class Score:
 
     @property
     def missing(self) -> list[str]:
+        """Required finding codes the run did not raise."""
         return [c for c in self.expected.get("findings", []) if c not in self.codes]
 
     @property
     def passed(self) -> bool:
+        """Outcome, disposition, amount and required findings all match."""
         e = self.expected
         return (
             self.outcome == e["outcome"]

@@ -27,9 +27,13 @@ class ModelUnavailable(Exception):
 class Tools(Protocol):
     """What the tool loop needs from a toolbox."""
 
-    def specs(self, names: list[str]) -> list[dict[str, Any]]: ...
+    def specs(self, names: list[str]) -> list[dict[str, Any]]:
+        """Function specs for the named tools."""
+        ...
 
-    def call(self, name: str, args: dict[str, Any], by: str = "agent") -> dict[str, Any]: ...
+    def call(self, name: str, args: dict[str, Any], by: str = "agent") -> dict[str, Any]:
+        """Run one tool and return its JSON-safe result."""
+        ...
 
 
 def request_key(model: str, messages: list[dict[str, Any]], tools: list[dict[str, Any]], response_format: Any) -> str:
@@ -68,6 +72,7 @@ class LLM:
 
     @property
     def client(self) -> Any:
+        """OpenAI SDK client pointed at xAI, created on first live call."""
         if self._client is None:
             from openai import OpenAI
 

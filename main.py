@@ -14,8 +14,9 @@ from rich.panel import Panel
 from rich.table import Table
 
 from invoice_agents.db import DEFAULT_DB, Store
-from invoice_agents.graph import Deps, State, stream
+from invoice_agents.graph import stream
 from invoice_agents.llm import LLM
+from invoice_agents.nodes import Deps, State
 from invoice_agents.observability import RunLog
 from invoice_agents.policy import load_policy
 
@@ -151,6 +152,7 @@ def run_batch(paths: list[Path], db: Path, console: Console) -> list[tuple[Path,
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Parse the command line and run the chosen command."""
     parser = argparse.ArgumentParser(description="Acme Corp invoice processing agents")
     parser.add_argument("command", nargs="?", choices=["run", "batch", "eval", "reset", "demo"], default="run")
     parser.add_argument("target", nargs="?", help="invoice file for run, folder for batch")
