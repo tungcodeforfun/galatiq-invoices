@@ -111,12 +111,13 @@ def intake_node(state: State, config: RunnableConfig) -> State:
 def check_node(state: State, config: RunnableConfig) -> State:
     """Extraction check: every value must trace to the document; once it does, apply the code-only rules."""
     deps, invoice = _deps(config), state.get("invoice")
+    read_by_rules = "intake" in state.get("degraded", [])
     no_text = ["the document could not be read"]
     errors = no_text if invoice is None else extraction_errors(invoice, state["source"])
     deps.log.emit("stage", agent="extraction_check", errors=errors)
     if errors or invoice is None:
         return {"extraction_errors": errors}
-    return {"extraction_errors": [], "findings": invoice_findings(invoice, state["source"], deps.policy)}
+    return {"extraction_errors": [], "findings": invoice_findings(invoice, state["source"], deps.policy, read_by_rules)}
 
 
 def after_check(state: State, config: RunnableConfig) -> str:

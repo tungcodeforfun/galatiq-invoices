@@ -72,22 +72,32 @@ def _parse(value: str | None) -> date | None:
         return None
 
 
-def _integrity_problems(invoice: Invoice) -> list[str]:
+def _integrity_problems(invoice: Invoice, read_by_rules: bool) -> list[str]:
     problems = []
-    if not (invoice.vendor or "").strip():
+    if not (invoice.vendor or "").strip() and not read_by_rules:
         problems.append("vendor name is missing")
-    if not (invoice.invoice_number or "").strip():
+    if not (invoice.invoice_number or "").strip() and not read_by_rules:
         problems.append("invoice number is missing")
     if not invoice.line_items:
         problems.append("no line items")
     for n, li in enumerate(invoice.line_items, 1):
-        if li.quantity is None or li.quantity <= 0:
+        if li.quantity is not None and li.quantity <= 0:
             problems.append(f"line {n} quantity is {li.quantity}")
         if li.unit_price is not None and li.unit_price < 0:
             problems.append(f"line {n} unit price is negative")
-    if invoice.total is None or invoice.total <= 0:
+    if invoice.total is not None and invoice.total <= 0:
         problems.append(f"total is {invoice.total}")
     return problems
+
+
+def _unread_values(invoice: Invoice, read_by_rules: bool) -> list[str]:
+    """Blank values nothing could read: a number written in words, or a vendor only in a letterhead the rules skip."""
+    unread = [f"the quantity on line {n}" for n, li in enumerate(invoice.line_items, 1) if li.quantity is None]
+    unread += ["the total"] if invoice.total is None else []
+    if read_by_rules:
+        unread += ["the vendor name"] if not (invoice.vendor or "").strip() else []
+        unread += ["the invoice number"] if not (invoice.invoice_number or "").strip() else []
+    return unread
 
 
 def _date_problem(invoice: Invoice) -> str | None:
@@ -103,12 +113,16 @@ def _date_problem(invoice: Invoice) -> str | None:
     return None
 
 
-def invoice_findings(invoice: Invoice, source: str, policy: Policy) -> list[Finding]:
-    """Findings that need only the invoice itself and policy: integrity, currency, threshold, dates, injection."""
+def invoice_findings(invoice: Invoice, source: str, policy: Policy, read_by_rules: bool = False) -> list[Finding]:
+    """Findings that need only the invoice itself and policy: integrity, unread values, currency, dates, injection."""
     found: list[Finding] = []
-    problems = _integrity_problems(invoice)
+    problems = _integrity_problems(invoice, read_by_rules)
     if problems:
         found.append(policy.finding("DATA_INTEGRITY", "; ".join(problems), "rules", subject="integrity"))
+    unread = _unread_values(invoice, read_by_rules)
+    if unread:
+        found.append(policy.finding("UNREAD_VALUE", f"Could not read {', '.join(unread)} from the document. Enter "
+                                    "the invoice by hand.", "rules", subject="unread"))
 
     currency = (invoice.currency or "USD").upper()
     if currency not in policy.currencies:

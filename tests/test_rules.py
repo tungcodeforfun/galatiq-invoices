@@ -41,6 +41,16 @@ def test_negative_quantity_and_missing_vendor_are_data_integrity(policy):
     assert codes(invoice, "", policy) == ["DATA_INTEGRITY"]
 
 
+def test_a_value_nobody_could_read_is_held_for_manual_entry_not_voided(policy):
+    words = make_invoice([("WidgetA", 1, 250)], total=250).model_copy(update={"total": None})
+    words.line_items[0].quantity = None
+    found = invoice_findings(words, "", policy)
+    assert [f.code for f in found] == ["UNREAD_VALUE"] and "None" not in found[0].message
+    letterhead = make_invoice([("WidgetA", 1, 250)], vendor=None)
+    assert codes(letterhead, "", policy) == ["DATA_INTEGRITY"]
+    assert [f.code for f in invoice_findings(letterhead, "", policy, read_by_rules=True)] == ["UNREAD_VALUE"]
+
+
 def test_foreign_currency_and_near_threshold(policy):
     assert codes(make_invoice([("WidgetA", 1, 250)], currency="EUR"), "", policy) == ["CURRENCY"]
     assert codes(make_invoice([("X", 1, 9975)]), "", policy) == ["NEAR_THRESHOLD"]
