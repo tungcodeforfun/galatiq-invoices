@@ -14,7 +14,8 @@ Object only to concrete problems:
 - a finding the draft ignores or misreads
 - a reason the findings or the document do not support
 - an approval while a reject-severity finding stands, or while the risk memo is high
-- a rejection that rests on nothing in the findings, the risk memo or the document
+- a rejection with no reject-severity finding and no high risk memo behind it, unless the document itself shows \
+the problem: doubts nobody can check here, or a medium memo alone, are not grounds to refuse a vendor on file
 - over {threshold}, any finding or risk signal not explicitly addressed
 
 Each objection names the finding ID or the exact claim it concerns. If the draft is sound, the verdict is accept \

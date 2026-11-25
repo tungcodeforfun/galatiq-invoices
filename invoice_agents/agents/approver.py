@@ -17,7 +17,10 @@ decide, so approving it only shows you missed it.
 sound, and say why.
 - Invoices over {threshold} need extra scrutiny: address every finding and the risk memo explicitly in your \
 reasons.
-- You may reject for a reason no check caught, if the evidence supports it. Reject a high-risk memo.
+- Reject a high-risk memo. A medium memo is yours to weigh: it does not on its own outweigh a vendor on file whose \
+checks all pass, so name it in your reasons and decide on the evidence.
+- You may reject for a reason no check caught when the document itself shows the problem. Doubts you cannot \
+check here are not enough.
 - Cite finding IDs in every reason they support. List every finding you considered in addressed_findings.
 
 Be brief and concrete: a finance manager reads your summary."""
@@ -51,6 +54,6 @@ def run(llm: LLM, invoice: Invoice, findings: list[Finding], risk: RiskMemo | No
     return decision, reason
 
 
-def needs_critique(invoice: Invoice, findings: list[Finding], policy: Policy) -> bool:
-    """The critic reviews every draft over the threshold or with any finding on file."""
-    return bool(findings) or (invoice.total or 0) > policy.approval_threshold
+def needs_critique(invoice: Invoice, findings: list[Finding], policy: Policy, draft: Decision) -> bool:
+    """The critic reviews any draft over the threshold, with a finding on file, or rejecting without one."""
+    return bool(findings) or (invoice.total or 0) > policy.approval_threshold or draft.action == "reject"

@@ -73,6 +73,12 @@ def _degraded(state: State, stage: str, reason: str | None) -> list[str]:
     return state.get("degraded", []) + ([f"{stage}: {reason}"] if reason else [])
 
 
+def _logged_calls(state: State, box: ToolBox, deps: Deps) -> list[dict[str, Any]]:
+    for call in box.calls[len(state.get("tool_calls", [])):]:
+        deps.log.emit("tool_call", agent=call["by"], tool=call["tool"], args=call["args"], result=call["result"])
+    return box.calls
+
+
 def load_node(state: State, config: RunnableConfig) -> State:
     path = Path(state["path"])
     try:
@@ -123,11 +129,9 @@ def validator_node(state: State, config: RunnableConfig) -> State:
     box = _toolbox(state, deps)
     missing = box.missing_checks() if state.get("coverage_rounds") else []
     notes, reason = validator.run(deps.llm, state["invoice"], box, missing)  # type: ignore[arg-type]
-    for call in box.calls[len(state.get("tool_calls", [])):]:
-        deps.log.emit("tool_call", agent="validator", **call)
     deps.log.emit("stage", agent="validator", notes=notes.model_dump() if notes else None, degraded=reason)
     return {"validator_notes": notes or state.get("validator_notes"), "findings": box.finding_list(),
-            "tool_calls": box.calls, "degraded": _degraded(state, "validator", reason)}
+            "tool_calls": _logged_calls(state, box, deps), "degraded": _degraded(state, "validator", reason)}
 
 
 def coverage_node(state: State, config: RunnableConfig) -> State:
@@ -142,7 +146,7 @@ def coverage_node(state: State, config: RunnableConfig) -> State:
         missing = []
     deps.log.emit("stage", agent="coverage", round=rounds, missing=[f"{t}({a})" for t, a in missing], forced=forced)
     return {"coverage_rounds": rounds, "coverage_forced": state.get("coverage_forced", []) + forced,
-            "findings": _numbered(box.finding_list()), "tool_calls": box.calls}
+            "findings": _numbered(box.finding_list()), "tool_calls": _logged_calls(state, box, deps)}
 
 
 def after_coverage(state: State, config: RunnableConfig) -> str:
@@ -162,7 +166,7 @@ def risk_node(state: State, config: RunnableConfig) -> State:
         findings = _numbered(findings + [extra])
     deps.log.emit("stage", agent="risk", memo=memo.model_dump(), degraded=reason)
     return {"risk": memo, "findings": findings, "drafts": [], "critiques": [],
-            "degraded": _degraded(state, "risk", reason)}
+            "tool_calls": _logged_calls(state, box, deps), "degraded": _degraded(state, "risk", reason)}
 
 
 def approver_node(state: State, config: RunnableConfig) -> State:
@@ -170,15 +174,18 @@ def approver_node(state: State, config: RunnableConfig) -> State:
     drafts, critiques = state.get("drafts", []), state.get("critiques", [])
     previous = drafts[-1] if drafts else None
     critique = critiques[-1] if critiques else None
+    box = _toolbox(state, deps)
     decision, reason = approver.run(deps.llm, state["invoice"], state["findings"], state.get("risk"),  # type: ignore[arg-type]
-                                    _toolbox(state, deps), deps.policy, previous, critique)
+                                    box, deps.policy, previous, critique)
     deps.log.emit("stage", agent="approver", draft=len(drafts) + 1, decision=decision.model_dump(), degraded=reason)
-    return {"drafts": drafts + [decision], "degraded": _degraded(state, "approver", reason)}
+    return {"drafts": drafts + [decision], "tool_calls": _logged_calls(state, box, deps),
+            "degraded": _degraded(state, "approver", reason)}
 
 
 def after_approver(state: State, config: RunnableConfig) -> str:
     deps, critiques = _deps(config), state.get("critiques", [])
-    if not critiques and not approver.needs_critique(state["invoice"], state["findings"], deps.policy):  # type: ignore[arg-type]
+    draft = state["drafts"][-1]
+    if not critiques and not approver.needs_critique(state["invoice"], state["findings"], deps.policy, draft):  # type: ignore[arg-type]
         return "gate"
     return "critic" if len(critiques) < deps.policy.max_rounds else "gate"
 
