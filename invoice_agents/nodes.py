@@ -113,7 +113,7 @@ def check_node(state: State, config: RunnableConfig) -> State:
     deps, invoice = _deps(config), state.get("invoice")
     read_by_rules = "intake" in state.get("degraded", [])
     no_text = ["the document could not be read"]
-    errors = no_text if invoice is None else extraction_errors(invoice, state["source"])
+    errors = no_text if invoice is None else extraction_errors(invoice, state["source"], read_by_rules)
     deps.log.emit("stage", agent="extraction_check", errors=errors)
     if errors or invoice is None:
         return {"extraction_errors": errors}

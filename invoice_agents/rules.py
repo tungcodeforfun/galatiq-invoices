@@ -8,6 +8,7 @@ from datetime import date
 from invoice_agents.matching import text_key
 from invoice_agents.policy import Policy
 from invoice_agents.schema import Finding, Invoice
+from invoice_agents.structured import total_from_lines
 
 NUMBER = re.compile(r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?")
 PLAIN_NUMBER = re.compile(r"\d+(?:\.\d+)?")
@@ -38,13 +39,15 @@ def numbers_in(text: str) -> set[float]:
     return {float(n.replace(",", "")) for n in found}
 
 
-def extraction_errors(invoice: Invoice, source: str) -> list[str]:
-    """Every extracted value must trace back to the document; returns one message per value that does not."""
+def extraction_errors(invoice: Invoice, source: str, read_by_rules: bool = False) -> list[str]:
+    """Every extracted value must trace to the document, bar a total the rules summed from a CSV's lines."""
     errors: list[str] = []
     written = numbers_in(source)
     source_key = text_key(ocr_digits(source))
+    computed = read_by_rules and invoice.total == total_from_lines(invoice)
     checks: list[tuple[str, float | None]] = [
-        ("subtotal", invoice.subtotal), ("tax", invoice.tax), ("shipping", invoice.shipping), ("total", invoice.total),
+        ("subtotal", invoice.subtotal), ("tax", invoice.tax), ("shipping", invoice.shipping),
+        ("total", None if computed else invoice.total),
     ]
     for n, li in enumerate(invoice.line_items, 1):
         checks += [(f"line {n} quantity", li.quantity), (f"line {n} unit_price", li.unit_price),

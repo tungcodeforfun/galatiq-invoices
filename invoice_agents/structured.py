@@ -174,28 +174,40 @@ def _parse(source: str) -> Any:
     return _csv_tree(text)
 
 
+def total_from_lines(invoice: Invoice) -> float | None:
+    """Lines (each as written, or quantity times unit price) plus tax and shipping; None if a line has neither."""
+    amounts = [li.amount if li.amount is not None else
+               li.quantity * li.unit_price if li.quantity is not None and li.unit_price is not None else None
+               for li in invoice.line_items]
+    if not amounts or None in amounts:
+        return None
+    return round(sum(a for a in amounts if a is not None) + (invoice.tax or 0) + (invoice.shipping or 0), 2)
+
+
 def read_structured(source: str) -> Invoice | None:
-    """The invoice in a JSON, XML or CSV document; None if it is none of them or has no line items or total."""
+    """The invoice in a JSON, XML or CSV file, a CSV without a total row totalled from its lines; else None."""
     tree = _parse(source)
     fields: dict[str, Any] = {}
     lines: list[dict[str, Any]] = []
     _collect(tree, fields, lines)
-    total = to_number(fields.get("total"))
-    if not lines or total is None:
+    if not lines:
         return None
     text = {k: (str(v).strip() or None) if v is not None else None for k, v in fields.items()}
     items = [LineItem(description=str(li["description"]).strip(), quantity=to_number(li["quantity"]),
                       unit_price=to_number(li.get("unit_price")), amount=to_number(li.get("amount")),
                       note=str(li["note"]).strip() if li.get("note") else None) for li in lines]
-    return Invoice(
+    invoice = Invoice(
         invoice_number=text.get("invoice_number"), vendor=text.get("vendor"),
         invoice_date=to_date(text.get("invoice_date")), due_date=to_date(text.get("due_date")),
         due_date_as_written=text.get("due_date"),
         currency=(text.get("currency") or ("USD" if "$" in source else "")).upper() or None, line_items=items,
         subtotal=to_number(text.get("subtotal")), tax=to_number(text.get("tax")),
-        shipping=to_number(text.get("shipping")), total=total, payment_terms=text.get("payment_terms"),
-        notes=text.get("notes"), revision=None, corrections=[],
+        shipping=to_number(text.get("shipping")), total=to_number(fields.get("total")),
+        payment_terms=text.get("payment_terms"), notes=text.get("notes"), revision=None, corrections=[],
     )
+    if invoice.total is None and not source.lstrip().startswith(("{", "[", "<")):
+        invoice.total = total_from_lines(invoice)
+    return invoice if invoice.total is not None else None
 
 
 def _prose(key: str, value: Any, in_line: bool, party: bool) -> bool:
