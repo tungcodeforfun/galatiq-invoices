@@ -244,9 +244,15 @@ def decisions(store: Store) -> None:
     st.caption("Select a row to see the full run.")
     picked = st.dataframe(view.drop(columns=["run_id", "key"]), hide_index=True, width="stretch",
                           on_select="rerun", selection_mode="single-row",
-                          column_config={"Total": st.column_config.NumberColumn(format="%.2f"),
-                                         "Time": st.column_config.DatetimeColumn("Time (UTC)",
-                                                                                 format="MMM D, HH:mm:ss")})
+                          column_config={"Time": st.column_config.DatetimeColumn("Time (UTC)", format="MMM D, HH:mm",
+                                                                                 width=105),
+                                         "File": st.column_config.TextColumn(width=220),
+                                         "Invoice": st.column_config.TextColumn(width=75),
+                                         "Vendor": st.column_config.TextColumn(width=170),
+                                         "Total": st.column_config.NumberColumn(format="%.2f", width=80),
+                                         "Currency": st.column_config.TextColumn("Cur.", width=50),
+                                         "Outcome": st.column_config.TextColumn(width=124),
+                                         "Disposition": st.column_config.TextColumn(width=115)})
     rows = picked.selection.rows
     if rows:
         state = load_state(RUNS_DIR / view.iloc[rows[0]].run_id)
