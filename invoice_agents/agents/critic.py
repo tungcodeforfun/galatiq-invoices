@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import json
+from typing import Any
+
 from invoice_agents.agents.approver import brief
 from invoice_agents.llm import LLM, ModelUnavailable
 from invoice_agents.policy import Policy
@@ -18,8 +21,9 @@ Object only to concrete problems:
 the problem: doubts nobody can check here, or a medium memo alone, are not grounds to refuse a vendor on file
 - over {threshold}, any finding or risk signal not explicitly addressed
 
-Each objection names the finding ID or the exact claim it concerns. If the draft is sound, the verdict is accept \
-with no objections. Do not object to style."""
+Each objection names the finding ID or the exact claim it concerns. The vendor master record comes from our own \
+systems: the VP may rely on it. If the draft is sound, the verdict is accept with no objections. Do not object to \
+style."""
 
 
 def rule_objections(draft: Decision, findings: list[Finding], invoice: Invoice, policy: Policy) -> list[str]:
@@ -36,9 +40,10 @@ def rule_objections(draft: Decision, findings: list[Finding], invoice: Invoice, 
 
 
 def run(llm: LLM, invoice: Invoice, findings: list[Finding], risk: RiskMemo | None, draft: Decision,
-        policy: Policy) -> tuple[Critique, str | None]:
+        vendor: dict[str, Any] | None, policy: Policy) -> tuple[Critique, str | None]:
     """Review the draft. Returns (critique, degraded_reason)."""
-    user = brief(invoice, findings, risk) + f"\n\nDraft decision:\n{draft.model_dump_json()}"
+    user = (brief(invoice, findings, risk) + f"\n\nVendor master record:\n{json.dumps(vendor) if vendor else 'none'}"
+            + f"\n\nDraft decision:\n{draft.model_dump_json()}")
     system = SYSTEM.format(threshold=f"${policy.approval_threshold:,.0f}")
     try:
         critique, reason = llm.ask("critic", system, user, Critique), None

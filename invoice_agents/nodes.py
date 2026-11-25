@@ -205,10 +205,11 @@ def after_approver(state: State, config: RunnableConfig) -> str:
 
 
 def critic_node(state: State, config: RunnableConfig) -> State:
-    """Critic: objections to the latest draft."""
+    """Critic: objections to the latest draft, with the vendor master record the VP could look up."""
     deps = _deps(config)
+    records = [c["result"] for c in state.get("tool_calls", []) if c["tool"] == "get_vendor"]
     critique, reason = critic.run(deps.llm, state["invoice"], state["findings"], state.get("risk"),  # type: ignore[arg-type]
-                                  state["drafts"][-1], deps.policy)
+                                  state["drafts"][-1], records[-1] if records else None, deps.policy)
     deps.log.emit("stage", agent="critic", round=len(state.get("critiques", [])) + 1,
                   critique=critique.model_dump(), degraded=reason)
     return {"critiques": state.get("critiques", []) + [critique], "degraded": _degraded(state, "critic", reason)}

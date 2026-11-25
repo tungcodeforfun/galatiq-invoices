@@ -75,8 +75,8 @@ def gate(
         blocked_by.append("no positive total to pay")
     elif total > policy.approval_threshold and not critiques:
         blocked_by.append(f"over ${policy.approval_threshold:,.0f} without critic review")
-    if critiques and critiques[-1].verdict == "revise":
-        blocked_by.append("the critic's objections are still open")
+    elif total > policy.approval_threshold and critiques[-1].verdict == "revise":
+        blocked_by.append(f"over ${policy.approval_threshold:,.0f} with the critic's objections still open")
     # Without a model nobody has read the free text, so rules alone may only pay small, spotless invoices.
     if degraded and (
         (total or 0) > policy.approval_threshold or any(f.severity != Severity.INFO for f in findings)

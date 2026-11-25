@@ -38,8 +38,9 @@ def test_over_threshold_needs_critic_review(policy):
     assert gate(decision("approve"), [], 12000.0, ACCEPTED, [], False, policy).approved
 
 
-def test_open_critic_objections_block_payment(policy):
+def test_open_critic_objections_block_payment_over_the_threshold(policy):
     assert not gate(decision("approve"), [], 12000.0, ACCEPTED + OPEN, [], False, policy).approved
+    assert gate(decision("approve"), [], 7185.0, ACCEPTED + OPEN, [], False, policy).approved
 
 
 def test_a_required_check_that_never_ran_blocks_payment(policy):
