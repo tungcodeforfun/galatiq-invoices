@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 from invoice_agents.policy import gate, required_disposition
-from invoice_agents.schema import Decision, Reason
+from invoice_agents.schema import Critique, Decision, Reason
+
+ACCEPTED = [Critique(verdict="accept", objections=[])]
+OPEN = [Critique(verdict="revise", objections=["F1 not addressed"])]
 
 
 def decision(action: str) -> Decision:
@@ -15,40 +18,49 @@ def numbered(*findings):
 
 
 def test_clean_approval_passes(policy):
-    assert gate(decision("approve"), [], 5000.0, 0, False, policy).approved
+    assert gate(decision("approve"), [], 5000.0, [], [], False, policy).approved
 
 
 def test_approval_with_a_reject_finding_is_overridden(policy):
     findings = numbered(policy.finding("STOCK_EXCEEDED", "GadgetX: 20 requested, 5 in stock", "test"))
-    result = gate(decision("approve"), findings, 15000.0, 1, False, policy)
+    result = gate(decision("approve"), findings, 15000.0, ACCEPTED, [], False, policy)
     assert not result.approved and result.overridden
     assert result.blocked_by == ["F1 STOCK_EXCEEDED"]
 
 
 def test_warnings_alone_do_not_block(policy):
     findings = numbered(policy.finding("PRICE_VARIANCE", "rush line", "test"))
-    assert gate(decision("approve"), findings, 7185.0, 1, False, policy).approved
+    assert gate(decision("approve"), findings, 7185.0, ACCEPTED, [], False, policy).approved
 
 
 def test_over_threshold_needs_critic_review(policy):
-    assert not gate(decision("approve"), [], 12000.0, 0, False, policy).approved
-    assert gate(decision("approve"), [], 12000.0, 1, False, policy).approved
+    assert not gate(decision("approve"), [], 12000.0, [], [], False, policy).approved
+    assert gate(decision("approve"), [], 12000.0, ACCEPTED, [], False, policy).approved
+
+
+def test_open_critic_objections_block_payment(policy):
+    assert not gate(decision("approve"), [], 12000.0, ACCEPTED + OPEN, [], False, policy).approved
+
+
+def test_a_required_check_that_never_ran_blocks_payment(policy):
+    result = gate(decision("approve"), [], 500.0, [], ["check_duplicate({})"], False, policy)
+    assert not result.approved
 
 
 def test_rejection_is_never_turned_into_payment(policy):
-    assert not gate(decision("reject"), [], 100.0, 1, False, policy).approved
+    assert not gate(decision("reject"), [], 100.0, ACCEPTED, [], False, policy).approved
 
 
 def test_nothing_to_pay_is_blocked(policy):
-    assert not gate(decision("approve"), [], -250.0, 1, False, policy).approved
+    assert not gate(decision("approve"), [], -250.0, ACCEPTED, [], False, policy).approved
 
 
 def test_degraded_mode_pays_only_spotless_invoices_under_threshold(policy):
-    warn = numbered(policy.finding("DATE_ODDITY", "no due date", "test"))
-    info = numbered(policy.finding("NEW_VENDOR", "unknown", "test"))
-    assert not gate(decision("approve"), warn, 500.0, 1, True, policy).approved
-    assert not gate(decision("approve"), [], 12000.0, 1, True, policy).approved
-    assert gate(decision("approve"), info, 500.0, 0, True, policy).approved
+    warn = numbered(policy.finding("NEW_VENDOR", "unknown", "test"))
+    info = numbered(policy.finding("NEAR_THRESHOLD", "close to the limit", "test"))
+    assert not gate(decision("approve"), warn, 500.0, ACCEPTED, [], True, policy).approved
+    assert not gate(decision("approve"), [], 12000.0, ACCEPTED, [], True, policy).approved
+    assert gate(decision("approve"), info, 500.0, [], [], True, policy).approved
 
 
 def test_void_beats_return_to_vendor(policy):

@@ -238,7 +238,7 @@ class ToolBox:
             self._add(
                 self.policy.finding(
                     "REVISION_CONFLICT", f"{first['number']} was already {first['status']} at "
-                    f"{first['total']:,.2f}; this version totals {inv.total or 0:,.2f} ({delta:+,.2f})",
+                    f"{first['total'] or 0:,.2f}; this version totals {inv.total or 0:,.2f} ({delta:+,.2f})",
                     "check_duplicate", subject="revision", prior_total=first["total"],
                     prior_status=first["status"], delta=delta,
                 )

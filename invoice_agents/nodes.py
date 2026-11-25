@@ -13,7 +13,7 @@ from invoice_agents.db import Store
 from invoice_agents.llm import LLM
 from invoice_agents.loaders import UnreadableDocument, file_digest, read_document
 from invoice_agents.observability import RunLog, save_state, write_report
-from invoice_agents.policy import GateResult, Policy, gate
+from invoice_agents.policy import GateResult, Policy, gate, load_policy
 from invoice_agents.rules import extraction_errors, invoice_findings
 from invoice_agents.schema import Critique, Decision, Finding, Invoice, Outcome, Payment, Resolution, RiskMemo
 from invoice_agents.tools import ToolBox, content_hash, number_key, text_key
@@ -51,6 +51,11 @@ class Deps:
     policy: Policy
     log: RunLog
 
+    @classmethod
+    def create(cls, path: Path, db: Path) -> Deps:
+        """Fresh model client, store, policy and run log for one invoice."""
+        return cls(llm=LLM(), store=Store(db), policy=load_policy(), log=RunLog(path))
+
 
 def _deps(config: RunnableConfig) -> Deps:
     return config["configurable"]["deps"]
@@ -84,7 +89,7 @@ def load_node(state: State, config: RunnableConfig) -> State:
         source = read_document(path)
     except UnreadableDocument as exc:
         _deps(config).log.emit("stage", agent="loader", error=str(exc))
-        return {"source": "", "invoice": None, "extraction_errors": [str(exc)], "intake_rounds": 99}
+        return {"source": "", "invoice": None, "extraction_errors": [str(exc)]}
     _deps(config).log.emit("stage", agent="loader", file=path.name, sha256=file_digest(path), chars=len(source))
     return {"source": source, "intake_rounds": 0, "findings": [], "tool_calls": [], "degraded": []}
 
@@ -114,7 +119,7 @@ def after_check(state: State, config: RunnableConfig) -> str:
     """Loop 1: back to intake while retries remain, then give up as unreadable."""
     if not state["extraction_errors"]:
         return "validator"
-    if state.get("invoice") and state["intake_rounds"] <= _deps(config).policy.max_rounds:
+    if state.get("invoice") and state["intake_rounds"] < _deps(config).policy.max_rounds:
         return "intake"
     return "unreadable"
 
@@ -219,8 +224,9 @@ def gate_node(state: State, config: RunnableConfig) -> State:
     """Policy gate on the final draft."""
     deps = _deps(config)
     decision = state["drafts"][-1]
-    result = gate(decision, state["findings"], state["invoice"].total, len(state.get("critiques", [])),  # type: ignore[union-attr]
-                  bool(state.get("degraded")), deps.policy)
+    unchecked = [f"{tool}({args})" for tool, args in _toolbox(state, deps).missing_checks()]
+    result = gate(decision, state["findings"], state["invoice"].total, state.get("critiques", []),  # type: ignore[union-attr]
+                  unchecked, bool(state.get("degraded")), deps.policy)
     deps.log.emit("stage", agent="policy_gate", **result.model_dump(), decision=decision.action)
     return {"gate": result}
 

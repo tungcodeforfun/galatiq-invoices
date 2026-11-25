@@ -8,7 +8,7 @@ from typing import Any
 import yaml
 from pydantic import BaseModel
 
-from invoice_agents.schema import Decision, Disposition, Finding, Severity
+from invoice_agents.schema import Critique, Decision, Disposition, Finding, Severity
 
 DEFAULT_POLICY = Path(__file__).resolve().parent.parent / "policy.yaml"
 
@@ -61,7 +61,8 @@ def gate(
     decision: Decision | None,
     findings: list[Finding],
     total: float | None,
-    critic_rounds: int,
+    critiques: list[Critique],
+    unchecked: list[str],
     degraded: bool,
     policy: Policy,
 ) -> GateResult:
@@ -69,10 +70,13 @@ def gate(
     if decision is None or decision.action == "reject":
         return GateResult(approved=False, blocked_by=["approver rejected"], overridden=False)
     blocked_by = [f"{f.id} {f.code}" for f in findings if f.severity == Severity.REJECT]
+    blocked_by += [f"required check never completed: {check}" for check in unchecked]
     if total is None or total <= 0:
         blocked_by.append("no positive total to pay")
-    elif total > policy.approval_threshold and critic_rounds == 0:
+    elif total > policy.approval_threshold and not critiques:
         blocked_by.append(f"over ${policy.approval_threshold:,.0f} without critic review")
+    if critiques and critiques[-1].verdict == "revise":
+        blocked_by.append("the critic's objections are still open")
     # Without a model nobody has read the free text, so rules alone may only pay small, spotless invoices.
     if degraded and (
         (total or 0) > policy.approval_threshold or any(f.severity != Severity.INFO for f in findings)
