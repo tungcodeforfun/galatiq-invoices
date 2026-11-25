@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Literal
+
 from invoice_agents.policy import NO_MODEL, gate, required_disposition
 from invoice_agents.schema import Critique, Decision, Reason
 
@@ -9,7 +11,7 @@ ACCEPTED = [Critique(verdict="accept", objections=[])]
 OPEN = [Critique(verdict="revise", objections=["F1 not addressed"])]
 
 
-def decision(action: str) -> Decision:
+def decision(action: Literal["approve", "reject"]) -> Decision:
     return Decision(action=action, reasons=[Reason(text="x", finding_ids=[])], addressed_findings=[], summary="x")
 
 

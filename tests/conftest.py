@@ -29,7 +29,7 @@ def policy() -> Policy:
 
 
 def make_invoice(lines: list[tuple[str, float, float]], total: float | None = None, number: str = "INV-9001",
-                 vendor: str = "Widgets Inc.", **fields) -> Invoice:
+                 vendor: str | None = "Widgets Inc.", **fields) -> Invoice:
     """Invoice with the given (description, quantity, unit price) lines; total defaults to their sum."""
     items = [LineItem(description=d, quantity=q, unit_price=p, amount=None, note=None) for d, q, p in lines]
     base = dict(

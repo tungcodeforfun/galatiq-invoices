@@ -28,6 +28,8 @@ select = ["E", "F", "I", "B", "UP", "SIM"]
 python_version = "3.11"
 ignore_missing_imports = true
 check_untyped_defs = true
+exclude_gitignore = true
+exclude = ["^data/"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

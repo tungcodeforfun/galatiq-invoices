@@ -176,7 +176,8 @@ def test_structured_files_never_recorded_are_read_and_held_for_approval_without_
     path = tmp_path / name
     path.write_text(text)
     state = run(path, tmp_path / "t.db")
-    assert "intake" in state["degraded"] and state["invoice"].total == amount
+    invoice = state["invoice"]
+    assert "intake" in state["degraded"] and invoice is not None and invoice.total == amount
     assert (state["outcome"].status, state["outcome"].disposition) == ("REJECTED", "manual_entry")
     assert [f.code for f in state["findings"] if f.severity == "reject"] == ["NEEDS_MODEL"]
     assert state["outcome"].summary.startswith("Every check passed") and "XAI_API_KEY" in state["outcome"].summary

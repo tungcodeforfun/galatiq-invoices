@@ -164,7 +164,7 @@ One projection, with its assumption stated: if Acme's $2M a year is mostly staff
 
 ```bash
 uv sync
-uv run ruff check . && uv run mypy invoice_agents main.py evals ui scripts && uv run pytest -q && uv run python main.py eval && uv run python main.py eval --set heldout
+uv run ruff check . && uv run mypy . && uv run pytest -q && uv run python main.py eval && uv run python main.py eval --set heldout
 ```
 
 Unit tests cover the deterministic core (gate, totals, stock aggregation, duplicates and revisions, item resolution, the recording key and replay, payment idempotency and retry); system tests run real invoice files through the graph and the CLI in replay mode.
