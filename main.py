@@ -134,6 +134,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--invoice_path", help="invoice file to process")
     parser.add_argument("--db", type=Path, default=DEFAULT_DB, help="SQLite database file")
     parser.add_argument("--json", action="store_true", help="print the outcome as JSON")
+    parser.add_argument("--port", type=int, default=8501, help="dashboard port for demo")
     args = parser.parse_args(argv)
     console = Console()
 
@@ -151,7 +152,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "demo":
         Store(args.db).reset()
         run_batch(invoice_files(Path("data/invoices")) + invoice_files(Path("data/invoices_extra")), args.db, console)
-        return subprocess.call([sys.executable, "-m", "streamlit", "run", "ui/app.py"])
+        return subprocess.call([sys.executable, "-m", "streamlit", "run", "ui/app.py", "--server.port", str(args.port)])
 
     target = args.invoice_path or args.target
     if not target:
