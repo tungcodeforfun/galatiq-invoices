@@ -16,12 +16,13 @@ from invoice_agents.db import DEFAULT_DB, Store
 from invoice_agents.graph import stream
 from invoice_agents.llm import LLM
 from invoice_agents.observability import RUNS_DIR, load_state
-from main import SUFFIXES, make_deps, step_line
+from invoice_agents.nodes import Deps
+from main import SUFFIXES, step_line
 
 STAGES = [("intake", "Intake"), ("validator", "Validator"), ("risk", "Risk"), ("approver", "VP"),
           ("critic", "Critic"), ("gate", "Gate"), ("payment", "Payment"), ("resolution", "Resolution")]
 SEVERITY_COLOR = {"reject": "red", "warn": "orange", "info": "blue"}
-STATUS_COLOR = {"PAID": "green", "REJECTED": "red", "PAYMENT_FAILED": "orange"}
+RISK_COLOR = {"low": "green", "medium": "orange", "high": "red"}
 
 st.set_page_config(page_title="Accounts payable agents", page_icon=":material/receipt_long:", layout="wide")
 
@@ -53,7 +54,7 @@ def stage_color(node: str, s: Any) -> str:
     if node == "gate":
         return "green" if s["gate"].approved else "red"
     if node == "risk":
-        return {"low": "green", "medium": "orange", "high": "red"}[s["risk"].level]
+        return RISK_COLOR[s["risk"].level]
     if node == "payment":
         return "green" if s["payment"].status in ("success", "already_paid") else "orange"
     return "red" if node == "resolution" else "blue"
@@ -61,7 +62,7 @@ def stage_color(node: str, s: Any) -> str:
 
 def process(path: Path) -> str:
     """Run one invoice, updating the agent strip and step log as each node finishes. Returns the run ID."""
-    deps = make_deps(path, DEFAULT_DB)
+    deps = Deps.create(path, DEFAULT_DB)
     strip = st.empty()
     done: dict[str, str] = {}
     strip.markdown(stage_strip(done))
@@ -118,22 +119,8 @@ def document_view(s: dict[str, Any]) -> None:
             st.markdown(f":blue-badge[corrected] {c['field']}: `{c['as_written']}` read as `{c['normalized']}`")
 
 
-def agents_view(s: dict[str, Any]) -> None:
-    """The agent transcript: tool calls, risk memo, VP drafts and critiques, gate, payment."""
-    calls = s.get("tool_calls") or []
-    if calls:
-        st.markdown("**Tool calls**")
-        st.dataframe(pd.DataFrame([{"by": c["by"], "tool": c["tool"], "args": str(c["args"]),
-                                    "result": str(c["result"])} for c in calls]),
-                     hide_index=True, width="stretch")
-    if s.get("coverage_forced"):
-        st.markdown("Coverage ran in code: " + ", ".join(s["coverage_forced"]))
-    if s.get("risk"):
-        memo = s["risk"]
-        st.markdown(f"**Risk analyst** :{ {'low': 'green', 'medium': 'orange', 'high': 'red'}[memo['level']] }"
-                    f"-badge[{memo['level']}]  \n{memo['summary']}")
-        for sig in memo["signals"]:
-            st.markdown(f"- {sig['kind'].replace('_', ' ')}: “{sig['quote']}” {sig['why']}")
+def review_view(s: dict[str, Any]) -> None:
+    """VP drafts, each followed by the critic's answer to it."""
     critiques = s.get("critiques") or []
     for n, draft in enumerate(s.get("drafts") or [], 1):
         with st.chat_message("VP", avatar=":material/gavel:"):
@@ -146,6 +133,24 @@ def agents_view(s: dict[str, Any]) -> None:
                 st.markdown(f"**{c['verdict'].title()}**")
                 for o in c["objections"]:
                     st.markdown(f"- {o}")
+
+
+def agents_view(s: dict[str, Any]) -> None:
+    """The agent transcript: tool calls, risk memo, VP drafts and critiques, gate, payment."""
+    calls = s.get("tool_calls") or []
+    if calls:
+        st.markdown("**Tool calls**")
+        st.dataframe(pd.DataFrame([{"by": c["by"], "tool": c["tool"], "args": str(c["args"]),
+                                    "result": str(c["result"])} for c in calls]),
+                     hide_index=True, width="stretch")
+    if s.get("coverage_forced"):
+        st.markdown("Coverage ran in code: " + ", ".join(s["coverage_forced"]))
+    if s.get("risk"):
+        memo = s["risk"]
+        st.markdown(f"**Risk analyst** :{RISK_COLOR[memo['level']]}-badge[{memo['level']}]  \n{memo['summary']}")
+        for sig in memo["signals"]:
+            st.markdown(f"- {sig['kind'].replace('_', ' ')}: “{sig['quote']}” {sig['why']}")
+    review_view(s)
     if s.get("gate"):
         g = s["gate"]
         st.markdown("**Policy gate:** " + ("pass" if g["approved"] else "blocked by " + ", ".join(g["blocked_by"])))

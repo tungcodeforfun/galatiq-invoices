@@ -93,6 +93,26 @@ def load_state(run_dir: Path) -> dict[str, Any] | None:
     return json.loads(path.read_text()) if path.exists() else None
 
 
+def _json_section(title: str, model: Any) -> list[str]:
+    return ["", f"## {title}", "", "```json", model.model_dump_json(indent=2), "```"]
+
+
+def _agent_sections(state: dict[str, Any]) -> list[str]:
+    parts: list[str] = []
+    for title, key in (("Validator notes", "validator_notes"), ("Risk memo", "risk")):
+        if state.get(key):
+            parts += _json_section(title, state[key])
+    critiques = state.get("critiques") or []
+    for n, draft in enumerate(state.get("drafts") or [], 1):
+        parts += _json_section(f"VP draft {n}", draft)
+        if n <= len(critiques):
+            parts += _json_section(f"Critique {n}", critiques[n - 1])
+    for title, key in (("Policy gate", "gate"), ("Payment", "payment"), ("Resolution", "resolution")):
+        if state.get(key):
+            parts += _json_section(title, state[key])
+    return parts
+
+
 def write_report(log: RunLog, state: dict[str, Any]) -> Path:
     """Write report.md: outcome, extracted invoice, findings, tool calls and every agent's output."""
     out, inv = state["outcome"], state.get("invoice")
@@ -114,17 +134,24 @@ def write_report(log: RunLog, state: dict[str, Any]) -> Path:
         parts += ["", "## Tool calls", "", _table(
             [[c["by"], c["tool"], json.dumps(c["args"]), json.dumps(c["result"])[:160]] for c in state["tool_calls"]],
             ["by", "tool", "args", "result"])]
-    for title, key in (("Validator notes", "validator_notes"), ("Risk memo", "risk")):
-        if state.get(key):
-            parts += ["", f"## {title}", "", "```json", state[key].model_dump_json(indent=2), "```"]
-    for n, draft in enumerate(state.get("drafts") or [], 1):
-        parts += ["", f"## VP draft {n}", "", "```json", draft.model_dump_json(indent=2), "```"]
-        critiques = state.get("critiques") or []
-        if n <= len(critiques):
-            parts += ["", f"## Critique {n}", "", "```json", critiques[n - 1].model_dump_json(indent=2), "```"]
-    for title, key in (("Policy gate", "gate"), ("Payment", "payment"), ("Resolution", "resolution")):
-        if state.get(key):
-            parts += ["", f"## {title}", "", "```json", state[key].model_dump_json(indent=2), "```"]
+    parts += _agent_sections(state)
     path = log.dir / "report.md"
     path.write_text("\n".join(parts) + "\n")
     return path
+
+
+def cost_label(t: dict[str, Any]) -> str:
+    """Grok cost for a run; replayed runs show what xAI billed when the responses were recorded."""
+    recorded = "replay" in t["tiers"] and "live" not in t["tiers"]
+    return f"${t['cost_usd']:.4f}" + (" recorded" if recorded else "")
+
+
+def usage_summary(totals: list[dict[str, Any]]) -> str:
+    """Totals and per-invoice averages of time, model calls, tool calls and Grok cost."""
+    n = max(len(totals), 1)
+    secs, cost = sum(t["seconds"] for t in totals), sum(t["cost_usd"] for t in totals)
+    llm, tools = sum(t["llm_calls"] for t in totals), sum(t["tool_calls"] for t in totals)
+    recorded = any(t["tiers"] for t in totals) and all("live" not in t["tiers"] for t in totals)
+    return (f"{secs:.1f}s ({secs / n:.1f}s per invoice) · {llm} model calls ({llm / n:.1f}) · "
+            f"{tools} tool calls ({tools / n:.1f}) · ${cost:.4f} Grok (${cost / n:.4f} per invoice"
+            + (", as recorded)" if recorded else ")"))

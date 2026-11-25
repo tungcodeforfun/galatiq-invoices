@@ -9,30 +9,31 @@ from typing import Any
 from langchain_core.runnables import RunnableConfig
 from langgraph.graph import END, START, StateGraph
 
-from invoice_agents import nodes as n
+from invoice_agents import nodes
 from invoice_agents.nodes import Deps, State
 
 
 def build_graph() -> Any:
     """Compile the graph. Loops: intake ⇄ check, validator ⇄ coverage, approver ⇄ critic, each bounded by policy."""
     g = StateGraph(State)
-    for name, node in [("load", n.load_node), ("intake", n.intake_node), ("check", n.check_node),
-                       ("unreadable", n.unreadable_node), ("validator", n.validator_node),
-                       ("coverage", n.coverage_node), ("risk", n.risk_node), ("approver", n.approver_node),
-                       ("critic", n.critic_node), ("gate", n.gate_node), ("payment", n.payment_node),
-                       ("resolution", n.resolution_node), ("record", n.record_node)]:
+    for name, node in [("load", nodes.load_node), ("intake", nodes.intake_node), ("check", nodes.check_node),
+                       ("unreadable", nodes.unreadable_node), ("validator", nodes.validator_node),
+                       ("coverage", nodes.coverage_node), ("risk", nodes.risk_node),
+                       ("approver", nodes.approver_node), ("critic", nodes.critic_node), ("gate", nodes.gate_node),
+                       ("payment", nodes.payment_node), ("resolution", nodes.resolution_node),
+                       ("record", nodes.record_node)]:
         g.add_node(name, node)
     g.add_edge(START, "load")
     g.add_conditional_edges("load", lambda s: "intake" if s.get("source") else "unreadable")
     g.add_edge("intake", "check")
-    g.add_conditional_edges("check", n.after_check)
+    g.add_conditional_edges("check", nodes.after_check)
     g.add_edge("unreadable", "resolution")
     g.add_edge("validator", "coverage")
-    g.add_conditional_edges("coverage", n.after_coverage)
+    g.add_conditional_edges("coverage", nodes.after_coverage)
     g.add_edge("risk", "approver")
-    g.add_conditional_edges("approver", n.after_approver)
-    g.add_conditional_edges("critic", n.after_critic)
-    g.add_conditional_edges("gate", n.after_gate)
+    g.add_conditional_edges("approver", nodes.after_approver)
+    g.add_conditional_edges("critic", nodes.after_critic)
+    g.add_conditional_edges("gate", nodes.after_gate)
     g.add_edge("payment", "record")
     g.add_edge("resolution", "record")
     g.add_edge("record", END)

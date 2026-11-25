@@ -25,6 +25,7 @@ class Score:
     amount: float | None
     codes: list[str]
     total: float | None
+    currency: str | None
     usage: dict[str, Any]
     degraded: bool
 
@@ -54,24 +55,24 @@ def score_all(db: Path) -> list[Score]:
     """Process every file in the answer key, in order, on the given database."""
     from invoice_agents.db import Store
     from invoice_agents.graph import process
-    from main import make_deps
+    from invoice_agents.nodes import Deps
 
     Store(db).reset()
     scores = []
     for file, expected in load_answer_key().items():
-        deps = make_deps(Path(file), db)
+        deps = Deps.create(Path(file), db)
         state = process(Path(file), deps)
         out, inv = state["outcome"], state.get("invoice")
         scores.append(Score(file=file, expected=expected, outcome=out.status, disposition=out.disposition,
                             amount=out.amount, codes=[f.code for f in state.get("findings", [])],
-                            total=inv.total if inv else None, usage=deps.log.totals(),
-                            degraded=bool(state.get("degraded"))))
+                            total=inv.total if inv else None, currency=inv.currency if inv else None,
+                            usage=deps.log.totals(), degraded=bool(state.get("degraded"))))
     return scores
 
 
 def run_scorecard(console: Console) -> int:
     """Print the scorecard; exit code 1 if any invoice misses its expectation."""
-    from main import cost_label, usage_summary
+    from invoice_agents.observability import cost_label, usage_summary
 
     with tempfile.TemporaryDirectory() as tmp, console.status("Running the answer key"):
         scores = score_all(Path(tmp) / "eval.db")
@@ -89,10 +90,12 @@ def run_scorecard(console: Console) -> int:
     console.print(table)
     passed = sum(s.passed for s in scores)
     paid = [s for s in scores if s.outcome == "PAID"]
-    stopped = sum(s.total or 0 for s in scores if s.outcome == "REJECTED" and (s.total or 0) > 0)
+    stopped = sum(s.total or 0 for s in scores
+                  if s.outcome == "REJECTED" and (s.total or 0) > 0 and (s.currency or "USD") == "USD")
     console.print(
         f"[bold]{passed}/{len(scores)} match the answer key[/] · {len(paid)} paid "
-        f"({sum(s.amount or 0 for s in paid):,.2f}) · {len(scores) - len(paid)} rejected ({stopped:,.2f} stopped)"
+        f"({sum(s.amount or 0 for s in paid):,.2f}) · {len(scores) - len(paid)} rejected "
+        f"({stopped:,.2f} USD stopped)"
     )
     console.print("Calls = model calls / tool calls. " + usage_summary([s.usage for s in scores]))
     return 0 if passed == len(scores) else 1

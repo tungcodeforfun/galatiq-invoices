@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any
 
 from rich.console import Console
 from rich.panel import Panel
@@ -15,10 +15,8 @@ from rich.table import Table
 
 from invoice_agents.db import DEFAULT_DB, Store
 from invoice_agents.graph import stream
-from invoice_agents.llm import LLM
 from invoice_agents.nodes import Deps, State
-from invoice_agents.observability import RunLog
-from invoice_agents.policy import load_policy
+from invoice_agents.observability import cost_label, usage_summary
 
 SUFFIXES = {".txt", ".json", ".csv", ".xml", ".pdf", ".md", ".eml"}
 STYLE = {"PAID": "green", "REJECTED": "red", "PAYMENT_FAILED": "yellow"}
@@ -62,14 +60,9 @@ def step_line(node: str, s: State) -> str | None:
     return None
 
 
-def make_deps(path: Path, db: Path) -> Deps:
-    """Fresh model client, store, policy and run log for one invoice."""
-    return Deps(llm=LLM(), store=Store(db), policy=load_policy(), log=RunLog(path))
-
-
 def run_one(path: Path, db: Path, console: Console, verbose: bool = True) -> tuple[State, Deps]:
     """Process one invoice, printing each agent step as it finishes."""
-    deps = make_deps(path, db)
+    deps = Deps.create(path, db)
     if verbose:
         console.print(f"[bold]{path}[/]  [dim]{deps.llm.model} · {deps.llm.mode} · run {deps.log.run_id}[/]")
     state: State = {}
@@ -103,23 +96,6 @@ def show_result(s: State, deps: Deps, console: Console) -> None:
     console.print(f"[dim]{t['seconds']}s · {t['llm_calls']} model calls ({', '.join(t['tiers']) or 'none'}) · "
                   f"{t['tool_calls']} tool calls · {t['tokens']} tokens · {cost_label(t)} · "
                   f"log {deps.log.dir}/events.jsonl · {deps.log.dir}/report.md[/]")
-
-
-def cost_label(t: dict[str, Any]) -> str:
-    """Grok cost for a run; replayed runs show what xAI billed when the responses were recorded."""
-    recorded = "replay" in t["tiers"] and "live" not in t["tiers"]
-    return f"${t['cost_usd']:.4f}" + (" recorded" if recorded else "")
-
-
-def usage_summary(totals: list[dict[str, Any]]) -> str:
-    """Totals and per-invoice averages of time, model calls, tool calls and Grok cost."""
-    n = max(len(totals), 1)
-    secs, cost = sum(t["seconds"] for t in totals), sum(t["cost_usd"] for t in totals)
-    llm, tools = sum(t["llm_calls"] for t in totals), sum(t["tool_calls"] for t in totals)
-    recorded = any(t["tiers"] for t in totals) and all("live" not in t["tiers"] for t in totals)
-    return (f"{secs:.1f}s ({secs / n:.1f}s per invoice) · {llm} model calls ({llm / n:.1f}) · "
-            f"{tools} tool calls ({tools / n:.1f}) · ${cost:.4f} Grok (${cost / n:.4f} per invoice"
-            + (", as recorded)" if recorded else ")"))
 
 
 def invoice_files(folder: Path) -> list[Path]:
@@ -185,7 +161,9 @@ def main(argv: list[str] | None = None) -> int:
     path = Path(target)
     if not path.is_file():
         parser.error(f"no such file: {path}")
-    state, deps = run_one(path, args.db, console, verbose=not args.json)
+    # mock_payment prints to stdout; keep stdout clean for the JSON document.
+    with contextlib.redirect_stdout(sys.stderr) if args.json else contextlib.nullcontext():
+        state, deps = run_one(path, args.db, console, verbose=not args.json)
     if args.json:
         print(json.dumps({"file": str(path), **state["outcome"].model_dump(), "usage": deps.log.totals(),
                           "findings": [f.model_dump(mode="json") for f in state["findings"]]}, indent=2))
