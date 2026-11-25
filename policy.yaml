@@ -5,7 +5,6 @@ price_tolerance_pct: 5
 currencies: [USD]
 max_rounds: 2
 payment_attempts: 3
-human_signoff_over: null
 
 findings:
   DATA_INTEGRITY:    {severity: reject, disposition: void}

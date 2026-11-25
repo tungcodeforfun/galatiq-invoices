@@ -22,7 +22,7 @@ with no objections. Do not object to style."""
 
 
 def rule_objections(draft: Decision, findings: list[Finding], invoice: Invoice, policy: Policy) -> list[str]:
-    """Objections that follow from policy alone: approving past a reject finding, or unaddressed findings over the line."""
+    """Objections that follow from policy alone: approval past a reject finding, or unaddressed findings."""
     objections = [
         f"{f.id} {f.code} has severity reject; policy does not allow approval"
         for f in findings if draft.action == "approve" and f.severity == Severity.REJECT

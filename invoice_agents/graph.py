@@ -1,4 +1,4 @@
-"""The LangGraph state graph: seven agents, three bounded self-correction loops, the policy gate, and the ledger write."""
+"""The LangGraph state graph: seven agents, three bounded self-correction loops, the policy gate, the ledger."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from invoice_agents.agents import approver, critic, intake, payment, resolution,
 from invoice_agents.db import Store
 from invoice_agents.llm import LLM
 from invoice_agents.loaders import UnreadableDocument, file_digest, read_document
-from invoice_agents.observability import RunLog, write_report
+from invoice_agents.observability import RunLog, save_state, write_report
 from invoice_agents.policy import GateResult, Policy, gate
 from invoice_agents.rules import extraction_errors, invoice_findings
 from invoice_agents.schema import (
@@ -105,9 +105,10 @@ def intake_node(state: State, config: RunnableConfig) -> State:
 
 def check_node(state: State, config: RunnableConfig) -> State:
     deps, invoice = _deps(config), state.get("invoice")
-    errors = extraction_errors(invoice, state["source"]) if invoice else ["the document could not be read"]
+    no_text = ["the document could not be read"]
+    errors = no_text if invoice is None else extraction_errors(invoice, state["source"])
     deps.log.emit("stage", agent="extraction_check", errors=errors)
-    if errors:
+    if errors or invoice is None:
         return {"extraction_errors": errors}
     return {"extraction_errors": [], "findings": invoice_findings(invoice, state["source"], deps.policy)}
 
@@ -256,6 +257,7 @@ def record_node(state: State, config: RunnableConfig) -> State:
     )
     deps.log.emit("outcome", **outcome.model_dump(), degraded=state.get("degraded", []), **deps.log.totals())
     write_report(deps.log, dict(state))
+    save_state(deps.log, dict(state))
     return {}
 
 
@@ -302,7 +304,7 @@ def stream(path: Path, deps: Deps) -> Iterator[tuple[str, State]]:
 
 def process(path: Path, deps: Deps) -> State:
     """Run one invoice to its outcome."""
-    state: State = {}
+    final: State = {}
     for _, state in stream(path, deps):
-        pass
-    return state
+        final = state
+    return final

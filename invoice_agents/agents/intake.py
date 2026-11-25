@@ -6,7 +6,8 @@ from invoice_agents import fallback
 from invoice_agents.llm import LLM, ModelUnavailable, untrusted
 from invoice_agents.schema import Invoice
 
-SYSTEM = """You are the intake clerk in Acme Corp's accounts payable team. You turn one vendor invoice into structured data.
+SYSTEM = """You are the intake clerk in Acme Corp's accounts payable team. \
+You turn one vendor invoice into structured data.
 
 Rules:
 - Extract only what the document says. Never compute, infer or fill in a missing value: use null.

@@ -47,6 +47,14 @@ def untrusted(label: str, text: str) -> str:
     )
 
 
+def structured_output(output: type[BaseModel]) -> dict[str, Any]:
+    """The json_schema response format that makes the model answer as `output`."""
+    return {
+        "type": "json_schema",
+        "json_schema": {"name": output.__name__, "schema": output.model_json_schema(), "strict": True},
+    }
+
+
 class LLM:
     """One model client per run. Modes: live (call Grok, save recordings), replay (recordings only), cached (both)."""
 
@@ -54,7 +62,7 @@ class LLM:
                  on_call: Callable[..., None] | None = None):
         self.mode = mode or os.environ.get("LLM_MODE") or ("live" if os.environ.get("XAI_API_KEY") else "replay")
         self.cassettes = cassettes
-        self.on_call = on_call or (lambda **_: None)
+        self.on_call: Callable[..., None] = on_call or (lambda **_: None)
         self.model = MODEL
         self._client: Any = None
 
@@ -72,10 +80,7 @@ class LLM:
         """Run the agent until it returns a valid `output`, executing any tool calls it makes along the way."""
         messages: list[dict[str, Any]] = [{"role": "system", "content": system}, {"role": "user", "content": user}]
         specs = tools.specs(tool_names or []) if tools else []
-        response_format = {
-            "type": "json_schema",
-            "json_schema": {"name": output.__name__, "schema": output.model_json_schema(), "strict": True},
-        }
+        response_format = structured_output(output)
         for _ in range(max_turns):
             message = self._complete(agent, messages, specs, response_format)["choices"][0]["message"]
             calls = message.get("tool_calls") or []
@@ -93,7 +98,7 @@ class LLM:
             for c in calls:
                 messages.append({"role": "tool", "tool_call_id": c["id"],
                                  "content": json.dumps(self._run_tool(tools, c["function"]))})
-        raise ModelUnavailable(f"{agent} gave no valid answer in {max_turns} turns")
+        raise ModelUnavailable(f"no valid answer in {max_turns} turns")
 
     @staticmethod
     def _run_tool(tools: Tools | None, function: dict[str, Any]) -> dict[str, Any]:
@@ -115,7 +120,7 @@ class LLM:
             self.on_call(agent=agent, tier="replay", key=key, latency_ms=0, usage=body.get("usage") or {})
             return body
         if self.mode == "replay":
-            raise ModelUnavailable(f"no recording for this {agent} request")
+            raise ModelUnavailable("no recording for this request")
         body = self._live(agent, messages, tools, response_format)
         self.cassettes.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps({"request_sha256": key, "response": body}, indent=1))
@@ -136,5 +141,5 @@ class LLM:
                 **({"tools": tools} if tools else {}),
             )
         except APIError as exc:
-            raise ModelUnavailable(f"{agent}: API error {getattr(exc, 'status_code', '')} {exc.message}") from exc
+            raise ModelUnavailable(f"API error {getattr(exc, 'status_code', '')} {exc.message}") from exc
         return response.model_dump()

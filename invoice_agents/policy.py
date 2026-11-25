@@ -30,7 +30,6 @@ class Policy(BaseModel):
     currencies: list[str]
     max_rounds: int
     payment_attempts: int
-    human_signoff_over: float | None = None
     findings: dict[str, FindingRule]
 
     def finding(self, code: str, message: str, source: str, subject: str = "", **evidence: Any) -> Finding:

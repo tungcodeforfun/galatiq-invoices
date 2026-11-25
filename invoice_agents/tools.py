@@ -206,10 +206,10 @@ class ToolBox:
         lines_sum = Decimal(0)
         for n, li in enumerate(inv.line_items, 1):
             computed = money(li.quantity) * money(li.unit_price)
-            if li.amount is not None and li.quantity is not None and li.unit_price is not None:
-                if abs(computed - money(li.amount)) > tol:
-                    problems.append(f"line {n}: {li.quantity:g} x {li.unit_price:,.2f} = {computed:,.2f}, "
-                                    f"invoice says {li.amount:,.2f}")
+            complete = None not in (li.amount, li.quantity, li.unit_price)
+            if complete and abs(computed - money(li.amount)) > tol:
+                problems.append(f"line {n}: {li.quantity:g} x {li.unit_price:,.2f} = {computed:,.2f}, "
+                                f"invoice says {li.amount:,.2f}")
             lines_sum += money(li.amount) if li.amount is not None else computed
         if inv.subtotal is not None and abs(lines_sum - money(inv.subtotal)) > tol:
             problems.append(f"lines add up to {lines_sum:,.2f}, subtotal says {inv.subtotal:,.2f}")

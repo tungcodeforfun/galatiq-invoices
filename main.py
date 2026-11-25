@@ -18,7 +18,7 @@ from invoice_agents.llm import LLM
 from invoice_agents.observability import RunLog
 from invoice_agents.policy import load_policy
 
-SUFFIXES = {".txt", ".json", ".csv", ".xml", ".pdf", ".md"}
+SUFFIXES = {".txt", ".json", ".csv", ".xml", ".pdf", ".md", ".eml"}
 STYLE = {"PAID": "green", "REJECTED": "red", "PAYMENT_FAILED": "yellow"}
 
 

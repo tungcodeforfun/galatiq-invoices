@@ -70,6 +70,28 @@ def _table(rows: list[list[Any]], header: list[str]) -> str:
     return "\n".join(lines)
 
 
+def _plain(value: Any) -> Any:
+    if hasattr(value, "model_dump"):
+        return value.model_dump(mode="json")
+    if isinstance(value, list):
+        return [_plain(v) for v in value]
+    return value
+
+
+def save_state(log: RunLog, state: dict[str, Any]) -> Path:
+    """Write state.json: the final graph state, for the dashboard to show any past run."""
+    plain = {k: _plain(v) for k, v in state.items()}
+    path = log.dir / "state.json"
+    path.write_text(json.dumps({**plain, "run_id": log.run_id, "totals": log.totals()}, indent=1, default=str))
+    return path
+
+
+def load_state(run_dir: Path) -> dict[str, Any] | None:
+    """A past run's final state, or None if the run did not finish."""
+    path = run_dir / "state.json"
+    return json.loads(path.read_text()) if path.exists() else None
+
+
 def write_report(log: RunLog, state: dict[str, Any]) -> Path:
     """Write report.md: outcome, extracted invoice, findings, tool calls and every agent's output."""
     out, inv = state["outcome"], state.get("invoice")
