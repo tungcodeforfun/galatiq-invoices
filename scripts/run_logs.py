@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -20,13 +21,13 @@ DOCS = ROOT / "docs" / "runs"
 
 
 def run_cli(file: str, db: Path) -> tuple[str, Path | None]:
-    """Process one file through the brief's command; returns the console output and the new run folder."""
-    before = set((ROOT / RUNS_DIR).glob("*"))
+    """Process one file through the brief's command; returns the console output and the run folder it names."""
     env = {**os.environ, "COLUMNS": "100"}
     result = subprocess.run([sys.executable, "main.py", "--db", str(db), f"--invoice_path={file}"], cwd=ROOT,
                             env=env, capture_output=True, text=True, timeout=900)
-    new = sorted(set((ROOT / RUNS_DIR).glob("*")) - before)
-    return result.stdout + result.stderr, (new[-1] if new else None)
+    text = result.stdout + result.stderr
+    report = re.search(rf"{RUNS_DIR}/[\w.-]+/report\.md", text)
+    return text, (ROOT / report.group(0)).parent if report else None
 
 
 def main() -> int:
