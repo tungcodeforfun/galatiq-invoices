@@ -131,7 +131,7 @@ Three loops, each bounded at two rounds: intake ⇄ extraction check (every valu
 
 ## Business case
 
-Measured on the samples (final live pass on 2026-11-25, `grok-4.7`, one invoice at a time; calls and cost from replaying that pass's recordings):
+Measured on the samples (final live pass on 2026-11-25, `grok-4.7`; calls and cost from replaying that pass's recordings). Files ran one at a time within each set, but the held-out pass ran during the samples' pass (about 18 minutes of overlap), which may have made both a little slower:
 
 | | Per invoice | All 24 |
 |---|---|---|
