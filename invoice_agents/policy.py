@@ -49,7 +49,6 @@ class GateResult(BaseModel):
 
     approved: bool
     blocked_by: list[str]
-    overridden: bool
 
 
 def load_policy(path: Path = DEFAULT_POLICY) -> Policy:
@@ -68,7 +67,7 @@ def gate(
 ) -> GateResult:
     """Allow payment only if the approver approved and no rule forbids it. Agents can be stricter, never looser."""
     if decision is None or decision.action == "reject":
-        return GateResult(approved=False, blocked_by=["approver rejected"], overridden=False)
+        return GateResult(approved=False, blocked_by=["approver rejected"])
     blocked_by = [f"{f.id} {f.code}" for f in findings if f.severity == Severity.REJECT]
     blocked_by += [f"required check never completed: {check}" for check in unchecked]
     if total is None or total <= 0:
@@ -82,14 +81,13 @@ def gate(
         (total or 0) > policy.approval_threshold or any(f.severity != Severity.INFO for f in findings)
     ):
         blocked_by.append("degraded mode pays only clean invoices under the approval threshold")
-    return GateResult(approved=not blocked_by, blocked_by=blocked_by, overridden=bool(blocked_by))
+    return GateResult(approved=not blocked_by, blocked_by=blocked_by)
+
+
+DISPOSITION_ORDER: tuple[Disposition, ...] = ("void", "manual_entry", "return_to_vendor")
 
 
 def required_disposition(findings: list[Finding], policy: Policy) -> Disposition | None:
-    """Disposition forced by findings: void beats return_to_vendor; None when no finding decides it."""
+    """Disposition forced by findings: void, then manual entry, then return to vendor; None when none decides it."""
     dispositions = {policy.findings[f.code].disposition for f in findings}
-    if "void" in dispositions:
-        return "void"
-    if "return_to_vendor" in dispositions:
-        return "return_to_vendor"
-    return None
+    return next((d for d in DISPOSITION_ORDER if d in dispositions), None)

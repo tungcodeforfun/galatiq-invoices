@@ -24,7 +24,7 @@ def test_clean_approval_passes(policy):
 def test_approval_with_a_reject_finding_is_overridden(policy):
     findings = numbered(policy.finding("STOCK_EXCEEDED", "GadgetX: 20 requested, 5 in stock", "test"))
     result = gate(decision("approve"), findings, 15000.0, ACCEPTED, [], False, policy)
-    assert not result.approved and result.overridden
+    assert not result.approved
     assert result.blocked_by == ["F1 STOCK_EXCEEDED"]
 
 

@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from invoice_agents.db import DEFAULT_DB, Store
+from invoice_agents.fallback import notice
 from invoice_agents.graph import stream
 from invoice_agents.llm import LLM
 from invoice_agents.nodes import Deps
@@ -86,7 +87,8 @@ def outcome_banner(s: dict[str, Any]) -> None:
                                                        if out["disposition"] else "")
     {"PAID": st.success, "REJECTED": st.error}.get(out["status"], st.warning)(f"**{title}**  \n{out['summary']}")
     if s.get("degraded"):
-        st.warning("Degraded mode: " + "; ".join(s["degraded"]))
+        live = "live" in s.get("totals", {}).get("tiers", [])
+        st.warning(notice(s["degraded"], live, reset="**Reset ledger** in the sidebar"))
 
 
 def findings_table(findings: list[dict[str, Any]]) -> None:

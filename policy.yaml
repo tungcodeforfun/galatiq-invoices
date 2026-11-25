@@ -10,6 +10,7 @@ findings:
   DATA_INTEGRITY:    {severity: reject, disposition: void}
   DUPLICATE:         {severity: reject, disposition: void}
   FRAUD_SIGNALS:     {severity: reject, disposition: void}
+  NEEDS_MODEL:       {severity: reject, disposition: manual_entry}
   UNREADABLE:        {severity: reject, disposition: return_to_vendor}
   REVISION_CONFLICT: {severity: reject, disposition: return_to_vendor}
   STOCK_EXCEEDED:    {severity: reject, disposition: return_to_vendor}

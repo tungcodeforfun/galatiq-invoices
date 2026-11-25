@@ -13,9 +13,9 @@ from invoice_agents.db import Store
 from invoice_agents.llm import LLM
 from invoice_agents.loaders import UnreadableDocument, file_digest, read_document
 from invoice_agents.observability import RunLog, save_state, write_report
-from invoice_agents.policy import GateResult, Policy, gate, load_policy
+from invoice_agents.policy import GateResult, Policy, gate, load_policy, required_disposition
 from invoice_agents.rules import extraction_errors, invoice_findings
-from invoice_agents.schema import Critique, Decision, Finding, Invoice, Outcome, Payment, Resolution, RiskMemo
+from invoice_agents.schema import Critique, Decision, Finding, Invoice, Outcome, Payment, Resolution, RiskMemo, Severity
 from invoice_agents.tools import ToolBox, content_hash, number_key, text_key
 
 
@@ -32,12 +32,12 @@ class State(TypedDict, total=False):
     validator_notes: validator.ValidatorNotes | None
     coverage_rounds: int
     coverage_forced: list[str]
-    risk: RiskMemo | None
+    risk: RiskMemo
     drafts: list[Decision]
     critiques: list[Critique]
     gate: GateResult
-    payment: Payment | None
-    resolution: Resolution | None
+    payment: Payment
+    resolution: Resolution
     outcome: Outcome
     degraded: list[str]
 
@@ -73,7 +73,9 @@ def _numbered(findings: list[Finding]) -> list[Finding]:
 
 
 def _degraded(state: State, stage: str, reason: str | None) -> list[str]:
-    return state.get("degraded", []) + ([f"{stage}: {reason}"] if reason else [])
+    """Agents that fell back to rules because no model answer existed; the reason goes to the event log."""
+    agents = state.get("degraded", [])
+    return agents + [stage] if reason and stage not in agents else agents
 
 
 def _logged_calls(state: State, box: ToolBox, deps: Deps) -> list[dict[str, Any]]:
@@ -125,10 +127,17 @@ def after_check(state: State, config: RunnableConfig) -> str:
 
 
 def unreadable_node(state: State, config: RunnableConfig) -> State:
-    """Record why the document could not be read; resolution returns it to the vendor."""
+    """Record why the document could not be read: a layout the rules can't read is entered by hand."""
     deps = _deps(config)
-    finding = deps.policy.finding("UNREADABLE", "Could not extract a consistent invoice: "
-                                  + "; ".join(state["extraction_errors"]), "extraction_check", subject="unreadable")
+    if "intake" in state.get("degraded", []):
+        message = ("Reading this layout needs Grok, and no API key is set. Enter the invoice by hand, or set "
+                   "XAI_API_KEY (export XAI_API_KEY=your-key) and process it again." if deps.llm.mode == "replay" else
+                   "Reading this layout needs Grok, and Grok did not answer. Enter the invoice by hand, or process "
+                   "it again.")
+        finding = deps.policy.finding("NEEDS_MODEL", message, "extraction_check", subject="unreadable")
+    else:
+        finding = deps.policy.finding("UNREADABLE", "Could not extract a consistent invoice: "
+                                      + "; ".join(state["extraction_errors"]), "extraction_check", subject="unreadable")
     return {"findings": _numbered([finding]), "drafts": []}
 
 
@@ -150,7 +159,7 @@ def coverage_node(state: State, config: RunnableConfig) -> State:
     rounds = state.get("coverage_rounds", 0) + 1
     missing = box.missing_checks()
     forced: list[str] = []
-    model_gave_up = bool(state.get("degraded")) and state["degraded"][-1].startswith("validator")
+    model_gave_up = "validator" in state.get("degraded", [])
     if missing and (rounds >= deps.policy.max_rounds or model_gave_up):
         forced = [f"{tool}({args})" for tool, args in box.run_missing()]
         missing = []
@@ -254,11 +263,16 @@ def payment_node(state: State, config: RunnableConfig) -> State:
 
 
 def resolution_node(state: State, config: RunnableConfig) -> State:
-    """Resolution agent: disposition, audit reasoning and the vendor email for a rejection."""
+    """Resolution agent: disposition, audit reasoning and the vendor email; manual entry needs no agent or email."""
     deps = _deps(config)
+    forced = required_disposition(state["findings"], deps.policy)
+    if forced == "manual_entry":
+        summary = " ".join(f.message for f in state["findings"] if f.severity == Severity.REJECT)
+        deps.log.emit("stage", agent="resolution", disposition=forced, reasoning=summary)
+        return {"outcome": Outcome(status="REJECTED", disposition=forced, summary=summary)}
     drafts = state.get("drafts") or []
     result, reason = resolution.run(deps.llm, state.get("invoice"), state["findings"], drafts[-1] if drafts else None,
-                                    deps.policy)
+                                    forced)
     deps.log.emit("stage", agent="resolution", **result.model_dump(), degraded=reason)
     return {"resolution": result, "degraded": _degraded(state, "resolution", reason),
             "outcome": Outcome(status="REJECTED", disposition=result.disposition, summary=result.reasoning)}

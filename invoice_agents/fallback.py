@@ -9,8 +9,8 @@ from typing import Any, Literal
 
 from invoice_agents.rules import INSTRUCTION_LIKE, ocr_digits
 from invoice_agents.schema import (
+    AgentDisposition,
     Decision,
-    Disposition,
     Finding,
     Invoice,
     LineItem,
@@ -148,7 +148,7 @@ def review(findings: list[Finding], memo: RiskMemo | None) -> Decision:
                     summary=f"Rule-based review: {action}.")
 
 
-def resolution(findings: list[Finding], disposition: Disposition) -> Resolution:
+def resolution(findings: list[Finding], disposition: AgentDisposition) -> Resolution:
     """List the problems; draft a plain correction request when the vendor can fix them."""
     problems = [f"{f.id} {f.code}: {f.message}" for f in findings if f.severity == Severity.REJECT]
     reasoning = "Rejected: " + ("; ".join(problems) or "the approver rejected it")
@@ -158,3 +158,21 @@ def resolution(findings: list[Finding], disposition: Disposition) -> Resolution:
                  + "\n".join(f"- {f.message}" for f in findings if f.severity == Severity.REJECT)
                  + "\n\nPlease send a corrected invoice.\n\nAccounts Payable, Acme Corp")
     return Resolution(disposition=disposition, reasoning=reasoning, vendor_reply=reply)
+
+
+STEP_NAMES = {"intake": "Intake", "validator": "Validator", "risk": "Risk", "approver": "VP", "critic": "Critic",
+              "resolution": "Resolution"}
+
+
+def notice(agents: list[str], live: bool, reset: str = "`python main.py reset`") -> str:
+    """One plain sentence or two for whoever reads the result: which steps Grok didn't answer, and what to do."""
+    if not agents:
+        return ""
+    steps = ", ".join(STEP_NAMES.get(a, a) for a in agents)
+    if live:
+        return f"Grok did not answer for {steps}, so built-in rules handled those steps. The run log has the error."
+    if "intake" in agents:
+        return ("Grok has no recorded answer for this file and no API key is set, so built-in rules read it. "
+                "Rules pay only clean invoices under the approval limit. Set XAI_API_KEY to have Grok read it.")
+    return (f"No recording exists for this ledger state, so {steps} used built-in rules. "
+            f"{reset} replays Grok's recorded answers, or set XAI_API_KEY.")

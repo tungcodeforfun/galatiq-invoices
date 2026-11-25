@@ -114,13 +114,14 @@ class Critique(BaseModel):
     objections: list[str] = Field(description="Specific problems with the draft; empty when the verdict is accept")
 
 
-Disposition = Literal["return_to_vendor", "void"]
+AgentDisposition = Literal["return_to_vendor", "void"]
+Disposition = Literal[AgentDisposition, "manual_entry"]
 
 
 class Resolution(BaseModel):
     """What happens to a rejected invoice and what the vendor is told."""
 
-    disposition: Disposition
+    disposition: AgentDisposition
     reasoning: str = Field(description="Why the invoice was rejected, for the audit log")
     vendor_reply: str | None = Field(description="Email to the vendor saying what to fix; null when voided")
 

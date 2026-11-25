@@ -4,8 +4,7 @@ from __future__ import annotations
 
 from invoice_agents import fallback
 from invoice_agents.llm import LLM, ModelUnavailable, findings_block, untrusted
-from invoice_agents.policy import Policy, required_disposition
-from invoice_agents.schema import Decision, Finding, Invoice, Resolution
+from invoice_agents.schema import AgentDisposition, Decision, Finding, Invoice, Resolution
 
 SYSTEM = """You close out rejected invoices in Acme Corp's accounts payable team.
 
@@ -20,10 +19,9 @@ numbers involved and exactly what a corrected invoice needs. For void, vendor_re
 internal fraud suspicions or stock levels in a vendor email: say what to correct, not what we hold."""
 
 
-def run(llm: LLM, invoice: Invoice | None, findings: list[Finding], decision: Decision | None, policy: Policy
-        ) -> tuple[Resolution, str | None]:
-    """Close out a rejection. Policy overrides the agent's disposition when a finding decides it."""
-    forced = required_disposition(findings, policy)
+def run(llm: LLM, invoice: Invoice | None, findings: list[Finding], decision: Decision | None,
+        forced: AgentDisposition | None) -> tuple[Resolution, str | None]:
+    """Close out a rejection. Policy's disposition, when a finding decides it, overrides the agent's choice."""
     user = (untrusted("extracted_invoice", invoice.model_dump_json() if invoice else "unreadable document")
             + "\n\n" + findings_block(findings)
             + f"\n\nVP decision:\n{decision.model_dump_json() if decision else 'none'}")
